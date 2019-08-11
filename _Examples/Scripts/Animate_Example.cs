@@ -7,7 +7,7 @@
 	using UnityEngine.UI;
 	using Random = UnityEngine.Random;
 
-	public class AnimateExample : MonoBehaviour {
+	public class Animate_Example : MonoBehaviour {
 
 
 		#region Public Fields
