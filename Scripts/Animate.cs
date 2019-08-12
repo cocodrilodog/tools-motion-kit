@@ -82,10 +82,6 @@
 		/// The reuseKey of this motion.
 		/// </param>
 		/// 
-		/// <param name="getter">
-		/// A function that returns the animated <see cref="Vector3"/> value. Can be a lambda expression.
-		/// </param>
-		/// 
 		/// <param name="setter">
 		/// A function that sets the animated <see cref="Vector3"/> value. Can be a lambda expression.
 		/// </param>
@@ -111,10 +107,6 @@
 		/// The reuseKey of this motion.
 		/// </param>
 		/// 
-		/// <param name="getter">
-		/// A function that returns the animated <see cref="float"/> value. Can be a lambda expression.
-		/// </param>
-		/// 
 		/// <param name="setter">
 		/// A function that sets the animated <see cref="float"/> value. Can be a lambda expression.
 		/// </param>
@@ -138,10 +130,6 @@
 		/// 
 		/// <param name="reuseKey">
 		/// The reuseKey of this motion.
-		/// </param>
-		/// 
-		/// <param name="getter">
-		/// A function that returns the animated <see cref="Color"/> value. Can be a lambda expression.
 		/// </param>
 		/// 
 		/// <param name="setter">
