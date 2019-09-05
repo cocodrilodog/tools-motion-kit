@@ -22,7 +22,7 @@ Animate is a tool that animates anything. It is very similar to [DOTween](http:/
 
 With `Animate`, all numeric values of any object can be animated. There are also built-in extensions to animate `Color` and `Vector3` values. The tool is easily extensible to support more animatable types.
 
-<img width="400" alt="imagen" src="https://user-images.githubusercontent.com/46692814/63643597-677c3500-c699-11e9-8960-e12bb7c770ca.gif">
+<img width="400" alt="imagen" src="https://user-images.githubusercontent.com/8107813/64360668-813e4600-cfd0-11e9-9cd4-c1cb5f592a94.gif">
 
 There is a examples scene in the project called `DoodleStories-AnimateExample`.
 
@@ -139,13 +139,13 @@ Motion Type | Animatable Type  | Default Easing Function
 
 A good place to look for easing functions is [Robert Penner's website](http://robertpenner.com/easing/)
 
-<img width="800" alt="imagen" src="https://user-images.githubusercontent.com/46692814/63652885-34828180-c72b-11e9-9da1-49f088451a73.png">
+<img width="800" alt="imagen" src="https://user-images.githubusercontent.com/8107813/64360751-b5b20200-cfd0-11e9-83a8-4df8a0199707.png">
 
 ### 4.2 `AnimateCurves`
 
 Sometimes the existing easing functions won't fit specific needs. For this, there is an additional option called `AnimateCurves`. It is an asset where you can design custom animation curves that can be passed as parameters to `SetEasing(...)`:
 
-<img width="317" alt="imagen" src="https://user-images.githubusercontent.com/46692814/63653641-22a5dc00-c735-11e9-96a4-df320e51d18a.png">
+<img width="317" alt="imagen" src="https://user-images.githubusercontent.com/8107813/64360868-fa3d9d80-cfd0-11e9-9ea0-4caa16aea6ed.png">
 
 Once you have a defined curve with a name, you can use it like this:
 
