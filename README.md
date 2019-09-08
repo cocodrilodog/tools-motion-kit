@@ -6,7 +6,7 @@ Animate is a tool that animates anything. It is very similar to [DOTween](http:/
 
 - [1 Introduction](#1-introduction)
 - [2 Animate Architecture](#2-animate-architecture)
-	- [2.1 The `this` and `reuseKey` Parameters](#21-the-this-and-reusekey-parameters)
+	- [2.1 The `owner` and `reuseKey` Parameters](#21-the-owner-and-reusekey-parameters)
 	- [2.2 The `setter` Parameter](#22-the-setter-parameter)
 	- [2.3 Clearing Motions](#23-clearing-motions)
 - [3 More `Motion` Settings](#3-more-motion-settings)
@@ -37,9 +37,9 @@ Animate.GetMotion(this, "Position", p => TheObject.localPosition = p)
 
 When we create an animation this way, the `Animate` tool creates and returns an instance of `Motion3D` type. Subsequential execution of this code will reuse the same `Motion3D` instance. This is handled internally and is explained below.
 
-### 2.1 The `this` and `reuseKey` Parameters 
+### 2.1 The `owner` and `reuseKey` Parameters 
 
-By passing `this` as the owner argument we are saying that the `Motion3D` instance is belongs to the object referenced by the `this` keyword (normally a `MonoBehaviour`)
+By passing `this` as the `owner` argument we are saying that the `Motion3D` instance belongs to the object referenced by the `this` keyword (normally a `MonoBehaviour`). It can be any object, though.
 
 The `reuseKey` `"Position"` is an arbitrary name that we create in order to reuse the generated `Motion3D` instance for all position animations that the `this` object will play and that will be performed by the same `Motion3D` instance.
 
