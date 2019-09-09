@@ -9,7 +9,7 @@
 	/// <summary>
 	/// Asset to design animation curves that can be used with <see cref="Animate"/>.
 	/// </summary>
-	[CreateAssetMenu(menuName = "Sago/DoodleStories/AnimateCurves")]
+	[CreateAssetMenu(menuName = "Cocodrilo Dog/Animation/AnimateCurves")]
 	public class AnimateCurves : ScriptableObject {
 
 
