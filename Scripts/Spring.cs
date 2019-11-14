@@ -61,20 +61,7 @@
 			m_TargetValue = targetValue;
 			T currentValue = m_Getter();
 			T difference = Subtract(m_TargetValue, currentValue);
-			//Speed = MultiplyByFloat(difference, Easing);
-
-
-			//TargetContentX = GetContentXForPage(CurrentPage);
-			//deltaX = TargetContentX - ContentX;
-
-
-
-			//float acceleration = deltaX * spring;
-			//ContentSpeedX += acceleration * Time.deltaTime;
-			//ContentSpeedX -= friction * ContentSpeedX * Time.deltaTime;
-			//ContentX += ContentSpeedX * Time.deltaTime;
-
-
+	
 			if (Mathf.Abs(Magnitude(difference)) > Threshold) {
 				T acceleration = MultiplyByFloat(difference, Strength);
 				Speed = Add(Speed, MultiplyByFloat(acceleration, Time.deltaTime));
