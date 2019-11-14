@@ -5,14 +5,16 @@
 	using System.Collections.Generic;
 	using UnityEngine;
 
-	[Serializable]
-	public abstract class Ease<T> {
+	public abstract class Spring<T> {
 
 
 		#region Public Fields
 
 		[SerializeField]
-		public float Easing = 10;
+		public float Strength = 32;
+
+		[SerializeField]
+		public float Friction = 8;
 
 		[SerializeField]
 		public float Threshold = 0.001f;
@@ -45,7 +47,7 @@
 
 		#region Constructors
 
-		public Ease(Func<T> getter, Action<T> setter) {
+		public Spring(Func<T> getter, Action<T> setter) {
 			m_Getter = getter ?? throw new ArgumentNullException(nameof(getter));
 			m_Setter = setter ?? throw new ArgumentNullException(nameof(setter));
 		}
@@ -58,10 +60,25 @@
 
 			m_TargetValue = targetValue;
 			T currentValue = m_Getter();
-			T difference = Subtract(m_TargetValue, m_Getter());
+			T difference = Subtract(m_TargetValue, currentValue);
+			//Speed = MultiplyByFloat(difference, Easing);
+
+
+			//TargetContentX = GetContentXForPage(CurrentPage);
+			//deltaX = TargetContentX - ContentX;
+
+
+
+			//float acceleration = deltaX * spring;
+			//ContentSpeedX += acceleration * Time.deltaTime;
+			//ContentSpeedX -= friction * ContentSpeedX * Time.deltaTime;
+			//ContentX += ContentSpeedX * Time.deltaTime;
+
 
 			if (Mathf.Abs(Magnitude(difference)) > Threshold) {
-				Speed = MultiplyByFloat(difference, Easing);
+				T acceleration = MultiplyByFloat(difference, Strength);
+				Speed = Add(Speed, MultiplyByFloat(acceleration, Time.deltaTime));
+				Speed = Subtract(Speed, MultiplyByFloat(Speed, Friction * Time.deltaTime));
 				m_Setter(Add(currentValue, MultiplyByFloat(Speed, Time.deltaTime)));
 				IsActive = true;
 			} else {
@@ -108,12 +125,12 @@
 	}
 
 	[Serializable]
-	public class EaseFloat : Ease<float> {
+	public class SpringFloat : Spring<float> {
 
 
 		#region Constructors
 
-		public EaseFloat(Func<float> getter, Action<float> setter) : base(getter, setter) { }
+		public SpringFloat(Func<float> getter, Action<float> setter) : base(getter, setter) { }
 
 		#endregion
 
