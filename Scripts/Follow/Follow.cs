@@ -24,9 +24,9 @@
 			protected set {
 				if (value != m_IsActive) {
 					m_IsActive = value;
-					Debug.LogFormat("IsActive: {0}; {1}", m_IsActive, Time.time);
 					if (!m_IsActive) {
 						m_Setter(m_TargetValue);
+						OnBecameIdle?.Invoke();
 					}
 				}
 			}
@@ -61,6 +61,13 @@
 			}
 
 		}
+
+		#endregion
+
+
+		#region Public Events
+
+		public event Action OnBecameIdle;
 
 		#endregion
 
