@@ -6,13 +6,10 @@
 	using UnityEngine;
 
 	[Serializable]
-	public abstract class Ease<T> {
+	public abstract class Follow<T> {
 
 
 		#region Public Fields
-
-		[SerializeField]
-		public float Easing = 10;
 
 		[SerializeField]
 		public float Threshold = 0.001f;
@@ -35,17 +32,12 @@
 			}
 		}
 
-		public T Speed {
-			get { return m_Speed; }
-			set { m_Speed = value; }
-		}
-
 		#endregion
 
 
 		#region Constructors
 
-		public Ease(Func<T> getter, Action<T> setter) {
+		public Follow(Func<T> getter, Action<T> setter) {
 			m_Getter = getter ?? throw new ArgumentNullException(nameof(getter));
 			m_Setter = setter ?? throw new ArgumentNullException(nameof(setter));
 		}
@@ -54,6 +46,7 @@
 
 
 		#region Public Methods
+
 		public void Update(T targetValue) {
 
 			m_TargetValue = targetValue;
@@ -61,18 +54,20 @@
 			T difference = Subtract(m_TargetValue, m_Getter());
 
 			if (Mathf.Abs(Magnitude(difference)) > Threshold) {
-				Speed = MultiplyByFloat(difference, Easing);
-				m_Setter(Add(currentValue, MultiplyByFloat(Speed, Time.deltaTime)));
+				m_Setter(UpdateValue(currentValue, difference));
 				IsActive = true;
 			} else {
 				IsActive = false;
 			}
 
 		}
+
 		#endregion
 
 
 		#region Protected Methods
+
+		protected abstract T UpdateValue(T currentValue, T difference);
 
 		protected abstract float Magnitude(T value);
 
@@ -97,48 +92,10 @@
 		private bool m_IsActive;
 
 		[NonSerialized]
-		private T m_Speed;
-
-		[NonSerialized]
 		private T m_TargetValue;
 
 		#endregion
 
 
 	}
-
-	[Serializable]
-	public class EaseFloat : Ease<float> {
-
-
-		#region Constructors
-
-		public EaseFloat(Func<float> getter, Action<float> setter) : base(getter, setter) { }
-
-		#endregion
-
-
-		#region Protected methods
-
-		protected override float Magnitude(float value) {
-			return value;
-		}
-
-		protected override float Add(float a, float b) {
-			return a + b;
-		}
-
-		protected override float Subtract(float a, float b) {
-			return a - b;
-		}
-
-		protected override float MultiplyByFloat(float a, float f) {
-			return a * f;
-		}
-
-		#endregion
-
-
-	}
-
 }
