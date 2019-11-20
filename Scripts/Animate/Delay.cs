@@ -169,6 +169,16 @@
 		}
 
 		/// <summary>
+		/// Sets the <see cref="TimeMode"/> of the motion.
+		/// </summary>
+		/// <param name="timeMode"></param>
+		/// <returns></returns>
+		public Delay SetTimeMode(TimeMode timeMode) {
+			m_TimeMode = timeMode;
+			return (Delay)this;
+		}
+
+		/// <summary>
 		/// Sets a callback that will be called every frame while the delay is playing 
 		/// and not paused.
 		/// </summary>
@@ -192,13 +202,16 @@
 		#endregion
 
 
-		#region Internal Fields
+		#region Private Fields
 
 		[NonSerialized]
 		private MonoBehaviour m_MonoBehaviour;
 
 		[NonSerialized]
 		private Coroutine m_Coroutine;
+
+		[NonSerialized]
+		private TimeMode m_TimeMode;
 
 		[NonSerialized]
 		private Action m_OnUpdate;
@@ -224,6 +237,24 @@
 		#endregion
 
 
+		#region Private Properties
+
+		private float DeltaTime {
+			get {
+				switch (m_TimeMode) {
+					case TimeMode.Normal: return Time.deltaTime;
+					case TimeMode.Unscaled: return Time.unscaledDeltaTime;
+					case TimeMode.Smooth: return Time.smoothDeltaTime;
+					case TimeMode.Fixed: return Time.fixedDeltaTime;
+					case TimeMode.FixedUnscaled: return Time.fixedUnscaledTime;
+					default: return Time.deltaTime;
+				}
+			}
+		}
+
+		#endregion
+
+
 		#region Internal Methods
 
 		private IEnumerator _Play() {
@@ -239,7 +270,7 @@
 				if (!IsPaused) {
 
 					// Add the time at the beginning because one frame has already happened
-					m_CurrentTime += Time.deltaTime;
+					m_CurrentTime += DeltaTime;
 
 					// This avoids progress to be greater than 1
 					if (m_CurrentTime > m_Duration) {

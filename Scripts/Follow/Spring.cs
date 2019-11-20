@@ -5,14 +5,25 @@
 	using System.Collections.Generic;
 	using UnityEngine;
 
+	/// <summary>
+	/// A spring out <see cref="Follow{T}"/> animation.
+	/// </summary>
+	/// <typeparam name="T"></typeparam>
 	public abstract class Spring<T> : Follow<T> {
 
 
 		#region Public Fields
 
+		/// <summary>
+		/// The spring strength. The higher the value, the stronger the spring is.
+		/// </summary>
 		[SerializeField]
 		public float Strength = 32;
 
+		/// <summary>
+		/// The friction that eventually stops the srping. The higher the value, the faster 
+		/// the movement stops.
+		/// </summary>
 		[SerializeField]
 		public float Friction = 8;
 
@@ -21,6 +32,9 @@
 
 		#region Public Properties
 
+		/// <summary>
+		/// The current speed of the animation.
+		/// </summary>
 		public T Speed {
 			get { return m_Speed; }
 			set { m_Speed = value; }
@@ -40,9 +54,9 @@
 
 		protected override T UpdateValue(T currentValue, T difference) {
 			T acceleration = MultiplyByFloat(difference, Strength);
-			Speed = Add(Speed, MultiplyByFloat(acceleration, Time.deltaTime));
-			Speed = Subtract(Speed, MultiplyByFloat(Speed, Friction * Time.deltaTime));
-			return Add(currentValue, MultiplyByFloat(Speed, Time.deltaTime));
+			Speed = Add(Speed, MultiplyByFloat(acceleration, DeltaTime));
+			Speed = Subtract(Speed, MultiplyByFloat(Speed, Friction * DeltaTime));
+			return Add(currentValue, MultiplyByFloat(Speed, DeltaTime));
 		}
 
 		#endregion
@@ -58,6 +72,9 @@
 
 	}
 
+	/// <summary>
+	/// An spring out <see cref="Follow{T}"/> animation for floats.
+	/// </summary>
 	[Serializable]
 	public class SpringFloat : Spring<float> {
 

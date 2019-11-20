@@ -5,12 +5,19 @@
 	using System.Collections.Generic;
 	using UnityEngine;
 
+	/// <summary>
+	/// An ease out <see cref="Follow{T}"/> animation.
+	/// </summary>
+	/// <typeparam name="T">The type to animate.</typeparam>
 	[Serializable]
 	public abstract class Ease<T> : Follow<T> {
 
 
 		#region Public Fields
-
+		
+		/// <summary>
+		/// Ease out amount. The higher this multiplier is the faster the ease out happens.
+		/// </summary>
 		[SerializeField]
 		public float Easing = 10;
 
@@ -19,6 +26,9 @@
 
 		#region Public Properties
 
+		/// <summary>
+		/// The current speed of the animation.
+		/// </summary>
 		public T Speed {
 			get { return m_Speed; }
 			set { m_Speed = value; }
@@ -38,7 +48,7 @@
 
 		protected override T UpdateValue(T currentValue, T difference) {
 			Speed = MultiplyByFloat(difference, Easing);
-			return Add(currentValue, MultiplyByFloat(Speed, Time.deltaTime));
+			return Add(currentValue, MultiplyByFloat(Speed, DeltaTime));
 		}
 
 		#endregion
@@ -54,6 +64,9 @@
 
 	}
 
+	/// <summary>
+	/// An ease out <see cref="Follow{T}"/> animation for floats.
+	/// </summary>
 	[Serializable]
 	public class EaseFloat : Ease<float> {
 

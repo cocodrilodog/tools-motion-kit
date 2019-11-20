@@ -288,6 +288,16 @@
 		}
 
 		/// <summary>
+		/// Sets the <see cref="TimeMode"/> of the motion.
+		/// </summary>
+		/// <param name="timeMode"></param>
+		/// <returns></returns>
+		public MotionT SetTimeMode(TimeMode timeMode) {
+			m_TimeMode = timeMode;
+			return (MotionT)this;
+		}
+
+		/// <summary>
 		/// Sets the easing of the motion.
 		/// </summary>
 		/// 
@@ -327,7 +337,7 @@
 		#endregion
 
 
-		#region Internal Fields
+		#region Private Fields
 
 		[NonSerialized]
 		private MonoBehaviour m_MonoBehaviour;
@@ -337,6 +347,9 @@
 
 		[NonSerialized]
 		private Coroutine m_Coroutine;
+
+		[NonSerialized]
+		private TimeMode m_TimeMode;
 
 		[NonSerialized]
 		private Easing m_Easing;
@@ -374,16 +387,29 @@
 		#endregion
 
 
-		#region Internal Properties
+		#region Private Properties
 
 		private Easing DefaultEasing {
 			get { return m_DefaultEasing = m_DefaultEasing ?? GetDefaultEasing(); }
 		}
 
+		private float DeltaTime {
+			get {
+				switch(m_TimeMode) {
+					case TimeMode.Normal: return Time.deltaTime;
+					case TimeMode.Unscaled: return Time.unscaledDeltaTime;
+					case TimeMode.Smooth: return Time.smoothDeltaTime;
+					case TimeMode.Fixed: return Time.fixedDeltaTime;
+					case TimeMode.FixedUnscaled: return Time.fixedUnscaledTime;
+					default: return Time.deltaTime;
+				}
+			}
+		}
+
 		#endregion
 
 
-		#region Internal Methods
+		#region Private Methods
 
 		/// <summary>
 		/// Implement this in subclasses to provide a default easing function.
@@ -404,7 +430,7 @@
 				if (!IsPaused) {
 
 					// Add the time at the beginning because one frame has already happened
-					m_CurrentTime += Time.deltaTime;
+					m_CurrentTime += DeltaTime;
 
 					// This avoids progress to be greater than 1
 					if (m_CurrentTime > m_Duration) {
