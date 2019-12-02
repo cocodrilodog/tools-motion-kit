@@ -10,7 +10,8 @@
 	/// <summary>
 	/// Animates a tiled image on a <see cref="Image"/> component.
 	/// </summary>
-	public class PatternAnimator : MonoBehaviour {
+	[RequireComponent(typeof(Image))]
+	public class UIPatternAnimator : MonoBehaviour {
 
 
 		#region Public Fields
