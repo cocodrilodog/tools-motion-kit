@@ -10,105 +10,40 @@
 	/// Asset to design animation curves that can be used with <see cref="Animate"/>.
 	/// </summary>
 	[CreateAssetMenu(menuName = "Cocodrilo Dog/Animation/AnimateCurves")]
-	public class AnimateCurves : ScriptableObject {
+	public static class AnimateCurves {
 
 
-		#region Public Methods
+		#region Public Static Methods
 
 		/// <summary>
-		/// Gets an easing function for floats modified by the <see cref="AnimationCurve"/>
-		/// identified by <c>curveKey</c>.
+		/// Gets an easing function for <c>float</c> modified by the provided 
+		/// <see cref="AnimationCurve"/>.
 		/// </summary>
-		/// <returns>The float easing function.</returns>
-		/// <param name="curveKey">Curve key.</param>
-		public MotionFloat.Easing EasingFloat(string curveKey) {
-			AnimationCurve curve = GetAnimationCurveByKey(curveKey);
+		/// <returns>The <c>float</c> easing function.</returns>
+		/// <param name="curve">The <see cref="AnimationCurve"/>.</param>
+		public static MotionFloat.Easing Float(AnimationCurve curve) {
 			return (a, b, t) => a + (b - a) * curve.Evaluate(t);
 		}
 
 		/// <summary>
-		/// Gets an easing function for <see cref="Vector3"/> modified by the 
-		/// <see cref="AnimationCurve"/> identified by <c>curveKey</c>.
+		/// Gets an easing function for <see cref="UnityEngine.Vector3"/> modified
+		/// by the provided <see cref="AnimationCurve"/>.
 		/// </summary>
-		/// <returns>The <see cref="Vector3"/> easing function.</returns>
-		/// <param name="curveKey">Curve key.</param>
-		public Motion3D.Easing Easing3D(string curveKey) {
-			AnimationCurve curve = GetAnimationCurveByKey(curveKey);
+		/// <returns>The <see cref="UnityEngine.Vector3"/> easing function.</returns>
+		/// <param name="curve">The <see cref="AnimationCurve"/>.</param>
+		public static Motion3D.Easing Vector3(AnimationCurve curve) {
 			return (a, b, t) => a + (b - a) * curve.Evaluate(t);
 		}
 
 		/// <summary>
-		/// Gets an easing function for <see cref="Color"/> modified by the 
-		/// <see cref="AnimationCurve"/> identified by <c>curveKey</c>.
+		/// Gets an easing function for <see cref="UnityEngine.Color"/> modified
+		/// by the provided <see cref="AnimationCurve"/>.
 		/// </summary>
-		/// <returns>The <see cref="Color"/> easing function.</returns>
-		/// <param name="curveKey">Curve key.</param>
-		public MotionColor.Easing EasingColor(string curveKey) {
-			AnimationCurve curve = GetAnimationCurveByKey(curveKey);
+		/// <returns>The <see cref="UnityEngine.Color"/> easing function.</returns>
+		/// <param name="curve">The <see cref="AnimationCurve"/>.</param>
+		public static MotionColor.Easing Color(AnimationCurve curve) {
 			return (a, b, t) => a + (b - a) * curve.Evaluate(t);
 		}
-
-		#endregion
-
-
-		#region Internal Fields
-
-		[SerializeField]
-		private KeyedAnimation[] m_Animations;
-
-		#endregion
-
-
-		#region Internal Methods
-
-		private AnimationCurve GetAnimationCurveByKey(string key) {
-			AnimationCurve curve = null;
-			foreach (KeyedAnimation animation in m_Animations) {
-				if (animation.Key == key)
-					curve = animation.AnimationCurve;
-			}
-			return curve;
-		}
-
-		#endregion
-
-	}
-
-	/// <summary>
-	/// An object that has <see cref="AnimationCurve"/> paired with a key.
-	/// </summary>
-	[Serializable]
-	public class KeyedAnimation {
-
-
-		#region Constructors
-
-		public KeyedAnimation() { }
-
-		public KeyedAnimation(string key, AnimationCurve curve) {
-			m_Key = key;
-			m_AnimationCurve = curve;
-		}
-
-		#endregion
-
-
-		#region Public Properties
-
-		public string Key { get { return m_Key; } }
-
-		public AnimationCurve AnimationCurve { get { return m_AnimationCurve; } }
-
-		#endregion
-
-
-		#region Internal Fields
-
-		[SerializeField]
-		private string m_Key;
-
-		[SerializeField]
-		private AnimationCurve m_AnimationCurve;
 
 		#endregion
 
