@@ -12,7 +12,8 @@
 
 		#region Public Fields
 
-		public AnimateCurves AnimateCurves;
+		[SerializeField]
+		public AnimationCurve AnimationCurve;
 
 		#endregion
 
@@ -179,7 +180,7 @@
 				// The blink graph is crafted in the AnimateCurves asset.
 				Animate.GetMotion(
 					this, "Color", c => ColorObject.Color = c
-				).SetEasing(AnimateCurves.EasingColor("AnimateExampleCurve"))
+				).SetEasing(AnimateCurves.Color(AnimationCurve))
 				.Play(ColorObject.Color, Random.ColorHSV(), 1);
 
 			});
