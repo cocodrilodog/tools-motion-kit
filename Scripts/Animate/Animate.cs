@@ -256,22 +256,22 @@
 		#region Internal Methods
 
 		private Motion3D _GetMotion(object owner, string reuseKey, Motion3D.Setter setter) {
-			return (Motion3D)_GetMotion(owner, reuseKey, () => new Motion3D(this, setter));
+			return (Motion3D)_GetPlayback(owner, reuseKey, () => new Motion3D(this, setter));
 		}
 
 		private MotionFloat _GetMotion(object owner, string reuseKey, MotionFloat.Setter setter) {
-			return (MotionFloat)_GetMotion(owner, reuseKey, () => new MotionFloat(this, setter));
+			return (MotionFloat)_GetPlayback(owner, reuseKey, () => new MotionFloat(this, setter));
 		}
 
 		private MotionColor _GetMotion(object owner, string reuseKey, MotionColor.Setter setter) {
-			return (MotionColor)_GetMotion(owner, reuseKey, () => new MotionColor(this, setter));
+			return (MotionColor)_GetPlayback(owner, reuseKey, () => new MotionColor(this, setter));
 		}
 
 		private Delay _GetDelay(object owner, string reuseKey) {
-			return (Delay)_GetMotion(owner, reuseKey, () => new Delay(this));
+			return (Delay)_GetPlayback(owner, reuseKey, () => new Delay(this));
 		}
 
-		private IPlayback _GetMotion(object owner, string reuseKey, Func<IPlayback> createMotion) {
+		private IPlayback _GetPlayback(object owner, string reuseKey, Func<IPlayback> createMotion) {
 			Dictionary<string, IPlayback> ownerMotions;
 			if (Motions.TryGetValue(owner, out ownerMotions)) {
 				IPlayback motion;
