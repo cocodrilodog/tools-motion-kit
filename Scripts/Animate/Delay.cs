@@ -143,6 +143,7 @@
 
 			// Value set on Play or individually
 			m_Duration = 0;
+			m_TimeMode = default;
 
 			// Values set when starting the coroutine
 			m_CurrentTime = 0;

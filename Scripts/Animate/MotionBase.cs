@@ -102,7 +102,7 @@
 		/// </summary>
 		/// 
 		/// <remarks>
-		/// It is set at <see cref="Play(ValueT, float)"/>, 
+		/// It is set at <see cref="Play(ValueT, ValueT, float)"/>, 
 		/// <see cref="Play(ValueT, ValueT, float)"/> or alternatively
 		/// at <see cref="SetDuration(float)"/>
 		/// </remarks>
@@ -236,8 +236,8 @@
 			StopCoroutine();
 
 			// Values set on Play or individually
-			m_InitialValue = default(ValueT);
-			m_FinalValue = default(ValueT);
+			m_InitialValue = default;
+			m_FinalValue = default;
 			m_Duration = 0;
 
 			// Values set when starting the coroutine
@@ -252,7 +252,8 @@
 			m_OnUpdate = null;
 			m_OnComplete = null;
 
-			// Go back to default easing.
+			// Go back to default time mode and easing.
+			m_TimeMode = default;
 			m_Easing = null;
 
 		}
