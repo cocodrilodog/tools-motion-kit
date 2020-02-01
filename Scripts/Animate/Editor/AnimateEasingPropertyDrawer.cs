@@ -13,10 +13,9 @@
 		#region Public Methods
 
 		public override float GetPropertyHeight(SerializedProperty property, GUIContent label) {
-			// I left this condition for consistency with the other property drawers.
 			base.GetPropertyHeight(property, label);
-			if(Property.isExpanded) {
-				return FieldHeight * 3;
+			if (EasingNameProperty.stringValue == "AnimationCurve") {
+				return FieldHeight * 2;
 			} else {
 				return FieldHeight;
 			}
@@ -32,22 +31,17 @@
 			base.OnGUI(position, property, label);
 
 			EditorGUI.BeginProperty(Position, Label, Property);
-			Property.isExpanded = EditorGUI.Foldout(GetNextPosition(), property.isExpanded, label);
 
-			if(Property.isExpanded) {
+			int easingNameIndex = AnimateEasingField.EasingNames.IndexOf(EasingNameProperty.stringValue);
+			easingNameIndex = EditorGUI.Popup(GetNextPosition(), label.text, easingNameIndex, AnimateEasingField.EasingNames.ToArray());
+			if (easingNameIndex > -1) {
+				EasingNameProperty.stringValue = AnimateEasingField.EasingNames[easingNameIndex];
+			}
 
+			if(EasingNameProperty.stringValue == "AnimationCurve") {
 				EditorGUI.indentLevel++;
-
-				EditorGUI.PropertyField(GetNextPosition(), UseCustomCurveProperty);
-
-				int easingNameIndex = AnimateEasingField.EasingNames.IndexOf(EasingNameProperty.stringValue);
-				easingNameIndex = EditorGUI.Popup(GetNextPosition(), easingNameIndex, AnimateEasingField.EasingNames.ToArray());
-				if (easingNameIndex > -1) {
-					EasingNameProperty.stringValue = AnimateEasingField.EasingNames[easingNameIndex];
-				}
-
+				EditorGUI.PropertyField(GetNextPosition(), AnimationCurveProperty);
 				EditorGUI.indentLevel--;
-
 			}
 
 			EditorGUI.EndProperty();
@@ -61,8 +55,8 @@
 
 		protected override void InitializePropertiesForGetHeight() {
 			base.InitializePropertiesForGetHeight();
-			UseCustomCurveProperty = Property.FindPropertyRelative("m_UseCustomCurve");
 			EasingNameProperty = Property.FindPropertyRelative("m_EasingName");
+			AnimationCurveProperty = Property.FindPropertyRelative("m_AnimationCurve");
 		}
 
 		#endregion
@@ -70,9 +64,9 @@
 
 		#region Private Properties
 
-		private SerializedProperty UseCustomCurveProperty { get; set; }
-
 		private SerializedProperty EasingNameProperty { get; set; }
+
+		private SerializedProperty AnimationCurveProperty { get; set; }
 
 		#endregion
 

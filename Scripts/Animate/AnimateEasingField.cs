@@ -16,6 +16,8 @@
 				if (m_EasingNames == null) {
 					m_EasingNames = new List<string>();
 
+					m_EasingNames.Add(AnimationCurveName);
+
 					m_EasingNames.Add("BackIn");
 					m_EasingNames.Add("BackOut");
 					m_EasingNames.Add("BackInOut");
@@ -65,15 +67,33 @@
 		#region Public Properties
 
 		public MotionFloat.Easing FloatEasing {
-			get { return FloatEasings[m_EasingName]; }
+			get {
+				if(m_EasingName == AnimationCurveName) {
+					return AnimateCurves.FloatEasing(m_AnimationCurve);
+				} else {
+					return FloatEasings[m_EasingName];
+				}
+			}
 		}
 
 		public Motion3D.Easing Vector3Easing {
-			get { return Vector3Easings[m_EasingName]; }
+			get {
+				if (m_EasingName == AnimationCurveName) {
+					return AnimateCurves.Vector3Easing(m_AnimationCurve);
+				} else {
+					return Vector3Easings[m_EasingName];
+				}
+			}
 		}
 
 		public MotionColor.Easing ColorEasing {
-			get { return ColorEasings[m_EasingName]; }
+			get {
+				if (m_EasingName == AnimationCurveName) {
+					return AnimateCurves.ColorEasing(m_AnimationCurve);
+				} else {
+					return ColorEasings[m_EasingName];
+				}
+			}
 		}
 
 		#endregion
@@ -92,6 +112,13 @@
 
 		[NonSerialized]
 		private static Dictionary<string, MotionColor.Easing> m_ColorEasings;
+
+		#endregion
+
+
+		#region Private Constants
+
+		private const string AnimationCurveName = "AnimationCurve";
 
 		#endregion
 
@@ -246,9 +273,6 @@
 
 
 		#region Private Fields
-
-		[SerializeField]
-		private bool m_UseCustomCurve;
 
 		[SerializeField]
 		private string m_EasingName = "Linear";
