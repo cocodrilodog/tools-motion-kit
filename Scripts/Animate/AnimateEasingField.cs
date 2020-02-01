@@ -30,7 +30,11 @@
 
 	#endregion
 
-
+	/// <summary>
+	/// Use this type to create fields in the inspector that allow to choose either
+	/// any <see cref="AnimateEasing"/> function or an <see cref="AnimationCurve"/>
+	/// to be used as <c>Easing</c> by <see cref="Animate"/>.
+	/// </summary>
 	[Serializable]
 	public class AnimateEasingField {
 
@@ -53,6 +57,16 @@
 
 		#region Public Properties
 
+		/// <summary>
+		/// Returns a <c>float</c> easing function based on the selected <see cref="m_EasingName"/>
+		/// in the inspector.
+		/// </summary>
+		///
+		/// <remarks>
+		///	If the selected <see cref="m_EasingName"/> is <c>"AnimationCurve"</c>, it will 
+		/// return an easing function based on the provided <see cref="AnimationCurve"/>,
+		/// otherwise it will return the selected <see cref="AnimateEasing"/> function.
+		/// </remarks>
 		public MotionFloat.Easing FloatEasing {
 			get {
 				if(m_EasingName == AnimationCurveName) {
@@ -63,6 +77,17 @@
 			}
 		}
 
+
+		/// <summary>
+		/// Returns a <c>Vector3</c> easing function based on the selected <see cref="m_EasingName"/>
+		/// in the inspector.
+		/// </summary>
+		///
+		/// <remarks>
+		///	If the selected <see cref="m_EasingName"/> is <c>"AnimationCurve"</c>, it will 
+		/// return an easing function based on the provided <see cref="AnimationCurve"/>,
+		/// otherwise it will return the selected <see cref="AnimateEasing"/> function.
+		/// </remarks>
 		public Motion3D.Easing Vector3Easing {
 			get {
 				if (m_EasingName == AnimationCurveName) {
@@ -73,6 +98,17 @@
 			}
 		}
 
+
+		/// <summary>
+		/// Returns a <c>Color</c> easing function based on the selected <see cref="m_EasingName"/>
+		/// in the inspector.
+		/// </summary>
+		///
+		/// <remarks>
+		///	If the selected <see cref="m_EasingName"/> is <c>"AnimationCurve"</c>, it will 
+		/// return an easing function based on the provided <see cref="AnimationCurve"/>,
+		/// otherwise it will return the selected <see cref="AnimateEasing"/> function.
+		/// </remarks>
 		public MotionColor.Easing ColorEasing {
 			get {
 				if (m_EasingName == AnimationCurveName) {
