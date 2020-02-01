@@ -56,6 +56,10 @@
 		protected override void InitializePropertiesForGetHeight() {
 			base.InitializePropertiesForGetHeight();
 			EasingNameProperty = Property.FindPropertyRelative("m_EasingName");
+		}
+
+		protected override void InitializePropertiesForOnGUI() {
+			base.InitializePropertiesForOnGUI();
 			AnimationCurveProperty = Property.FindPropertyRelative("m_AnimationCurve");
 		}
 

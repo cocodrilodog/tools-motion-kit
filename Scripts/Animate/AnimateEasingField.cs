@@ -5,6 +5,32 @@
 	using System.Collections.Generic;
 	using UnityEngine;
 
+
+	#region Small Types
+
+	public class EasingsSet {
+
+		public MotionFloat.Easing FloatEasing;
+
+		public Motion3D.Easing Vector3Easing;
+
+		public MotionColor.Easing ColorEasing;
+
+		public EasingsSet(
+			MotionFloat.Easing floatEasing,
+			Motion3D.Easing vector3Easing,
+			MotionColor.Easing colorEasing
+		) {
+			FloatEasing = floatEasing;
+			Vector3Easing = vector3Easing;
+			ColorEasing = colorEasing;
+		}
+
+	}
+
+	#endregion
+
+
 	[Serializable]
 	public class AnimateEasingField {
 
@@ -15,47 +41,8 @@
 			get {
 				if (m_EasingNames == null) {
 					m_EasingNames = new List<string>();
-
 					m_EasingNames.Add(AnimationCurveName);
-
-					m_EasingNames.Add("BackIn");
-					m_EasingNames.Add("BackOut");
-					m_EasingNames.Add("BackInOut");
-
-					m_EasingNames.Add("BounceIn");
-					m_EasingNames.Add("BounceOut");
-					m_EasingNames.Add("BounceInOut");
-
-					m_EasingNames.Add("CircIn");
-					m_EasingNames.Add("CircOut");
-					m_EasingNames.Add("CircInOut");
-
-					m_EasingNames.Add("ElasticIn");
-					m_EasingNames.Add("ElasticOut");
-					m_EasingNames.Add("ElasticInOut");
-
-					m_EasingNames.Add("ExpoIn");
-					m_EasingNames.Add("ExpoOut");
-					m_EasingNames.Add("ExpoInOut");
-
-					m_EasingNames.Add("Linear");
-
-					m_EasingNames.Add("QuadIn");
-					m_EasingNames.Add("QuadOut");
-					m_EasingNames.Add("QuadInOut");
-
-					m_EasingNames.Add("QuartIn");
-					m_EasingNames.Add("QuartOut");
-					m_EasingNames.Add("QuartInOut");
-
-					m_EasingNames.Add("QuintIn");
-					m_EasingNames.Add("QuintOut");
-					m_EasingNames.Add("QuintInOut");
-
-					m_EasingNames.Add("SinusIn");
-					m_EasingNames.Add("SinusOut");
-					m_EasingNames.Add("SinusInOut");
-
+					m_EasingNames.AddRange(AllEasings.Keys);
 				}
 				return m_EasingNames;
 			}
@@ -71,7 +58,7 @@
 				if(m_EasingName == AnimationCurveName) {
 					return AnimateCurves.FloatEasing(m_AnimationCurve);
 				} else {
-					return FloatEasings[m_EasingName];
+					return AllEasings[m_EasingName].FloatEasing;
 				}
 			}
 		}
@@ -81,7 +68,7 @@
 				if (m_EasingName == AnimationCurveName) {
 					return AnimateCurves.Vector3Easing(m_AnimationCurve);
 				} else {
-					return Vector3Easings[m_EasingName];
+					return AllEasings[m_EasingName].Vector3Easing;
 				}
 			}
 		}
@@ -91,7 +78,7 @@
 				if (m_EasingName == AnimationCurveName) {
 					return AnimateCurves.ColorEasing(m_AnimationCurve);
 				} else {
-					return ColorEasings[m_EasingName];
+					return AllEasings[m_EasingName].ColorEasing;
 				}
 			}
 		}
@@ -105,13 +92,7 @@
 		private static List<string> m_EasingNames;
 
 		[NonSerialized]
-		private static Dictionary<string, MotionFloat.Easing> m_FloatEasings;
-
-		[NonSerialized]
-		private static Dictionary<string, Motion3D.Easing> m_Vector3Easings;
-
-		[NonSerialized]
-		private static Dictionary<string, MotionColor.Easing> m_ColorEasings;
+		private static Dictionary<string, EasingsSet> m_AllEasings;
 
 		#endregion
 
@@ -125,147 +106,52 @@
 
 		#region Private Static Properties
 
-		private static Dictionary<string, MotionFloat.Easing> FloatEasings {
+		private static Dictionary<string, EasingsSet> AllEasings {
 			get {
-				if (m_FloatEasings == null) {
-					m_FloatEasings = new Dictionary<string, MotionFloat.Easing>();
+				if(m_AllEasings == null) {
 
-					m_FloatEasings["BackIn"] = AnimateEasing.BackIn;
-					m_FloatEasings["BackOut"] = AnimateEasing.BackOut;
-					m_FloatEasings["BackInOut"] = AnimateEasing.BackInOut;
+					m_AllEasings = new Dictionary<string, EasingsSet>();
 
-					m_FloatEasings["BounceIn"] = AnimateEasing.BounceIn;
-					m_FloatEasings["BounceOut"] = AnimateEasing.BounceOut;
-					m_FloatEasings["BounceInOut"] = AnimateEasing.BounceInOut;
+					m_AllEasings["BackIn"] = new EasingsSet(AnimateEasing.BackIn, AnimateEasing.BackIn, AnimateEasing.BackIn);
+					m_AllEasings["BackOut"] = new EasingsSet(AnimateEasing.BackOut, AnimateEasing.BackOut, AnimateEasing.BackOut);
+					m_AllEasings["BackInOut"] = new EasingsSet(AnimateEasing.BackInOut, AnimateEasing.BackInOut, AnimateEasing.BackInOut);
 
-					m_FloatEasings["CircIn"] = AnimateEasing.CircIn;
-					m_FloatEasings["CircOut"] = AnimateEasing.CircOut;
-					m_FloatEasings["CircInOut"] = AnimateEasing.CircInOut;
+					m_AllEasings["BounceIn"] = new EasingsSet(AnimateEasing.BounceIn, AnimateEasing.BounceIn, AnimateEasing.BounceIn);
+					m_AllEasings["BounceOut"] = new EasingsSet(AnimateEasing.BounceOut, AnimateEasing.BounceOut, AnimateEasing.BounceOut);
+					m_AllEasings["BounceInOut"] = new EasingsSet(AnimateEasing.BounceInOut, AnimateEasing.BounceInOut, AnimateEasing.BounceInOut);
 
-					m_FloatEasings["ElasticIn"] = AnimateEasing.ElasticIn;
-					m_FloatEasings["ElasticOut"] = AnimateEasing.ElasticOut;
-					m_FloatEasings["ElasticInOut"] = AnimateEasing.ElasticInOut;
+					m_AllEasings["CircIn"] = new EasingsSet(AnimateEasing.CircIn, AnimateEasing.CircIn, AnimateEasing.CircIn);
+					m_AllEasings["CircOut"] = new EasingsSet(AnimateEasing.CircOut, AnimateEasing.CircOut, AnimateEasing.CircOut);
+					m_AllEasings["CircInOut"] = new EasingsSet(AnimateEasing.CircInOut, AnimateEasing.CircInOut, AnimateEasing.CircInOut);
 
-					m_FloatEasings["ExpoIn"] = AnimateEasing.ExpoIn;
-					m_FloatEasings["ExpoOut"] = AnimateEasing.ExpoOut;
-					m_FloatEasings["ExpoInOut"] = AnimateEasing.ExpoInOut;
+					m_AllEasings["ElasticIn"] = new EasingsSet(AnimateEasing.ElasticIn, AnimateEasing.ElasticIn, AnimateEasing.ElasticIn);
+					m_AllEasings["ElasticOut"] = new EasingsSet(AnimateEasing.ElasticOut, AnimateEasing.ElasticOut, AnimateEasing.ElasticOut);
+					m_AllEasings["ElasticInOut"] = new EasingsSet(AnimateEasing.ElasticInOut, AnimateEasing.ElasticInOut, AnimateEasing.ElasticInOut);
 
-					m_FloatEasings["Linear"] = AnimateEasing.Linear;
+					m_AllEasings["ExpoIn"] = new EasingsSet(AnimateEasing.ExpoIn, AnimateEasing.ExpoIn, AnimateEasing.ExpoIn);
+					m_AllEasings["ExpoOut"] = new EasingsSet(AnimateEasing.ExpoOut, AnimateEasing.ExpoOut, AnimateEasing.ExpoOut);
+					m_AllEasings["ExpoInOut"] = new EasingsSet(AnimateEasing.ExpoInOut, AnimateEasing.ExpoInOut, AnimateEasing.ExpoInOut);
 
-					m_FloatEasings["QuadIn"] = AnimateEasing.QuadIn;
-					m_FloatEasings["QuadOut"] = AnimateEasing.QuadOut;
-					m_FloatEasings["QuadInOut"] = AnimateEasing.QuadInOut;
+					m_AllEasings["Linear"] = new EasingsSet(AnimateEasing.Linear, AnimateEasing.Linear, AnimateEasing.Linear);
 
-					m_FloatEasings["QuartIn"] = AnimateEasing.QuartIn;
-					m_FloatEasings["QuartOut"] = AnimateEasing.QuartOut;
-					m_FloatEasings["QuartInOut"] = AnimateEasing.QuartInOut;
+					m_AllEasings["QuadIn"] = new EasingsSet(AnimateEasing.QuadIn, AnimateEasing.QuadIn, AnimateEasing.QuadIn);
+					m_AllEasings["QuadOut"] = new EasingsSet(AnimateEasing.QuadOut, AnimateEasing.QuadOut, AnimateEasing.QuadOut);
+					m_AllEasings["QuadInOut"] = new EasingsSet(AnimateEasing.QuadInOut, AnimateEasing.QuadInOut, AnimateEasing.QuadInOut);
 
-					m_FloatEasings["QuintIn"] = AnimateEasing.QuintIn;
-					m_FloatEasings["QuintOut"] = AnimateEasing.QuintOut;
-					m_FloatEasings["QuintInOut"] = AnimateEasing.QuintInOut;
+					m_AllEasings["QuartIn"] = new EasingsSet(AnimateEasing.QuartIn, AnimateEasing.QuartIn, AnimateEasing.QuartIn);
+					m_AllEasings["QuartOut"] = new EasingsSet(AnimateEasing.QuartOut, AnimateEasing.QuartOut, AnimateEasing.QuartOut); ;
+					m_AllEasings["QuartInOut"] = new EasingsSet(AnimateEasing.QuartInOut, AnimateEasing.QuartInOut, AnimateEasing.QuartInOut);
 
-					m_FloatEasings["SinusIn"] = AnimateEasing.SinusIn;
-					m_FloatEasings["SinusOut"] = AnimateEasing.SinusOut;
-					m_FloatEasings["SinusInOut"] = AnimateEasing.SinusInOut;
+					m_AllEasings["QuintIn"] = new EasingsSet(AnimateEasing.QuintIn, AnimateEasing.QuintIn, AnimateEasing.QuintIn);
+					m_AllEasings["QuintOut"] = new EasingsSet(AnimateEasing.QuintOut, AnimateEasing.QuintOut, AnimateEasing.QuintOut);
+					m_AllEasings["QuintInOut"] = new EasingsSet(AnimateEasing.QuintInOut, AnimateEasing.QuintInOut, AnimateEasing.QuintInOut);
+
+					m_AllEasings["SinusIn"] = new EasingsSet(AnimateEasing.SinusIn, AnimateEasing.SinusIn, AnimateEasing.SinusIn);
+					m_AllEasings["SinusOut"] = new EasingsSet(AnimateEasing.SinusOut, AnimateEasing.SinusOut, AnimateEasing.SinusOut);
+					m_AllEasings["SinusInOut"] = new EasingsSet(AnimateEasing.SinusInOut, AnimateEasing.SinusInOut, AnimateEasing.SinusInOut);
 
 				}
-				return m_FloatEasings;
-			}
-		}
-
-		private static Dictionary<string, Motion3D.Easing> Vector3Easings {
-			get {
-				if (m_Vector3Easings == null) {
-					m_Vector3Easings = new Dictionary<string, Motion3D.Easing>();
-
-					m_Vector3Easings["BackIn"] = AnimateEasing.BackIn;
-					m_Vector3Easings["BackOut"] = AnimateEasing.BackOut;
-					m_Vector3Easings["BackInOut"] = AnimateEasing.BackInOut;
-
-					m_Vector3Easings["BounceIn"] = AnimateEasing.BounceIn;
-					m_Vector3Easings["BounceOut"] = AnimateEasing.BounceOut;
-					m_Vector3Easings["BounceInOut"] = AnimateEasing.BounceInOut;
-
-					m_Vector3Easings["CircIn"] = AnimateEasing.CircIn;
-					m_Vector3Easings["CircOut"] = AnimateEasing.CircOut;
-					m_Vector3Easings["CircInOut"] = AnimateEasing.CircInOut;
-
-					m_Vector3Easings["ElasticIn"] = AnimateEasing.ElasticIn;
-					m_Vector3Easings["ElasticOut"] = AnimateEasing.ElasticOut;
-					m_Vector3Easings["ElasticInOut"] = AnimateEasing.ElasticInOut;
-
-					m_Vector3Easings["ExpoIn"] = AnimateEasing.ExpoIn;
-					m_Vector3Easings["ExpoOut"] = AnimateEasing.ExpoOut;
-					m_Vector3Easings["ExpoInOut"] = AnimateEasing.ExpoInOut;
-
-					m_Vector3Easings["Linear"] = AnimateEasing.Linear;
-
-					m_Vector3Easings["QuadIn"] = AnimateEasing.QuadIn;
-					m_Vector3Easings["QuadOut"] = AnimateEasing.QuadOut;
-					m_Vector3Easings["QuadInOut"] = AnimateEasing.QuadInOut;
-
-					m_Vector3Easings["QuartIn"] = AnimateEasing.QuartIn;
-					m_Vector3Easings["QuartOut"] = AnimateEasing.QuartOut;
-					m_Vector3Easings["QuartInOut"] = AnimateEasing.QuartInOut;
-
-					m_Vector3Easings["QuintIn"] = AnimateEasing.QuintIn;
-					m_Vector3Easings["QuintOut"] = AnimateEasing.QuintOut;
-					m_Vector3Easings["QuintInOut"] = AnimateEasing.QuintInOut;
-
-					m_Vector3Easings["SinusIn"] = AnimateEasing.SinusIn;
-					m_Vector3Easings["SinusOut"] = AnimateEasing.SinusOut;
-					m_Vector3Easings["SinusInOut"] = AnimateEasing.SinusInOut;
-
-				}
-				return m_Vector3Easings;
-			}
-		}
-
-		private static Dictionary<string, MotionColor.Easing> ColorEasings {
-			get {
-				if (m_ColorEasings == null) {
-					m_ColorEasings = new Dictionary<string, MotionColor.Easing>();
-
-					m_ColorEasings["BackIn"] = AnimateEasing.BackIn;
-					m_ColorEasings["BackOut"] = AnimateEasing.BackOut;
-					m_ColorEasings["BackInOut"] = AnimateEasing.BackInOut;
-
-					m_ColorEasings["BounceIn"] = AnimateEasing.BounceIn;
-					m_ColorEasings["BounceOut"] = AnimateEasing.BounceOut;
-					m_ColorEasings["BounceInOut"] = AnimateEasing.BounceInOut;
-
-					m_ColorEasings["CircIn"] = AnimateEasing.CircIn;
-					m_ColorEasings["CircOut"] = AnimateEasing.CircOut;
-					m_ColorEasings["CircInOut"] = AnimateEasing.CircInOut;
-
-					m_ColorEasings["ElasticIn"] = AnimateEasing.ElasticIn;
-					m_ColorEasings["ElasticOut"] = AnimateEasing.ElasticOut;
-					m_ColorEasings["ElasticInOut"] = AnimateEasing.ElasticInOut;
-
-					m_ColorEasings["ExpoIn"] = AnimateEasing.ExpoIn;
-					m_ColorEasings["ExpoOut"] = AnimateEasing.ExpoOut;
-					m_ColorEasings["ExpoInOut"] = AnimateEasing.ExpoInOut;
-
-					m_ColorEasings["Linear"] = AnimateEasing.Linear;
-
-					m_ColorEasings["QuadIn"] = AnimateEasing.QuadIn;
-					m_ColorEasings["QuadOut"] = AnimateEasing.QuadOut;
-					m_ColorEasings["QuadInOut"] = AnimateEasing.QuadInOut;
-
-					m_ColorEasings["QuartIn"] = AnimateEasing.QuartIn;
-					m_ColorEasings["QuartOut"] = AnimateEasing.QuartOut;
-					m_ColorEasings["QuartInOut"] = AnimateEasing.QuartInOut;
-
-					m_ColorEasings["QuintIn"] = AnimateEasing.QuintIn;
-					m_ColorEasings["QuintOut"] = AnimateEasing.QuintOut;
-					m_ColorEasings["QuintInOut"] = AnimateEasing.QuintInOut;
-
-					m_ColorEasings["SinusIn"] = AnimateEasing.SinusIn;
-					m_ColorEasings["SinusOut"] = AnimateEasing.SinusOut;
-					m_ColorEasings["SinusInOut"] = AnimateEasing.SinusInOut;
-
-				}
-				return m_ColorEasings;
+				return m_AllEasings;
 			}
 		}
 
