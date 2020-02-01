@@ -36,10 +36,10 @@
 
 		private void Update() {
 			// Update the UI
-			if(PlaybackMotion.IsPlaying) {
+			if (PlaybackMotion.IsPlaying) {
 				if (PlaybackMotion.IsPaused) {
 					PlayPauseLabel.text = "Resume";
- 				} else {
+				} else {
 					PlaybackSlider.value = PlaybackMotion.Progress;
 					PlayPauseLabel.text = "Pause";
 				}
@@ -89,10 +89,10 @@
 
 
 		#region Internal Fields - Serialized
-		
+
 		[SerializeField]
 		private Transform m_PlaybackObject;
-		
+
 		[SerializeField]
 		private ColorModifier m_ColorObject;
 
@@ -131,11 +131,11 @@
 
 
 		#region Internal Properties
-		
+
 		private Transform PlaybackObject { get { return m_PlaybackObject; } }
 
 		private ColorModifier ColorObject { get { return m_ColorObject; } }
-		
+
 		private Transform PositionObject { get { return m_PositionObject; } }
 
 		private Transform ChainObject { get { return m_ChainObject; } }
@@ -180,7 +180,7 @@
 				// The blink graph is crafted in the AnimateCurves asset.
 				Animate.GetMotion(
 					this, "Color", c => ColorObject.Color = c
-				).SetEasing(AnimateCurves.Color(AnimationCurve))
+				).SetEasing(AnimateCurves.ColorEasing(AnimationCurve))
 				.Play(ColorObject.Color, Random.ColorHSV(), 1);
 
 			});
@@ -195,7 +195,7 @@
 				Motion3D motion = Animate.GetMotion(
 					this,
 					// Name them differently so we are sure that the motions are different objects
-					string.Format("Chain{0}", i), 
+					string.Format("Chain{0}", i),
 					p => ChainObject.localPosition = p
 				);
 
@@ -215,8 +215,8 @@
 			}
 
 			motions[0].Play(
-				ChainObject.localPosition, 
-				new Vector3(5, 0, 0) + Random.onUnitSphere * 3, 
+				ChainObject.localPosition,
+				new Vector3(5, 0, 0) + Random.onUnitSphere * 3,
 				1
 			);
 

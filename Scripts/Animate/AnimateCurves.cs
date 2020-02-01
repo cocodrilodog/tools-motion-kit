@@ -21,7 +21,7 @@
 		/// </summary>
 		/// <returns>The <c>float</c> easing function.</returns>
 		/// <param name="curve">The <see cref="AnimationCurve"/>.</param>
-		public static MotionFloat.Easing Float(AnimationCurve curve) {
+		public static MotionFloat.Easing FloatEasing(AnimationCurve curve) {
 			return (a, b, t) => a + (b - a) * curve.Evaluate(t);
 		}
 
@@ -31,7 +31,7 @@
 		/// </summary>
 		/// <returns>The <see cref="UnityEngine.Vector3"/> easing function.</returns>
 		/// <param name="curve">The <see cref="AnimationCurve"/>.</param>
-		public static Motion3D.Easing Vector3(AnimationCurve curve) {
+		public static Motion3D.Easing Vector3Easing(AnimationCurve curve) {
 			return (a, b, t) => a + (b - a) * curve.Evaluate(t);
 		}
 
@@ -41,7 +41,7 @@
 		/// </summary>
 		/// <returns>The <see cref="UnityEngine.Color"/> easing function.</returns>
 		/// <param name="curve">The <see cref="AnimationCurve"/>.</param>
-		public static MotionColor.Easing Color(AnimationCurve curve) {
+		public static MotionColor.Easing ColorEasing(AnimationCurve curve) {
 			return (a, b, t) => a + (b - a) * curve.Evaluate(t);
 		}
 
