@@ -42,6 +42,18 @@
 					m_EasingNames.Add("QuadOut");
 					m_EasingNames.Add("QuadInOut");
 
+					m_EasingNames.Add("QuartIn");
+					m_EasingNames.Add("QuartOut");
+					m_EasingNames.Add("QuartInOut");
+
+					m_EasingNames.Add("QuintIn");
+					m_EasingNames.Add("QuintOut");
+					m_EasingNames.Add("QuintInOut");
+
+					m_EasingNames.Add("SinusIn");
+					m_EasingNames.Add("SinusOut");
+					m_EasingNames.Add("SinusInOut");
+
 				}
 				return m_EasingNames;
 			}
@@ -52,8 +64,16 @@
 
 		#region Public Properties
 
+		public MotionFloat.Easing FloatEasing {
+			get { return FloatEasings[m_EasingName]; }
+		}
+
 		public Motion3D.Easing Vector3Easing {
 			get { return Vector3Easings[m_EasingName]; }
+		}
+
+		public MotionColor.Easing ColorEasing {
+			get { return ColorEasings[m_EasingName]; }
 		}
 
 		#endregion
@@ -65,12 +85,66 @@
 		private static List<string> m_EasingNames;
 
 		[NonSerialized]
+		private static Dictionary<string, MotionFloat.Easing> m_FloatEasings;
+
+		[NonSerialized]
 		private static Dictionary<string, Motion3D.Easing> m_Vector3Easings;
+
+		[NonSerialized]
+		private static Dictionary<string, MotionColor.Easing> m_ColorEasings;
 
 		#endregion
 
 
 		#region Private Static Properties
+
+		private static Dictionary<string, MotionFloat.Easing> FloatEasings {
+			get {
+				if (m_FloatEasings == null) {
+					m_FloatEasings = new Dictionary<string, MotionFloat.Easing>();
+
+					m_FloatEasings["BackIn"] = AnimateEasing.BackIn;
+					m_FloatEasings["BackOut"] = AnimateEasing.BackOut;
+					m_FloatEasings["BackInOut"] = AnimateEasing.BackInOut;
+
+					m_FloatEasings["BounceIn"] = AnimateEasing.BounceIn;
+					m_FloatEasings["BounceOut"] = AnimateEasing.BounceOut;
+					m_FloatEasings["BounceInOut"] = AnimateEasing.BounceInOut;
+
+					m_FloatEasings["CircIn"] = AnimateEasing.CircIn;
+					m_FloatEasings["CircOut"] = AnimateEasing.CircOut;
+					m_FloatEasings["CircInOut"] = AnimateEasing.CircInOut;
+
+					m_FloatEasings["ElasticIn"] = AnimateEasing.ElasticIn;
+					m_FloatEasings["ElasticOut"] = AnimateEasing.ElasticOut;
+					m_FloatEasings["ElasticInOut"] = AnimateEasing.ElasticInOut;
+
+					m_FloatEasings["ExpoIn"] = AnimateEasing.ExpoIn;
+					m_FloatEasings["ExpoOut"] = AnimateEasing.ExpoOut;
+					m_FloatEasings["ExpoInOut"] = AnimateEasing.ExpoInOut;
+
+					m_FloatEasings["Linear"] = AnimateEasing.Linear;
+
+					m_FloatEasings["QuadIn"] = AnimateEasing.QuadIn;
+					m_FloatEasings["QuadOut"] = AnimateEasing.QuadOut;
+					m_FloatEasings["QuadInOut"] = AnimateEasing.QuadInOut;
+
+					m_FloatEasings["QuartIn"] = AnimateEasing.QuartIn;
+					m_FloatEasings["QuartOut"] = AnimateEasing.QuartOut;
+					m_FloatEasings["QuartInOut"] = AnimateEasing.QuartInOut;
+
+					m_FloatEasings["QuintIn"] = AnimateEasing.QuintIn;
+					m_FloatEasings["QuintOut"] = AnimateEasing.QuintOut;
+					m_FloatEasings["QuintInOut"] = AnimateEasing.QuintInOut;
+
+					m_FloatEasings["SinusIn"] = AnimateEasing.SinusIn;
+					m_FloatEasings["SinusOut"] = AnimateEasing.SinusOut;
+					m_FloatEasings["SinusInOut"] = AnimateEasing.SinusInOut;
+
+				}
+				return m_FloatEasings;
+			}
+		}
 
 		private static Dictionary<string, Motion3D.Easing> Vector3Easings {
 			get {
@@ -103,8 +177,68 @@
 					m_Vector3Easings["QuadOut"] = AnimateEasing.QuadOut;
 					m_Vector3Easings["QuadInOut"] = AnimateEasing.QuadInOut;
 
+					m_Vector3Easings["QuartIn"] = AnimateEasing.QuartIn;
+					m_Vector3Easings["QuartOut"] = AnimateEasing.QuartOut;
+					m_Vector3Easings["QuartInOut"] = AnimateEasing.QuartInOut;
+
+					m_Vector3Easings["QuintIn"] = AnimateEasing.QuintIn;
+					m_Vector3Easings["QuintOut"] = AnimateEasing.QuintOut;
+					m_Vector3Easings["QuintInOut"] = AnimateEasing.QuintInOut;
+
+					m_Vector3Easings["SinusIn"] = AnimateEasing.SinusIn;
+					m_Vector3Easings["SinusOut"] = AnimateEasing.SinusOut;
+					m_Vector3Easings["SinusInOut"] = AnimateEasing.SinusInOut;
+
 				}
 				return m_Vector3Easings;
+			}
+		}
+
+		private static Dictionary<string, MotionColor.Easing> ColorEasings {
+			get {
+				if (m_ColorEasings == null) {
+					m_ColorEasings = new Dictionary<string, MotionColor.Easing>();
+
+					m_ColorEasings["BackIn"] = AnimateEasing.BackIn;
+					m_ColorEasings["BackOut"] = AnimateEasing.BackOut;
+					m_ColorEasings["BackInOut"] = AnimateEasing.BackInOut;
+
+					m_ColorEasings["BounceIn"] = AnimateEasing.BounceIn;
+					m_ColorEasings["BounceOut"] = AnimateEasing.BounceOut;
+					m_ColorEasings["BounceInOut"] = AnimateEasing.BounceInOut;
+
+					m_ColorEasings["CircIn"] = AnimateEasing.CircIn;
+					m_ColorEasings["CircOut"] = AnimateEasing.CircOut;
+					m_ColorEasings["CircInOut"] = AnimateEasing.CircInOut;
+
+					m_ColorEasings["ElasticIn"] = AnimateEasing.ElasticIn;
+					m_ColorEasings["ElasticOut"] = AnimateEasing.ElasticOut;
+					m_ColorEasings["ElasticInOut"] = AnimateEasing.ElasticInOut;
+
+					m_ColorEasings["ExpoIn"] = AnimateEasing.ExpoIn;
+					m_ColorEasings["ExpoOut"] = AnimateEasing.ExpoOut;
+					m_ColorEasings["ExpoInOut"] = AnimateEasing.ExpoInOut;
+
+					m_ColorEasings["Linear"] = AnimateEasing.Linear;
+
+					m_ColorEasings["QuadIn"] = AnimateEasing.QuadIn;
+					m_ColorEasings["QuadOut"] = AnimateEasing.QuadOut;
+					m_ColorEasings["QuadInOut"] = AnimateEasing.QuadInOut;
+
+					m_ColorEasings["QuartIn"] = AnimateEasing.QuartIn;
+					m_ColorEasings["QuartOut"] = AnimateEasing.QuartOut;
+					m_ColorEasings["QuartInOut"] = AnimateEasing.QuartInOut;
+
+					m_ColorEasings["QuintIn"] = AnimateEasing.QuintIn;
+					m_ColorEasings["QuintOut"] = AnimateEasing.QuintOut;
+					m_ColorEasings["QuintInOut"] = AnimateEasing.QuintInOut;
+
+					m_ColorEasings["SinusIn"] = AnimateEasing.SinusIn;
+					m_ColorEasings["SinusOut"] = AnimateEasing.SinusOut;
+					m_ColorEasings["SinusInOut"] = AnimateEasing.SinusInOut;
+
+				}
+				return m_ColorEasings;
 			}
 		}
 
@@ -118,6 +252,9 @@
 
 		[SerializeField]
 		private string m_EasingName = "Linear";
+
+		[SerializeField]
+		private AnimationCurve m_AnimationCurve;
 
 		#endregion
 
