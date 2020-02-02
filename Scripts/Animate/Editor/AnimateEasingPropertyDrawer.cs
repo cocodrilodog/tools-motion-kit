@@ -14,7 +14,7 @@
 
 		public override float GetPropertyHeight(SerializedProperty property, GUIContent label) {
 			base.GetPropertyHeight(property, label);
-			if (EasingNameProperty.stringValue == "AnimationCurve") {
+			if (EasingNameProperty.stringValue == AnimateEasingField.AnimationCurveName) {
 				return FieldHeight * 2;
 			} else {
 				return FieldHeight;
@@ -38,7 +38,7 @@
 				EasingNameProperty.stringValue = AnimateEasingField.EasingNames[easingNameIndex];
 			}
 
-			if(EasingNameProperty.stringValue == "AnimationCurve") {
+			if(EasingNameProperty.stringValue == AnimateEasingField.AnimationCurveName) {
 				EditorGUI.indentLevel++;
 				EditorGUI.PropertyField(GetNextPosition(), AnimationCurveProperty);
 				EditorGUI.indentLevel--;
