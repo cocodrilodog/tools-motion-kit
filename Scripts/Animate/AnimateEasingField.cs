@@ -1,7 +1,7 @@
 ﻿namespace CocodriloDog.Animation {
 
 	using System;
-	using System.Collections;
+	using System.Collections.ObjectModel;
 	using System.Collections.Generic;
 	using UnityEngine;
 
@@ -41,12 +41,13 @@
 
 		#region Public Static Properties
 
-		public static List<string> EasingNames {
+		public static ReadOnlyCollection<string> EasingNames {
 			get {
 				if (m_EasingNames == null) {
-					m_EasingNames = new List<string>();
-					m_EasingNames.Add(AnimationCurveName);
-					m_EasingNames.AddRange(AllEasings.Keys);
+					List<string> easingNames = new List<string>();
+					easingNames.Add(AnimationCurveName);
+					easingNames.AddRange(AllEasings.Keys);
+					m_EasingNames = new ReadOnlyCollection<string>(easingNames);
 				}
 				return m_EasingNames;
 			}
@@ -124,8 +125,11 @@
 
 		#region Private Static Fields
 
+		//[NonSerialized]
+		//private static List<string> m_EasingNames;
+
 		[NonSerialized]
-		private static List<string> m_EasingNames;
+		private static ReadOnlyCollection<string> m_EasingNames;
 
 		[NonSerialized]
 		private static Dictionary<string, EasingsSet> m_AllEasings;
