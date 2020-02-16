@@ -16,10 +16,11 @@
 		#region Public Fields
 		
 		/// <summary>
-		/// Ease out amount. The higher this multiplier is the faster the ease out happens.
+		/// How rapidly is the ease carried out. The higher this multiplier is, the
+		/// faster the ease out happens.
 		/// </summary>
 		[SerializeField]
-		public float Easing = 10;
+		public float Rapidity = 10;
 
 		#endregion
 
@@ -47,7 +48,7 @@
 		#region Protected Methods
 
 		protected override T UpdateValue(T currentValue, T difference) {
-			Speed = MultiplyByFloat(difference, Easing);
+			Speed = MultiplyByFloat(difference, Rapidity);
 			return Add(currentValue, MultiplyByFloat(Speed, DeltaTime));
 		}
 
@@ -93,6 +94,43 @@
 		}
 
 		protected override float MultiplyByFloat(float a, float f) {
+			return a * f;
+		}
+
+		#endregion
+
+
+	}
+
+	/// <summary>
+	/// An ease out <see cref="Follow{T}"/> animation for Vector3.
+	/// </summary>
+	[Serializable]
+	public class Ease3D : Ease<Vector3> {
+
+
+		#region Constructors
+
+		public Ease3D(Func<Vector3> getter, Action<Vector3> setter) : base(getter, setter) { }
+
+		#endregion
+
+
+		#region Protected methods
+
+		protected override float Magnitude(Vector3 value) {
+			return value.magnitude;
+		}
+
+		protected override Vector3 Add(Vector3 a, Vector3 b) {
+			return a + b;
+		}
+
+		protected override Vector3 Subtract(Vector3 a, Vector3 b) {
+			return a - b;
+		}
+
+		protected override Vector3 MultiplyByFloat(Vector3 a, float f) {
 			return a * f;
 		}
 
