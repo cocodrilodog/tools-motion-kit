@@ -7,17 +7,18 @@
 	using UnityEditor;
 
 	[CustomPropertyDrawer(typeof(AnimateEasingField))]
-	public class AnimateEasingPropertyDrawer : PropertyDrawerBase {
+	public class AnimateEasingFieldPropertyDrawer : PropertyDrawerBase {
 
 
 		#region Public Methods
 
 		public override float GetPropertyHeight(SerializedProperty property, GUIContent label) {
 			base.GetPropertyHeight(property, label);
-			if (EasingNameProperty.stringValue == AnimateEasingField.AnimateCurveName) {
-				return FieldHeight * 2;
-			} else {
-				return FieldHeight;
+			switch (EasingNameProperty.stringValue) {
+				case AnimateEasingField.AnimateCurveName:
+					return FieldHeight * 2;
+				default:
+					return FieldHeight;
 			}
 		}
 
@@ -38,7 +39,7 @@
 				EasingNameProperty.stringValue = AnimateEasingField.EasingNames[easingNameIndex];
 			}
 
-			if(EasingNameProperty.stringValue == AnimateEasingField.AnimateCurveName) {
+			if (EasingNameProperty.stringValue == AnimateEasingField.AnimateCurveName) {
 				EditorGUI.indentLevel++;
 				EditorGUI.PropertyField(GetNextPosition(), AnimateCurveProperty);
 				EditorGUI.indentLevel--;

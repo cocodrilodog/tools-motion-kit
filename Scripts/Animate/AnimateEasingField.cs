@@ -70,10 +70,11 @@
 		/// </remarks>
 		public MotionFloat.Easing FloatEasing {
 			get {
-				if(m_EasingName == AnimateCurveName) {
-					return AnimateCurve.FloatEasing;
-				} else {
-					return AllEasings[m_EasingName].FloatEasing;
+				switch (m_EasingName) {
+					case AnimateCurveName:
+						return AnimateCurve.FloatEasing;
+					default:
+						return AllEasings[m_EasingName].FloatEasing;
 				}
 			}
 		}
@@ -91,10 +92,11 @@
 		/// </remarks>
 		public Motion3D.Easing Vector3Easing {
 			get {
-				if (m_EasingName == AnimateCurveName) {
-					return AnimateCurve.Vector3Easing;
-				} else {
-					return AllEasings[m_EasingName].Vector3Easing;
+				switch (m_EasingName) {
+					case AnimateCurveName:
+						return AnimateCurve.Vector3Easing;
+					default:
+						return AllEasings[m_EasingName].Vector3Easing;
 				}
 			}
 		}
@@ -112,10 +114,11 @@
 		/// </remarks>
 		public MotionColor.Easing ColorEasing {
 			get {
-				if (m_EasingName == AnimateCurveName) {
-					return AnimateCurve.ColorEasing;
-				} else {
-					return AllEasings[m_EasingName].ColorEasing;
+				switch (m_EasingName) {
+					case AnimateCurveName:
+						return AnimateCurve.ColorEasing;
+					default:
+						return AllEasings[m_EasingName].ColorEasing;
 				}
 			}
 		}
@@ -199,9 +202,6 @@
 
 		[SerializeField]
 		private string m_EasingName = "Linear";
-
-		//[SerializeField]
-		//private AnimationCurve m_AnimationCurve;
 
 		[SerializeField]
 		private AnimateCurve m_AnimateCurve;
