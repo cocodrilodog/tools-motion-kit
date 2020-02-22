@@ -45,7 +45,7 @@
 			get {
 				if (m_EasingNames == null) {
 					List<string> easingNames = new List<string>();
-					easingNames.Add(AnimationCurveName);
+					easingNames.Add(AnimateCurveName);
 					easingNames.AddRange(AllEasings.Keys);
 					m_EasingNames = new ReadOnlyCollection<string>(easingNames);
 				}
@@ -70,8 +70,8 @@
 		/// </remarks>
 		public MotionFloat.Easing FloatEasing {
 			get {
-				if(m_EasingName == AnimationCurveName) {
-					return AnimateCurves.FloatEasing(m_AnimationCurve);
+				if(m_EasingName == AnimateCurveName) {
+					return AnimateCurve.FloatEasing;
 				} else {
 					return AllEasings[m_EasingName].FloatEasing;
 				}
@@ -91,8 +91,8 @@
 		/// </remarks>
 		public Motion3D.Easing Vector3Easing {
 			get {
-				if (m_EasingName == AnimationCurveName) {
-					return AnimateCurves.Vector3Easing(m_AnimationCurve);
+				if (m_EasingName == AnimateCurveName) {
+					return AnimateCurve.Vector3Easing;
 				} else {
 					return AllEasings[m_EasingName].Vector3Easing;
 				}
@@ -112,8 +112,8 @@
 		/// </remarks>
 		public MotionColor.Easing ColorEasing {
 			get {
-				if (m_EasingName == AnimationCurveName) {
-					return AnimateCurves.ColorEasing(m_AnimationCurve);
+				if (m_EasingName == AnimateCurveName) {
+					return AnimateCurve.ColorEasing;
 				} else {
 					return AllEasings[m_EasingName].ColorEasing;
 				}
@@ -124,9 +124,6 @@
 
 
 		#region Private Static Fields
-
-		//[NonSerialized]
-		//private static List<string> m_EasingNames;
 
 		[NonSerialized]
 		private static ReadOnlyCollection<string> m_EasingNames;
@@ -139,7 +136,7 @@
 
 		#region Private Constants
 
-		public const string AnimationCurveName = "Animation Curve";
+		public const string AnimateCurveName = "Animate Curve";
 
 		#endregion
 
@@ -203,8 +200,18 @@
 		[SerializeField]
 		private string m_EasingName = "Linear";
 
+		//[SerializeField]
+		//private AnimationCurve m_AnimationCurve;
+
 		[SerializeField]
-		private AnimationCurve m_AnimationCurve;
+		private AnimateCurve m_AnimateCurve;
+
+		#endregion
+
+
+		#region Private Properties
+
+		private AnimateCurve AnimateCurve { get { return m_AnimateCurve; } }
 
 		#endregion
 

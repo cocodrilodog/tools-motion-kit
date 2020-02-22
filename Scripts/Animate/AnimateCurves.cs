@@ -7,9 +7,8 @@
 	using UnityEngine;
 
 	/// <summary>
-	/// Asset to design animation curves that can be used with <see cref="Animate"/>.
+	/// Retrieves animation curves that can be used with <see cref="Animate"/>.
 	/// </summary>
-	[CreateAssetMenu(menuName = "Cocodrilo Dog/Animation/AnimateCurves")]
 	public static class AnimateCurves {
 
 
@@ -21,6 +20,7 @@
 		/// </summary>
 		/// <returns>The <c>float</c> easing function.</returns>
 		/// <param name="curve">The <see cref="AnimationCurve"/>.</param>
+		[Obsolete("This is an obsolete method. Instead use instances of the AnimateCurve class.")]
 		public static MotionFloat.Easing FloatEasing(AnimationCurve curve) {
 			return (a, b, t) => a + (b - a) * curve.Evaluate(t);
 		}
@@ -31,6 +31,7 @@
 		/// </summary>
 		/// <returns>The <see cref="UnityEngine.Vector3"/> easing function.</returns>
 		/// <param name="curve">The <see cref="AnimationCurve"/>.</param>
+		[Obsolete("This is an obsolete method. Instead use instances of the AnimateCurve class.")]
 		public static Motion3D.Easing Vector3Easing(AnimationCurve curve) {
 			return (a, b, t) => a + (b - a) * curve.Evaluate(t);
 		}
@@ -41,6 +42,7 @@
 		/// </summary>
 		/// <returns>The <see cref="UnityEngine.Color"/> easing function.</returns>
 		/// <param name="curve">The <see cref="AnimationCurve"/>.</param>
+		[Obsolete("This is an obsolete method. Instead use instances of the AnimateCurve class.")]
 		public static MotionColor.Easing ColorEasing(AnimationCurve curve) {
 			return (a, b, t) => a + (b - a) * curve.Evaluate(t);
 		}

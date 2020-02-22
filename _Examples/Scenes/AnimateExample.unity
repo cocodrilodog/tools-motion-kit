@@ -152,6 +152,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 306fd0360e6fb4f6083949d97649f520, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  ColorPropertyName: _Color
   m_Color: {r: 0.78580123, g: 1, b: 0.75735295, a: 1}
   m_Alpha: 1
 --- !u!23 &34822899
@@ -259,6 +260,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 306fd0360e6fb4f6083949d97649f520, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  ColorPropertyName: _Color
   m_Color: {r: 1, g: 0.873428, b: 0.64705884, a: 1}
   m_Alpha: 1
 --- !u!23 &91446303
@@ -756,6 +758,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 306fd0360e6fb4f6083949d97649f520, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  ColorPropertyName: _Color
   m_Color: {r: 1, g: 0.8602941, b: 0.8602941, a: 1}
   m_Alpha: 1
 --- !u!1 &788312825
@@ -2021,6 +2024,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 306fd0360e6fb4f6083949d97649f520, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  ColorPropertyName: _Color
   m_Color: {r: 0.97302234, g: 1, b: 0.7205882, a: 1}
   m_Alpha: 1
 --- !u!1 &1968115242
@@ -2130,6 +2134,85 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+  AnimateCurve:
+    Curve:
+      serializedVersion: 2
+      m_Curve:
+      - serializedVersion: 3
+        time: 0
+        value: 1
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 34
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0.33333334
+      - serializedVersion: 3
+        time: 0.2499
+        value: 1
+        inSlope: -0
+        outSlope: Infinity
+        tangentMode: 1
+        weightedMode: 0
+        inWeight: 0.13533837
+        outWeight: 0
+      - serializedVersion: 3
+        time: 0.25
+        value: 0
+        inSlope: Infinity
+        outSlope: 0.00321459
+        tangentMode: 1
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0.5825152
+      - serializedVersion: 3
+        time: 0.499
+        value: 0
+        inSlope: 0.007714667
+        outSlope: Infinity
+        tangentMode: 1
+        weightedMode: 0
+        inWeight: 0.59157634
+        outWeight: 0
+      - serializedVersion: 3
+        time: 0.5
+        value: 1
+        inSlope: 78.51317
+        outSlope: -0.0006232728
+        tangentMode: 1
+        weightedMode: 0
+        inWeight: 0.33333334
+        outWeight: 0.9999428
+      - serializedVersion: 3
+        time: 0.7499
+        value: 1
+        inSlope: 0.0007511764
+        outSlope: -0.036356688
+        tangentMode: 1
+        weightedMode: 0
+        inWeight: 0.82968146
+        outWeight: 0.33333334
+      - serializedVersion: 3
+        time: 0.75
+        value: 0
+        inSlope: -0.04565593
+        outSlope: -0.011857906
+        tangentMode: 1
+        weightedMode: 0
+        inWeight: 0.33333334
+        outWeight: 1
+      - serializedVersion: 3
+        time: 1
+        value: 0
+        inSlope: 0.0041088862
+        outSlope: 0.0041088862
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0.99658847
+        outWeight: 0
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
   m_PlaybackObject: {fileID: 548418075}
   m_ColorObject: {fileID: 91446302}
   m_PositionObject: {fileID: 34822902}

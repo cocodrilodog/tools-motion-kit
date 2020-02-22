@@ -9,7 +9,7 @@
 	/// Shake easing compatible with <see cref="Animate"/>.
 	/// </summary>
 	[Serializable]
-	public class Shake {
+	public class Shake : ParameterizedEasing {
 
 
 		#region Public Fields
@@ -28,7 +28,7 @@
 
 		#region Public Properties
 
-		public MotionFloat.Easing FloatEasing {
+		public override MotionFloat.Easing FloatEasing {
 			get {
 
 				// This avoids that 2 or more animations that started at the same time look the same.
@@ -52,7 +52,7 @@
 			}
 		}
 
-		public Motion3D.Easing Vector3Easing {
+		public override Motion3D.Easing Vector3Easing {
 			get {
 
 				// This avoids that the animations of x, y and z look the same.
@@ -80,7 +80,7 @@
 			}
 		}
 
-		public MotionColor.Easing ColorEasing {
+		public override MotionColor.Easing ColorEasing {
 			get {
 
 				// This avoids that the animations of x, y and z look the same.

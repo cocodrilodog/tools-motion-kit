@@ -14,7 +14,7 @@
 
 		public override float GetPropertyHeight(SerializedProperty property, GUIContent label) {
 			base.GetPropertyHeight(property, label);
-			if (EasingNameProperty.stringValue == AnimateEasingField.AnimationCurveName) {
+			if (EasingNameProperty.stringValue == AnimateEasingField.AnimateCurveName) {
 				return FieldHeight * 2;
 			} else {
 				return FieldHeight;
@@ -38,9 +38,9 @@
 				EasingNameProperty.stringValue = AnimateEasingField.EasingNames[easingNameIndex];
 			}
 
-			if(EasingNameProperty.stringValue == AnimateEasingField.AnimationCurveName) {
+			if(EasingNameProperty.stringValue == AnimateEasingField.AnimateCurveName) {
 				EditorGUI.indentLevel++;
-				EditorGUI.PropertyField(GetNextPosition(), AnimationCurveProperty);
+				EditorGUI.PropertyField(GetNextPosition(), AnimateCurveProperty);
 				EditorGUI.indentLevel--;
 			}
 
@@ -60,7 +60,7 @@
 
 		protected override void InitializePropertiesForOnGUI() {
 			base.InitializePropertiesForOnGUI();
-			AnimationCurveProperty = Property.FindPropertyRelative("m_AnimationCurve");
+			AnimateCurveProperty = Property.FindPropertyRelative("m_AnimateCurve");
 		}
 
 		#endregion
@@ -77,7 +77,7 @@
 
 		private SerializedProperty EasingNameProperty { get; set; }
 
-		private SerializedProperty AnimationCurveProperty { get; set; }
+		private SerializedProperty AnimateCurveProperty { get; set; }
 
 		private string[] EasingNamesArray {
 			get {
