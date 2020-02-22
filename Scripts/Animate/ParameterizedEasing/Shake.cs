@@ -14,12 +14,21 @@
 
 		#region Public Fields
 
+		/// <summary>
+		/// How fast will the shake happen?
+		/// </summary>
 		[SerializeField]
 		public float Speed = 10;
 
+		/// <summary>
+		/// The magnitude of the shake.
+		/// </summary>
 		[SerializeField]
 		public float Magnitude = 2;
 
+		/// <summary>
+		/// Will this shake be dampered over time?
+		/// </summary>
 		[SerializeField]
 		public bool IsDampered = true;
 
@@ -28,6 +37,9 @@
 
 		#region Public Properties
 
+		/// <summary>
+		/// Gets an easing function for <c>float</c> modified by the shake parameters.
+		/// </summary>
 		public override MotionFloat.Easing FloatEasing {
 			get {
 
@@ -52,6 +64,9 @@
 			}
 		}
 
+		/// <summary>
+		/// Gets an easing function for <c>Vector3</c> modified by the shake parameters.
+		/// </summary>
 		public override Motion3D.Easing Vector3Easing {
 			get {
 
@@ -80,6 +95,9 @@
 			}
 		}
 
+		/// <summary>
+		/// Gets an easing function for <c>Color</c> modified by the shake parameters.
+		/// </summary>
 		public override MotionColor.Easing ColorEasing {
 			get {
 
