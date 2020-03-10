@@ -15,10 +15,10 @@
 		#region Public Fields
 
 		/// <summary>
-		/// How fast will the shake happen?
+		/// How fast will the shake look?
 		/// </summary>
 		[SerializeField]
-		public float Speed = 10;
+		public float TMultiplier = 10;
 
 		/// <summary>
 		/// The magnitude of the shake.
@@ -57,7 +57,7 @@
 					}
 
 					// PerlinNoise returns values from 0 to 1. For that reason we subtract 0.5f
-					return lerp + (Mathf.PerlinNoise((Time.time + timeOffset) * Speed, 0f) - 0.5f) * magnitude;
+					return lerp + (Mathf.PerlinNoise((t + timeOffset) * TMultiplier, 0f) - 0.5f) * magnitude;
 
 				};
 
@@ -85,9 +85,9 @@
 
 					// PerlinNoise returns values from 0 to 1. For that reason we subtract 0.5f
 					return lerp + new Vector3(
-						(Mathf.PerlinNoise((Time.time + timeOffset.x) * Speed, 0f) - 0.5f) * magnitude,
-						(Mathf.PerlinNoise((Time.time + timeOffset.y) * Speed, 0f) - 0.5f) * magnitude,
-						(Mathf.PerlinNoise((Time.time + timeOffset.z) * Speed, 0f) - 0.5f) * magnitude
+						(Mathf.PerlinNoise((t + timeOffset.x) * TMultiplier, 0f) - 0.5f) * magnitude,
+						(Mathf.PerlinNoise((t + timeOffset.y) * TMultiplier, 0f) - 0.5f) * magnitude,
+						(Mathf.PerlinNoise((t + timeOffset.z) * TMultiplier, 0f) - 0.5f) * magnitude
 					);
 
 				};
@@ -116,9 +116,9 @@
 
 					// PerlinNoise returns values from 0 to 1. For that reason we subtract 0.5f
 					return lerp + new Color(
-						(Mathf.PerlinNoise((Time.time + timeOffset.r) * Speed, 0f) - 0.5f) * magnitude,
-						(Mathf.PerlinNoise((Time.time + timeOffset.g) * Speed, 0f) - 0.5f) * magnitude,
-						(Mathf.PerlinNoise((Time.time + timeOffset.b) * Speed, 0f) - 0.5f) * magnitude
+						(Mathf.PerlinNoise((t + timeOffset.r) * TMultiplier, 0f) - 0.5f) * magnitude,
+						(Mathf.PerlinNoise((t + timeOffset.g) * TMultiplier, 0f) - 0.5f) * magnitude,
+						(Mathf.PerlinNoise((t + timeOffset.b) * TMultiplier, 0f) - 0.5f) * magnitude
 					);
 
 				};

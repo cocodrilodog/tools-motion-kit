@@ -35,7 +35,7 @@
 			Property.isExpanded = EditorGUI.Foldout(GetNextPosition(), Property.isExpanded, label);
 			if (Property.isExpanded) {
 				EditorGUI.indentLevel++;
-				EditorGUI.PropertyField(GetNextPosition(), SpeedProperty);
+				EditorGUI.PropertyField(GetNextPosition(), TMultiplierProperty);
 				EditorGUI.PropertyField(GetNextPosition(), MagnitudeProperty);
 				EditorGUI.PropertyField(GetNextPosition(), IsDamperedProperty);
 				if (IsDamperedProperty.boolValue) {
@@ -56,7 +56,7 @@
 
 		protected override void InitializePropertiesForOnGUI() {
 			base.InitializePropertiesForOnGUI();
-			SpeedProperty = Property.FindPropertyRelative("Speed");
+			TMultiplierProperty = Property.FindPropertyRelative("TMultiplier");
 			MagnitudeProperty = Property.FindPropertyRelative("Magnitude");
 			IsDamperedProperty = Property.FindPropertyRelative("IsDampered");
 			DamperProperty = Property.FindPropertyRelative("m_Damper");
@@ -65,7 +65,7 @@
 
 		#region Private Properties
 
-		private SerializedProperty SpeedProperty;
+		private SerializedProperty TMultiplierProperty;
 
 		private SerializedProperty MagnitudeProperty;
 
