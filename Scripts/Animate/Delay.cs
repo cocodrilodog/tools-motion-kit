@@ -155,6 +155,7 @@
 
 			// Set to null the callbacks
 			m_OnUpdate = null;
+			m_OnUpdateProgress = null;
 			m_OnComplete = null;
 
 		}
@@ -191,6 +192,13 @@
 			return this;
 		}
 
+		/// <summary>
+		/// Sets a callback that will be called every frame while the delay is playing 
+		/// and not paused. <paramref name="onUpdate"/> receives the <c>progress</c> as
+		/// parameter.
+		/// </summary>
+		/// <returns>The delay object.</returns>
+		/// <param name="onUpdate">The action to be invoked on update.</param>
 		public Delay SetOnUpdate(Action<float> onUpdate) {
 			m_OnUpdate = null;
 			m_OnUpdateProgress = onUpdate;

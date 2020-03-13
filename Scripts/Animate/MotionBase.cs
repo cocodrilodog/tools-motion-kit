@@ -250,6 +250,7 @@
 
 			// Set to null the callbacks
 			m_OnUpdate = null;
+			m_OnUpdateProgress = null;
 			m_OnComplete = null;
 
 			// Go back to default time mode and easing.
@@ -315,13 +316,27 @@
 		}
 
 		/// <summary>
-		/// Sets a callback that will be called every frame while the motion is playing 
+		/// Sets a callback that will be called every frame while the delay is playing 
 		/// and not paused.
 		/// </summary>
-		/// <returns>The motion object.</returns>
+		/// <returns>The delay object.</returns>
 		/// <param name="onUpdate">The action to be invoked on update.</param>
 		public MotionT SetOnUpdate(Action onUpdate) {
+			m_OnUpdateProgress = null;
 			m_OnUpdate = onUpdate;
+			return (MotionT)this;
+		}
+
+		/// <summary>
+		/// Sets a callback that will be called every frame while the delay is playing 
+		/// and not paused. <paramref name="onUpdate"/> receives the <c>progress</c> as
+		/// parameter.
+		/// </summary>
+		/// <returns>The delay object.</returns>
+		/// <param name="onUpdate">The action to be invoked on update.</param>
+		public MotionT SetOnUpdate(Action<float> onUpdate) {
+			m_OnUpdate = null;
+			m_OnUpdateProgress = onUpdate;
 			return (MotionT)this;
 		}
 
@@ -360,6 +375,9 @@
 
 		[NonSerialized]
 		private Action m_OnUpdate;
+
+		[NonSerialized]
+		private Action<float> m_OnUpdateProgress;
 
 		[NonSerialized]
 		private Action m_OnComplete;
@@ -442,9 +460,8 @@
 
 					Progress = m_CurrentTime / m_Duration;
 
-					if (m_OnUpdate != null) {
-						m_OnUpdate();
-					}
+					m_OnUpdate?.Invoke();
+					m_OnUpdateProgress?.Invoke(Progress);
 
 				}
 				yield return null;
@@ -453,9 +470,8 @@
 			// Set the final value
 			m_Setter(m_FinalValue);
 
-			if (m_OnUpdate != null) {
-				m_OnUpdate();
-			}
+			m_OnUpdate?.Invoke();
+			m_OnUpdateProgress?.Invoke(Progress);
 
 			// Set the coroutine to null before calling m_OnComplete() because m_OnComplete()
 			// may start another animation with the same motion object and we don't 
