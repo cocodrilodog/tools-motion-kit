@@ -476,9 +476,7 @@
 			m_IsPlaying = false;
 			m_CurrentTime = 0;
 
-			if (m_OnComplete != null) {
-				m_OnComplete();
-			}
+			m_OnComplete?.Invoke();
 
 		}
 
