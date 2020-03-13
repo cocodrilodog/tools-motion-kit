@@ -4,18 +4,18 @@
 	using System.Collections;
 	using UnityEngine;
 
-	public class Delay : IPlayback, ITimedProgressable {
+	public class Timer : IPlayback, ITimedProgressable {
 
 
 		#region Constructors
 
 		/// <summary>
-		/// Initializes a new instance of the <see cref="Delay"/> class.
+		/// Initializes a new instance of the <see cref="Timer"/> class.
 		/// </summary>
 		/// <param name="monoBehaviour">
 		/// A <see cref="MonoBehaviour"/> that will start the coroutines.
 		/// </param>
-		public Delay(MonoBehaviour monoBehaviour) {
+		public Timer(MonoBehaviour monoBehaviour) {
 			m_MonoBehaviour = monoBehaviour;
 		}
 
@@ -25,18 +25,18 @@
 		#region Public Properties
 
 		/// <summary>
-		/// The current time of this delay.
+		/// The current time of this timer.
 		/// </summary>
 		/// 
 		/// <remarks> 
-		/// It is calculated inside of the coroutine while the delay is playing
+		/// It is calculated inside of the coroutine while the timer is playing
 		/// </remarks>
 		/// 
 		/// <value>The time.</value>
 		public float CurrentTime { get { return m_CurrentTime; } }
 
 		/// <summary>
-		/// Gets the duration of this delay.
+		/// Gets the duration of this timer.
 		/// </summary>
 		/// 
 		/// <remarks>
@@ -48,7 +48,7 @@
 		public float Duration { get { return m_Duration; } }
 
 		/// <summary>
-		/// Gets and sets the progress from 0 to 1 on this delay.
+		/// Gets and sets the progress from 0 to 1 on this timer.
 		/// </summary>
 		/// <value>The progress.</value>
 		public float Progress {	
@@ -57,13 +57,13 @@
 		}
 
 		/// <summary>
-		/// Is the delay playing?
+		/// Is the timer playing?
 		/// </summary>
 		/// <value><c>true</c> if is playing; otherwise, <c>false</c>.</value>
 		public bool IsPlaying { get { return m_IsPlaying; } }
 
 		/// <summary>
-		/// Is the delay paused?
+		/// Is the timer paused?
 		/// </summary>
 		/// <value><c>true</c> if is paused; otherwise, <c>false</c>.</value>
 		public bool IsPaused { get { return m_IsPaused; } }
@@ -74,11 +74,11 @@
 		#region Public Methods
 
 		/// <summary>
-		/// Plays the delay that will last the given <c>duration</c>. 
+		/// Plays the timer that will last the given <c>duration</c>. 
 		/// </summary>
-		/// <returns>The delay object.</returns>
+		/// <returns>The timer object.</returns>
 		/// <param name="duration">Duration.</param>
-		public Delay Play(float duration) {
+		public Timer Play(float duration) {
 			StopCoroutine();
 			m_Duration = duration;
 			m_IsPaused = false;
@@ -88,7 +88,7 @@
 		}
 
 		/// <summary>
-		/// Plays the delay that will last the <see cref="Duration"/>.
+		/// Plays the timer that will last the <see cref="Duration"/>.
 		/// </summary>
 		/// 
 		/// <remarks>
@@ -96,8 +96,8 @@
 		/// <see cref="SetDuration(float)"/>.
 		/// </remarks>
 		/// 
-		/// <returns>The delay object.</returns>
-		public Delay Play() {
+		/// <returns>The timer object.</returns>
+		public Timer Play() {
 			StopCoroutine();
 			m_IsPaused = false;
 			m_Coroutine = m_MonoBehaviour.StartCoroutine(_Play());
@@ -106,19 +106,19 @@
 		}
 
 		/// <summary>
-		/// Pauses the delay.
+		/// Pauses the timer.
 		/// </summary>
 		/// <returns>The motion object.</returns>
-		public Delay Pause() {
+		public Timer Pause() {
 			m_IsPaused = true;
 			return this;
 		}
 
 		/// <summary>
-		/// Resumes this delay.
+		/// Resumes this timer.
 		/// </summary>
-		/// <returns>The delay object.</returns>
-		public Delay Resume() {
+		/// <returns>The timer object.</returns>
+		public Timer Resume() {
 			// Progress may have changed from outside so we update m_CurrentTime here.
 			m_CurrentTime = m_Progress * m_Duration;
 			m_IsPaused = false;
@@ -126,7 +126,7 @@
 		}
 
 		/// <summary>
-		/// Stops the delay.
+		/// Stops the timer.
 		/// </summary>
 		public void Stop() {
 			StopCoroutine();
@@ -134,9 +134,9 @@
 		}
 
 		/// <summary>
-		/// Resets the delay to its default state.
+		/// Resets the timer to its default state.
 		/// </summary>
-		/// <returns>The delay object.</returns>
+		/// <returns>The timer object.</returns>
 		public void Reset() {
 
 			StopCoroutine();
@@ -161,11 +161,11 @@
 		}
 
 		/// <summary>
-		/// Sets the duration of the delay.
+		/// Sets the duration of the timer.
 		/// </summary>
-		/// <returns>The delay object.</returns>
+		/// <returns>The timer object.</returns>
 		/// <param name="duration">The duration.</param>
-		public Delay SetDuration(float duration) {
+		public Timer SetDuration(float duration) {
 			m_Duration = duration;
 			return this;
 		}
@@ -175,31 +175,31 @@
 		/// </summary>
 		/// <param name="timeMode"></param>
 		/// <returns></returns>
-		public Delay SetTimeMode(TimeMode timeMode) {
+		public Timer SetTimeMode(TimeMode timeMode) {
 			m_TimeMode = timeMode;
-			return (Delay)this;
+			return (Timer)this;
 		}
 
 		/// <summary>
-		/// Sets a callback that will be called every frame while the delay is playing 
+		/// Sets a callback that will be called every frame while the timer is playing 
 		/// and not paused.
 		/// </summary>
-		/// <returns>The delay object.</returns>
+		/// <returns>The timer object.</returns>
 		/// <param name="onUpdate">The action to be invoked on update.</param>
-		public Delay SetOnUpdate(Action onUpdate) {
+		public Timer SetOnUpdate(Action onUpdate) {
 			m_OnUpdateProgress = null;
 			m_OnUpdate = onUpdate;
 			return this;
 		}
 
 		/// <summary>
-		/// Sets a callback that will be called every frame while the delay is playing 
+		/// Sets a callback that will be called every frame while the timer is playing 
 		/// and not paused. <paramref name="onUpdate"/> receives the <c>progress</c> as
 		/// parameter.
 		/// </summary>
-		/// <returns>The delay object.</returns>
+		/// <returns>The timer object.</returns>
 		/// <param name="onUpdate">The action to be invoked on update.</param>
-		public Delay SetOnUpdate(Action<float> onUpdate) {
+		public Timer SetOnUpdate(Action<float> onUpdate) {
 			m_OnUpdate = null;
 			m_OnUpdateProgress = onUpdate;
 			return this;
@@ -208,9 +208,9 @@
 		/// <summary>
 		/// Sets a callback that will be called when the motion completes its animation.
 		/// </summary>
-		/// <returns>The delay object.</returns>
+		/// <returns>The timer object.</returns>
 		/// <param name="onComplete">The action to be invoked on complete.</param>
-		public Delay SetOnComplete(Action onComplete) {
+		public Timer SetOnComplete(Action onComplete) {
 			m_OnComplete = onComplete;
 			return this;
 		}
@@ -281,7 +281,7 @@
 			m_CurrentTime = 0;
 			m_Progress = 0;
 
-			// Wait one frame for the properties to be ready, in case the delay is
+			// Wait one frame for the properties to be ready, in case the timer is
 			// created and started in the same line.
 			yield return null;
 

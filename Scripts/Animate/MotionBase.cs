@@ -45,10 +45,6 @@
 		/// A <see cref="MonoBehaviour"/> that will start the coroutines.
 		/// </param>
 		/// 
-		/// <param name="getter">
-		/// The getter of the property to animate.
-		/// </param>
-		/// 
 		/// <param name="setter">
 		/// The settter of the property to animate.
 		/// </param>
@@ -316,10 +312,10 @@
 		}
 
 		/// <summary>
-		/// Sets a callback that will be called every frame while the delay is playing 
+		/// Sets a callback that will be called every frame while the motion is playing 
 		/// and not paused.
 		/// </summary>
-		/// <returns>The delay object.</returns>
+		/// <returns>The motion object.</returns>
 		/// <param name="onUpdate">The action to be invoked on update.</param>
 		public MotionT SetOnUpdate(Action onUpdate) {
 			m_OnUpdateProgress = null;
@@ -328,11 +324,11 @@
 		}
 
 		/// <summary>
-		/// Sets a callback that will be called every frame while the delay is playing 
+		/// Sets a callback that will be called every frame while the motion is playing 
 		/// and not paused. <paramref name="onUpdate"/> receives the <c>progress</c> as
 		/// parameter.
 		/// </summary>
-		/// <returns>The delay object.</returns>
+		/// <returns>The motion object.</returns>
 		/// <param name="onUpdate">The action to be invoked on update.</param>
 		public MotionT SetOnUpdate(Action<float> onUpdate) {
 			m_OnUpdate = null;

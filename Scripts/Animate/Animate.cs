@@ -33,7 +33,7 @@
 	/// <see cref="GetMotion(object, string, MotionBase{float, MotionFloat}.Setter)"/>,
 	/// <see cref="GetMotion(object, string, MotionBase{Vector3, Motion3D}.Setter)"/>, or
 	/// <see cref="GetMotion(object, string, MotionBase{Color, MotionColor}.Setter)"/>
-	/// <see cref="GetDelay(object, string)"/>
+	/// <see cref="GetTimer(object, string)"/>
 	/// 
 	/// Those methods receive the following parameters: <c>owner</c>, <c>reuseKey</c>, <c>getter</c> 
 	/// and <c>setter</c>, describd below.
@@ -144,21 +144,21 @@
 		}
 
 		/// <summary>
-		/// Gets a <see cref="Delay"/> object ready be played.
+		/// Gets a <see cref="Timer"/> object ready be played.
 		/// </summary>
 		/// 
-		/// <returns>The delay.</returns>
+		/// <returns>The timer.</returns>
 		/// 
 		/// <param name="owner">
-		/// The ownwer of this delay.
+		/// The ownwer of this timer.
 		/// </param>
 		/// 
 		/// <param name="reuseKey">
-		/// The reuseKey of this delay.
+		/// The reuseKey of this timer.
 		/// </param>
-		public static Delay GetDelay(object owner, string reuseKey) {
+		public static Timer GetTimer(object owner, string reuseKey) {
 			if (Instance != null) {
-				return Instance._GetDelay(owner, reuseKey);
+				return Instance._GetTimer(owner, reuseKey);
 			} else {
 				return null;
 			}
@@ -267,8 +267,8 @@
 			return (MotionColor)_GetPlayback(owner, reuseKey, () => new MotionColor(this, setter));
 		}
 
-		private Delay _GetDelay(object owner, string reuseKey) {
-			return (Delay)_GetPlayback(owner, reuseKey, () => new Delay(this));
+		private Timer _GetTimer(object owner, string reuseKey) {
+			return (Timer)_GetPlayback(owner, reuseKey, () => new Timer(this));
 		}
 
 		private IPlayback _GetPlayback(object owner, string reuseKey, Func<IPlayback> createMotion) {
@@ -318,7 +318,7 @@
 			Dictionary<string, IPlayback> ownerMotions;
 			if (Motions.TryGetValue(owner, out ownerMotions)) {
 				IPlayback motion;
-				if(ownerMotions.TryGetValue(reuseKey, out motion)) {
+				if (ownerMotions.TryGetValue(reuseKey, out motion)) {
 					motion.Stop();
 					return true;
 				}

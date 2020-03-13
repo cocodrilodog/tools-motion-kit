@@ -173,10 +173,10 @@
 			.Play(PositionObject.localPosition, position, 1f)
 			.SetOnComplete(() => {
 
-				// A delay at the end of the movement
-				Animate.GetDelay(this, "Delay").Play(1).SetOnComplete(onComplete);
+				// A timer at the end of the movement
+				Animate.GetTimer(this, "Timer").Play(1).SetOnComplete(onComplete);
 
-				// A color blink in the sphere of the middle while the delay.
+				// A color blink in the sphere of the middle while the timer.
 				// The blink graph is crafted in the AnimateCurves asset.
 				Animate.GetMotion(
 					this, "Color", c => ColorObject.Color = c
