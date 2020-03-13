@@ -50,7 +50,7 @@
 
 		private void OnDestroy() {
 			// Clear the motions that were created by this script.
-			Animate.ClearMotions(this);
+			Animate.ClearPlaybacks(this);
 		}
 
 		#endregion

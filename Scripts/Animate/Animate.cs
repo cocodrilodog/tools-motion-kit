@@ -24,42 +24,43 @@
 
 	/// 
 	/// <summary>
-	/// Utility singleton to create reusable animations with coroutines. It can be used in combination
-	/// with <see cref="SagoEasing"/> classes.
+	/// Utility singleton to create reusable animations and/or timed-callbacks with coroutines.
 	/// </summary>
 	/// 
 	/// <remarks>
-	/// Motion objects are created and returned by these methods: 
+	/// <c>Motion</c>, <c>Timer</c> and <c>Sequence</c> are objects used to animate any
+	/// property of any object.
+	/// Playback objects are created and returned by these methods: 
 	/// <see cref="GetMotion(object, string, MotionBase{float, MotionFloat}.Setter)"/>,
 	/// <see cref="GetMotion(object, string, MotionBase{Vector3, Motion3D}.Setter)"/>, or
 	/// <see cref="GetMotion(object, string, MotionBase{Color, MotionColor}.Setter)"/>
 	/// <see cref="GetTimer(object, string)"/>
 	/// 
-	/// Those methods receive the following parameters: <c>owner</c>, <c>reuseKey</c>, <c>getter</c> 
+	/// Those methods receive the following parameters: <c>owner</c>, <c>reuseKey</c>
 	/// and <c>setter</c>, describd below.
 	/// 
-	/// If a <see cref="MotionBase{ValueT, MotionT}"/> with the same owner and reuseKey was already created before, 
-	/// that will be the returned object. Otherwise a new <see cref="MotionBase{ValueT, MotionT}"/> instance is 
+	/// If a <c>Playback</c> object with the same owner and reuseKey was already created before, 
+	/// that will be the returned object. Otherwise a new <c>Playback</c> object  instance is 
 	/// created and returned which will be stored internally for later reuse with the newly assigned
 	/// combination of owner and reuseKey.
 	/// 
 	/// <example>
 	/// <code>
 	/// Animate.GetMotion(
-	/// 	this, "MyPosition", () => transform.localPosition, (s) => transform.localPosition = s
+	/// 	this, "MyPosition", s => transform.localPosition = s
 	/// ).SetEasing(Quadratic.EaseOut).Play(Vector3.up, 0.3f);
 	/// </code>
 	/// </example>
 	/// 
 	/// The <c>owner</c>:
-	/// Any object with which you want to relate the <see cref="MotionBase{ValueT, MotionT}"/> object in order to 
-	/// reuse it in multiple animations. After you are done with the animations of this owner, you 
-	/// can call <see cref="ClearMotions(object)"/> to remove all of its related <see cref="MotionBase{ValueT, MotionT}"/>
-	/// objects forever.
+	/// Any object with which you want to relate the <c>Playback</c> object in order to 
+	/// reuse it in multiple animations/callbacks. After you are done with the animations/callbacks
+	/// of this owner, you can call <see cref="ClearPlaybacks(object)"/> to remove all of its related
+	/// <c>Playback</c> objects forever.
 	/// 
 	/// The <c>reuseKey</c>:
-	/// A string key that identifies all the animations that will be performed by the same 
-	/// <see cref=" MotionBase{ValueT, MotionT}"/> object that is related to the same owner. Animations with 
+	/// A string key that identifies all the animations/callbacks that will be performed by the same 
+	/// <c>Playback</c> object object that is related to the same owner. <c>Playback</c> objects with 
 	/// the same reuseKey and owner will stop to one another if one is started while the other 
 	/// was playing.
 	/// </remarks>
@@ -75,7 +76,7 @@
 		/// <returns>The <see cref="Motion3D"/>.</returns>
 		/// 
 		/// <param name="owner">
-		/// The ownwe of thi motion.
+		/// The owner of this motion.
 		/// </param>
 		/// 
 		/// <param name="reuseKey">
@@ -165,61 +166,69 @@
 		}
 
 		/// <summary>
-		/// Is the motion currently playing?
+		/// Is the <c>Playback</c> object currently playing?
 		/// </summary>
-		/// <returns><c>true</c>, if motion playing is playing, <c>false</c> otherwise.</returns>
+		/// <returns>
+		/// <c>true</c>, if the <c>Playback</c> object is playing, <c>false</c> otherwise.
+		/// </returns>
 		/// <param name="owner">Owner.</param>
 		/// <param name="reuseKey">Reuse key.</param>
-		public static bool IsMotionPlaying(object owner, string reuseKey) {
-			return Instance._IsMotionPlaying(owner, reuseKey);
+		public static bool IsPlaybackPlaying(object owner, string reuseKey) {
+			return Instance._IsPlaybackPlaying(owner, reuseKey);
 		}
 
 		/// <summary>
-		/// Is the motion currently paused?
+		/// Is the <c>Playback</c> object currently paused?
 		/// </summary>
-		/// <returns><c>true</c>, if motion is paused, <c>false</c> otherwise.</returns>
+		/// <returns>
+		/// <c>true</c>, if the <c>Playback</c> object is paused, <c>false</c> otherwise.
+		/// </returns>
 		/// <param name="owner">Owner.</param>
 		/// <param name="reuseKey">Reuse key.</param>
-		public static bool IsMotionPaused(object owner, string reuseKey) {
-			return Instance._IsMotionPaused(owner, reuseKey);
+		public static bool IsPlaybackPaused(object owner, string reuseKey) {
+			return Instance._IsPlaybackPaused(owner, reuseKey);
 		}
 
 		/// <summary>
-		/// Stops the motion with the specified <paramref name="owner"/> and 
+		/// Stops the <c>Playback</c> object with the specified <paramref name="owner"/> and 
 		/// <paramref name="reuseKey"/>, if one is found.
 		/// </summary>
-		/// <returns><c>true</c>, if motion was found and stopped, <c>false</c> otherwise.</returns>
+		/// <returns>
+		/// <c>true</c>, if the <c>Playback</c> object was found and stopped, <c>false</c> otherwise.
+		/// </returns>
 		/// <param name="owner">Owner.</param>
 		/// <param name="reuseKey">Reuse key.</param>
-		public static bool StopMotion(object owner, string reuseKey) {
-			return Instance._StopMotion(owner, reuseKey);
+		public static bool StopPlayback(object owner, string reuseKey) {
+			return Instance._StopPlayback(owner, reuseKey);
 		}
 
 		/// <summary>
-		/// Removes all cached <see cref="MotionBase{ValueT, MotionT}"/> objects that are related to 
+		/// Removes all cached <c>Playback</c> objects that are related to 
 		/// <c>owner</c>
 		/// </summary>
-		/// <returns><c>true</c>, if motions were cleared, <c>false</c> otherwise.</returns>
+		/// <returns>
+		/// <c>true</c>, if playbacks were cleared, <c>false</c> otherwise.
+		/// </returns>
 		/// <param name="owner">Owner.</param>
-		public static bool ClearMotions(object owner) {
+		public static bool ClearPlaybacks(object owner) {
 			// Check for null because this may be called from OnDestroy() of another 
 			// object and at that point, it is possible that the animate instance is 
 			// already destroyed.
 			if (Instance != null) {
-				return Instance._ClearMotions(owner);
+				return Instance._ClearPlaybacks(owner);
 			}
 			return false;
 		}
 
 		/// <summary>
-		/// Removes all cached <see cref="MotionBase{ValueT, MotionT}"/> objects.
+		/// Removes all cached <c>Playback</c> objects.
 		/// </summary>
-		public static void ClearAllMotions() {
+		public static void ClearAllPlaybacks() {
 			// Check for null because this may be called from OnDestroy() of another 
 			// object and at that point, it is possible that the animate instance is 
 			// already destroyed.
 			if (Instance != null) {
-				Instance._ClearAllMotions();
+				Instance._ClearAllPlaybacks();
 			}
 		}
 
@@ -239,15 +248,15 @@
 		#region Internal Fields
 
 		[NonSerialized]
-		Dictionary<object, Dictionary<string, IPlayback>> m_Motions;
+		Dictionary<object, Dictionary<string, IPlayback>> m_Playbacks;
 
 		#endregion
 
 
 		#region Internal Properties
 
-		Dictionary<object, Dictionary<string, IPlayback>> Motions {
-			get { return m_Motions = m_Motions ?? new Dictionary<object, Dictionary<string, IPlayback>>(); }
+		Dictionary<object, Dictionary<string, IPlayback>> Playbacks {
+			get { return m_Playbacks = m_Playbacks ?? new Dictionary<object, Dictionary<string, IPlayback>>(); }
 		}
 
 		#endregion
@@ -271,82 +280,82 @@
 			return (Timer)_GetPlayback(owner, reuseKey, () => new Timer(this));
 		}
 
-		private IPlayback _GetPlayback(object owner, string reuseKey, Func<IPlayback> createMotion) {
-			Dictionary<string, IPlayback> ownerMotions;
-			if (Motions.TryGetValue(owner, out ownerMotions)) {
-				IPlayback motion;
+		private IPlayback _GetPlayback(object owner, string reuseKey, Func<IPlayback> createPlayback) {
+			Dictionary<string, IPlayback> ownerPlaybacks;
+			if (Playbacks.TryGetValue(owner, out ownerPlaybacks)) {
+				IPlayback playback;
 				// There is a owner object registered, let's search for the reuseKey
-				if (ownerMotions.TryGetValue(reuseKey, out motion)) {
+				if (ownerPlaybacks.TryGetValue(reuseKey, out playback)) {
 					// That owner did register that reuseKey, so return the existing motion
-					return motion;
+					return playback;
 				} else {
 					// The target doesn't have the key yet, so create the reuseKey and motion
-					return ownerMotions[reuseKey] = createMotion();
+					return ownerPlaybacks[reuseKey] = createPlayback();
 				}
 			} else {
 				// There is no target registered. Must register it as well as the reuseKey and 
 				// create a new motion
-				ownerMotions = new Dictionary<string, IPlayback>();
-				Motions[owner] = ownerMotions;
-				return ownerMotions[reuseKey] = createMotion();
+				ownerPlaybacks = new Dictionary<string, IPlayback>();
+				Playbacks[owner] = ownerPlaybacks;
+				return ownerPlaybacks[reuseKey] = createPlayback();
 			}
 		}
 
-		private bool _IsMotionPlaying(object owner, string reuseKey) {
-			Dictionary<string, IPlayback> ownerMotions;
-			if (Motions.TryGetValue(owner, out ownerMotions)) {
-				IPlayback motion;
-				if (ownerMotions.TryGetValue(reuseKey, out motion)) {
-					return motion.IsPlaying;
+		private bool _IsPlaybackPlaying(object owner, string reuseKey) {
+			Dictionary<string, IPlayback> ownerPlaybacks;
+			if (Playbacks.TryGetValue(owner, out ownerPlaybacks)) {
+				IPlayback playback;
+				if (ownerPlaybacks.TryGetValue(reuseKey, out playback)) {
+					return playback.IsPlaying;
 				}
 			}
 			return false;
 		}
 
-		private bool _IsMotionPaused(object owner, string reuseKey) {
-			Dictionary<string, IPlayback> ownerMotions;
-			if (Motions.TryGetValue(owner, out ownerMotions)) {
-				IPlayback motion;
-				if (ownerMotions.TryGetValue(reuseKey, out motion)) {
-					return motion.IsPaused;
+		private bool _IsPlaybackPaused(object owner, string reuseKey) {
+			Dictionary<string, IPlayback> ownerPlaybacks;
+			if (Playbacks.TryGetValue(owner, out ownerPlaybacks)) {
+				IPlayback playback;
+				if (ownerPlaybacks.TryGetValue(reuseKey, out playback)) {
+					return playback.IsPaused;
 				}
 			}
 			return false;
 		}
 
-		private bool _StopMotion(object owner, string reuseKey) {
-			Dictionary<string, IPlayback> ownerMotions;
-			if (Motions.TryGetValue(owner, out ownerMotions)) {
-				IPlayback motion;
-				if (ownerMotions.TryGetValue(reuseKey, out motion)) {
-					motion.Stop();
+		private bool _StopPlayback(object owner, string reuseKey) {
+			Dictionary<string, IPlayback> ownerPlaybacks;
+			if (Playbacks.TryGetValue(owner, out ownerPlaybacks)) {
+				IPlayback playback;
+				if (ownerPlaybacks.TryGetValue(reuseKey, out playback)) {
+					playback.Stop();
 					return true;
 				}
 			}
 			return false;
 		}
 
-		private bool _ClearMotions(object owner) {
-			Dictionary<string, IPlayback> ownerMotions;
-			if (Motions.TryGetValue(owner, out ownerMotions)) {
-				foreach (KeyValuePair<string, IPlayback> entry in ownerMotions) {
+		private bool _ClearPlaybacks(object owner) {
+			Dictionary<string, IPlayback> ownerPlaybacks;
+			if (Playbacks.TryGetValue(owner, out ownerPlaybacks)) {
+				foreach (KeyValuePair<string, IPlayback> entry in ownerPlaybacks) {
 					entry.Value.Reset();
 				}
-				Motions.Remove(owner);
+				Playbacks.Remove(owner);
 				return true;
 			} else {
 				return false;
 			}
 		}
 
-		private void _ClearAllMotions() {
-			foreach (KeyValuePair<object, Dictionary<string, IPlayback>> ownerEntry in Motions) {
+		private void _ClearAllPlaybacks() {
+			foreach (KeyValuePair<object, Dictionary<string, IPlayback>> ownerEntry in Playbacks) {
 				foreach (KeyValuePair<string, IPlayback> entry in ownerEntry.Value) {
 					entry.Value.Reset();
 				}
 				ownerEntry.Value.Clear();
 			}
-			Motions.Clear();
+			Playbacks.Clear();
 		}
 
 		#endregion
