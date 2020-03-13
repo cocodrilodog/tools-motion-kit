@@ -186,7 +186,14 @@
 		/// <returns>The delay object.</returns>
 		/// <param name="onUpdate">The action to be invoked on update.</param>
 		public Delay SetOnUpdate(Action onUpdate) {
+			m_OnUpdateProgress = null;
 			m_OnUpdate = onUpdate;
+			return this;
+		}
+
+		public Delay SetOnUpdate(Action<float> onUpdate) {
+			m_OnUpdate = null;
+			m_OnUpdateProgress = onUpdate;
 			return this;
 		}
 
@@ -216,6 +223,9 @@
 
 		[NonSerialized]
 		private Action m_OnUpdate;
+
+		[NonSerialized]
+		private Action<float> m_OnUpdateProgress;
 
 		[NonSerialized]
 		private Action m_OnComplete;
@@ -282,17 +292,15 @@
 
 					Progress = m_CurrentTime / m_Duration;
 
-					if (m_OnUpdate != null) {
-						m_OnUpdate();
-					}
+					m_OnUpdate?.Invoke();
+					m_OnUpdateProgress?.Invoke(Progress);
 
 				}
 				yield return null;
 			}
 
-			if (m_OnUpdate != null) {
-				m_OnUpdate();
-			}
+			m_OnUpdate?.Invoke();
+			m_OnUpdateProgress?.Invoke(Progress);
 
 			// Set the coroutine to null before calling m_OnComplete() because m_OnComplete()
 			// may start another animation with the same motion object and we don't 
