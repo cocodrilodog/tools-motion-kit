@@ -49,6 +49,17 @@
 		#endregion
 
 
+		#region Public Constructors
+
+		public Blink() { }
+
+		public Blink(int blinkCount) {
+			BlinkCount = blinkCount;
+		}
+
+		#endregion
+
+
 	}
 
 }
