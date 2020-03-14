@@ -32,6 +32,9 @@
 		/// <value>The duration.</value>
 		public float Duration { get { return m_Duration; } }
 
+		/// <summary>
+		/// The sum of the sequence items duration.
+		/// </summary>
 		public float SequenceDuration { get { return m_SequenceDuration; } }
 
 		/// <summary>
@@ -228,13 +231,13 @@
 		}
 
 		/// <summary>
-		/// Updates the total duration of the sequence and the time position of
-		/// its items.
+		/// Updates <see cref="SequenceDuration"/> and assigns its value to <see cref="Duration"/>
+		/// so that the default duration of the sequence results from its items. Additionally
+		/// calculates the position in time of its items. 
 		/// </summary>
 		///
 		/// <remarks>
-		/// It should be called if the duration of any of its sequence items
-		/// changes.
+		/// It should be called if the duration of any of its sequence items changes.
 		/// </remarks>
 		public void UpdateSequence() {
 			m_SequenceItemPositions = new float[m_SequenceItems.Length];
