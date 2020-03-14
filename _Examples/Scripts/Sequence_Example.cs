@@ -22,9 +22,9 @@
 
 				Animate.GetMotion(this, "Color", c => ColorSphere.Color = c)
 					.SetInitialValue(Color.red).SetFinalValue(Color.black)
-					.SetDuration(3).SetEasing(new Blink(4).ColorEasing)
+					.SetDuration(1).SetEasing(new Blink(4).ColorEasing)
 
-			).Play(10);
+			).Play(4);
 
 			Debug.LogFormat("Sequence: {0}", sequence);
 

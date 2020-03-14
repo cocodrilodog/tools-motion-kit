@@ -165,9 +165,9 @@
 			}
 		}
 
-		public static Sequence GetSequence(object owner, string reuseKey, params ITimedProgressable[] timedProgressables) {
+		public static Sequence GetSequence(object owner, string reuseKey, params ITimedProgressable[] sequenceItems) {
 			if (Instance != null) {
-				return Instance._GetSequence(owner, reuseKey, timedProgressables);
+				return Instance._GetSequence(owner, reuseKey, sequenceItems);
 			} else {
 				return null;
 			}
@@ -288,8 +288,8 @@
 			return (Timer)_GetPlayback(owner, reuseKey, () => new Timer(this));
 		}
 
-		private Sequence _GetSequence(object owner, string reuseKey, ITimedProgressable[] timedProgressables) {
-			return (Sequence)_GetPlayback(owner, reuseKey, () => new Sequence(this, timedProgressables));
+		private Sequence _GetSequence(object owner, string reuseKey, ITimedProgressable[] sequenceItems) {
+			return (Sequence)_GetPlayback(owner, reuseKey, () => new Sequence(this, sequenceItems));
 		}
 
 		private IPlayback _GetPlayback(object owner, string reuseKey, Func<IPlayback> createPlayback) {

@@ -7,22 +7,6 @@
 	public class Sequence : IPlayback, ITimedProgressable {
 
 
-		#region Constructors
-
-		/// <summary>
-		/// Initializes a new instance of the <see cref="Sequence"/> class.
-		/// </summary>
-		/// <param name="monoBehaviour">
-		/// A <see cref="MonoBehaviour"/> that will start the coroutines.
-		/// </param>
-		public Sequence(MonoBehaviour monoBehaviour, params ITimedProgressable[] timedProgressables) {
-			m_MonoBehaviour = monoBehaviour;
-			m_TimedProgressables = timedProgressables;
-		}
-
-		#endregion
-
-
 		#region Public Properties
 
 		/// <summary>
@@ -56,11 +40,13 @@
 			get { return m_Progress; }
 			set {
 				m_Progress = value;
-
-				for(int i = 0; i < m_TimedProgressables.Length; i++) {
-
+				float timeOnSequence = m_Progress * m_SequenceTotalDuration;
+				for(int i = 0; i < m_SequenceItems.Length; i++) {
+					if (timeOnSequence >= m_SequenceItemPositions[i] &&
+						timeOnSequence < m_SequenceItemPositions[i] + m_SequenceItems[i].Duration) {
+						m_SequenceItems[i].Progress = (timeOnSequence - m_SequenceItemPositions[i]) / m_SequenceItems[i].Duration;
+					}
 				}
-
 			}
 		}
 
@@ -75,6 +61,23 @@
 		/// </summary>
 		/// <value><c>true</c> if is paused; otherwise, <c>false</c>.</value>
 		public bool IsPaused { get { return m_IsPaused; } }
+
+		#endregion
+
+
+		#region Constructors
+
+		/// <summary>
+		/// Initializes a new instance of the <see cref="Sequence"/> class.
+		/// </summary>
+		/// <param name="monoBehaviour">
+		/// A <see cref="MonoBehaviour"/> that will start the coroutines.
+		/// </param>
+		public Sequence(MonoBehaviour monoBehaviour, params ITimedProgressable[] sequenceItems) {
+			m_MonoBehaviour = monoBehaviour;
+			m_SequenceItems = sequenceItems;
+			UpdateSequence();
+		}
 
 		#endregion
 
@@ -222,6 +225,23 @@
 			return this;
 		}
 
+		/// <summary>
+		/// Updates the total duration of the sequence and the time position of
+		/// its items.
+		/// </summary>
+		///
+		/// <remarks>
+		/// It should be called if the duration of any of its sequence items
+		/// changes.
+		/// </remarks>
+		public void UpdateSequence() {
+			m_SequenceItemPositions = new float[m_SequenceItems.Length];
+			for (int i = 0; i < m_SequenceItems.Length; i++) {
+				m_SequenceItemPositions[i] = m_SequenceTotalDuration;
+				m_SequenceTotalDuration += m_SequenceItems[i].Duration;
+			}
+		}
+
 		#endregion
 
 
@@ -231,7 +251,19 @@
 		private MonoBehaviour m_MonoBehaviour;
 
 		[NonSerialized]
-		private ITimedProgressable[] m_TimedProgressables;
+		private ITimedProgressable[] m_SequenceItems;
+
+		/// <summary>
+		/// The total duration of the sequence.
+		/// </summary>
+		[NonSerialized]
+		private float m_SequenceTotalDuration;
+
+		/// <summary>
+		/// The position in time of each <c>TimedProgressable</c>.
+		/// </summary>
+		[NonSerialized]
+		private float[] m_SequenceItemPositions;
 
 		[NonSerialized]
 		private Coroutine m_Coroutine;

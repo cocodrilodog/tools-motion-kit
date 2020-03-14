@@ -7,21 +7,6 @@
 	public class Timer : IPlayback, ITimedProgressable {
 
 
-		#region Constructors
-
-		/// <summary>
-		/// Initializes a new instance of the <see cref="Timer"/> class.
-		/// </summary>
-		/// <param name="monoBehaviour">
-		/// A <see cref="MonoBehaviour"/> that will start the coroutines.
-		/// </param>
-		public Timer(MonoBehaviour monoBehaviour) {
-			m_MonoBehaviour = monoBehaviour;
-		}
-
-		#endregion
-
-
 		#region Public Properties
 
 		/// <summary>
@@ -67,6 +52,22 @@
 		/// </summary>
 		/// <value><c>true</c> if is paused; otherwise, <c>false</c>.</value>
 		public bool IsPaused { get { return m_IsPaused; } }
+
+		#endregion
+
+
+
+		#region Constructors
+
+		/// <summary>
+		/// Initializes a new instance of the <see cref="Timer"/> class.
+		/// </summary>
+		/// <param name="monoBehaviour">
+		/// A <see cref="MonoBehaviour"/> that will start the coroutines.
+		/// </param>
+		public Timer(MonoBehaviour monoBehaviour) {
+			m_MonoBehaviour = monoBehaviour;
+		}
 
 		#endregion
 

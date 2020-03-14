@@ -34,28 +34,6 @@
 		#endregion
 
 
-		#region Constructors
-
-		/// <summary>
-		/// Initializes a new instance of the <see cref="MotionBase{ValueT, MotionT}"/> 
-		/// class.
-		/// </summary>
-		/// 
-		/// <param name="monoBehaviour">
-		/// A <see cref="MonoBehaviour"/> that will start the coroutines.
-		/// </param>
-		/// 
-		/// <param name="setter">
-		/// The settter of the property to animate.
-		/// </param>
-		public MotionBase(MonoBehaviour monoBehaviour, Setter setter) {
-			m_MonoBehaviour = monoBehaviour;
-			m_Setter = setter;
-		}
-
-		#endregion
-
-
 		#region Public Properties
 
 		/// <summary>
@@ -143,6 +121,28 @@
 		/// </summary>
 		/// <value><c>true</c> if is paused; otherwise, <c>false</c>.</value>
 		public bool IsPaused { get { return m_IsPaused; } }
+
+		#endregion
+
+
+		#region Constructors
+
+		/// <summary>
+		/// Initializes a new instance of the <see cref="MotionBase{ValueT, MotionT}"/> 
+		/// class.
+		/// </summary>
+		/// 
+		/// <param name="monoBehaviour">
+		/// A <see cref="MonoBehaviour"/> that will start the coroutines.
+		/// </param>
+		/// 
+		/// <param name="setter">
+		/// The settter of the property to animate.
+		/// </param>
+		public MotionBase(MonoBehaviour monoBehaviour, Setter setter) {
+			m_MonoBehaviour = monoBehaviour;
+			m_Setter = setter;
+		}
 
 		#endregion
 
