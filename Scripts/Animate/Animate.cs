@@ -165,6 +165,14 @@
 			}
 		}
 
+		public static Sequence GetSequence(object owner, string reuseKey, params ITimedProgressable[] timedProgressables) {
+			if (Instance != null) {
+				return Instance._GetSequence(owner, reuseKey, timedProgressables);
+			} else {
+				return null;
+			}
+		}
+
 		/// <summary>
 		/// Is the <c>Playback</c> object currently playing?
 		/// </summary>
@@ -278,6 +286,10 @@
 
 		private Timer _GetTimer(object owner, string reuseKey) {
 			return (Timer)_GetPlayback(owner, reuseKey, () => new Timer(this));
+		}
+
+		private Sequence _GetSequence(object owner, string reuseKey, ITimedProgressable[] timedProgressables) {
+			return (Sequence)_GetPlayback(owner, reuseKey, () => new Sequence(this, timedProgressables));
 		}
 
 		private IPlayback _GetPlayback(object owner, string reuseKey, Func<IPlayback> createPlayback) {

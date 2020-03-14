@@ -4,19 +4,20 @@
 	using System.Collections;
 	using UnityEngine;
 
-	public class Timer : IPlayback, ITimedProgressable {
+	public class Sequence : IPlayback, ITimedProgressable {
 
 
 		#region Constructors
 
 		/// <summary>
-		/// Initializes a new instance of the <see cref="Timer"/> class.
+		/// Initializes a new instance of the <see cref="Sequence"/> class.
 		/// </summary>
 		/// <param name="monoBehaviour">
 		/// A <see cref="MonoBehaviour"/> that will start the coroutines.
 		/// </param>
-		public Timer(MonoBehaviour monoBehaviour) {
+		public Sequence(MonoBehaviour monoBehaviour, params ITimedProgressable[] timedProgressables) {
 			m_MonoBehaviour = monoBehaviour;
+			m_TimedProgressables = timedProgressables;
 		}
 
 		#endregion
@@ -25,18 +26,18 @@
 		#region Public Properties
 
 		/// <summary>
-		/// The current time of this timer.
+		/// The current time of this sequence.
 		/// </summary>
 		/// 
 		/// <remarks> 
-		/// It is calculated inside of the coroutine while the timer is playing
+		/// It is calculated inside of the coroutine while the sequence is playing
 		/// </remarks>
 		/// 
 		/// <value>The time.</value>
 		public float CurrentTime { get { return m_CurrentTime; } }
 
 		/// <summary>
-		/// Gets the duration of this timer.
+		/// Gets the duration of this sequence.
 		/// </summary>
 		/// 
 		/// <remarks>
@@ -48,22 +49,29 @@
 		public float Duration { get { return m_Duration; } }
 
 		/// <summary>
-		/// Gets and sets the progress from 0 to 1 on this timer.
+		/// Gets and sets the progress from 0 to 1 on this sequence.
 		/// </summary>
 		/// <value>The progress.</value>
-		public float Progress {	
+		public float Progress {
 			get { return m_Progress; }
-			set { m_Progress = value; }
+			set {
+				m_Progress = value;
+
+				for(int i = 0; i < m_TimedProgressables.Length; i++) {
+
+				}
+
+			}
 		}
 
 		/// <summary>
-		/// Is the timer playing?
+		/// Is the sequence playing?
 		/// </summary>
 		/// <value><c>true</c> if is playing; otherwise, <c>false</c>.</value>
 		public bool IsPlaying { get { return m_IsPlaying; } }
 
 		/// <summary>
-		/// Is the timer paused?
+		/// Is the sequence paused?
 		/// </summary>
 		/// <value><c>true</c> if is paused; otherwise, <c>false</c>.</value>
 		public bool IsPaused { get { return m_IsPaused; } }
@@ -74,11 +82,11 @@
 		#region Public Methods
 
 		/// <summary>
-		/// Plays the timer that will last the given <c>duration</c>. 
+		/// Plays the sequence that will last the given <c>duration</c>. 
 		/// </summary>
-		/// <returns>The timer object.</returns>
+		/// <returns>The sequence object.</returns>
 		/// <param name="duration">Duration.</param>
-		public Timer Play(float duration) {
+		public Sequence Play(float duration) {
 			StopCoroutine();
 			m_Duration = duration;
 			m_IsPaused = false;
@@ -88,7 +96,7 @@
 		}
 
 		/// <summary>
-		/// Plays the timer that will last the <see cref="Duration"/>.
+		/// Plays the sequence that will last the <see cref="Duration"/>.
 		/// </summary>
 		/// 
 		/// <remarks>
@@ -96,8 +104,8 @@
 		/// <see cref="SetDuration(float)"/>.
 		/// </remarks>
 		/// 
-		/// <returns>The timer object.</returns>
-		public Timer Play() {
+		/// <returns>The sequence object.</returns>
+		public Sequence Play() {
 			StopCoroutine();
 			m_IsPaused = false;
 			m_Coroutine = m_MonoBehaviour.StartCoroutine(_Play());
@@ -106,19 +114,19 @@
 		}
 
 		/// <summary>
-		/// Pauses the timer.
+		/// Pauses the sequence.
 		/// </summary>
-		/// <returns>The timer object.</returns>
-		public Timer Pause() {
+		/// <returns>The sequence object.</returns>
+		public Sequence Pause() {
 			m_IsPaused = true;
 			return this;
 		}
 
 		/// <summary>
-		/// Resumes this timer.
+		/// Resumes this sequence.
 		/// </summary>
-		/// <returns>The timer object.</returns>
-		public Timer Resume() {
+		/// <returns>The sequence object.</returns>
+		public Sequence Resume() {
 			// Progress may have changed from outside so we update m_CurrentTime here.
 			m_CurrentTime = m_Progress * m_Duration;
 			m_IsPaused = false;
@@ -126,7 +134,7 @@
 		}
 
 		/// <summary>
-		/// Stops the timer.
+		/// Stops the sequence.
 		/// </summary>
 		public void Stop() {
 			StopCoroutine();
@@ -134,9 +142,8 @@
 		}
 
 		/// <summary>
-		/// Resets the timer to its default state.
+		/// Resets the sequence to its default state.
 		/// </summary>
-		/// <returns>The timer object.</returns>
 		public void Reset() {
 
 			StopCoroutine();
@@ -161,56 +168,56 @@
 		}
 
 		/// <summary>
-		/// Sets the duration of the timer.
+		/// Sets the duration of the sequence.
 		/// </summary>
-		/// <returns>The timer object.</returns>
+		/// <returns>The sequence object.</returns>
 		/// <param name="duration">The duration.</param>
-		public Timer SetDuration(float duration) {
+		public Sequence SetDuration(float duration) {
 			m_Duration = duration;
 			return this;
 		}
 
 		/// <summary>
-		/// Sets the <see cref="TimeMode"/> of the timer.
+		/// Sets the <see cref="TimeMode"/> of the sequence.
 		/// </summary>
 		/// <param name="timeMode"></param>
 		/// <returns></returns>
-		public Timer SetTimeMode(TimeMode timeMode) {
+		public Sequence SetTimeMode(TimeMode timeMode) {
 			m_TimeMode = timeMode;
-			return (Timer)this;
+			return this;
 		}
 
 		/// <summary>
-		/// Sets a callback that will be called every frame while the timer is playing 
+		/// Sets a callback that will be called every frame while the sequence is playing 
 		/// and not paused.
 		/// </summary>
-		/// <returns>The timer object.</returns>
+		/// <returns>The sequence object.</returns>
 		/// <param name="onUpdate">The action to be invoked on update.</param>
-		public Timer SetOnUpdate(Action onUpdate) {
+		public Sequence SetOnUpdate(Action onUpdate) {
 			m_OnUpdateProgress = null;
 			m_OnUpdate = onUpdate;
 			return this;
 		}
 
 		/// <summary>
-		/// Sets a callback that will be called every frame while the timer is playing 
+		/// Sets a callback that will be called every frame while the sequence is playing 
 		/// and not paused. <paramref name="onUpdate"/> receives the <c>progress</c> as
 		/// parameter.
 		/// </summary>
-		/// <returns>The timer object.</returns>
+		/// <returns>The sequence object.</returns>
 		/// <param name="onUpdate">The action to be invoked on update.</param>
-		public Timer SetOnUpdate(Action<float> onUpdate) {
+		public Sequence SetOnUpdate(Action<float> onUpdate) {
 			m_OnUpdate = null;
 			m_OnUpdateProgress = onUpdate;
 			return this;
 		}
 
 		/// <summary>
-		/// Sets a callback that will be called when the timer completes.
+		/// Sets a callback that will be called when the sequence completes.
 		/// </summary>
-		/// <returns>The timer object.</returns>
+		/// <returns>The sequence object.</returns>
 		/// <param name="onComplete">The action to be invoked on complete.</param>
-		public Timer SetOnComplete(Action onComplete) {
+		public Sequence SetOnComplete(Action onComplete) {
 			m_OnComplete = onComplete;
 			return this;
 		}
@@ -222,6 +229,9 @@
 
 		[NonSerialized]
 		private MonoBehaviour m_MonoBehaviour;
+
+		[NonSerialized]
+		private ITimedProgressable[] m_TimedProgressables;
 
 		[NonSerialized]
 		private Coroutine m_Coroutine;
@@ -281,7 +291,7 @@
 			m_CurrentTime = 0;
 			m_Progress = 0;
 
-			// Wait one frame for the properties to be ready, in case the timer is
+			// Wait one frame for the properties to be ready, in case the sequence is
 			// created and started in the same line.
 			yield return null;
 
@@ -311,7 +321,7 @@
 			m_OnUpdateProgress?.Invoke(Progress);
 
 			// Set the coroutine to null before calling m_OnComplete() because m_OnComplete()
-			// may start another animation with the same timer object and we don't 
+			// may start another animation with the same motion object and we don't 
 			// want to set the coroutine to null just after starting the new animation.
 			m_Coroutine = null;
 			m_IsPlaying = false;
