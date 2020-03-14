@@ -94,6 +94,14 @@
 			}
 		}
 
+		public static Motion3D GetMotion(Motion3D.Setter setter) {
+			if (Instance != null) {
+				return Instance._GetMotion(setter);
+			} else {
+				return null;
+			}
+		}
+
 		/// <summary>
 		/// Gets a <see cref="MotionFloat"/> object ready to use for any animation.
 		/// </summary>
@@ -114,6 +122,14 @@
 		public static MotionFloat GetMotion(object owner, string reuseKey, MotionFloat.Setter setter) {
 			if (Instance != null) {
 				return Instance._GetMotion(owner, reuseKey, setter);
+			} else {
+				return null;
+			}
+		}
+
+		public static MotionFloat GetMotion(MotionFloat.Setter setter) {
+			if (Instance != null) {
+				return Instance._GetMotion(setter);
 			} else {
 				return null;
 			}
@@ -144,6 +160,14 @@
 			}
 		}
 
+		public static MotionColor GetMotion(MotionColor.Setter setter) {
+			if (Instance != null) {
+				return Instance._GetMotion(setter);
+			} else {
+				return null;
+			}
+		}
+
 		/// <summary>
 		/// Gets a <see cref="Timer"/> object ready be played.
 		/// </summary>
@@ -165,9 +189,25 @@
 			}
 		}
 
+		public static Timer GetTimer() {
+			if (Instance != null) {
+				return Instance._GetTimer();
+			} else {
+				return null;
+			}
+		}
+
 		public static Sequence GetSequence(object owner, string reuseKey, params ITimedProgressable[] sequenceItems) {
 			if (Instance != null) {
 				return Instance._GetSequence(owner, reuseKey, sequenceItems);
+			} else {
+				return null;
+			}
+		}
+
+		public static Sequence GetSequence(params ITimedProgressable[] sequenceItems) {
+			if (Instance != null) {
+				return Instance._GetSequence(sequenceItems);
 			} else {
 				return null;
 			}
@@ -276,20 +316,40 @@
 			return (Motion3D)_GetPlayback(owner, reuseKey, () => new Motion3D(this, setter));
 		}
 
+		private Motion3D _GetMotion(Motion3D.Setter setter) {
+			return new Motion3D(this, setter);
+		}
+
 		private MotionFloat _GetMotion(object owner, string reuseKey, MotionFloat.Setter setter) {
 			return (MotionFloat)_GetPlayback(owner, reuseKey, () => new MotionFloat(this, setter));
+		}
+
+		private MotionFloat _GetMotion(MotionFloat.Setter setter) {
+			return new MotionFloat(this, setter);
 		}
 
 		private MotionColor _GetMotion(object owner, string reuseKey, MotionColor.Setter setter) {
 			return (MotionColor)_GetPlayback(owner, reuseKey, () => new MotionColor(this, setter));
 		}
 
+		private MotionColor _GetMotion(MotionColor.Setter setter) {
+			return new MotionColor(this, setter);
+		}
+
 		private Timer _GetTimer(object owner, string reuseKey) {
 			return (Timer)_GetPlayback(owner, reuseKey, () => new Timer(this));
 		}
 
+		private Timer _GetTimer() {
+			return new Timer(this);
+		}
+
 		private Sequence _GetSequence(object owner, string reuseKey, ITimedProgressable[] sequenceItems) {
 			return (Sequence)_GetPlayback(owner, reuseKey, () => new Sequence(this, sequenceItems));
+		}
+
+		private Sequence _GetSequence(ITimedProgressable[] sequenceItems) {
+			return new Sequence(this, sequenceItems);
 		}
 
 		private IPlayback _GetPlayback(object owner, string reuseKey, Func<IPlayback> createPlayback) {

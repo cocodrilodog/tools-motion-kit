@@ -41,8 +41,7 @@
 		private void EventTrigger_PointerClick(BaseEventData arg0) {
 			Animate.GetMotion(this, "Color", c => ColorModifier.Color = c)
 				.SetEasing(Blink.ColorEasing)
-				.Play(m_DefaultColor, Color.black, 1)
-				.SetOnComplete(() => ColorModifier.Color = m_DefaultColor);
+				.Play(Color.black, m_DefaultColor, 1);
 		}
 
 		#endregion

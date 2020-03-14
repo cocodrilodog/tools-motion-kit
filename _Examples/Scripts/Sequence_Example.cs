@@ -16,15 +16,39 @@
 
 				this, "Sequence",
 
-				Animate.GetMotion(this, "Position", p => PositionCube.transform.position = p)
+				Animate.GetMotion(p => PositionCube.transform.position = p)
 					.SetInitialValue(new Vector3(2, -2, 0)).SetFinalValue(new Vector3(-2, -2, 0))
-					.SetDuration(3).SetEasing(AnimateEasing.ElasticOut),
+					.SetDuration(2).SetEasing(AnimateEasing.ElasticOut),
 
-				Animate.GetMotion(this, "Color", c => ColorSphere.Color = c)
+				Animate.GetMotion(c => ColorSphere.Color = c)
 					.SetInitialValue(Color.red).SetFinalValue(Color.black)
-					.SetDuration(1).SetEasing(new Blink(4).ColorEasing)
+					.SetDuration(1).SetEasing(new Blink(2).ColorEasing),
 
-			).Play(4);
+				Animate.GetMotion(p => PositionCube.transform.position = p)
+					.SetInitialValue(new Vector3(-2, -2, 0)).SetFinalValue(new Vector3(-2, 2, 0))
+					.SetDuration(2).SetEasing(AnimateEasing.ElasticOut),
+
+				Animate.GetMotion(c => ColorSphere.Color = c)
+					.SetInitialValue(Color.green).SetFinalValue(Color.black)
+					.SetDuration(1).SetEasing(new Blink(2).ColorEasing),
+
+				Animate.GetMotion(p => PositionCube.transform.position = p)
+					.SetInitialValue(new Vector3(-2, 2, 0)).SetFinalValue(new Vector3(2, 2, 0))
+					.SetDuration(2).SetEasing(AnimateEasing.ElasticOut),
+
+				Animate.GetMotion(c => ColorSphere.Color = c)
+					.SetInitialValue(Color.blue).SetFinalValue(Color.black)
+					.SetDuration(1).SetEasing(new Blink(2).ColorEasing),
+
+				Animate.GetMotion(p => PositionCube.transform.position = p)
+					.SetInitialValue(new Vector3(2, 2, 0)).SetFinalValue(new Vector3(2, -2, 0))
+					.SetDuration(2).SetEasing(AnimateEasing.ElasticOut),
+
+				Animate.GetMotion(c => ColorSphere.Color = c)
+					.SetInitialValue(Color.white).SetFinalValue(Color.black)
+					.SetDuration(1).SetEasing(new Blink(2).ColorEasing)
+
+			).Play();
 
 			Debug.LogFormat("Sequence: {0}", sequence);
 

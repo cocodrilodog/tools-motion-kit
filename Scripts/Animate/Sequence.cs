@@ -32,6 +32,8 @@
 		/// <value>The duration.</value>
 		public float Duration { get { return m_Duration; } }
 
+		public float SequenceDuration { get { return m_SequenceDuration; } }
+
 		/// <summary>
 		/// Gets and sets the progress from 0 to 1 on this sequence.
 		/// </summary>
@@ -40,7 +42,7 @@
 			get { return m_Progress; }
 			set {
 				m_Progress = value;
-				float timeOnSequence = m_Progress * m_SequenceTotalDuration;
+				float timeOnSequence = m_Progress * m_SequenceDuration;
 				for(int i = 0; i < m_SequenceItems.Length; i++) {
 					if (timeOnSequence >= m_SequenceItemPositions[i] &&
 						timeOnSequence < m_SequenceItemPositions[i] + m_SequenceItems[i].Duration) {
@@ -237,9 +239,10 @@
 		public void UpdateSequence() {
 			m_SequenceItemPositions = new float[m_SequenceItems.Length];
 			for (int i = 0; i < m_SequenceItems.Length; i++) {
-				m_SequenceItemPositions[i] = m_SequenceTotalDuration;
-				m_SequenceTotalDuration += m_SequenceItems[i].Duration;
+				m_SequenceItemPositions[i] = m_SequenceDuration;
+				m_SequenceDuration += m_SequenceItems[i].Duration;
 			}
+			m_Duration = m_SequenceDuration;
 		}
 
 		#endregion
@@ -254,13 +257,13 @@
 		private ITimedProgressable[] m_SequenceItems;
 
 		/// <summary>
-		/// The total duration of the sequence.
+		/// The sum of the sequence items duration.
 		/// </summary>
 		[NonSerialized]
-		private float m_SequenceTotalDuration;
+		private float m_SequenceDuration;
 
 		/// <summary>
-		/// The position in time of each <c>TimedProgressable</c>.
+		/// The position in time of each sequence item.
 		/// </summary>
 		[NonSerialized]
 		private float[] m_SequenceItemPositions;

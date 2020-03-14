@@ -23,7 +23,7 @@
 			get {
 				return (a, b, t) => {
 					int value = (int)(t * BlinkCount * 2) % 2;
-					return value == 0 ? b : a;
+					return value == 0 ? a : b;
 				};
 			}
 		}
@@ -32,7 +32,7 @@
 			get {
 				return (a, b, t) => {
 					int value = (int)(t * BlinkCount * 2) % 2;
-					return value == 0 ? b : a;
+					return value == 0 ? a : b;
 				};
 			}
 		}
@@ -41,7 +41,7 @@
 			get {
 				return (a, b, t) => {
 					int value = (int)(t * BlinkCount * 2) % 2;
-					return value == 0 ? b : a;
+					return value == 0 ? a : b;
 				};
 			}
 		}
