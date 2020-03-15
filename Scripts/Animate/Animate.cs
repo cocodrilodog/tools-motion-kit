@@ -9,15 +9,17 @@
 	#region Interfaces
 
 	public interface IPlayback {
-		void Reset();
-		void Stop();
 		bool IsPlaying { get; }
 		bool IsPaused { get; }
+		void Reset();
+		void Stop();
 	}
 
 	public interface ITimedProgressable {
 		float Progress { get; set; }
 		float Duration { get; }
+		void OnUpdate();
+		void OnComplete();
 	}
 
 	#endregion
@@ -70,7 +72,8 @@
 		#region Public Static Methods
 
 		/// <summary>
-		/// Gets a <see cref="Motion3D"/> object ready to use for any animation.
+		/// Gets a <see cref="Motion3D"/> object ready to use for any animation and registers it with
+		/// its <paramref name="owner"/> and <paramref name="reuseKey"/> for later reuse.
 		/// </summary>
 		/// 
 		/// <returns>The <see cref="Motion3D"/>.</returns>
@@ -94,6 +97,15 @@
 			}
 		}
 
+		/// <summary>
+		/// Gets a <see cref="Motion3D"/> object ready to use for any animation.
+		/// </summary>
+		/// 
+		/// <returns>The <see cref="Motion3D"/>.</returns>
+		/// 
+		/// <param name="setter">
+		/// A function that sets the animated <see cref="Vector3"/> value. Can be a lambda expression.
+		/// </param>
 		public static Motion3D GetMotion(Motion3D.Setter setter) {
 			if (Instance != null) {
 				return Instance._GetMotion(setter);
@@ -103,7 +115,8 @@
 		}
 
 		/// <summary>
-		/// Gets a <see cref="MotionFloat"/> object ready to use for any animation.
+		/// Gets a <see cref="MotionFloat"/> object ready to use for any animation and registers it with
+		/// its <paramref name="owner"/> and <paramref name="reuseKey"/> for later reuse.
 		/// </summary>
 		/// 
 		/// <returns>The <see cref="MotionFloat"/>.</returns>
@@ -127,6 +140,15 @@
 			}
 		}
 
+		/// <summary>
+		/// Gets a <see cref="MotionFloat"/> object ready to use for any animation.
+		/// </summary>
+		/// 
+		/// <returns>The <see cref="MotionFloat"/>.</returns>
+		/// 
+		/// <param name="setter">
+		/// A function that sets the animated <see cref="float"/> value. Can be a lambda expression.
+		/// </param>
 		public static MotionFloat GetMotion(MotionFloat.Setter setter) {
 			if (Instance != null) {
 				return Instance._GetMotion(setter);
@@ -136,7 +158,8 @@
 		}
 
 		/// <summary>
-		/// Gets a <see cref="MotionColor"/> object ready to use for any animation.
+		/// Gets a <see cref="MotionColor"/> object ready to use for any animation and registers it with
+		/// its <paramref name="owner"/> and <paramref name="reuseKey"/> for later reuse.
 		/// </summary>
 		/// 
 		/// <returns>The <see cref="MotionColor"/>.</returns>
@@ -160,6 +183,15 @@
 			}
 		}
 
+		/// <summary>
+		/// Gets a <see cref="MotionColor"/> object ready to use for any animation.
+		/// </summary>
+		/// 
+		/// <returns>The <see cref="MotionColor"/>.</returns>
+		/// 
+		/// <param name="setter">
+		/// A function that sets the animated <see cref="Color"/> value. Can be a lambda expression.
+		/// </param>
 		public static MotionColor GetMotion(MotionColor.Setter setter) {
 			if (Instance != null) {
 				return Instance._GetMotion(setter);
@@ -169,7 +201,8 @@
 		}
 
 		/// <summary>
-		/// Gets a <see cref="Timer"/> object ready be played.
+		/// Gets a <see cref="Timer"/> object ready be played and registers it with
+		/// its <paramref name="owner"/> and <paramref name="reuseKey"/> for later reuse.
 		/// </summary>
 		/// 
 		/// <returns>The timer.</returns>
@@ -189,6 +222,11 @@
 			}
 		}
 
+		/// <summary>
+		/// Gets a <see cref="Timer"/> object ready be played.
+		/// </summary>
+		/// 
+		/// <returns>The timer.</returns>
 		public static Timer GetTimer() {
 			if (Instance != null) {
 				return Instance._GetTimer();
@@ -197,6 +235,24 @@
 			}
 		}
 
+		/// <summary>
+		/// Gets a <see cref="Sequence"/> object ready be played and registers it with
+		/// its <paramref name="owner"/> and <paramref name="reuseKey"/> for later reuse.
+		/// </summary>
+		/// 
+		/// <returns>The sequence.</returns>
+		/// 
+		/// <param name="owner">
+		/// The ownwer of this sequence.
+		/// </param>
+		/// 
+		/// <param name="reuseKey">
+		/// The reuseKey of this sequence.
+		/// </param>
+		///
+		/// <param name="sequenceItems">
+		/// The items that will make the sequence.
+		/// </param>
 		public static Sequence GetSequence(object owner, string reuseKey, params ITimedProgressable[] sequenceItems) {
 			if (Instance != null) {
 				return Instance._GetSequence(owner, reuseKey, sequenceItems);
@@ -205,6 +261,15 @@
 			}
 		}
 
+		/// <summary>
+		/// Gets a <see cref="Sequence"/> object ready be played.
+		/// </summary>
+		/// 
+		/// <returns>The sequence.</returns>
+		///
+		/// <param name="sequenceItems">
+		/// The items that will make the sequence.
+		/// </param>
 		public static Sequence GetSequence(params ITimedProgressable[] sequenceItems) {
 			if (Instance != null) {
 				return Instance._GetSequence(sequenceItems);

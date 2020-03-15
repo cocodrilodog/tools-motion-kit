@@ -346,6 +346,21 @@
 			return (MotionT)this;
 		}
 
+		/// <summary>
+		/// Invokes the <c>OnUpdate</c> callback.
+		/// </summary>
+		public void OnUpdate() {
+			m_OnUpdate?.Invoke();
+			m_OnUpdateProgress?.Invoke(Progress);
+		}
+
+		/// <summary>
+		/// Invokes the <c>OnComplete</c> callback.
+		/// </summary>
+		public void OnComplete() {
+			m_OnComplete?.Invoke();
+		}
+
 		#endregion
 
 
@@ -456,8 +471,7 @@
 
 					Progress = m_CurrentTime / m_Duration;
 
-					m_OnUpdate?.Invoke();
-					m_OnUpdateProgress?.Invoke(Progress);
+					OnUpdate();
 
 				}
 				yield return null;
@@ -466,8 +480,7 @@
 			// Set the final value
 			m_Setter(m_FinalValue);
 
-			m_OnUpdate?.Invoke();
-			m_OnUpdateProgress?.Invoke(Progress);
+			OnUpdate();
 
 			// Set the coroutine to null before calling m_OnComplete() because m_OnComplete()
 			// may start another animation with the same motion object and we don't 
@@ -476,7 +489,7 @@
 			m_IsPlaying = false;
 			m_CurrentTime = 0;
 
-			m_OnComplete?.Invoke();
+			OnComplete();
 
 		}
 
