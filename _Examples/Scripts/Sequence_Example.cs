@@ -18,35 +18,51 @@
 
 				Animate.GetMotion(p => PositionCube.transform.position = p)
 					.SetInitialValue(new Vector3(2, -2, 0)).SetFinalValue(new Vector3(-2, -2, 0))
-					.SetDuration(2).SetEasing(AnimateEasing.ElasticOut),
+					.SetDuration(2).SetEasing(AnimateEasing.ElasticOut)
+					.SetOnUpdate(() => Debug.LogFormat("Animation #1 Update"))
+					.SetOnComplete(() => Debug.LogFormat("Animation #1 Complete")),
 
 				Animate.GetMotion(c => ColorSphere.Color = c)
 					.SetInitialValue(Color.red).SetFinalValue(Color.black)
-					.SetDuration(1).SetEasing(new Blink(2).ColorEasing),
+					.SetDuration(1).SetEasing(new Blink(2).ColorEasing)
+					.SetOnUpdate(() => Debug.LogFormat("Animation #2 Update"))
+					.SetOnComplete(() => Debug.LogFormat("Animation #2 Complete")),
 
 				Animate.GetMotion(p => PositionCube.transform.position = p)
 					.SetInitialValue(new Vector3(-2, -2, 0)).SetFinalValue(new Vector3(-2, 2, 0))
-					.SetDuration(2).SetEasing(AnimateEasing.ElasticOut),
+					.SetDuration(2).SetEasing(AnimateEasing.ElasticOut)
+					.SetOnUpdate(() => Debug.LogFormat("Animation #3 Update"))
+					.SetOnComplete(() => Debug.LogFormat("Animation #3 Complete")),
 
 				Animate.GetMotion(c => ColorSphere.Color = c)
 					.SetInitialValue(Color.green).SetFinalValue(Color.black)
-					.SetDuration(1).SetEasing(new Blink(2).ColorEasing),
+					.SetDuration(1).SetEasing(new Blink(2).ColorEasing)
+					.SetOnUpdate(() => Debug.LogFormat("Animation #4 Update"))
+					.SetOnComplete(() => Debug.LogFormat("Animation #4 Complete")),
 
 				Animate.GetMotion(p => PositionCube.transform.position = p)
 					.SetInitialValue(new Vector3(-2, 2, 0)).SetFinalValue(new Vector3(2, 2, 0))
-					.SetDuration(2).SetEasing(AnimateEasing.ElasticOut),
+					.SetDuration(2).SetEasing(AnimateEasing.ElasticOut)
+					.SetOnUpdate(() => Debug.LogFormat("Animation #5 Update"))
+					.SetOnComplete(() => Debug.LogFormat("Animation #5 Complete")),
 
 				Animate.GetMotion(c => ColorSphere.Color = c)
 					.SetInitialValue(Color.blue).SetFinalValue(Color.black)
-					.SetDuration(1).SetEasing(new Blink(2).ColorEasing),
+					.SetDuration(1).SetEasing(new Blink(2).ColorEasing)
+					.SetOnUpdate(() => Debug.LogFormat("Animation #6 Update"))
+					.SetOnComplete(() => Debug.LogFormat("Animation #6 Complete")),
 
 				Animate.GetMotion(p => PositionCube.transform.position = p)
 					.SetInitialValue(new Vector3(2, 2, 0)).SetFinalValue(new Vector3(2, -2, 0))
-					.SetDuration(2).SetEasing(AnimateEasing.ElasticOut),
+					.SetDuration(2).SetEasing(AnimateEasing.ElasticOut)
+					.SetOnUpdate(() => Debug.LogFormat("Animation #7 Update"))
+					.SetOnComplete(() => Debug.LogFormat("Animation #7 Complete")),
 
 				Animate.GetMotion(c => ColorSphere.Color = c)
 					.SetInitialValue(Color.white).SetFinalValue(Color.black)
 					.SetDuration(1).SetEasing(new Blink(2).ColorEasing)
+					.SetOnUpdate(() => Debug.LogFormat("Animation #8 Update"))
+					.SetOnComplete(() => Debug.LogFormat("Animation #8 Complete"))
 
 			).Play();
 

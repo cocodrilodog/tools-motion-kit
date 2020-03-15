@@ -49,7 +49,8 @@
 				for(int i = 0; i < m_SequenceItems.Length; i++) {
 					if (timeOnSequence >= m_SequenceItemPositions[i] &&
 						timeOnSequence < m_SequenceItemPositions[i] + m_SequenceItems[i].Duration) {
-						m_SequenceItems[i].Progress = (timeOnSequence - m_SequenceItemPositions[i]) / m_SequenceItems[i].Duration;
+						m_ProgressedSequenceItem = m_SequenceItems[i];
+						m_ProgressedSequenceItem.Progress = (timeOnSequence - m_SequenceItemPositions[i]) / m_ProgressedSequenceItem.Duration;
 					}
 				}
 			}
@@ -252,6 +253,7 @@
 		/// Invokes the <c>OnUpdate</c> callback.
 		/// </summary>
 		public void OnUpdate() {
+			m_ProgressedSequenceItem?.OnUpdate();
 			m_OnUpdate?.Invoke();
 			m_OnUpdateProgress?.Invoke(Progress);
 		}
@@ -260,6 +262,8 @@
 		/// Invokes the <c>OnComplete</c> callback.
 		/// </summary>
 		public void OnComplete() {
+			// This is the last item.
+			m_ProgressedSequenceItem?.OnComplete();
 			m_OnComplete?.Invoke();
 		}
 
@@ -285,6 +289,24 @@
 		/// </summary>
 		[NonSerialized]
 		private float[] m_SequenceItemPositions;
+
+		/// <summary>
+		/// The currently progressed sequence item as calculated by <see cref="Progress"/>.
+		/// </summary>
+		[NonSerialized]
+		private ITimedProgressable m_ProgressedSequenceItem;
+
+		/// <summary>
+		/// Storage for <see cref="m_ProgressedSequenceItem"/> to check for change on
+		/// <see cref="_Play"/>.
+		/// </summary>
+		///
+		/// <remarks>
+		/// When <see cref="m_ProgressedSequenceItem"/> changes, is time to invoke its
+		/// <c>OnComplete</c> callback.
+		/// </remarks>
+		[NonSerialized]
+		private ITimedProgressable m_LastProgressedSequenceItem;
 
 		[NonSerialized]
 		private Coroutine m_Coroutine;
@@ -362,6 +384,11 @@
 					}
 
 					Progress = m_CurrentTime / m_Duration;
+
+					if(m_ProgressedSequenceItem != m_LastProgressedSequenceItem) {
+						m_LastProgressedSequenceItem?.OnComplete();
+						m_LastProgressedSequenceItem = m_ProgressedSequenceItem;
+					}
 
 					OnUpdate();
 
