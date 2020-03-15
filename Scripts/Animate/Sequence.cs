@@ -148,6 +148,8 @@
 		public void Stop() {
 			StopCoroutine();
 			m_IsPlaying = false;
+			m_ProgressedSequenceItem = null;
+			m_LastProgressedSequenceItem = null;
 		}
 
 		/// <summary>
@@ -173,6 +175,10 @@
 			m_OnUpdate = null;
 			m_OnUpdateProgress = null;
 			m_OnComplete = null;
+
+			// Storage for progressed sequence item
+			m_ProgressedSequenceItem = null;
+			m_LastProgressedSequenceItem = null;
 
 		}
 
