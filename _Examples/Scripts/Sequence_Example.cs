@@ -90,7 +90,7 @@
 		public void ResetButton_OnClick() {
 			m_Sequence.Reset();
 			m_Sequence.Progress = 0;
-			// Reset sets duration to 0
+			// Reset sets duration to 0, so we restore it here
 			m_Sequence.SetDuration(m_Sequence.SequenceDuration);
 			PlaybackSlider.value = 0;
 		}

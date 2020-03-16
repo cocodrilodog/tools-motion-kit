@@ -75,20 +75,6 @@
 		#region Public Methods
 
 		/// <summary>
-		/// Plays the timer that will last the given <c>duration</c>. 
-		/// </summary>
-		/// <returns>The timer object.</returns>
-		/// <param name="duration">Duration.</param>
-		public Timer Play(float duration) {
-			StopCoroutine();
-			m_Duration = duration;
-			m_IsPaused = false;
-			m_Coroutine = m_MonoBehaviour.StartCoroutine(_Play());
-			m_IsPlaying = true;
-			return this;
-		}
-
-		/// <summary>
 		/// Plays the timer that will last the <see cref="Duration"/>.
 		/// </summary>
 		/// 
@@ -99,7 +85,17 @@
 		/// 
 		/// <returns>The timer object.</returns>
 		public Timer Play() {
+			return Play(Duration);
+		}
+
+		/// <summary>
+		/// Plays the timer that will last the given <c>duration</c>. 
+		/// </summary>
+		/// <returns>The timer object.</returns>
+		/// <param name="duration">Duration.</param>
+		public Timer Play(float duration) {
 			StopCoroutine();
+			m_Duration = duration;
 			m_IsPaused = false;
 			m_Coroutine = m_MonoBehaviour.StartCoroutine(_Play());
 			m_IsPlaying = true;

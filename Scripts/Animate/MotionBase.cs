@@ -149,25 +149,6 @@
 
 		#region Public Methods
 
-		/// <summary>
-		/// Plays the motion that animates the intended property from the <c>initialValue</c>
-		/// to the specified <c>finalValue</c> during the given <c>duration</c>. 
-		/// </summary>
-		/// 
-		/// <returns>The motion object.</returns>
-		/// <param name="initialValue">Initial value.</param>
-		/// <param name="finalValue">Final value.</param>
-		/// <param name="duration">Duration.</param>
-		public MotionT Play(ValueT initialValue, ValueT finalValue, float duration) {
-			StopCoroutine();
-			m_InitialValue = initialValue;
-			m_FinalValue = finalValue;
-			m_Duration = duration;
-			m_IsPaused = false;
-			m_Coroutine = m_MonoBehaviour.StartCoroutine(_Play());
-			m_IsPlaying = true;
-			return (MotionT)this;
-		}
 
 		/// <summary>
 		/// Plays the motion that animates the intended property from its current value or
@@ -183,7 +164,23 @@
 		/// 
 		/// <returns>The motion object.</returns>
 		public MotionT Play() {
+			return Play(InitialValue, FinalValue, Duration);
+		}
+
+		/// <summary>
+		/// Plays the motion that animates the intended property from the <c>initialValue</c>
+		/// to the specified <c>finalValue</c> during the given <c>duration</c>. 
+		/// </summary>
+		/// 
+		/// <returns>The motion object.</returns>
+		/// <param name="initialValue">Initial value.</param>
+		/// <param name="finalValue">Final value.</param>
+		/// <param name="duration">Duration.</param>
+		public MotionT Play(ValueT initialValue, ValueT finalValue, float duration) {
 			StopCoroutine();
+			m_InitialValue = initialValue;
+			m_FinalValue = finalValue;
+			m_Duration = duration;
 			m_IsPaused = false;
 			m_Coroutine = m_MonoBehaviour.StartCoroutine(_Play());
 			m_IsPlaying = true;

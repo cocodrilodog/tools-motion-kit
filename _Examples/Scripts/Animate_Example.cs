@@ -60,6 +60,11 @@
 
 		public void ResetButton_OnClick() {
 			PlaybackMotion.Reset();
+
+			// Restore the values that were assigned on play
+			PlaybackMotion.SetDuration(5).SetEasing(AnimateEasing.ElasticOut)
+				.SetInitialValue(new Vector3(-5, -2, 0)).SetFinalValue(new Vector3(-5, 2, 0));
+
 			PlaybackObject.localPosition = new Vector3(-5, -2, 0);
 		}
 
@@ -191,16 +196,13 @@
 			List<Motion3D> motions = new List<Motion3D>();
 
 			for (int i = 0; i < 10; i++) {
-
 				Motion3D motion = Animate.GetMotion(
 					this,
 					// Name them differently so we are sure that the motions are different objects
 					string.Format("Chain{0}", i),
 					p => ChainObject.localPosition = p
 				);
-
 				motions.Add(motion);
-
 				if (motions.Count > 1) {
 					motions[i - 1].SetOnComplete(() => {
 						motion.Play(
@@ -211,7 +213,6 @@
 						);
 					});
 				}
-
 			}
 
 			motions[0].Play(

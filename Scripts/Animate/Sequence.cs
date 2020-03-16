@@ -102,6 +102,20 @@
 		#region Public Methods
 
 		/// <summary>
+		/// Plays the sequence that will last the <see cref="Duration"/>.
+		/// </summary>
+		/// 
+		/// <remarks>
+		/// <see cref="Duration"/> should have been set before via 
+		/// <see cref="SetDuration(float)"/>.
+		/// </remarks>
+		/// 
+		/// <returns>The sequence object.</returns>
+		public Sequence Play() {
+			return Play(Duration);
+		}
+
+		/// <summary>
 		/// Plays the sequence that will last the given <c>duration</c>. 
 		/// </summary>
 		///
@@ -115,32 +129,14 @@
 		/// <returns>The sequence object.</returns>
 		/// <param name="duration">Duration.</param>
 		public Sequence Play(float duration) {
-			StopCoroutine();
-			m_Duration = duration;
-			m_IsPaused = false;
-			m_Coroutine = m_MonoBehaviour.StartCoroutine(_Play());
-			m_IsPlaying = true;
-			return this;
-		}
-
-		/// <summary>
-		/// Plays the sequence that will last the <see cref="Duration"/>.
-		/// </summary>
-		/// 
-		/// <remarks>
-		/// <see cref="Duration"/> should have been set before via 
-		/// <see cref="SetDuration(float)"/>.
-		/// </remarks>
-		/// 
-		/// <returns>The sequence object.</returns>
-		public Sequence Play() {
-			StopCoroutine();
 			if (m_Duration > 0) {
+				StopCoroutine();
+				m_Duration = duration;
 				m_IsPaused = false;
 				m_Coroutine = m_MonoBehaviour.StartCoroutine(_Play());
 				m_IsPlaying = true;
 			} else {
-				// TODO: Check if this needs to be done in MotionBase and Timer.
+				// TODO: Check if this condition needs to be done in MotionBase and Timer.
 				// TODO: Should the OnUpdate and OnComplete callbacks of the sequence items be called here?
 				Progress = 1;
 				OnUpdate();
