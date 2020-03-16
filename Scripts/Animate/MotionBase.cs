@@ -11,7 +11,7 @@
 		where MotionT : MotionBase<ValueT, MotionT> {
 
 
-		#region Delegates
+		#region Small Types
 
 		/// <summary>
 		/// The setter of the property to animate.

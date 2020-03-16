@@ -65,7 +65,9 @@
 					.SetOnUpdate(() => Debug.LogFormat("Animation #8 Update"))
 					.SetOnComplete(() => Debug.LogFormat("Animation #8 Complete: {0}", ColorSphere.Color))
 
-			).Play();
+			).SetOnUpdate(()=> Debug.LogFormat("Sequence update"))
+			.SetOnComplete(() => Debug.LogFormat("Sequence complete"))
+			.Play();
 		}
 
 		private void Update() {
@@ -90,8 +92,13 @@
 		public void ResetButton_OnClick() {
 			m_Sequence.Reset();
 			m_Sequence.Progress = 0;
-			// Reset sets duration to 0, so we restore it here
+
+			// Restore the sequence parameters
 			m_Sequence.SetDuration(m_Sequence.SequenceDuration);
+			m_Sequence.SetOnUpdate(() => Debug.LogFormat("Sequence update"))
+				.SetOnComplete(() => Debug.LogFormat("Sequence complete"));
+
+			m_Sequence.SetDuration(0.05f);
 			PlaybackSlider.value = 0;
 		}
 

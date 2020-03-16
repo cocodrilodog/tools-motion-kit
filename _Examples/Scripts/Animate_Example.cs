@@ -162,7 +162,7 @@
 			m_PlaybackMotion = Animate.GetMotion(
 				this, "Playback", p => PlaybackObject.localPosition = p
 			).SetEasing(AnimateEasing.ElasticOut)
-			.Play(PlaybackObject.localPosition, new Vector3(-5, 2, 0), 5).Pause();
+			.Play(PlaybackObject.localPosition, new Vector3(-5, 2, 0), 5);
 		}
 
 		private void RepeatCycle() {
