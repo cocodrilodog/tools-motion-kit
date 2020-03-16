@@ -7,6 +7,20 @@
 	public class Sequence : IPlayback, ITimedProgressable {
 
 
+		#region Small Types
+
+		/// <summary>
+		/// The easing function that will be used for the sequence.
+		/// </summary>
+		/// 
+		/// <remarks>
+		/// Used as parameter at the contructor of a Motion object.
+		/// </remarks>
+		public delegate float Easing(float a, float b, float t);
+
+		#endregion
+
+
 		#region Public Properties
 
 		/// <summary>
@@ -25,8 +39,11 @@
 		/// </summary>
 		/// 
 		/// <remarks>
-		/// It is set at <see cref="Play(float)"/> or alternatively
-		/// at <see cref="SetDuration(float)"/>
+		/// It is set at <see cref="Play(float)"/> or alternatively at 
+		/// <see cref="SetDuration(float)"/>. By default the <see cref="Duration"/> 
+		/// will be the same as <see cref="SequenceDuration"/>, but it can be set to
+		/// another value, which will scale the individual duration of the sequence
+		/// items to fit the assigned <see cref="Duration"/>.
 		/// </remarks>
 		/// 
 		/// <value>The duration.</value>
@@ -45,14 +62,8 @@
 			get { return m_Progress; }
 			set {
 				m_Progress = value;
-				float timeOnSequence = m_Progress * m_SequenceDuration;
-				for(int i = 0; i < m_SequenceItems.Length; i++) {
-					if (timeOnSequence >= m_SequenceItemPositions[i] &&
-						timeOnSequence < m_SequenceItemPositions[i] + m_SequenceItems[i].Duration) {
-						m_ProgressedSequenceItem = m_SequenceItems[i];
-						m_ProgressedSequenceItem.Progress = (timeOnSequence - m_SequenceItemPositions[i]) / m_ProgressedSequenceItem.Duration;
-					}
-				}
+				UpdateSequenceItemAtProgress(m_Progress);
+				ApplyProgress();
 			}
 		}
 
@@ -93,6 +104,14 @@
 		/// <summary>
 		/// Plays the sequence that will last the given <c>duration</c>. 
 		/// </summary>
+		///
+		/// <remarks>
+		/// <see cref="Duration"/> can be set alternatively at <see cref="SetDuration(float)"/>.
+		/// By default the <see cref="Duration"/> will be the same as <see cref="SequenceDuration"/>,
+		/// but it can be set to another value, which will scale the individual duration of the
+		/// sequence items to fit the assigned <see cref="Duration"/>.
+		/// </remarks>
+		/// 
 		/// <returns>The sequence object.</returns>
 		/// <param name="duration">Duration.</param>
 		public Sequence Play(float duration) {
@@ -116,9 +135,17 @@
 		/// <returns>The sequence object.</returns>
 		public Sequence Play() {
 			StopCoroutine();
-			m_IsPaused = false;
-			m_Coroutine = m_MonoBehaviour.StartCoroutine(_Play());
-			m_IsPlaying = true;
+			if (m_Duration > 0) {
+				m_IsPaused = false;
+				m_Coroutine = m_MonoBehaviour.StartCoroutine(_Play());
+				m_IsPlaying = true;
+			} else {
+				// TODO: Check if this needs to be done in MotionBase and Timer.
+				// TODO: Should the OnUpdate and OnComplete callbacks of the sequence items be called here?
+				Progress = 1;
+				OnUpdate();
+				OnComplete();
+			}
 			return this;
 		}
 
@@ -183,8 +210,16 @@
 		}
 
 		/// <summary>
-		/// Sets the duration of the sequence.
+		/// Sets the <see cref="Duration"/> of the sequence.
 		/// </summary>
+		/// 
+		/// <remarks>
+		/// It is can be set at <see cref="Play(float)"/> or through this method.
+		/// By default the <see cref="Duration"/> will be the same as <see cref="SequenceDuration"/>,
+		/// but it can be set to another value, which will scale the individual duration
+		/// of the sequence items to fit the assigned <see cref="Duration"/>.
+		/// </remarks>
+		/// 
 		/// <returns>The sequence object.</returns>
 		/// <param name="duration">The duration.</param>
 		public Sequence SetDuration(float duration) {
@@ -199,6 +234,22 @@
 		/// <returns></returns>
 		public Sequence SetTimeMode(TimeMode timeMode) {
 			m_TimeMode = timeMode;
+			return this;
+		}
+
+		/// <summary>
+		/// Sets the easing of the motion.
+		/// </summary>
+		/// 
+		/// <remarks>
+		/// This must be a function that interpolates two values <c>a</c> and <c>b</c>
+		/// with a progress number from 0 to 1 <c>t</c>
+		/// </remarks>
+		/// 
+		/// <returns>The motion object.</returns>
+		/// <param name="easing">Easing.</param>
+		public Sequence SetEasing(Easing easing) {
+			m_Easing = easing;
 			return this;
 		}
 
@@ -268,8 +319,11 @@
 		/// Invokes the <c>OnComplete</c> callback.
 		/// </summary>
 		public void OnComplete() {
-			// This is the last item.
-			m_ProgressedSequenceItem?.OnComplete();
+			// This calls OnComplete on the last item.
+			if (m_LastProgressedSequenceItem != null) {
+				m_ProgressedSequenceItem.Progress = 1;
+				m_ProgressedSequenceItem.OnComplete();
+			}
 			m_OnComplete?.Invoke();
 		}
 
@@ -284,9 +338,6 @@
 		[NonSerialized]
 		private ITimedProgressable[] m_SequenceItems;
 
-		/// <summary>
-		/// The sum of the sequence items duration.
-		/// </summary>
 		[NonSerialized]
 		private float m_SequenceDuration;
 
@@ -301,6 +352,12 @@
 		/// </summary>
 		[NonSerialized]
 		private ITimedProgressable m_ProgressedSequenceItem;
+
+		/// <summary>
+		/// The index of the <see cref="m_ProgressedSequenceItem"/>.
+		/// </summary>
+		[NonSerialized]
+		private int m_ProgressedSequenceItemIndex;
 
 		/// <summary>
 		/// Storage for <see cref="m_ProgressedSequenceItem"/> to check for change on
@@ -319,6 +376,9 @@
 
 		[NonSerialized]
 		private TimeMode m_TimeMode;
+
+		[NonSerialized]
+		private Easing m_Easing;
 
 		[NonSerialized]
 		private Action m_OnUpdate;
@@ -362,10 +422,26 @@
 			}
 		}
 
+		/// <summary>
+		/// An internal version of <see cref="Progress"/>
+		/// </summary>
+		///
+		/// <remarks>
+		///	This is used in <see cref="_Play"/> which calls <see cref="UpdateSequenceItemAtProgress(float)"/>
+		///	prior to applying the progress.
+		/// </remarks>
+		private float _Progress {
+			get { return m_Progress; }
+			set {
+				m_Progress = value;
+				ApplyProgress();
+			}
+		}
+
 		#endregion
 
 
-		#region Internal Methods
+		#region Private Methods
 
 		private IEnumerator _Play() {
 
@@ -385,16 +461,31 @@
 					// This avoids progress to be greater than 1
 					if (m_CurrentTime > m_Duration) {
 						m_CurrentTime = m_Duration;
-						Progress = 1;
+						_Progress = 1;
 						break;
 					}
 
-					Progress = m_CurrentTime / m_Duration;
+					// Check for OnComplete of all the items except the last one
+					
+					// Get the sequence item to be progressed (targetProgress is always < 1 here)
+					float targetProgress = m_CurrentTime / m_Duration;
+					UpdateSequenceItemAtProgress(targetProgress);
 
-					if(m_ProgressedSequenceItem != m_LastProgressedSequenceItem) {
-						m_LastProgressedSequenceItem?.OnComplete();
+					// TODO: If duration is very short, should OnUpdate and OnComplete be certified
+					// to be called in all sequence items?
+					
+					// Will the progressed sequence item change?
+					// If it will, complete the previous one before. 
+					if (m_ProgressedSequenceItem != m_LastProgressedSequenceItem) {
+						if(m_LastProgressedSequenceItem != null) {
+							m_LastProgressedSequenceItem.Progress = 1;
+							m_LastProgressedSequenceItem.OnComplete();
+						}
 						m_LastProgressedSequenceItem = m_ProgressedSequenceItem;
 					}
+
+					// Finally, apply the progress
+					_Progress = targetProgress;
 
 					OnUpdate();
 
@@ -420,6 +511,38 @@
 				m_MonoBehaviour.StopCoroutine(m_Coroutine);
 				m_Coroutine = null;
 			}
+		}
+
+		/// <summary>
+		/// Gets the item of the sequence that coincides with the provided <paramref name="progress"/>.
+		/// </summary>
+		/// <param name="progress">The progress.</param>
+		private void UpdateSequenceItemAtProgress(float progress) {
+			if (m_Progress < 1) {
+				// Progress translated to time units
+				float timeOnSequence = progress * m_SequenceDuration;
+				// Iterate through items
+				for (int i = 0; i < m_SequenceItems.Length; i++) {
+					if (timeOnSequence >= m_SequenceItemPositions[i] &&
+						timeOnSequence < m_SequenceItemPositions[i] + m_SequenceItems[i].Duration) {
+						m_ProgressedSequenceItemIndex = i;
+						m_ProgressedSequenceItem = m_SequenceItems[i];
+						break;
+					}
+				}
+			} else {
+				// Handle progress == 1 (0 is already handled)
+				m_ProgressedSequenceItemIndex = m_SequenceItems.Length - 1;
+				m_ProgressedSequenceItem = m_SequenceItems[m_ProgressedSequenceItemIndex];
+			}
+		}
+
+		private void ApplyProgress() {
+			float timeOnSequence = m_Progress * m_SequenceDuration;
+			// TODO: Use easing
+			m_ProgressedSequenceItem.Progress =
+				(timeOnSequence - m_SequenceItemPositions[m_ProgressedSequenceItemIndex]) /
+				m_ProgressedSequenceItem.Duration;
 		}
 
 		#endregion

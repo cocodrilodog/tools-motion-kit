@@ -182,11 +182,6 @@
 		/// </remarks>
 		/// 
 		/// <returns>The motion object.</returns>
-		/// 
-		/// <param name="startAtCurrentValue">
-		/// If set to <c>true</c> starts at the current value of the intended animatable 
-		/// property otherwise starts at <see cref="InitialValue"/>.
-		/// </param>
 		public MotionT Play() {
 			StopCoroutine();
 			m_IsPaused = false;
@@ -476,9 +471,6 @@
 				}
 				yield return null;
 			}
-
-			// Set the final value
-			m_Setter(m_FinalValue);
 
 			OnUpdate();
 
