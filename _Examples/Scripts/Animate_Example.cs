@@ -61,7 +61,7 @@
 		public void ResetButton_OnClick() {
 			PlaybackMotion.Reset();
 
-			// Restore the values that were assigned on play
+			// Restore the parameters that were assigned on play
 			PlaybackMotion.SetDuration(5).SetEasing(AnimateEasing.ElasticOut)
 				.SetInitialValue(new Vector3(-5, -2, 0)).SetFinalValue(new Vector3(-5, 2, 0));
 

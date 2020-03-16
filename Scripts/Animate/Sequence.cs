@@ -442,7 +442,6 @@
 					// Add the time at the beginning because one frame has already happened
 					m_CurrentTime += DeltaTime;
 
-					Debug.LogFormat("FRAME");
 					// Complete the sequence items if they haven't been completed
 					foreach (SequenceItemInfo itemInfo in m_SequenceItemsInfo) {
 						if (!itemInfo.Completed) {
@@ -522,6 +521,8 @@
 				(timeOnSequence - m_SequenceItemsInfo[m_ProgressedSequenceItemInfo.Index].Position) /
 				m_ProgressedSequenceItemInfo.Item.Duration;
 
+			// If the sequence is paused and the Progress is set to a point in time before, this updates
+			// the following sequence items so that they are not marked as completed.
 			for(int i = m_ProgressedSequenceItemInfo.Index; i < m_SequenceItemsInfo.Length; i++) {
 				m_SequenceItemsInfo[i].Completed = false;
 			}
