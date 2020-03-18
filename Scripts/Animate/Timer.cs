@@ -6,7 +6,7 @@
 
 	public class Timer : IPlayback, ITimedProgressable {
 
-
+		
 		#region Public Properties
 
 		/// <summary>
@@ -35,10 +35,16 @@
 		/// <summary>
 		/// Gets and sets the progress from 0 to 1 on this timer.
 		/// </summary>
+		/// <remarks>
+		///	It updates the <see cref="CurrentTime"/> consistently.
+		/// </remarks>
 		/// <value>The progress.</value>
 		public float Progress {	
 			get { return m_Progress; }
-			set { m_Progress = value; }
+			set {
+				m_Progress = value;
+				m_CurrentTime = m_Progress * m_Duration;
+			}
 		}
 
 		/// <summary>
@@ -283,6 +289,15 @@
 			}
 		}
 
+		/// <summary>
+		/// Internal version of <see cref="Progress"/> that doesn't update <see cref="m_CurrentTime"/>
+		/// because it was updated in the coroutine.
+		/// </summary>
+		private float _Progress {
+			get { return m_Progress; }
+			set { m_Progress = value; }
+		}
+
 		#endregion
 
 
@@ -306,11 +321,11 @@
 					// This avoids progress to be greater than 1
 					if (m_CurrentTime > m_Duration) {
 						m_CurrentTime = m_Duration;
-						Progress = 1;
+						_Progress = 1;
 						break;
 					}
 
-					Progress = m_CurrentTime / m_Duration;
+					_Progress = m_CurrentTime / m_Duration;
 
 					OnUpdate();
 

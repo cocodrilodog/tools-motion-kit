@@ -92,22 +92,17 @@
 		/// it will use <see cref=" InitialValue"/> and <see cref="FinalValue"/>
 		/// as the values to interpolate while paused or even while not playing
 		/// at all.
+		///	It updates the <see cref="CurrentTime"/> consistently.
 		/// </remarks>
 		/// 
 		/// <value>The progress.</value>
 		public float Progress { 
-
 			get { return m_Progress; } 
-
 			set {
-				if (m_Easing != null) {
-					m_Setter(m_Easing(m_InitialValue, m_FinalValue, value));
-				} else {
-					m_Setter(DefaultEasing(m_InitialValue, m_FinalValue, value));
-				}
 				m_Progress = value;
+				m_CurrentTime = m_Progress * m_Duration;
+				ApplyProgress();
 			}
-
 		}
 
 		/// <summary>
@@ -428,6 +423,18 @@
 			}
 		}
 
+		/// <summary>
+		/// Internal version of <see cref="Progress"/> that doesn't update <see cref="m_CurrentTime"/>
+		/// because it was updated in the coroutine.
+		/// </summary>
+		private float _Progress {
+			get { return m_Progress; }
+			set {
+				m_Progress = value;
+				ApplyProgress();
+			}
+		}
+
 		#endregion
 
 
@@ -457,11 +464,11 @@
 					// This avoids progress to be greater than 1
 					if (m_CurrentTime > m_Duration) {
 						m_CurrentTime = m_Duration;
-						Progress = 1;
+						_Progress = 1;
 						break;
 					}
 
-					Progress = m_CurrentTime / m_Duration;
+					_Progress = m_CurrentTime / m_Duration;
 
 					OnUpdate();
 
@@ -486,6 +493,14 @@
 			if (m_Coroutine != null) {
 				m_MonoBehaviour.StopCoroutine(m_Coroutine);
 				m_Coroutine = null;
+			}
+		}
+
+		private void ApplyProgress() {
+			if (m_Easing != null) {
+				m_Setter(m_Easing(m_InitialValue, m_FinalValue, m_Progress));
+			} else {
+				m_Setter(DefaultEasing(m_InitialValue, m_FinalValue, m_Progress));
 			}
 		}
 

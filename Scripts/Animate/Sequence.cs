@@ -91,12 +91,16 @@
 		/// <summary>
 		/// Gets and sets the progress from 0 to 1 on this sequence.
 		/// </summary>
+		/// <remarks>
+		///	It updates the <see cref="CurrentTime"/> consistently.
+		/// </remarks>
 		/// <value>The progress.</value>
 		public float Progress {
 			get { return m_Progress; }
 			set {
 				m_Progress = value;
-				UpdateProgressedSequenceItemInfo(m_Progress);
+				m_CurrentTime = m_Progress * m_Duration;
+				SetProgressingItemInfo(m_Progress);
 				ApplyProgress();
 			}
 		}
@@ -127,7 +131,7 @@
 		public Sequence(MonoBehaviour monoBehaviour, params ITimedProgressable[] sequenceItems) {
 			m_MonoBehaviour = monoBehaviour;
 			m_SequenceItems = sequenceItems;
-			UpdateSequence();
+			EvaluateSequence();
 		}
 
 		#endregion
@@ -197,7 +201,8 @@
 		public void Stop() {
 			StopCoroutine();
 			m_IsPlaying = false;
-			m_ProgressedSequenceItemInfo = null;
+			m_ProgressingItemInfo = null;
+			MarkSequenceItemsAsNotCompleted();
 		}
 
 		/// <summary>
@@ -224,8 +229,9 @@
 			m_OnUpdateProgress = null;
 			m_OnComplete = null;
 
-			// Storage for progressed sequence item
-			m_ProgressedSequenceItemInfo = null;
+			// Sequence objects
+			m_ProgressingItemInfo = null;
+			MarkSequenceItemsAsNotCompleted();
 
 		}
 
@@ -317,7 +323,7 @@
 		/// <remarks>
 		/// It should be called if the duration of any of its sequence items changes.
 		/// </remarks>
-		public void UpdateSequence() {
+		public void EvaluateSequence() {
 			m_SequenceItemsInfo = new SequenceItemInfo[m_SequenceItems.Length];
 			for (int i = 0; i < m_SequenceItems.Length; i++) {
 				m_SequenceItemsInfo[i] = new SequenceItemInfo(i, m_SequenceItems[i]);
@@ -331,9 +337,24 @@
 		/// Invokes the <c>OnUpdate</c> callback.
 		/// </summary>
 		public void OnUpdate() {
-			if (m_ProgressedSequenceItemInfo != null && !m_ProgressedSequenceItemInfo.Completed) {
-				m_ProgressedSequenceItemInfo.Item.OnUpdate();
+			// Complete the sequence items if time is past their end and they haven't been completed
+			foreach (SequenceItemInfo itemInfo in m_SequenceItemsInfo) {
+				if (!itemInfo.Completed) {
+					float timeScale = m_Duration / m_SequenceDuration;
+					float itemEnd = (itemInfo.Position + itemInfo.Item.Duration) * timeScale;
+					if (m_CurrentTime >= itemEnd) {
+						itemInfo.Item.Progress = 1;
+						itemInfo.Item.OnUpdate();
+						itemInfo.Item.OnComplete();
+						itemInfo.Completed = true;
+					}
+				}
 			}
+			// Update the progressing item as long as it haven't been completed
+			if (m_ProgressingItemInfo != null && !m_ProgressingItemInfo.Completed) {
+				m_ProgressingItemInfo.Item.OnUpdate();
+			}
+			// Update the sequence itself
 			m_OnUpdate?.Invoke();
 			m_OnUpdateProgress?.Invoke(Progress);
 		}
@@ -342,6 +363,12 @@
 		/// Invokes the <c>OnComplete</c> callback.
 		/// </summary>
 		public void OnComplete() {
+			// Complete the progressing item as long as it haven't been completed.
+			// At this point, the m_ProgressingItemInfo must be the last item.
+			if (m_ProgressingItemInfo != null && !m_ProgressingItemInfo.Completed) {
+				m_ProgressingItemInfo.Item.OnComplete();
+			}
+			// Complete the sequence itself
 			m_OnComplete?.Invoke();
 		}
 
@@ -363,10 +390,11 @@
 		private float m_SequenceDuration;
 
 		/// <summary>
-		/// The currently progressed sequence item as calculated by <see cref="Progress"/>.
+		/// The currently progressing sequence item as calculated by
+		/// <see cref="SetProgressingItemInfo(float)"/>.
 		/// </summary>
 		[NonSerialized]
-		private SequenceItemInfo m_ProgressedSequenceItemInfo;
+		private SequenceItemInfo m_ProgressingItemInfo;
 
 		[NonSerialized]
 		private Coroutine m_Coroutine;
@@ -419,6 +447,19 @@
 			}
 		}
 
+		/// <summary>
+		/// Internal version of <see cref="Progress"/> that doesn't update <see cref="m_CurrentTime"/>
+		/// because it was updated in the coroutine.
+		/// </summary>
+		private float _Progress {
+			get { return m_Progress; }
+			set {
+				m_Progress = value;
+				SetProgressingItemInfo(m_Progress);
+				ApplyProgress();
+			}
+		}
+
 		#endregion
 
 
@@ -428,9 +469,8 @@
 
 			m_CurrentTime = 0;
 			m_Progress = 0;
-			foreach(SequenceItemInfo itemInfo in m_SequenceItemsInfo) {
-				itemInfo.Completed = false;
-			}
+
+			MarkSequenceItemsAsNotCompleted();
 
 			// Wait one frame for the properties to be ready, in case the sequence is
 			// created and started in the same line.
@@ -442,28 +482,15 @@
 					// Add the time at the beginning because one frame has already happened
 					m_CurrentTime += DeltaTime;
 
-					// Complete the sequence items if they haven't been completed
-					foreach (SequenceItemInfo itemInfo in m_SequenceItemsInfo) {
-						if (!itemInfo.Completed) {
-							float sequenceTimeScale = m_Duration / m_SequenceDuration;
-							float itemEnd = (itemInfo.Position + itemInfo.Item.Duration) * sequenceTimeScale;
-							if (m_CurrentTime > itemEnd) {
-								itemInfo.Item.Progress = 1;
-								itemInfo.Item.OnComplete();
-								itemInfo.Completed = true;
-							}
-						}
-					}
-
 					// This avoids progress to be greater than 1
 					if (m_CurrentTime > m_Duration) {
 						m_CurrentTime = m_Duration;
-						Progress = 1;
+						_Progress = 1;
 						break;
 					}
 
-					// Finally, apply the progress
-					Progress = m_CurrentTime / m_Duration;
+					// Set the progress
+					_Progress = m_CurrentTime / m_Duration;
 					
 					OnUpdate();
 
@@ -491,11 +518,20 @@
 			}
 		}
 
+		private void MarkSequenceItemsAsNotCompleted() {
+			foreach (SequenceItemInfo itemInfo in m_SequenceItemsInfo) {
+				itemInfo.Completed = false;
+				if(itemInfo.Item is Sequence) {
+					((Sequence)itemInfo.Item).MarkSequenceItemsAsNotCompleted();
+				}
+			}
+		}
+
 		/// <summary>
-		/// Gets the item of the sequence that coincides with the provided <paramref name="progress"/>.
+		/// Sets the item of the sequence that coincides with the provided <paramref name="progress"/>.
 		/// </summary>
 		/// <param name="progress">The progress.</param>
-		private void UpdateProgressedSequenceItemInfo(float progress) {
+		private void SetProgressingItemInfo(float progress) {
 			if (m_Progress < 1) {
 				// Progress translated to time units
 				float timeOnSequence = progress * m_SequenceDuration;
@@ -503,27 +539,27 @@
 				for (int i = 0; i < m_SequenceItemsInfo.Length; i++) {
 					if (timeOnSequence >= m_SequenceItemsInfo[i].Position &&
 						timeOnSequence < m_SequenceItemsInfo[i].Position + m_SequenceItemsInfo[i].Item.Duration) {
-						m_ProgressedSequenceItemInfo = m_SequenceItemsInfo[i];
+						m_ProgressingItemInfo = m_SequenceItemsInfo[i];
 						break;
 					}
 				}
 			} else {
 				// Handle progress == 1 (0 is already handled)
-				m_ProgressedSequenceItemInfo = m_SequenceItemsInfo[m_SequenceItemsInfo.Length - 1];
+				m_ProgressingItemInfo = m_SequenceItemsInfo[m_SequenceItemsInfo.Length - 1];
 			}
 		}
 
 		private void ApplyProgress() {
 
-			float timeOnSequence = m_Progress * m_SequenceDuration;
 			// TODO: Use easing
-			m_ProgressedSequenceItemInfo.Item.Progress =
-				(timeOnSequence - m_SequenceItemsInfo[m_ProgressedSequenceItemInfo.Index].Position) /
-				m_ProgressedSequenceItemInfo.Item.Duration;
+			float timeOnSequence = m_Progress * m_SequenceDuration;
+			m_ProgressingItemInfo.Item.Progress =
+				(timeOnSequence - m_SequenceItemsInfo[m_ProgressingItemInfo.Index].Position) /
+				m_ProgressingItemInfo.Item.Duration;
 
 			// If the sequence is paused and the Progress is set to a point in time before, this updates
 			// the following sequence items so that they are not marked as completed.
-			for(int i = m_ProgressedSequenceItemInfo.Index; i < m_SequenceItemsInfo.Length; i++) {
+			for(int i = m_ProgressingItemInfo.Index; i < m_SequenceItemsInfo.Length; i++) {
 				m_SequenceItemsInfo[i].Completed = false;
 			}
 

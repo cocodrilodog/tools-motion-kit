@@ -29,23 +29,33 @@
 					.SetOnUpdate(() => Debug.LogFormat("Animation #2 Update"))
 					.SetOnComplete(() => Debug.LogFormat("Animation #2 Complete: {0}", ColorSphere.Color)),
 
+				Animate.GetTimer()
+					.SetDuration(2)
+					.SetOnUpdate(() => Debug.LogFormat("Timer Update"))
+					.SetOnComplete(() => Debug.LogFormat("Timer Complete")),
+
 				Animate.GetMotion(p => PositionCube.transform.position = p)
 					.SetInitialValue(new Vector3(-2, -2, 0)).SetFinalValue(new Vector3(-2, 2, 0))
 					.SetDuration(2).SetEasing(AnimateEasing.ElasticOut)
 					.SetOnUpdate(() => Debug.LogFormat("Animation #3 Update"))
 					.SetOnComplete(() => Debug.LogFormat("Animation #3 Complete: {0}", PositionCube.transform.position)),
 
-				Animate.GetMotion(c => ColorSphere.Color = c)
-					.SetInitialValue(Color.green).SetFinalValue(Color.black)
-					.SetDuration(1).SetEasing(new Blink(2).ColorEasing)
-					.SetOnUpdate(() => Debug.LogFormat("Animation #4 Update"))
-					.SetOnComplete(() => Debug.LogFormat("Animation #4 Complete: {0}", ColorSphere.Color)),
+				Animate.GetSequence(
 
-				Animate.GetMotion(p => PositionCube.transform.position = p)
-					.SetInitialValue(new Vector3(-2, 2, 0)).SetFinalValue(new Vector3(2, 2, 0))
-					.SetDuration(2).SetEasing(AnimateEasing.ElasticOut)
-					.SetOnUpdate(() => Debug.LogFormat("Animation #5 Update"))
-					.SetOnComplete(() => Debug.LogFormat("Animation #5 Complete: {0}", PositionCube.transform.position)),
+					Animate.GetMotion(c => ColorSphere.Color = c)
+						.SetInitialValue(Color.green).SetFinalValue(Color.black)
+						.SetDuration(1).SetEasing(new Blink(2).ColorEasing)
+						.SetOnUpdate(() => Debug.LogFormat("Animation #4 Update"))
+						.SetOnComplete(() => Debug.LogFormat("Animation #4 Complete: {0}", ColorSphere.Color)),
+
+					Animate.GetMotion(p => PositionCube.transform.position = p)
+						.SetInitialValue(new Vector3(-2, 2, 0)).SetFinalValue(new Vector3(2, 2, 0))
+						.SetDuration(2).SetEasing(AnimateEasing.ElasticOut)
+						.SetOnUpdate(() => Debug.LogFormat("Animation #5 Update"))
+						.SetOnComplete(() => Debug.LogFormat("Animation #5 Complete: {0}", PositionCube.transform.position))
+
+				).SetOnUpdate(() => Debug.LogFormat("Animation #4-5 Update!!!"))
+				.SetOnComplete(() => Debug.LogFormat("Animation #4-5 Complete!!!")),
 
 				Animate.GetMotion(c => ColorSphere.Color = c)
 					.SetInitialValue(Color.blue).SetFinalValue(Color.black)
@@ -94,11 +104,11 @@
 			m_Sequence.Progress = 0;
 
 			// Restore the sequence parameters
-			m_Sequence.SetDuration(m_Sequence.SequenceDuration);
+			//m_Sequence.SetDuration(m_Sequence.SequenceDuration);
+			m_Sequence.SetDuration(0);
 			m_Sequence.SetOnUpdate(() => Debug.LogFormat("Sequence update"))
 				.SetOnComplete(() => Debug.LogFormat("Sequence complete"));
 
-			m_Sequence.SetDuration(0.05f);
 			PlaybackSlider.value = 0;
 		}
 
