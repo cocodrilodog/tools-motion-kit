@@ -338,7 +338,7 @@
 		/// </summary>
 		public void OnUpdate() {
 			m_OnUpdate?.Invoke();
-			m_OnUpdateProgress?.Invoke(Progress);
+			m_OnUpdateProgress?.Invoke(_Progress);
 		}
 
 		/// <summary>

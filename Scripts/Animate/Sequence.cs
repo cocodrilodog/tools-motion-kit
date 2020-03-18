@@ -98,9 +98,9 @@
 		public float Progress {
 			get { return m_Progress; }
 			set {
-				m_Progress = value;
+				m_Progress = Mathf.Clamp01(value);
 				m_CurrentTime = m_Progress * m_Duration;
-				SetProgressingItemInfo(m_Progress);
+				SetProgressingItemInfo();
 				ApplyProgress();
 			}
 		}
@@ -342,7 +342,8 @@
 				if (!itemInfo.Completed) {
 					float timeScale = m_Duration / m_SequenceDuration;
 					float itemEnd = (itemInfo.Position + itemInfo.Item.Duration) * timeScale;
-					if (m_CurrentTime >= itemEnd) {
+					
+					if (EasedProgress * m_Duration >= itemEnd) { // <- EasedProgress * m_Duration means eased currentTime
 						itemInfo.Item.Progress = 1;
 						itemInfo.Item.OnUpdate();
 						itemInfo.Item.OnComplete();
@@ -356,7 +357,7 @@
 			}
 			// Update the sequence itself
 			m_OnUpdate?.Invoke();
-			m_OnUpdateProgress?.Invoke(Progress);
+			m_OnUpdateProgress?.Invoke(_Progress);
 		}
 
 		/// <summary>
@@ -391,7 +392,7 @@
 
 		/// <summary>
 		/// The currently progressing sequence item as calculated by
-		/// <see cref="SetProgressingItemInfo(float)"/>.
+		/// <see cref="SetProgressingItemInfo()"/>.
 		/// </summary>
 		[NonSerialized]
 		private SequenceItemInfo m_ProgressingItemInfo;
@@ -454,9 +455,22 @@
 		private float _Progress {
 			get { return m_Progress; }
 			set {
-				m_Progress = value;
-				SetProgressingItemInfo(m_Progress);
+				m_Progress = Mathf.Clamp01(value);
+				SetProgressingItemInfo();
 				ApplyProgress();
+			}
+		}
+
+		/// <summary>
+		/// The <see cref="Progress"/>, but processed by <see cref="m_Easing"/>.
+		/// </summary>
+		private float EasedProgress {
+			get {
+				if(m_Easing != null) {
+					return m_Easing(0, 1, m_Progress);
+				} else {
+					return m_Progress;
+				}
 			}
 		}
 
@@ -528,13 +542,12 @@
 		}
 
 		/// <summary>
-		/// Sets the item of the sequence that coincides with the provided <paramref name="progress"/>.
+		/// Sets the item of the sequence that coincides with <see cref="EasedProgress"/>
 		/// </summary>
-		/// <param name="progress">The progress.</param>
-		private void SetProgressingItemInfo(float progress) {
-			if (m_Progress < 1) {
+		private void SetProgressingItemInfo() {
+			if (EasedProgress < 1) {
 				// Progress translated to time units
-				float timeOnSequence = progress * m_SequenceDuration;
+				float timeOnSequence = EasedProgress * m_SequenceDuration;
 				// Iterate through items
 				for (int i = 0; i < m_SequenceItemsInfo.Length; i++) {
 					if (timeOnSequence >= m_SequenceItemsInfo[i].Position &&
@@ -551,8 +564,7 @@
 
 		private void ApplyProgress() {
 
-			// TODO: Use easing
-			float timeOnSequence = m_Progress * m_SequenceDuration;
+			float timeOnSequence = EasedProgress * m_SequenceDuration;
 			m_ProgressingItemInfo.Item.Progress =
 				(timeOnSequence - m_SequenceItemsInfo[m_ProgressingItemInfo.Index].Position) /
 				m_ProgressingItemInfo.Item.Duration;

@@ -75,7 +75,8 @@
 					.SetOnUpdate(() => Debug.LogFormat("Animation #8 Update"))
 					.SetOnComplete(() => Debug.LogFormat("Animation #8 Complete: {0}", ColorSphere.Color))
 
-			).SetOnUpdate(()=> Debug.LogFormat("Sequence update"))
+			).SetEasing(AnimateEasing.QuadInOut)
+			.SetOnUpdate(()=> Debug.LogFormat("Sequence update"))
 			.SetOnComplete(() => Debug.LogFormat("Sequence complete"))
 			.Play();
 		}
