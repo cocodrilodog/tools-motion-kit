@@ -4,6 +4,10 @@
 	using System.Collections;
 	using UnityEngine;
 
+	/// <summary>
+	/// A sequence of <see cref="MotionBase{ValueT, MotionT}"/>, <see cref="Timer"/>
+	/// and <see cref="Sequence"/> objects.
+	/// </summary>
 	public class Sequence : IPlayback, ITimedProgressable {
 
 

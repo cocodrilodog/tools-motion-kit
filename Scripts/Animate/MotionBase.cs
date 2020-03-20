@@ -5,7 +5,7 @@
 	using UnityEngine;
 
 	/// <summary>
-	/// The object that defines an animation.
+	/// The object that defines an animation of a property from value A to value B.
 	/// </summary>
 	public abstract class MotionBase<ValueT, MotionT> : IPlayback, ITimedProgressable 
 		where MotionT : MotionBase<ValueT, MotionT> {

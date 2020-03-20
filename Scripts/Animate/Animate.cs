@@ -26,20 +26,21 @@
 
 	/// 
 	/// <summary>
-	/// Utility singleton to create reusable animations and/or timed-callbacks with coroutines.
+	/// Singleton to create reusable motions, timers and sequences which altogether
+	/// are used to create animations.
 	/// </summary>
 	/// 
 	/// <remarks>
 	/// <c>Motion</c>, <c>Timer</c> and <c>Sequence</c> are objects used to animate any
 	/// property of any object.
-	/// Playback objects are created and returned by these methods: 
+	/// 
+	/// Playback objects are created and returned by Methods like these: 
 	/// <see cref="GetMotion(object, string, MotionBase{float, MotionFloat}.Setter)"/>,
-	/// <see cref="GetMotion(object, string, MotionBase{Vector3, Motion3D}.Setter)"/>, or
-	/// <see cref="GetMotion(object, string, MotionBase{Color, MotionColor}.Setter)"/>
-	/// <see cref="GetTimer(object, string)"/>
+	/// <see cref="GetTimer(object, string)"/> and
+	/// <see cref="GetSequence(object, string, ITimedProgressable[])"/>
 	/// 
 	/// Those methods receive the following parameters: <c>owner</c>, <c>reuseKey</c>
-	/// and <c>setter</c>, describd below.
+	/// and other parameters.
 	/// 
 	/// If a <c>Playback</c> object with the same owner and reuseKey was already created before, 
 	/// that will be the returned object. Otherwise a new <c>Playback</c> object  instance is 
@@ -65,6 +66,13 @@
 	/// <c>Playback</c> object object that is related to the same owner. <c>Playback</c> objects with 
 	/// the same reuseKey and owner will stop to one another if one is started while the other 
 	/// was playing.
+	///
+	/// There are also versions to create non-registered motions, timers and sequences:
+	/// <see cref="GetMotion(MotionBase{float, MotionFloat}.Setter)"/>,
+	/// <see cref="GetTimer()"/> and
+	/// <see cref="GetSequence(ITimedProgressable[])"/>
+	///
+	/// In this case, the reusability of the playback objects must be handled by the client code.
 	/// </remarks>
 	public class Animate : MonoSingleton<Animate> {
 

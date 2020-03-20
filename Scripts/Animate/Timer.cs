@@ -4,6 +4,10 @@
 	using System.Collections;
 	using UnityEngine;
 
+	/// <summary>
+	/// A timer that works exactly as a <see cref="MotionBase{ValueT, MotionT}"/>
+	/// but without affecting any property.
+	/// </summary>
 	public class Timer : IPlayback, ITimedProgressable {
 
 		
