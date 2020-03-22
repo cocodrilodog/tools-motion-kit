@@ -429,12 +429,12 @@
 			Dictionary<string, IPlayback> ownerPlaybacks;
 			if (Playbacks.TryGetValue(owner, out ownerPlaybacks)) {
 				IPlayback playback;
-				// There is a owner object registered, let's search for the reuseKey
+				// There is an owner object registered, let's search for the reuseKey
 				if (ownerPlaybacks.TryGetValue(reuseKey, out playback)) {
-					// That owner did register that reuseKey, so return the existing motion
+					// That owner did register that reuseKey, so return the existing playback
 					return playback;
 				} else {
-					// The target doesn't have the key yet, so create the reuseKey and motion
+					// The target doesn't have the key yet, so create the reuseKey and playback
 					return ownerPlaybacks[reuseKey] = createPlayback();
 				}
 			} else {
