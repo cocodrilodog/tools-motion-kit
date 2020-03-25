@@ -340,24 +340,24 @@
 		/// <summary>
 		/// Invokes the <c>OnUpdate</c> callback.
 		/// </summary>
-		public void OnUpdate() {
+		public void InvokeOnUpdate() {
 			// Complete the sequence items if time is past their end and they haven't been completed
 			foreach (SequenceItemInfo itemInfo in m_SequenceItemsInfo) {
 				if (!itemInfo.Completed) {
 					float timeScale = m_Duration / m_SequenceDuration;
 					float itemEnd = (itemInfo.Position + itemInfo.Item.Duration) * timeScale;
-					
+
 					if (EasedProgress * m_Duration >= itemEnd) { // <- EasedProgress * m_Duration means eased currentTime
 						itemInfo.Item.Progress = 1;
-						itemInfo.Item.OnUpdate();
-						itemInfo.Item.OnComplete();
+						itemInfo.Item.InvokeOnUpdate();
+						itemInfo.Item.InvokeOnComplete();
 						itemInfo.Completed = true;
 					}
 				}
 			}
 			// Update the progressing item as long as it haven't been completed
 			if (m_ProgressingItemInfo != null && !m_ProgressingItemInfo.Completed) {
-				m_ProgressingItemInfo.Item.OnUpdate();
+				m_ProgressingItemInfo.Item.InvokeOnUpdate();
 			}
 			// Update the sequence itself
 			m_OnUpdate?.Invoke();
@@ -367,11 +367,11 @@
 		/// <summary>
 		/// Invokes the <c>OnComplete</c> callback.
 		/// </summary>
-		public void OnComplete() {
+		public void InvokeOnComplete() {
 			// Complete the progressing item as long as it haven't been completed.
 			// At this point, the m_ProgressingItemInfo must be the last item.
 			if (m_ProgressingItemInfo != null && !m_ProgressingItemInfo.Completed) {
-				m_ProgressingItemInfo.Item.OnComplete();
+				m_ProgressingItemInfo.Item.InvokeOnComplete();
 			}
 			// Complete the sequence itself
 			m_OnComplete?.Invoke();
@@ -470,7 +470,7 @@
 		/// </summary>
 		private float EasedProgress {
 			get {
-				if(m_Easing != null) {
+				if (m_Easing != null) {
 					return m_Easing(0, 1, m_Progress);
 				} else {
 					return m_Progress;
@@ -509,14 +509,14 @@
 
 					// Set the progress
 					_Progress = m_CurrentTime / m_Duration;
-					
-					OnUpdate();
+
+					InvokeOnUpdate();
 
 				}
 				yield return null;
 			}
 
-			OnUpdate();
+			InvokeOnUpdate();
 
 			// Set the coroutine to null before calling m_OnComplete() because m_OnComplete()
 			// may start another animation with the same motion object and we don't 
@@ -525,7 +525,7 @@
 			m_IsPlaying = false;
 			m_CurrentTime = 0;
 
-			OnComplete();
+			InvokeOnComplete();
 
 		}
 
@@ -539,7 +539,7 @@
 		private void MarkSequenceItemsAsNotCompleted() {
 			foreach (SequenceItemInfo itemInfo in m_SequenceItemsInfo) {
 				itemInfo.Completed = false;
-				if(itemInfo.Item is Sequence) {
+				if (itemInfo.Item is Sequence) {
 					((Sequence)itemInfo.Item).MarkSequenceItemsAsNotCompleted();
 				}
 			}
@@ -575,7 +575,7 @@
 
 			// If the sequence is paused and the Progress is set to a point in time before, this updates
 			// the following sequence items so that they are not marked as completed.
-			for(int i = m_ProgressingItemInfo.Index; i < m_SequenceItemsInfo.Length; i++) {
+			for (int i = m_ProgressingItemInfo.Index; i < m_SequenceItemsInfo.Length; i++) {
 				m_SequenceItemsInfo[i].Completed = false;
 			}
 

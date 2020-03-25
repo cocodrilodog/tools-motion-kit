@@ -18,8 +18,8 @@
 	public interface ITimedProgressable {
 		float Progress { get; set; }
 		float Duration { get; }
-		void OnUpdate();
-		void OnComplete();
+		void InvokeOnUpdate();
+		void InvokeOnComplete();
 	}
 
 	#endregion

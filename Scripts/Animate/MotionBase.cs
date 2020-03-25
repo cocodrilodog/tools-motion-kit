@@ -7,7 +7,7 @@
 	/// <summary>
 	/// The object that defines an animation of a property from value A to value B.
 	/// </summary>
-	public abstract class MotionBase<ValueT, MotionT> : IPlayback, ITimedProgressable 
+	public abstract class MotionBase<ValueT, MotionT> : IPlayback, ITimedProgressable
 		where MotionT : MotionBase<ValueT, MotionT> {
 
 
@@ -96,8 +96,8 @@
 		/// </remarks>
 		/// 
 		/// <value>The progress.</value>
-		public float Progress { 
-			get { return m_Progress; } 
+		public float Progress {
+			get { return m_Progress; }
 			set {
 				m_Progress = value;
 				m_CurrentTime = m_Progress * m_Duration;
@@ -336,7 +336,7 @@
 		/// <summary>
 		/// Invokes the <c>OnUpdate</c> callback.
 		/// </summary>
-		public void OnUpdate() {
+		public void InvokeOnUpdate() {
 			m_OnUpdate?.Invoke();
 			m_OnUpdateProgress?.Invoke(_Progress);
 		}
@@ -344,7 +344,7 @@
 		/// <summary>
 		/// Invokes the <c>OnComplete</c> callback.
 		/// </summary>
-		public void OnComplete() {
+		public void InvokeOnComplete() {
 			m_OnComplete?.Invoke();
 		}
 
@@ -412,7 +412,7 @@
 
 		private float DeltaTime {
 			get {
-				switch(m_TimeMode) {
+				switch (m_TimeMode) {
 					case TimeMode.Normal: return Time.deltaTime;
 					case TimeMode.Unscaled: return Time.unscaledDeltaTime;
 					case TimeMode.Smooth: return Time.smoothDeltaTime;
@@ -470,13 +470,13 @@
 
 					_Progress = m_CurrentTime / m_Duration;
 
-					OnUpdate();
+					InvokeOnUpdate();
 
 				}
 				yield return null;
 			}
 
-			OnUpdate();
+			InvokeOnUpdate();
 
 			// Set the coroutine to null before calling m_OnComplete() because m_OnComplete()
 			// may start another animation with the same motion object and we don't 
@@ -485,7 +485,7 @@
 			m_IsPlaying = false;
 			m_CurrentTime = 0;
 
-			OnComplete();
+			InvokeOnComplete();
 
 		}
 
