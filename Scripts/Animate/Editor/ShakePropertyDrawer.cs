@@ -32,7 +32,8 @@
 
 		public override void OnGUI(Rect position, SerializedProperty property, GUIContent label) {
 			base.OnGUI(position, property, label);
-			Property.isExpanded = EditorGUI.Foldout(GetNextPosition(), Property.isExpanded, label);
+			Label = EditorGUI.BeginProperty(position, label, property);
+			Property.isExpanded = EditorGUI.Foldout(GetNextPosition(), Property.isExpanded, Label);
 			if (Property.isExpanded) {
 				EditorGUI.indentLevel++;
 				EditorGUI.PropertyField(GetNextPosition(), TMultiplierProperty);
@@ -45,6 +46,7 @@
 				}
 				EditorGUI.indentLevel--;
 			}
+			EditorGUI.EndProperty();
 		}
 
 		#endregion

@@ -31,10 +31,16 @@
 
 			base.OnGUI(position, property, label);
 
-			EditorGUI.BeginProperty(Position, Label, Property);
+			Label = EditorGUI.BeginProperty(Position, Label, Property);
 
 			int easingNameIndex = AnimateEasingField.EasingNames.IndexOf(EasingNameProperty.stringValue);
-			easingNameIndex = EditorGUI.Popup(GetNextPosition(), label.text, easingNameIndex, EasingNamesArray);
+
+			GUIContent[] guiContents = new GUIContent[EasingNamesArray.Length];
+			for(int i = 0; i < EasingNamesArray.Length; i++) {
+				guiContents[i] = new GUIContent(EasingNamesArray[i]);
+			}
+
+			easingNameIndex = EditorGUI.Popup(GetNextPosition(), Label, easingNameIndex, guiContents);
 			if (easingNameIndex > -1) {
 				EasingNameProperty.stringValue = AnimateEasingField.EasingNames[easingNameIndex];
 			}

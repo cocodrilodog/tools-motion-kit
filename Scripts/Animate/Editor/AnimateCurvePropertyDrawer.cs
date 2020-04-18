@@ -23,7 +23,9 @@
 
 		public override void OnGUI(Rect position, SerializedProperty property, GUIContent label) {
 			base.OnGUI(position, property, label);
+			Label = EditorGUI.BeginProperty(position, label, property);
 			EditorGUI.PropertyField(GetNextPosition(), CurveProperty, Label);
+			EditorGUI.EndProperty();
 		}
 
 		#endregion

@@ -12,6 +12,7 @@
 
 		#region Public Fields
 
+		[Tooltip("A Animate curve.")]
 		[SerializeField]
 		public AnimateCurve AnimateCurve;
 
