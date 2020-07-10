@@ -8,6 +8,8 @@
 
 	#region Interfaces
 
+	// TODO: When a playback object is disposed, it should be market as such and shouldn't
+	// allow any further execution.
 	public interface IPlayback {
 		bool IsPlaying { get; }
 		bool IsPaused { get; }
