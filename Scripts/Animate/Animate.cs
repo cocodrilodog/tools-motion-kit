@@ -11,8 +11,8 @@
 	public interface IPlayback {
 		bool IsPlaying { get; }
 		bool IsPaused { get; }
-		void Reset();
 		void Stop();
+		void Reset();
 	}
 
 	public interface ITimedProgressable {
@@ -20,6 +20,7 @@
 		float Duration { get; }
 		void InvokeOnUpdate();
 		void InvokeOnComplete();
+		void Reset();
 	}
 
 	#endregion

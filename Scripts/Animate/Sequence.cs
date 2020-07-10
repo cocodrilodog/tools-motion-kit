@@ -134,6 +134,11 @@
 		/// </param>
 		public Sequence(MonoBehaviour monoBehaviour, params ITimedProgressable[] sequenceItems) {
 			m_MonoBehaviour = monoBehaviour;
+			for (int i = 0; i < sequenceItems.Length; i++) {
+				if (Mathf.Approximately(sequenceItems[i].Duration, 0)) {
+					throw new ArgumentException("Sequence items can not have duration equal to 0");
+				}
+			}
 			m_SequenceItems = sequenceItems;
 			EvaluateSequence();
 		}
@@ -236,6 +241,11 @@
 			// Sequence objects
 			m_ProgressingItemInfo = null;
 			MarkSequenceItemsAsNotCompleted();
+
+			// Reset all to avoid references that would prevent garbage collection
+			foreach(SequenceItemInfo sequenceItemInfo in m_SequenceItemsInfo) {
+				sequenceItemInfo.Item.Reset();
+			}
 
 		}
 
