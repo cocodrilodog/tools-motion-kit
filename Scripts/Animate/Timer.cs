@@ -46,6 +46,7 @@
 		public float Progress {
 			get { return m_Progress; }
 			set {
+				CheckDisposed();
 				m_Progress = value;
 				m_CurrentTime = m_Progress * m_Duration;
 			}
@@ -146,19 +147,9 @@
 		/// <returns>The timer object.</returns>
 		public void Dispose() {
 
+			m_IsDisposed = true;
+
 			StopCoroutine();
-
-			// Value set on Play or individually
-			m_Duration = 0;
-			m_TimeMode = default;
-
-			// Values set when starting the coroutine
-			m_CurrentTime = 0;
-			m_Progress = 0;
-
-			// Values set on playback actions
-			m_IsPlaying = false;
-			m_IsPaused = false;
 
 			// Set to null the callbacks
 			m_OnUpdate = null;
@@ -275,6 +266,9 @@
 		[NonSerialized]
 		private bool m_IsPaused;
 
+		[NonSerialized]
+		private bool m_IsDisposed;
+
 		#endregion
 
 
@@ -299,7 +293,10 @@
 		/// </summary>
 		private float _Progress {
 			get { return m_Progress; }
-			set { m_Progress = value; }
+			set {
+				CheckDisposed();
+				m_Progress = value;
+			}
 		}
 
 		#endregion
@@ -354,6 +351,14 @@
 			if (m_Coroutine != null) {
 				m_MonoBehaviour.StopCoroutine(m_Coroutine);
 				m_Coroutine = null;
+			}
+		}
+
+		private void CheckDisposed() {
+			if (m_IsDisposed) {
+				throw new InvalidOperationException(
+					"This timer has been disposed, it can not be used anymore."
+				);
 			}
 		}
 

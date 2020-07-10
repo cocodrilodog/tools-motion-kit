@@ -53,7 +53,7 @@
 		/// </summary>
 		/// 
 		/// <remarks>
-		/// It is set at <see cref="Play(ValueT, float)"/> or alternatively
+		/// It is set at <see cref="Play(ValueT, ValueT, float)"/> or alternatively
 		/// at <see cref="SetFinalValue(ValueT)"/>
 		/// </remarks>
 		/// 
@@ -216,20 +216,9 @@
 		/// <returns>The motion object.</returns>
 		public void Dispose() {
 
+			m_IsDisposed = true;
+
 			StopCoroutine();
-
-			// Values set on Play or individually
-			m_InitialValue = default;
-			m_FinalValue = default;
-			m_Duration = 0;
-
-			// Values set when starting the coroutine
-			m_CurrentTime = 0;
-			m_Progress = 0;
-
-			// Values set on playback actions
-			m_IsPlaying = false;
-			m_IsPaused = false;
 
 			// Set to null the callbacks
 			m_OnUpdate = null;
@@ -237,7 +226,7 @@
 			m_OnComplete = null;
 
 			// Go back to default time mode and easing.
-			m_TimeMode = default;
+			//m_TimeMode = default;
 			m_Easing = null;
 
 		}
@@ -401,6 +390,9 @@
 		[NonSerialized]
 		private bool m_IsPaused;
 
+		[NonSerialized]
+		private bool m_IsDisposed;
+
 		#endregion
 
 
@@ -497,10 +489,19 @@
 		}
 
 		private void ApplyProgress() {
+			CheckDisposed();
 			if (m_Easing != null) {
 				m_Setter(m_Easing(m_InitialValue, m_FinalValue, m_Progress));
 			} else {
 				m_Setter(DefaultEasing(m_InitialValue, m_FinalValue, m_Progress));
+			}
+		}
+
+		private void CheckDisposed() {
+			if (m_IsDisposed) {
+				throw new InvalidOperationException(
+					"This motion has been disposed, it can not be used anymore."
+				);
 			}
 		}
 

@@ -219,19 +219,9 @@
 		/// </summary>
 		public void Dispose() {
 
+			m_IsDisposed = true;
+
 			StopCoroutine();
-
-			// Value set on Play or individually
-			m_Duration = 0;
-			m_TimeMode = default;
-
-			// Values set when starting the coroutine
-			m_CurrentTime = 0;
-			m_Progress = 0;
-
-			// Values set on playback actions
-			m_IsPlaying = false;
-			m_IsPaused = false;
 
 			// Set to null the callbacks
 			m_OnUpdate = null;
@@ -444,6 +434,9 @@
 		[NonSerialized]
 		private bool m_IsPaused;
 
+		[NonSerialized]
+		private bool m_IsDisposed;
+
 		#endregion
 
 
@@ -581,6 +574,8 @@
 
 		private void ApplyProgress() {
 
+			CheckDisposed();
+
 			float timeOnSequence = EasedProgress * m_SequenceDuration;
 			m_ProgressingItemInfo.Item.Progress =
 				(timeOnSequence - m_SequenceItemsInfo[m_ProgressingItemInfo.Index].Position) /
@@ -592,6 +587,14 @@
 				m_SequenceItemsInfo[i].Completed = false;
 			}
 
+		}
+
+		private void CheckDisposed() {
+			if (m_IsDisposed) {
+				throw new InvalidOperationException(
+					"This sequence has been disposed, it can not be used anymore."
+				);
+			}
 		}
 
 		#endregion
