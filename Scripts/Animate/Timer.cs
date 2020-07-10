@@ -10,7 +10,7 @@
 	/// </summary>
 	public class Timer : IPlayback, ITimedProgressable {
 
-		
+
 		#region Public Properties
 
 		/// <summary>
@@ -43,7 +43,7 @@
 		///	It updates the <see cref="CurrentTime"/> consistently.
 		/// </remarks>
 		/// <value>The progress.</value>
-		public float Progress {	
+		public float Progress {
 			get { return m_Progress; }
 			set {
 				m_Progress = value;
@@ -144,7 +144,7 @@
 		/// Resets the timer to its default state.
 		/// </summary>
 		/// <returns>The timer object.</returns>
-		public void Reset() {
+		public void Dispose() {
 
 			StopCoroutine();
 

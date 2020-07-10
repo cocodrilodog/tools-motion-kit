@@ -12,7 +12,7 @@
 		bool IsPlaying { get; }
 		bool IsPaused { get; }
 		void Stop();
-		void Reset();
+		void Dispose();
 	}
 
 	public interface ITimedProgressable {
@@ -20,7 +20,7 @@
 		float Duration { get; }
 		void InvokeOnUpdate();
 		void InvokeOnComplete();
-		void Reset();
+		void Dispose();
 	}
 
 	#endregion
@@ -484,7 +484,7 @@
 			Dictionary<string, IPlayback> ownerPlaybacks;
 			if (Playbacks.TryGetValue(owner, out ownerPlaybacks)) {
 				foreach (KeyValuePair<string, IPlayback> entry in ownerPlaybacks) {
-					entry.Value.Reset();
+					entry.Value.Dispose();
 				}
 				Playbacks.Remove(owner);
 				return true;
@@ -496,7 +496,7 @@
 		private void _ClearAllPlaybacks() {
 			foreach (KeyValuePair<object, Dictionary<string, IPlayback>> ownerEntry in Playbacks) {
 				foreach (KeyValuePair<string, IPlayback> entry in ownerEntry.Value) {
-					entry.Value.Reset();
+					entry.Value.Dispose();
 				}
 				ownerEntry.Value.Clear();
 			}

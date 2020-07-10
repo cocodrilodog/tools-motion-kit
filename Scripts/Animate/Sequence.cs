@@ -217,7 +217,7 @@
 		/// <summary>
 		/// Resets the sequence to its default state.
 		/// </summary>
-		public void Reset() {
+		public void Dispose() {
 
 			StopCoroutine();
 
@@ -244,7 +244,7 @@
 
 			// Reset all to avoid references that would prevent garbage collection
 			foreach(SequenceItemInfo sequenceItemInfo in m_SequenceItemsInfo) {
-				sequenceItemInfo.Item.Reset();
+				sequenceItemInfo.Item.Dispose();
 			}
 
 		}
@@ -564,6 +564,9 @@
 				float timeOnSequence = EasedProgress * m_SequenceDuration;
 				// Iterate through items
 				for (int i = 0; i < m_SequenceItemsInfo.Length; i++) {
+					if (Mathf.Approximately(m_SequenceItemsInfo[i].Item.Duration, 0)) {
+						throw new ArgumentException("Sequence items can not have duration equal to 0");
+					}
 					if (timeOnSequence >= m_SequenceItemsInfo[i].Position &&
 						timeOnSequence < m_SequenceItemsInfo[i].Position + m_SequenceItemsInfo[i].Item.Duration) {
 						m_ProgressingItemInfo = m_SequenceItemsInfo[i];

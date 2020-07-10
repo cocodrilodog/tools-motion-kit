@@ -101,16 +101,16 @@
 		#region UI Event Handlers
 
 		public void ResetButton_OnClick() {
-			m_Sequence.Reset();
-			m_Sequence.Progress = 0;
+			m_Sequence.Dispose();
+			//m_Sequence.Progress = 0;
 
-			// Restore the sequence parameters
-			//m_Sequence.SetDuration(m_Sequence.SequenceDuration);
-			m_Sequence.SetDuration(0);
-			m_Sequence.SetOnUpdate(() => Debug.LogFormat("Sequence update"))
-				.SetOnComplete(() => Debug.LogFormat("Sequence complete"));
+			//// Restore the sequence parameters
+			////m_Sequence.SetDuration(m_Sequence.SequenceDuration);
+			//m_Sequence.SetDuration(0);
+			//m_Sequence.SetOnUpdate(() => Debug.LogFormat("Sequence update"))
+			//	.SetOnComplete(() => Debug.LogFormat("Sequence complete"));
 
-			PlaybackSlider.value = 0;
+			//PlaybackSlider.value = 0;
 		}
 
 		public void StopButton_OnClick() {

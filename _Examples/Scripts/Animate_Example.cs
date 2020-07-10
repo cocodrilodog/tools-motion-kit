@@ -60,7 +60,7 @@
 		#region UI Event Handlers
 
 		public void ResetButton_OnClick() {
-			PlaybackMotion.Reset();
+			PlaybackMotion.Dispose();
 
 			// Restore the parameters that were assigned on play
 			PlaybackMotion.SetDuration(5).SetEasing(AnimateEasing.ElasticOut)

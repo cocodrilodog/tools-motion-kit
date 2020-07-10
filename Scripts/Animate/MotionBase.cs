@@ -214,7 +214,7 @@
 		/// Resets the motion to its default state.
 		/// </summary>
 		/// <returns>The motion object.</returns>
-		public void Reset() {
+		public void Dispose() {
 
 			StopCoroutine();
 
