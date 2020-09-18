@@ -409,7 +409,7 @@
 					case TimeMode.Unscaled: return Time.unscaledDeltaTime;
 					case TimeMode.Smooth: return Time.smoothDeltaTime;
 					case TimeMode.Fixed: return Time.fixedDeltaTime;
-					case TimeMode.FixedUnscaled: return Time.fixedUnscaledTime;
+					case TimeMode.FixedUnscaled: return Time.fixedUnscaledDeltaTime;
 					default: return Time.deltaTime;
 				}
 			}
