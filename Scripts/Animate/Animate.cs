@@ -125,6 +125,49 @@
 		}
 
 		/// <summary>
+		/// Gets a <see cref="MotionQuaternion"/> object ready to use for any animation.
+		/// </summary>
+		/// 
+		/// <returns>The <see cref="MotionQuaternion"/>.</returns>
+		/// 
+		/// <param name="setter">
+		/// A function that sets the animated <see cref="Quaternion"/> value. Can be a lambda expression.
+		/// </param>
+		public static MotionQuaternion GetMotion(MotionQuaternion.Setter setter) {
+			if (Instance != null) {
+				return Instance._GetMotion(setter);
+			} else {
+				return null;
+			}
+		}
+
+		/// <summary>
+		/// Gets a <see cref="MotionQuaternion"/> object ready to use for any animation and registers it with
+		/// its <paramref name="owner"/> and <paramref name="reuseID"/> for later reuse.
+		/// </summary>
+		/// 
+		/// <returns>The <see cref="MotionQuaternion"/>.</returns>
+		/// 
+		/// <param name="owner">
+		/// The owner of this motion.
+		/// </param>
+		/// 
+		/// <param name="reuseID">
+		/// The reuseID of this motion.
+		/// </param>
+		/// 
+		/// <param name="setter">
+		/// A function that sets the animated <see cref="Quaternion"/> value. Can be a lambda expression.
+		/// </param>
+		public static MotionQuaternion GetMotion(object owner, string reuseID, MotionQuaternion.Setter setter) {
+			if (Instance != null) {
+				return Instance._GetMotion(owner, reuseID, setter);
+			} else {
+				return null;
+			}
+		}
+
+		/// <summary>
 		/// Gets a <see cref="MotionFloat"/> object ready to use for any animation.
 		/// </summary>
 		/// 
@@ -393,6 +436,14 @@
 
 		private Motion3D _GetMotion(Motion3D.Setter setter) {
 			return new Motion3D(this, setter);
+		}
+
+		private MotionQuaternion _GetMotion(object owner, string reuseID, MotionQuaternion.Setter setter) {
+			return (MotionQuaternion)_GetPlayback(owner, reuseID, () => new MotionQuaternion(this, setter));
+		}
+
+		private MotionQuaternion _GetMotion(MotionQuaternion.Setter setter) {
+			return new MotionQuaternion(this, setter);
 		}
 
 		private MotionFloat _GetMotion(object owner, string reuseID, MotionFloat.Setter setter) {
