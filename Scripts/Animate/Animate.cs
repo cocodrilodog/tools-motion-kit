@@ -13,9 +13,19 @@
 	}
 
 	public interface IPlayback : IDisposable {
+
 		bool IsPlaying { get; }
 		bool IsPaused { get; }
 		void Stop();
+
+		/// <summary>
+		/// Implement this to check if the setter or timed progressables are equal.
+		/// Otherwise a new Motion/Sequence/Parallel should be created.
+		/// </summary>
+		/// <param name="setterOrTimedProgressables"></param>
+		/// <returns></returns>
+		//bool IsCompatible(object setterOrTimedProgressables);
+
 	}
 
 	public interface ITimedProgressable : IDisposable {
@@ -479,12 +489,18 @@
 		}
 
 		private IPlayback _GetPlayback(object owner, string reuseID, Func<IPlayback> createPlayback) {
-			Dictionary<string, IPlayback> ownerPlaybacks;
-			if (Playbacks.TryGetValue(owner, out ownerPlaybacks)) {
-				IPlayback playback;
+			if (Playbacks.TryGetValue(owner, out Dictionary<string, IPlayback> ownerPlaybacks)) {
 				// There is an owner object registered, let's search for the reuseID
-				if (ownerPlaybacks.TryGetValue(reuseID, out playback)) {
+				if (ownerPlaybacks.TryGetValue(reuseID, out IPlayback playback)) {
 					// That owner did register that reuseID, so return the existing playback
+
+					// TODO: Compare if the provided parameters match the existing playback properties.
+					// For example, the setter or the sequenceItems. If not, the existing one should be 
+					// disposed and a new one should be created.
+					//
+					// HINT: Implement IPlayback.IsCompatible(object setterOrTimedProgressables);
+					// and compare createPlayback.Method.ReturnType == playback.GetType();
+					// The setterOrTimedProgressables should be passed to this function.
 					return playback;
 				} else {
 					// The target doesn't have the key yet, so create the reuseID and playback

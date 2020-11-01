@@ -224,6 +224,7 @@
 			m_OnUpdate = null;
 			m_OnUpdateProgress = null;
 			m_OnComplete = null;
+			m_OnCompleteNull = null;
 
 			// Go back to default time mode and easing.
 			//m_TimeMode = default;
@@ -318,7 +319,20 @@
 		/// <returns>The motion object.</returns>
 		/// <param name="onComplete">The action to be invoked on complete.</param>
 		public MotionT SetOnComplete(Action onComplete) {
+			m_OnCompleteNull = null;
 			m_OnComplete = onComplete;
+			return (MotionT)this;
+		}
+
+		/// <summary>
+		/// Sets a callback that will be called when the motion completes its animation. The 
+		/// callback can return <c>true</c> to set itself to null.
+		/// </summary>
+		/// <returns>The motion object.</returns>
+		/// <param name="onComplete">The action to be invoked on complete.</param>
+		public MotionT SetOnComplete(Func<bool> onComplete) {
+			m_OnComplete = null;
+			m_OnCompleteNull = onComplete;
 			return (MotionT)this;
 		}
 
@@ -335,6 +349,9 @@
 		/// </summary>
 		public void InvokeOnComplete() {
 			m_OnComplete?.Invoke();
+			if (m_OnCompleteNull != null && m_OnCompleteNull.Invoke()) {
+				SetOnComplete(null);
+			}
 		}
 
 		#endregion
@@ -368,6 +385,9 @@
 
 		[NonSerialized]
 		private Action m_OnComplete;
+
+		[NonSerialized]
+		private Func<bool> m_OnCompleteNull;
 
 		[NonSerialized]
 		private ValueT m_InitialValue;

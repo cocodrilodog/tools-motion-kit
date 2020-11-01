@@ -227,6 +227,7 @@
 			m_OnUpdate = null;
 			m_OnUpdateProgress = null;
 			m_OnComplete = null;
+			m_OnCompleteNull = null;
 
 			// Sequence objects
 			m_ProgressingItemInfo = null;
@@ -314,7 +315,19 @@
 		/// <returns>The sequence object.</returns>
 		/// <param name="onComplete">The action to be invoked on complete.</param>
 		public Sequence SetOnComplete(Action onComplete) {
+			m_OnCompleteNull = null;
 			m_OnComplete = onComplete;
+			return this;
+		}
+
+		/// <summary>
+		/// Sets a callback that will be called when the sequence completes.
+		/// </summary>
+		/// <returns>The sequence object.</returns>
+		/// <param name="onComplete">The action to be invoked on complete.</param>
+		public Sequence SetOnComplete(Func<bool> onComplete) {
+			m_OnComplete = null;
+			m_OnCompleteNull = onComplete;
 			return this;
 		}
 
@@ -344,6 +357,7 @@
 			// Complete the sequence items if time is past their end and they haven't been completed
 			foreach (SequenceItemInfo itemInfo in m_SequenceItemsInfo) {
 				if (!itemInfo.Completed) {
+
 					float timeScale = m_Duration / m_SequenceDuration;
 					float itemEnd = (itemInfo.Position + itemInfo.Item.Duration) * timeScale;
 
@@ -353,6 +367,7 @@
 						itemInfo.Item.InvokeOnComplete();
 						itemInfo.Completed = true;
 					}
+
 				}
 			}
 			// Update the progressing item as long as it haven't been completed
@@ -375,6 +390,9 @@
 			}
 			// Complete the sequence itself
 			m_OnComplete?.Invoke();
+			if (m_OnCompleteNull != null && m_OnCompleteNull.Invoke()) {
+				SetOnComplete(null);
+			}
 		}
 
 		#endregion
@@ -418,6 +436,9 @@
 
 		[NonSerialized]
 		private Action m_OnComplete;
+
+		[NonSerialized]
+		private Func<bool> m_OnCompleteNull;
 
 		[NonSerialized]
 		private float m_CurrentTime;

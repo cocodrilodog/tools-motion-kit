@@ -155,6 +155,7 @@
 			m_OnUpdate = null;
 			m_OnUpdateProgress = null;
 			m_OnComplete = null;
+			m_OnCompleteNull = null;
 
 		}
 
@@ -209,7 +210,20 @@
 		/// <returns>The timer object.</returns>
 		/// <param name="onComplete">The action to be invoked on complete.</param>
 		public Timer SetOnComplete(Action onComplete) {
+			m_OnCompleteNull = null;
 			m_OnComplete = onComplete;
+			return this;
+		}
+
+		/// <summary>
+		/// Sets a callback that will be called when the timer completes. The 
+		/// callback can return <c>true</c> to set itself to null.
+		/// </summary>
+		/// <returns>The motion object.</returns>
+		/// <param name="onComplete">The action to be invoked on complete.</param>
+		public Timer SetOnComplete(Func<bool> onComplete) {
+			m_OnComplete = null;
+			m_OnCompleteNull = onComplete;
 			return this;
 		}
 
@@ -226,6 +240,9 @@
 		/// </summary>
 		public void InvokeOnComplete() {
 			m_OnComplete?.Invoke();
+			if (m_OnCompleteNull != null && m_OnCompleteNull.Invoke()) {
+				SetOnComplete(null);
+			}
 		}
 
 		#endregion
@@ -250,6 +267,9 @@
 
 		[NonSerialized]
 		private Action m_OnComplete;
+
+		[NonSerialized]
+		private Func<bool> m_OnCompleteNull;
 
 		[NonSerialized]
 		private float m_CurrentTime;
