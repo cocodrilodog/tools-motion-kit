@@ -146,17 +146,9 @@
 		/// </summary>
 		/// <returns>The timer object.</returns>
 		public void Dispose() {
-
 			m_IsDisposed = true;
-
 			StopCoroutine();
-
-			// Set to null the callbacks
-			m_OnUpdate = null;
-			m_OnUpdateProgress = null;
-			m_OnComplete = null;
-			m_OnCompleteNull = null;
-
+			Clean(CleanFlag.OnUpdate | CleanFlag.OnComplete);
 		}
 
 		/// <summary>
@@ -186,21 +178,20 @@
 		/// <returns>The timer object.</returns>
 		/// <param name="onUpdate">The action to be invoked on update.</param>
 		public Timer SetOnUpdate(Action onUpdate) {
-			m_OnUpdateProgress = null;
+			m_OnUpdateTimer = null;
 			m_OnUpdate = onUpdate;
 			return this;
 		}
 
 		/// <summary>
 		/// Sets a callback that will be called every frame while the timer is playing 
-		/// and not paused. <paramref name="onUpdate"/> receives the <c>progress</c> as
-		/// parameter.
+		/// and not paused. The callback receives the timer object as a parameter.
 		/// </summary>
 		/// <returns>The timer object.</returns>
 		/// <param name="onUpdate">The action to be invoked on update.</param>
-		public Timer SetOnUpdate(Action<float> onUpdate) {
+		public Timer SetOnUpdate(Action<Timer> onUpdate) {
 			m_OnUpdate = null;
-			m_OnUpdateProgress = onUpdate;
+			m_OnUpdateTimer = onUpdate;
 			return this;
 		}
 
@@ -210,20 +201,20 @@
 		/// <returns>The timer object.</returns>
 		/// <param name="onComplete">The action to be invoked on complete.</param>
 		public Timer SetOnComplete(Action onComplete) {
-			m_OnCompleteNull = null;
+			m_OnCompleteTimer = null;
 			m_OnComplete = onComplete;
 			return this;
 		}
 
 		/// <summary>
-		/// Sets a callback that will be called when the timer completes. The 
-		/// callback can return <c>true</c> to set itself to null.
+		/// Sets a callback that will be called when the timer completes. The callback
+		/// receives the timer object as a parameter.
 		/// </summary>
 		/// <returns>The motion object.</returns>
 		/// <param name="onComplete">The action to be invoked on complete.</param>
-		public Timer SetOnComplete(Func<bool> onComplete) {
+		public Timer SetOnComplete(Action<Timer> onComplete) {
 			m_OnComplete = null;
-			m_OnCompleteNull = onComplete;
+			m_OnCompleteTimer = onComplete;
 			return this;
 		}
 
@@ -232,7 +223,7 @@
 		/// </summary>
 		public void InvokeOnUpdate() {
 			m_OnUpdate?.Invoke();
-			m_OnUpdateProgress?.Invoke(_Progress);
+			m_OnUpdateTimer?.Invoke(this);
 		}
 
 		/// <summary>
@@ -240,9 +231,16 @@
 		/// </summary>
 		public void InvokeOnComplete() {
 			m_OnComplete?.Invoke();
-			if (m_OnCompleteNull != null && m_OnCompleteNull.Invoke()) {
-				SetOnComplete(null);
-			}
+			m_OnCompleteTimer?.Invoke(this);
+		}
+
+		/// <summary>
+		/// Sets <c>Easing</c>, <c>OnUpdate</c> and/or <c>OnComplete</c> to null;
+		/// </summary>
+		/// <param name="cleanFlag">The clean flags.</param>
+		public void Clean(CleanFlag cleanFlag) {
+			if ((cleanFlag & CleanFlag.OnUpdate) == CleanFlag.OnUpdate) { SetOnUpdate((Action)null); }
+			if ((cleanFlag & CleanFlag.OnComplete) == CleanFlag.OnComplete) { SetOnComplete((Action)null); }
 		}
 
 		#endregion
@@ -263,13 +261,13 @@
 		private Action m_OnUpdate;
 
 		[NonSerialized]
-		private Action<float> m_OnUpdateProgress;
+		private Action<Timer> m_OnUpdateTimer;
 
 		[NonSerialized]
 		private Action m_OnComplete;
 
 		[NonSerialized]
-		private Func<bool> m_OnCompleteNull;
+		private Action<Timer> m_OnCompleteTimer;
 
 		[NonSerialized]
 		private float m_CurrentTime;

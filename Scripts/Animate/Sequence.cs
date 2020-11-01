@@ -224,10 +224,7 @@
 			StopCoroutine();
 
 			// Set to null the callbacks
-			m_OnUpdate = null;
-			m_OnUpdateProgress = null;
-			m_OnComplete = null;
-			m_OnCompleteNull = null;
+			Clean(CleanFlag.Easing | CleanFlag.OnUpdate | CleanFlag.OnComplete);
 
 			// Sequence objects
 			m_ProgressingItemInfo = null;
@@ -291,21 +288,20 @@
 		/// <returns>The sequence object.</returns>
 		/// <param name="onUpdate">The action to be invoked on update.</param>
 		public Sequence SetOnUpdate(Action onUpdate) {
-			m_OnUpdateProgress = null;
+			m_OnUpdateSequence = null;
 			m_OnUpdate = onUpdate;
 			return this;
 		}
 
 		/// <summary>
 		/// Sets a callback that will be called every frame while the sequence is playing 
-		/// and not paused. <paramref name="onUpdate"/> receives the <c>progress</c> as
-		/// parameter.
+		/// and not paused. The callback receives the sequence object as parameter.
 		/// </summary>
 		/// <returns>The sequence object.</returns>
 		/// <param name="onUpdate">The action to be invoked on update.</param>
-		public Sequence SetOnUpdate(Action<float> onUpdate) {
+		public Sequence SetOnUpdate(Action<Sequence> onUpdate) {
 			m_OnUpdate = null;
-			m_OnUpdateProgress = onUpdate;
+			m_OnUpdateSequence = onUpdate;
 			return this;
 		}
 
@@ -315,19 +311,20 @@
 		/// <returns>The sequence object.</returns>
 		/// <param name="onComplete">The action to be invoked on complete.</param>
 		public Sequence SetOnComplete(Action onComplete) {
-			m_OnCompleteNull = null;
+			m_OnCompleteSequence = null;
 			m_OnComplete = onComplete;
 			return this;
 		}
 
 		/// <summary>
-		/// Sets a callback that will be called when the sequence completes.
+		/// Sets a callback that will be called when the sequence completes. The callback receives
+		/// the sequence object as a parameter.
 		/// </summary>
 		/// <returns>The sequence object.</returns>
 		/// <param name="onComplete">The action to be invoked on complete.</param>
-		public Sequence SetOnComplete(Func<bool> onComplete) {
+		public Sequence SetOnComplete(Action<Sequence> onComplete) {
 			m_OnComplete = null;
-			m_OnCompleteNull = onComplete;
+			m_OnCompleteSequence = onComplete;
 			return this;
 		}
 
@@ -376,7 +373,7 @@
 			}
 			// Update the sequence itself
 			m_OnUpdate?.Invoke();
-			m_OnUpdateProgress?.Invoke(_Progress);
+			m_OnUpdateSequence?.Invoke(this);
 		}
 
 		/// <summary>
@@ -390,9 +387,17 @@
 			}
 			// Complete the sequence itself
 			m_OnComplete?.Invoke();
-			if (m_OnCompleteNull != null && m_OnCompleteNull.Invoke()) {
-				SetOnComplete(null);
-			}
+			m_OnCompleteSequence?.Invoke(this);
+		}
+
+		/// <summary>
+		/// Sets <c>Easing</c>, <c>OnUpdate</c> and/or <c>OnComplete</c> to null;
+		/// </summary>
+		/// <param name="cleanFlag">The clean flags.</param>
+		public void Clean(CleanFlag cleanFlag) {
+			if ((cleanFlag & CleanFlag.Easing) == CleanFlag.Easing) { SetEasing(null); }
+			if ((cleanFlag & CleanFlag.OnUpdate) == CleanFlag.OnUpdate) { SetOnUpdate((Action)null); }
+			if ((cleanFlag & CleanFlag.OnComplete) == CleanFlag.OnComplete) { SetOnComplete((Action)null); }
 		}
 
 		#endregion
@@ -432,13 +437,13 @@
 		private Action m_OnUpdate;
 
 		[NonSerialized]
-		private Action<float> m_OnUpdateProgress;
+		private Action<Sequence> m_OnUpdateSequence;
 
 		[NonSerialized]
 		private Action m_OnComplete;
 
 		[NonSerialized]
-		private Func<bool> m_OnCompleteNull;
+		private Action<Sequence> m_OnCompleteSequence;
 
 		[NonSerialized]
 		private float m_CurrentTime;

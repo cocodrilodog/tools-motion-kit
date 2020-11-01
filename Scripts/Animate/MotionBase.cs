@@ -215,21 +215,9 @@
 		/// </summary>
 		/// <returns>The motion object.</returns>
 		public void Dispose() {
-
 			m_IsDisposed = true;
-
 			StopCoroutine();
-
-			// Set to null the callbacks
-			m_OnUpdate = null;
-			m_OnUpdateProgress = null;
-			m_OnComplete = null;
-			m_OnCompleteNull = null;
-
-			// Go back to default time mode and easing.
-			//m_TimeMode = default;
-			m_Easing = null;
-
+			Clean(CleanFlag.Easing | CleanFlag.OnUpdate | CleanFlag.OnComplete);
 		}
 
 		/// <summary>
@@ -295,21 +283,20 @@
 		/// <returns>The motion object.</returns>
 		/// <param name="onUpdate">The action to be invoked on update.</param>
 		public MotionT SetOnUpdate(Action onUpdate) {
-			m_OnUpdateProgress = null;
+			m_OnUpdateMotion = null;
 			m_OnUpdate = onUpdate;
 			return (MotionT)this;
 		}
 
 		/// <summary>
 		/// Sets a callback that will be called every frame while the motion is playing 
-		/// and not paused. <paramref name="onUpdate"/> receives the <c>progress</c> as
-		/// parameter.
+		/// and not paused. The callback receives the motion object as a parameter.
 		/// </summary>
 		/// <returns>The motion object.</returns>
 		/// <param name="onUpdate">The action to be invoked on update.</param>
-		public MotionT SetOnUpdate(Action<float> onUpdate) {
+		public MotionT SetOnUpdate(Action<MotionT> onUpdate) {
 			m_OnUpdate = null;
-			m_OnUpdateProgress = onUpdate;
+			m_OnUpdateMotion = onUpdate;
 			return (MotionT)this;
 		}
 
@@ -319,20 +306,20 @@
 		/// <returns>The motion object.</returns>
 		/// <param name="onComplete">The action to be invoked on complete.</param>
 		public MotionT SetOnComplete(Action onComplete) {
-			m_OnCompleteNull = null;
+			m_OnCompleteMotion = null;
 			m_OnComplete = onComplete;
 			return (MotionT)this;
 		}
 
 		/// <summary>
-		/// Sets a callback that will be called when the motion completes its animation. The 
-		/// callback can return <c>true</c> to set itself to null.
+		/// Sets a callback that will be called when the motion completes its animation.
+		/// The callback receives the motion object as a parameter.
 		/// </summary>
 		/// <returns>The motion object.</returns>
 		/// <param name="onComplete">The action to be invoked on complete.</param>
-		public MotionT SetOnComplete(Func<bool> onComplete) {
+		public MotionT SetOnComplete(Action<MotionT> onComplete) {
 			m_OnComplete = null;
-			m_OnCompleteNull = onComplete;
+			m_OnCompleteMotion = onComplete;
 			return (MotionT)this;
 		}
 
@@ -341,7 +328,7 @@
 		/// </summary>
 		public void InvokeOnUpdate() {
 			m_OnUpdate?.Invoke();
-			m_OnUpdateProgress?.Invoke(_Progress);
+			m_OnUpdateMotion?.Invoke(this as MotionT);
 		}
 
 		/// <summary>
@@ -349,9 +336,17 @@
 		/// </summary>
 		public void InvokeOnComplete() {
 			m_OnComplete?.Invoke();
-			if (m_OnCompleteNull != null && m_OnCompleteNull.Invoke()) {
-				SetOnComplete(null);
-			}
+			m_OnCompleteMotion?.Invoke(this as MotionT);
+		}
+
+		/// <summary>
+		/// Sets <c>Easing</c>, <c>OnUpdate</c> and/or <c>OnComplete</c> to null;
+		/// </summary>
+		/// <param name="cleanFlag">The clean flags.</param>
+		public void Clean(CleanFlag cleanFlag) {
+			if ((cleanFlag & CleanFlag.Easing) == CleanFlag.Easing) { SetEasing(null); }
+			if ((cleanFlag & CleanFlag.OnUpdate) == CleanFlag.OnUpdate) { SetOnUpdate((Action)null); }
+			if ((cleanFlag & CleanFlag.OnComplete) == CleanFlag.OnComplete) { SetOnComplete((Action)null); }
 		}
 
 		#endregion
@@ -381,13 +376,13 @@
 		private Action m_OnUpdate;
 
 		[NonSerialized]
-		private Action<float> m_OnUpdateProgress;
+		private Action<MotionT> m_OnUpdateMotion;
 
 		[NonSerialized]
 		private Action m_OnComplete;
 
 		[NonSerialized]
-		private Func<bool> m_OnCompleteNull;
+		private Action<MotionT> m_OnCompleteMotion;
 
 		[NonSerialized]
 		private ValueT m_InitialValue;
