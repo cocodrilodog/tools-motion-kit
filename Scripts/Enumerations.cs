@@ -16,7 +16,8 @@
 		None = 0,
 		Easing = 1,
 		OnUpdate = 2,
-		OnComplete = 4,
+		OnInterrupt = 4,
+		OnComplete = 8
 	}
 
 }

@@ -172,6 +172,9 @@
 		/// <param name="finalValue">Final value.</param>
 		/// <param name="duration">Duration.</param>
 		public MotionT Play(ValueT initialValue, ValueT finalValue, float duration) {
+			if (IsPlaying) {
+				InvokeOnInterrupt();
+			}
 			StopCoroutine();
 			m_InitialValue = initialValue;
 			m_FinalValue = finalValue;
@@ -206,6 +209,9 @@
 		/// Stops the motion.
 		/// </summary>
 		public void Stop() {
+			if (IsPlaying) {
+				InvokeOnInterrupt();
+			}
 			StopCoroutine();
 			m_IsPlaying = false;
 		}
@@ -217,7 +223,7 @@
 		public void Dispose() {
 			m_IsDisposed = true;
 			StopCoroutine();
-			Clean(CleanFlag.Easing | CleanFlag.OnUpdate | CleanFlag.OnComplete);
+			Clean(CleanFlag.Easing | CleanFlag.OnUpdate | CleanFlag.OnComplete | CleanFlag.OnInterrupt);
 		}
 
 		/// <summary>
@@ -301,6 +307,31 @@
 		}
 
 		/// <summary>
+		/// Sets a callback that will be called when the motion is interrupted by being played
+		/// or stopped while <see cref="IsPlaying"/><c> == true</c>.
+		/// </summary>
+		/// <param name="onInterrupt">The action to be invoked on interrupt.</param>
+		/// <returns></returns>
+		public MotionT SetOnInterrupt(Action onInterrupt) {
+			m_OnInterruptMotion = null;
+			m_OnInterrupt = onInterrupt;
+			return (MotionT)this;
+		}
+
+		/// <summary>
+		/// Sets a callback that will be called when the motion is interrupted by being played
+		/// or stopped while <see cref="IsPlaying"/><c> == true</c>. The callback receives the 
+		/// motion object as a parameter.
+		/// </summary>
+		/// <param name="onInterrupt">The action to be invoked on interrupt.</param>
+		/// <returns></returns>
+		public MotionT SetOnInterrupt(Action<MotionT> onInterrupt) {
+			m_OnInterrupt = null;
+			m_OnInterruptMotion = onInterrupt;
+			return (MotionT)this;
+		}
+
+		/// <summary>
 		/// Sets a callback that will be called when the motion completes its animation.
 		/// </summary>
 		/// <returns>The motion object.</returns>
@@ -331,6 +362,11 @@
 			m_OnUpdateMotion?.Invoke(this as MotionT);
 		}
 
+		public void InvokeOnInterrupt() {
+			m_OnInterrupt?.Invoke();
+			m_OnInterruptMotion?.Invoke(this as MotionT);
+		}
+
 		/// <summary>
 		/// Invokes the <c>OnComplete</c> callback.
 		/// </summary>
@@ -346,6 +382,7 @@
 		public void Clean(CleanFlag cleanFlag) {
 			if ((cleanFlag & CleanFlag.Easing) == CleanFlag.Easing) { SetEasing(null); }
 			if ((cleanFlag & CleanFlag.OnUpdate) == CleanFlag.OnUpdate) { SetOnUpdate((Action)null); }
+			if ((cleanFlag & CleanFlag.OnInterrupt) == CleanFlag.OnInterrupt) { SetOnInterrupt((Action)null); }
 			if ((cleanFlag & CleanFlag.OnComplete) == CleanFlag.OnComplete) { SetOnComplete((Action)null); }
 		}
 
@@ -383,6 +420,12 @@
 
 		[NonSerialized]
 		private Action<MotionT> m_OnCompleteMotion;
+
+		[NonSerialized]
+		private Action m_OnInterrupt;
+
+		[NonSerialized]
+		private Action<MotionT> m_OnInterruptMotion;
 
 		[NonSerialized]
 		private ValueT m_InitialValue;
