@@ -105,6 +105,9 @@
 		/// <returns>The timer object.</returns>
 		/// <param name="duration">Duration.</param>
 		public Timer Play(float duration) {
+			if (IsPlaying) {
+				InvokeOnInterrupt();
+			}
 			StopCoroutine();
 			m_Duration = duration;
 			m_IsPaused = false;
@@ -137,6 +140,9 @@
 		/// Stops the timer.
 		/// </summary>
 		public void Stop() {
+			if (IsPlaying) {
+				InvokeOnInterrupt();
+			}
 			StopCoroutine();
 			m_IsPlaying = false;
 		}
@@ -148,7 +154,7 @@
 		public void Dispose() {
 			m_IsDisposed = true;
 			StopCoroutine();
-			Clean(CleanFlag.OnUpdate | CleanFlag.OnComplete);
+			Clean(CleanFlag.OnUpdate | CleanFlag.OnInterrupt | CleanFlag.OnComplete);
 		}
 
 		/// <summary>
@@ -196,6 +202,31 @@
 		}
 
 		/// <summary>
+		/// Sets a callback that will be called when the timer is interrupted by being played
+		/// or stopped while <see cref="IsPlaying"/><c> == true</c>.
+		/// </summary>
+		/// <param name="onInterrupt">The action to be invoked on interrupt.</param>
+		/// <returns>The motion object.</returns>
+		public Timer SetOnInterrupt(Action onInterrupt) {
+			m_OnInterruptMotion = null;
+			m_OnInterrupt = onInterrupt;
+			return this;
+		}
+
+		/// <summary>
+		/// Sets a callback that will be called when the timer is interrupted by being played
+		/// or stopped while <see cref="IsPlaying"/><c> == true</c>. The callback receives the 
+		/// timer object as a parameter.
+		/// </summary>
+		/// <param name="onInterrupt">The action to be invoked on interrupt.</param>
+		/// <returns>The motion object.</returns>
+		public Timer SetOnInterrupt(Action<Timer> onInterrupt) {
+			m_OnInterrupt = null;
+			m_OnInterruptMotion = onInterrupt;
+			return this;
+		}
+
+		/// <summary>
 		/// Sets a callback that will be called when the timer completes.
 		/// </summary>
 		/// <returns>The timer object.</returns>
@@ -227,6 +258,14 @@
 		}
 
 		/// <summary>
+		/// Invokes the <c>OnInterrupt</c> callback.
+		/// </summary>
+		public void InvokeOnInterrupt() {
+			m_OnInterrupt?.Invoke();
+			m_OnInterruptMotion?.Invoke(this);
+		}
+
+		/// <summary>
 		/// Invokes the <c>OnComplete</c> callback.
 		/// </summary>
 		public void InvokeOnComplete() {
@@ -235,11 +274,12 @@
 		}
 
 		/// <summary>
-		/// Sets <c>Easing</c>, <c>OnUpdate</c> and/or <c>OnComplete</c> to null;
+		/// Sets <c>OnUpdate</c>, <c>OnInterrupt</c> and/or <c>OnComplete</c> to null.
 		/// </summary>
 		/// <param name="cleanFlag">The clean flags.</param>
 		public void Clean(CleanFlag cleanFlag) {
 			if ((cleanFlag & CleanFlag.OnUpdate) == CleanFlag.OnUpdate) { SetOnUpdate((Action)null); }
+			if ((cleanFlag & CleanFlag.OnInterrupt) == CleanFlag.OnInterrupt) { SetOnInterrupt((Action)null); }
 			if ((cleanFlag & CleanFlag.OnComplete) == CleanFlag.OnComplete) { SetOnComplete((Action)null); }
 		}
 
@@ -262,6 +302,12 @@
 
 		[NonSerialized]
 		private Action<Timer> m_OnUpdateTimer;
+
+		[NonSerialized]
+		private Action m_OnInterrupt;
+
+		[NonSerialized]
+		private Action<Timer> m_OnInterruptMotion;
 
 		[NonSerialized]
 		private Action m_OnComplete;

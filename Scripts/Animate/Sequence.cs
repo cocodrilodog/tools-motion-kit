@@ -176,6 +176,9 @@
 		/// <returns>The sequence object.</returns>
 		/// <param name="duration">Duration.</param>
 		public Sequence Play(float duration) {
+			if (IsPlaying) {
+				InvokeOnInterrupt();
+			}
 			StopCoroutine();
 			m_Duration = duration;
 			m_IsPaused = false;
@@ -208,6 +211,9 @@
 		/// Stops the sequence.
 		/// </summary>
 		public void Stop() {
+			if (IsPlaying) {
+				InvokeOnInterrupt();
+			}
 			StopCoroutine();
 			m_IsPlaying = false;
 			m_ProgressingItemInfo = null;
@@ -224,7 +230,7 @@
 			StopCoroutine();
 
 			// Set to null the callbacks
-			Clean(CleanFlag.Easing | CleanFlag.OnUpdate | CleanFlag.OnComplete);
+			Clean(CleanFlag.Easing | CleanFlag.OnUpdate | CleanFlag.OnInterrupt | CleanFlag.OnComplete);
 
 			// Sequence objects
 			m_ProgressingItemInfo = null;
@@ -306,6 +312,31 @@
 		}
 
 		/// <summary>
+		/// Sets a callback that will be called when the sequence is interrupted by being played
+		/// or stopped while <see cref="IsPlaying"/><c> == true</c>.
+		/// </summary>
+		/// <param name="onInterrupt">The action to be invoked on interrupt.</param>
+		/// <returns>The motion object.</returns>
+		public Sequence SetOnInterrupt(Action onInterrupt) {
+			m_OnInterruptMotion = null;
+			m_OnInterrupt = onInterrupt;
+			return this;
+		}
+
+		/// <summary>
+		/// Sets a callback that will be called when the sequence is interrupted by being played
+		/// or stopped while <see cref="IsPlaying"/><c> == true</c>. The callback receives the 
+		/// sequence object as a parameter.
+		/// </summary>
+		/// <param name="onInterrupt">The action to be invoked on interrupt.</param>
+		/// <returns>The motion object.</returns>
+		public Sequence SetOnInterrupt(Action<Sequence> onInterrupt) {
+			m_OnInterrupt = null;
+			m_OnInterruptMotion = onInterrupt;
+			return this;
+		}
+
+		/// <summary>
 		/// Sets a callback that will be called when the sequence completes.
 		/// </summary>
 		/// <returns>The sequence object.</returns>
@@ -377,6 +408,19 @@
 		}
 
 		/// <summary>
+		/// Invokes the <c>OnInterrupt</c> callback.
+		/// </summary>
+		public void InvokeOnInterrupt() {
+			// Interrupt the progressing item as long as it haven't been completed.
+			if (m_ProgressingItemInfo != null && !m_ProgressingItemInfo.Completed) {
+				m_ProgressingItemInfo.Item.InvokeOnInterrupt();
+			}
+			// Interrupt the sequence itself
+			m_OnInterrupt?.Invoke();
+			m_OnInterruptMotion?.Invoke(this);
+		}
+
+		/// <summary>
 		/// Invokes the <c>OnComplete</c> callback.
 		/// </summary>
 		public void InvokeOnComplete() {
@@ -397,6 +441,7 @@
 		public void Clean(CleanFlag cleanFlag) {
 			if ((cleanFlag & CleanFlag.Easing) == CleanFlag.Easing) { SetEasing(null); }
 			if ((cleanFlag & CleanFlag.OnUpdate) == CleanFlag.OnUpdate) { SetOnUpdate((Action)null); }
+			if ((cleanFlag & CleanFlag.OnInterrupt) == CleanFlag.OnInterrupt) { SetOnInterrupt((Action)null); }
 			if ((cleanFlag & CleanFlag.OnComplete) == CleanFlag.OnComplete) { SetOnComplete((Action)null); }
 		}
 
@@ -438,6 +483,12 @@
 
 		[NonSerialized]
 		private Action<Sequence> m_OnUpdateSequence;
+
+		[NonSerialized]
+		private Action m_OnInterrupt;
+
+		[NonSerialized]
+		private Action<Sequence> m_OnInterruptMotion;
 
 		[NonSerialized]
 		private Action m_OnComplete;

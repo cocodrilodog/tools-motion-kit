@@ -32,6 +32,7 @@
 		float Progress { get; set; }
 		float Duration { get; }
 		void InvokeOnUpdate();
+		void InvokeOnInterrupt();
 		void InvokeOnComplete();
 	}
 

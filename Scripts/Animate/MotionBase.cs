@@ -223,7 +223,7 @@
 		public void Dispose() {
 			m_IsDisposed = true;
 			StopCoroutine();
-			Clean(CleanFlag.Easing | CleanFlag.OnUpdate | CleanFlag.OnComplete | CleanFlag.OnInterrupt);
+			Clean(CleanFlag.Easing | CleanFlag.OnUpdate | CleanFlag.OnInterrupt | CleanFlag.OnComplete);
 		}
 
 		/// <summary>
@@ -311,7 +311,7 @@
 		/// or stopped while <see cref="IsPlaying"/><c> == true</c>.
 		/// </summary>
 		/// <param name="onInterrupt">The action to be invoked on interrupt.</param>
-		/// <returns></returns>
+		/// <returns>The motion object.</returns>
 		public MotionT SetOnInterrupt(Action onInterrupt) {
 			m_OnInterruptMotion = null;
 			m_OnInterrupt = onInterrupt;
@@ -324,7 +324,7 @@
 		/// motion object as a parameter.
 		/// </summary>
 		/// <param name="onInterrupt">The action to be invoked on interrupt.</param>
-		/// <returns></returns>
+		/// <returns>The motion object.</returns>
 		public MotionT SetOnInterrupt(Action<MotionT> onInterrupt) {
 			m_OnInterrupt = null;
 			m_OnInterruptMotion = onInterrupt;
@@ -362,6 +362,9 @@
 			m_OnUpdateMotion?.Invoke(this as MotionT);
 		}
 
+		/// <summary>
+		/// Invokes the <c>OnInterrupt</c> callback.
+		/// </summary>
 		public void InvokeOnInterrupt() {
 			m_OnInterrupt?.Invoke();
 			m_OnInterruptMotion?.Invoke(this as MotionT);
@@ -376,7 +379,7 @@
 		}
 
 		/// <summary>
-		/// Sets <c>Easing</c>, <c>OnUpdate</c> and/or <c>OnComplete</c> to null;
+		/// Sets <c>Easing</c>, <c>OnUpdate</c>, <c>OnInterrupt</c> and/or <c>OnComplete</c> to null.
 		/// </summary>
 		/// <param name="cleanFlag">The clean flags.</param>
 		public void Clean(CleanFlag cleanFlag) {
@@ -416,16 +419,16 @@
 		private Action<MotionT> m_OnUpdateMotion;
 
 		[NonSerialized]
-		private Action m_OnComplete;
-
-		[NonSerialized]
-		private Action<MotionT> m_OnCompleteMotion;
-
-		[NonSerialized]
 		private Action m_OnInterrupt;
 
 		[NonSerialized]
 		private Action<MotionT> m_OnInterruptMotion;
+
+		[NonSerialized]
+		private Action m_OnComplete;
+
+		[NonSerialized]
+		private Action<MotionT> m_OnCompleteMotion;
 
 		[NonSerialized]
 		private ValueT m_InitialValue;
