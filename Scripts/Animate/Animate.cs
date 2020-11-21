@@ -13,19 +13,10 @@
 	}
 
 	public interface IPlayback : IDisposable {
-
 		bool IsPlaying { get; }
 		bool IsPaused { get; }
 		void Stop();
-
-		/// <summary>
-		/// Implement this to check if the setter or timed progressables are equal.
-		/// Otherwise a new Motion/Sequence/Parallel should be created.
-		/// </summary>
-		/// <param name="setterOrTimedProgressables"></param>
-		/// <returns></returns>
-		//bool IsCompatible(object setterOrTimedProgressables);
-
+		void SetAnimatableElement(object element);
 	}
 
 	public interface ITimedProgressable : IDisposable {
@@ -430,78 +421,71 @@
 		#endregion
 
 
-		#region Internal Properties
+		#region Private Properties
 
-		Dictionary<object, Dictionary<string, IPlayback>> Playbacks {
+		private Dictionary<object, Dictionary<string, IPlayback>> Playbacks {
 			get { return m_Playbacks = m_Playbacks ?? new Dictionary<object, Dictionary<string, IPlayback>>(); }
 		}
 
 		#endregion
 
 
-		#region Internal Methods
-
-		private Motion3D _GetMotion(object owner, string reuseID, Motion3D.Setter setter) {
-			return (Motion3D)_GetPlayback(owner, reuseID, () => new Motion3D(this, setter));
-		}
+		#region Private Methods
 
 		private Motion3D _GetMotion(Motion3D.Setter setter) {
 			return new Motion3D(this, setter);
 		}
 
-		private MotionQuaternion _GetMotion(object owner, string reuseID, MotionQuaternion.Setter setter) {
-			return (MotionQuaternion)_GetPlayback(owner, reuseID, () => new MotionQuaternion(this, setter));
+		private Motion3D _GetMotion(object owner, string reuseID, Motion3D.Setter setter) {
+			return (Motion3D)_GetPlayback(owner, reuseID, () => new Motion3D(this, setter), setter);
 		}
 
 		private MotionQuaternion _GetMotion(MotionQuaternion.Setter setter) {
 			return new MotionQuaternion(this, setter);
 		}
 
-		private MotionFloat _GetMotion(object owner, string reuseID, MotionFloat.Setter setter) {
-			return (MotionFloat)_GetPlayback(owner, reuseID, () => new MotionFloat(this, setter));
+		private MotionQuaternion _GetMotion(object owner, string reuseID, MotionQuaternion.Setter setter) {
+			return (MotionQuaternion)_GetPlayback(owner, reuseID, () => new MotionQuaternion(this, setter), setter);
 		}
 
 		private MotionFloat _GetMotion(MotionFloat.Setter setter) {
 			return new MotionFloat(this, setter);
 		}
 
-		private MotionColor _GetMotion(object owner, string reuseID, MotionColor.Setter setter) {
-			return (MotionColor)_GetPlayback(owner, reuseID, () => new MotionColor(this, setter));
+		private MotionFloat _GetMotion(object owner, string reuseID, MotionFloat.Setter setter) {
+			return (MotionFloat)_GetPlayback(owner, reuseID, () => new MotionFloat(this, setter), setter);
 		}
 
 		private MotionColor _GetMotion(MotionColor.Setter setter) {
 			return new MotionColor(this, setter);
 		}
 
-		private Timer _GetTimer(object owner, string reuseID) {
-			return (Timer)_GetPlayback(owner, reuseID, () => new Timer(this));
+		private MotionColor _GetMotion(object owner, string reuseID, MotionColor.Setter setter) {
+			return (MotionColor)_GetPlayback(owner, reuseID, () => new MotionColor(this, setter), setter);
 		}
 
 		private Timer _GetTimer() {
 			return new Timer(this);
 		}
 
-		private Sequence _GetSequence(object owner, string reuseID, ITimedProgressable[] sequenceItems) {
-			return (Sequence)_GetPlayback(owner, reuseID, () => new Sequence(this, sequenceItems));
+		private Timer _GetTimer(object owner, string reuseID) {
+			return (Timer)_GetPlayback(owner, reuseID, () => new Timer(this));
 		}
 
 		private Sequence _GetSequence(ITimedProgressable[] sequenceItems) {
 			return new Sequence(this, sequenceItems);
 		}
 
-		private IPlayback _GetPlayback(object owner, string reuseID, Func<IPlayback> createPlayback) {
+		private Sequence _GetSequence(object owner, string reuseID, ITimedProgressable[] sequenceItems) {
+			return (Sequence)_GetPlayback(owner, reuseID, () => new Sequence(this, sequenceItems), sequenceItems);
+		}
+
+		private IPlayback _GetPlayback(object owner, string reuseID, Func<IPlayback> createPlayback, object animatableElement = null) {
 			if (Playbacks.TryGetValue(owner, out Dictionary<string, IPlayback> ownerPlaybacks)) {
 				// There is an owner object registered, let's search for the reuseID
 				if (ownerPlaybacks.TryGetValue(reuseID, out IPlayback playback)) {
 					// That owner did register that reuseID, so return the existing playback
-
-					// TODO: Compare if the provided parameters match the existing playback properties.
-					// For example, the setter or the sequenceItems. If not, the existing one should be 
-					// disposed and a new one should be created.
-					//
-					// HINT: Implement IPlayback.IsCompatible(object setterOrTimedProgressables);
-					// and compare createPlayback.Method.ReturnType == playback.GetType();
-					// The setterOrTimedProgressables should be passed to this function.
+					playback.SetAnimatableElement(animatableElement);
 					return playback;
 				} else {
 					// The target doesn't have the key yet, so create the reuseID and playback

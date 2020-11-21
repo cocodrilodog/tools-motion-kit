@@ -283,6 +283,12 @@
 			if ((cleanFlag & CleanFlag.OnComplete) == CleanFlag.OnComplete) { SetOnComplete((Action)null); }
 		}
 
+		/// <summary>
+		/// Does nothing. For interface compliance only.
+		/// </summary>
+		/// <param name="animatableElement"></param>
+		public void SetAnimatableElement(object animatableElement) { }
+
 		#endregion
 
 

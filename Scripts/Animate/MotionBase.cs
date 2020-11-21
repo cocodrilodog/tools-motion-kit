@@ -389,6 +389,19 @@
 			if ((cleanFlag & CleanFlag.OnComplete) == CleanFlag.OnComplete) { SetOnComplete((Action)null); }
 		}
 
+		/// <summary>
+		/// Changes the setter.
+		/// </summary>
+		/// <param name="animatableElement">The setter.</param>
+		public void SetAnimatableElement(object animatableElement) {
+			if(!(animatableElement is Setter)) {
+				throw new ArgumentException(
+					$"The animatableElement: {animatableElement.GetType()} is not a {m_Setter.GetType()}"
+				);
+			}
+			m_Setter = (Setter)animatableElement;
+		}
+
 		#endregion
 
 

@@ -445,6 +445,14 @@
 			if ((cleanFlag & CleanFlag.OnComplete) == CleanFlag.OnComplete) { SetOnComplete((Action)null); }
 		}
 
+		/// <summary>
+		/// Changes sequence items.
+		/// </summary>
+		/// <param name="animatableElement"></param>
+		public void SetAnimatableElement(object animatableElement) {
+			// TODO: Implement
+		}
+
 		#endregion
 
 
