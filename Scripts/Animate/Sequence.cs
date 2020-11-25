@@ -134,13 +134,7 @@
 		/// </param>
 		public Sequence(MonoBehaviour monoBehaviour, params ITimedProgressable[] sequenceItems) {
 			m_MonoBehaviour = monoBehaviour;
-			for (int i = 0; i < sequenceItems.Length; i++) {
-				if (Mathf.Approximately(sequenceItems[i].Duration, 0)) {
-					throw new ArgumentException("Sequence items can not have duration equal to 0");
-				}
-			}
-			m_SequenceItems = sequenceItems;
-			EvaluateSequence();
+			SetAnimatableElement(sequenceItems);
 		}
 
 		#endregion
@@ -370,6 +364,7 @@
 		/// </remarks>
 		public void EvaluateSequence() {
 			m_SequenceItemsInfo = new SequenceItemInfo[m_SequenceItems.Length];
+			m_SequenceDuration = 0;
 			for (int i = 0; i < m_SequenceItems.Length; i++) {
 				m_SequenceItemsInfo[i] = new SequenceItemInfo(i, m_SequenceItems[i]);
 				m_SequenceItemsInfo[i].Position = m_SequenceDuration;
@@ -450,7 +445,23 @@
 		/// </summary>
 		/// <param name="animatableElement"></param>
 		public void SetAnimatableElement(object animatableElement) {
-			// TODO: Implement
+
+			if (!(animatableElement is ITimedProgressable[])) {
+				throw new ArgumentException(
+					$"The animatableElement: {animatableElement.GetType()} is not a {m_SequenceItems.GetType()}"
+				);
+			}
+
+			ITimedProgressable[] sequenceItems = (ITimedProgressable[])animatableElement;
+			for (int i = 0; i < sequenceItems.Length; i++) {
+				if (Mathf.Approximately(sequenceItems[i].Duration, 0)) {
+					throw new ArgumentException("Sequence items can not have duration equal to 0");
+				}
+			}
+
+			m_SequenceItems = sequenceItems;
+			EvaluateSequence();
+
 		}
 
 		#endregion

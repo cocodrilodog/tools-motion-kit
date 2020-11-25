@@ -33,6 +33,13 @@
 
 		}
 
+		private void Update() {
+			if (Input.GetKeyDown(KeyCode.Space)) {
+				Animate.GetMotion(this, "X", s => Cube.localScale = s)
+					.Play(Cube.localScale, Vector3.one * 2, 1);
+			}
+		}
+
 		private void OnDestroy() {
 			Animate.ClearPlaybacks(this);
 		}

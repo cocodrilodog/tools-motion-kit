@@ -257,6 +257,21 @@
 		}
 
 		/// <summary>
+		/// Shortcut to set <c>initialValue</c>, <c>finalValue</c> and <c>duration</c>
+		/// in one call.
+		/// </summary>
+		/// <param name="initialValue">The initial value of the motion.</param>
+		/// <param name="finalValue">The final value of the motion.</param>
+		/// <param name="duration">The duration of the motion.</param>
+		/// <returns></returns>
+		public MotionT SetValuesAndDuration(ValueT initialValue, ValueT finalValue, float duration) {
+			m_InitialValue = initialValue;
+			m_FinalValue = finalValue;
+			m_Duration = duration;
+			return (MotionT)this;
+		}
+
+		/// <summary>
 		/// Sets the <see cref="TimeMode"/> of the motion.
 		/// </summary>
 		/// <param name="timeMode"></param>
