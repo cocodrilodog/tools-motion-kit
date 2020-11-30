@@ -55,7 +55,7 @@
 	/// 
 	/// If a <c>Playback</c> object with the same owner and reuseID was already created before, 
 	/// that will be the returned object. Otherwise a new <c>Playback</c> object  instance is 
-	/// created and returned which will be stored internally for later reuse with the newly assigned
+	/// created and returned which will be stored internally for later reuse with the assigned
 	/// combination of owner and reuseID.
 	/// 
 	/// <example>
@@ -74,9 +74,9 @@
 	/// 
 	/// The <c>reuseID</c>:
 	/// A string that identifies all the animations/callbacks that will be performed by the same 
-	/// <c>Playback</c> object object that is related to the same owner. Motions, timers and sequences
-	/// started with the same reuseID and owner will stop to one another if one is started while the other 
-	/// was playing because they are carried out by the same <c>Playback</c> object.
+	/// <c>Playback</c> object that is related to the same owner. Motions, timers and sequences
+	/// that are started with the same reuseID and owner will stop to one another if one is started 
+	/// while the other was playing because they are carried out by the same <c>Playback</c> object.
 	///
 	/// </remarks>
 	public class Animate : MonoSingleton<Animate> {
@@ -96,9 +96,8 @@
 		public static Motion3D GetMotion(Motion3D.Setter setter) {
 			if (Instance != null) {
 				return Instance._GetMotion(setter);
-			} else {
-				return null;
 			}
+			return null;
 		}
 
 		/// <summary>
@@ -122,9 +121,8 @@
 		public static Motion3D GetMotion(object owner, string reuseID, Motion3D.Setter setter) {
 			if (Instance != null) {
 				return Instance._GetMotion(owner, reuseID, setter);
-			} else {
-				return null;
 			}
+			return null;
 		}
 
 		/// <summary>
@@ -139,9 +137,8 @@
 		public static MotionFloat GetMotion(MotionFloat.Setter setter) {
 			if (Instance != null) {
 				return Instance._GetMotion(setter);
-			} else {
-				return null;
 			}
+			return null;
 		}
 
 		/// <summary>
@@ -165,9 +162,8 @@
 		public static MotionFloat GetMotion(object owner, string reuseID, MotionFloat.Setter setter) {
 			if (Instance != null) {
 				return Instance._GetMotion(owner, reuseID, setter);
-			} else {
-				return null;
 			}
+			return null;
 		}
 
 		/// <summary>
@@ -182,9 +178,8 @@
 		public static MotionColor GetMotion(MotionColor.Setter setter) {
 			if (Instance != null) {
 				return Instance._GetMotion(setter);
-			} else {
-				return null;
 			}
+			return null;
 		}
 
 		/// <summary>
@@ -208,9 +203,8 @@
 		public static MotionColor GetMotion(object owner, string reuseID, MotionColor.Setter setter) {
 			if (Instance != null) {
 				return Instance._GetMotion(owner, reuseID, setter);
-			} else {
-				return null;
 			}
+			return null;
 		}
 
 		/// <summary>
@@ -221,9 +215,8 @@
 		public static Timer GetTimer() {
 			if (Instance != null) {
 				return Instance._GetTimer();
-			} else {
-				return null;
 			}
+			return null;
 		}
 
 		/// <summary>
@@ -243,9 +236,8 @@
 		public static Timer GetTimer(object owner, string reuseID) {
 			if (Instance != null) {
 				return Instance._GetTimer(owner, reuseID);
-			} else {
-				return null;
 			}
+			return null;
 		}
 
 		/// <summary>
@@ -260,9 +252,8 @@
 		public static Sequence GetSequence(params ITimedProgressable[] sequenceItems) {
 			if (Instance != null) {
 				return Instance._GetSequence(sequenceItems);
-			} else {
-				return null;
 			}
+			return null;
 		}
 
 		/// <summary>
@@ -286,9 +277,8 @@
 		public static Sequence GetSequence(object owner, string reuseID, params ITimedProgressable[] sequenceItems) {
 			if (Instance != null) {
 				return Instance._GetSequence(owner, reuseID, sequenceItems);
-			} else {
-				return null;
 			}
+			return null;
 		}
 
 		/// <summary>
@@ -301,9 +291,8 @@
 		public static IPlayback GetPlayback(object owner, string reuseID) {
 			if (Instance != null) {
 				return Instance._GetPlayback(owner, reuseID);
-			} else {
-				return null;
 			}
+			return null;
 		}
 
 		/// <summary>
@@ -316,47 +305,9 @@
 		public static T GetPlayback<T>(object owner, string reuseID) where T : class, IPlayback {
 			if (Instance != null) {
 				return Instance._GetPlayback(owner, reuseID) as T;
-			} else {
-				return default(T);
 			}
+			return default(T);
 		}
-
-		///// <summary>
-		///// Is the <c>Playback</c> object currently playing?
-		///// </summary>
-		///// <returns>
-		///// <c>true</c>, if the <c>Playback</c> object is playing, <c>false</c> otherwise.
-		///// </returns>
-		///// <param name="owner">Owner.</param>
-		///// <param name="reuseID">Reuse id.</param>
-		//public static bool IsPlaybackPlaying(object owner, string reuseID) {
-		//	return Instance._IsPlaybackPlaying(owner, reuseID);
-		//}
-
-		///// <summary>
-		///// Is the <c>Playback</c> object currently paused?
-		///// </summary>
-		///// <returns>
-		///// <c>true</c>, if the <c>Playback</c> object is paused, <c>false</c> otherwise.
-		///// </returns>
-		///// <param name="owner">Owner.</param>
-		///// <param name="reuseID">Reuse id.</param>
-		//public static bool IsPlaybackPaused(object owner, string reuseID) {
-		//	return Instance._IsPlaybackPaused(owner, reuseID);
-		//}
-
-		///// <summary>
-		///// Stops the <c>Playback</c> object with the specified <paramref name="owner"/> and 
-		///// <paramref name="reuseID"/>, if one is found.
-		///// </summary>
-		///// <returns>
-		///// <c>true</c>, if the <c>Playback</c> object was found and stopped, <c>false</c> otherwise.
-		///// </returns>
-		///// <param name="owner">Owner.</param>
-		///// <param name="reuseID">Reuse id.</param>
-		//public static bool StopPlayback(object owner, string reuseID) {
-		//	return Instance._StopPlayback(owner, reuseID);
-		//}
 
 		/// <summary>
 		/// Removes all cached <c>Playback</c> objects that are related to 
@@ -489,40 +440,6 @@
 			}
 			return null;
 		}
-
-		//private bool _IsPlaybackPlaying(object owner, string reuseID) {
-		//	Dictionary<string, IPlayback> ownerPlaybacks;
-		//	if (Playbacks.TryGetValue(owner, out ownerPlaybacks)) {
-		//		IPlayback playback;
-		//		if (ownerPlaybacks.TryGetValue(reuseID, out playback)) {
-		//			return playback.IsPlaying;
-		//		}
-		//	}
-		//	return false;
-		//}
-
-		//private bool _IsPlaybackPaused(object owner, string reuseID) {
-		//	Dictionary<string, IPlayback> ownerPlaybacks;
-		//	if (Playbacks.TryGetValue(owner, out ownerPlaybacks)) {
-		//		IPlayback playback;
-		//		if (ownerPlaybacks.TryGetValue(reuseID, out playback)) {
-		//			return playback.IsPaused;
-		//		}
-		//	}
-		//	return false;
-		//}
-
-		//private bool _StopPlayback(object owner, string reuseID) {
-		//	Dictionary<string, IPlayback> ownerPlaybacks;
-		//	if (Playbacks.TryGetValue(owner, out ownerPlaybacks)) {
-		//		IPlayback playback;
-		//		if (ownerPlaybacks.TryGetValue(reuseID, out playback)) {
-		//			playback.Stop();
-		//			return true;
-		//		}
-		//	}
-		//	return false;
-		//}
 
 		private bool _ClearPlaybacks(object owner) {
 			Dictionary<string, IPlayback> ownerPlaybacks;
