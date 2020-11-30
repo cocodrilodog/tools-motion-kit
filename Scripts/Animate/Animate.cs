@@ -292,41 +292,71 @@
 		}
 
 		/// <summary>
-		/// Is the <c>Playback</c> object currently playing?
+		/// Gets the <c>Motion</c>, <c>Timer</c> or <c>Sequence</c> registered with <paramref name="owner"/>
+		/// and the <paramref name="reuseID"/>.
 		/// </summary>
-		/// <returns>
-		/// <c>true</c>, if the <c>Playback</c> object is playing, <c>false</c> otherwise.
-		/// </returns>
-		/// <param name="owner">Owner.</param>
-		/// <param name="reuseID">Reuse id.</param>
-		public static bool IsPlaybackPlaying(object owner, string reuseID) {
-			return Instance._IsPlaybackPlaying(owner, reuseID);
+		/// <param name="owner"></param>
+		/// <param name="reuseID"></param>
+		/// <returns></returns>
+		public static IPlayback GetPlayback(object owner, string reuseID) {
+			if (Instance != null) {
+				return Instance._GetPlayback(owner, reuseID);
+			} else {
+				return null;
+			}
 		}
 
 		/// <summary>
-		/// Is the <c>Playback</c> object currently paused?
+		/// Gets the <c>Motion</c>, <c>Timer</c> or <c>Sequence</c> registered with <paramref name="owner"/>
+		/// and the <paramref name="reuseID"/>.
 		/// </summary>
-		/// <returns>
-		/// <c>true</c>, if the <c>Playback</c> object is paused, <c>false</c> otherwise.
-		/// </returns>
-		/// <param name="owner">Owner.</param>
-		/// <param name="reuseID">Reuse id.</param>
-		public static bool IsPlaybackPaused(object owner, string reuseID) {
-			return Instance._IsPlaybackPaused(owner, reuseID);
+		/// <param name="owner"></param>
+		/// <param name="reuseID"></param>
+		/// <returns></returns>
+		public static T GetPlayback<T>(object owner, string reuseID) where T : class, IPlayback {
+			if (Instance != null) {
+				return Instance._GetPlayback(owner, reuseID) as T;
+			} else {
+				return default(T);
+			}
 		}
 
-		/// <summary>
-		/// Stops the <c>Playback</c> object with the specified <paramref name="owner"/> and 
-		/// <paramref name="reuseID"/>, if one is found.
-		/// </summary>
-		/// <returns>
-		/// <c>true</c>, if the <c>Playback</c> object was found and stopped, <c>false</c> otherwise.
-		/// </returns>
-		/// <param name="owner">Owner.</param>
-		/// <param name="reuseID">Reuse id.</param>
-		public static bool StopPlayback(object owner, string reuseID) {
-			return Instance._StopPlayback(owner, reuseID);
-		}
+		///// <summary>
+		///// Is the <c>Playback</c> object currently playing?
+		///// </summary>
+		///// <returns>
+		///// <c>true</c>, if the <c>Playback</c> object is playing, <c>false</c> otherwise.
+		///// </returns>
+		///// <param name="owner">Owner.</param>
+		///// <param name="reuseID">Reuse id.</param>
+		//public static bool IsPlaybackPlaying(object owner, string reuseID) {
+		//	return Instance._IsPlaybackPlaying(owner, reuseID);
+		//}
+
+		///// <summary>
+		///// Is the <c>Playback</c> object currently paused?
+		///// </summary>
+		///// <returns>
+		///// <c>true</c>, if the <c>Playback</c> object is paused, <c>false</c> otherwise.
+		///// </returns>
+		///// <param name="owner">Owner.</param>
+		///// <param name="reuseID">Reuse id.</param>
+		//public static bool IsPlaybackPaused(object owner, string reuseID) {
+		//	return Instance._IsPlaybackPaused(owner, reuseID);
+		//}
+
+		///// <summary>
+		///// Stops the <c>Playback</c> object with the specified <paramref name="owner"/> and 
+		///// <paramref name="reuseID"/>, if one is found.
+		///// </summary>
+		///// <returns>
+		///// <c>true</c>, if the <c>Playback</c> object was found and stopped, <c>false</c> otherwise.
+		///// </returns>
+		///// <param name="owner">Owner.</param>
+		///// <param name="reuseID">Reuse id.</param>
+		//public static bool StopPlayback(object owner, string reuseID) {
+		//	return Instance._StopPlayback(owner, reuseID);
+		//}
 
 		/// <summary>
 		/// Removes all cached <c>Playback</c> objects that are related to 
@@ -450,39 +480,49 @@
 			}
 		}
 
-		private bool _IsPlaybackPlaying(object owner, string reuseID) {
-			Dictionary<string, IPlayback> ownerPlaybacks;
-			if (Playbacks.TryGetValue(owner, out ownerPlaybacks)) {
+		private IPlayback _GetPlayback(object owner, string reuseID) {
+			if (Playbacks.TryGetValue(owner, out Dictionary<string, IPlayback> ownerPlaybacks)) {
 				IPlayback playback;
 				if (ownerPlaybacks.TryGetValue(reuseID, out playback)) {
-					return playback.IsPlaying;
+					return playback;
 				}
 			}
-			return false;
+			return null;
 		}
 
-		private bool _IsPlaybackPaused(object owner, string reuseID) {
-			Dictionary<string, IPlayback> ownerPlaybacks;
-			if (Playbacks.TryGetValue(owner, out ownerPlaybacks)) {
-				IPlayback playback;
-				if (ownerPlaybacks.TryGetValue(reuseID, out playback)) {
-					return playback.IsPaused;
-				}
-			}
-			return false;
-		}
+		//private bool _IsPlaybackPlaying(object owner, string reuseID) {
+		//	Dictionary<string, IPlayback> ownerPlaybacks;
+		//	if (Playbacks.TryGetValue(owner, out ownerPlaybacks)) {
+		//		IPlayback playback;
+		//		if (ownerPlaybacks.TryGetValue(reuseID, out playback)) {
+		//			return playback.IsPlaying;
+		//		}
+		//	}
+		//	return false;
+		//}
 
-		private bool _StopPlayback(object owner, string reuseID) {
-			Dictionary<string, IPlayback> ownerPlaybacks;
-			if (Playbacks.TryGetValue(owner, out ownerPlaybacks)) {
-				IPlayback playback;
-				if (ownerPlaybacks.TryGetValue(reuseID, out playback)) {
-					playback.Stop();
-					return true;
-				}
-			}
-			return false;
-		}
+		//private bool _IsPlaybackPaused(object owner, string reuseID) {
+		//	Dictionary<string, IPlayback> ownerPlaybacks;
+		//	if (Playbacks.TryGetValue(owner, out ownerPlaybacks)) {
+		//		IPlayback playback;
+		//		if (ownerPlaybacks.TryGetValue(reuseID, out playback)) {
+		//			return playback.IsPaused;
+		//		}
+		//	}
+		//	return false;
+		//}
+
+		//private bool _StopPlayback(object owner, string reuseID) {
+		//	Dictionary<string, IPlayback> ownerPlaybacks;
+		//	if (Playbacks.TryGetValue(owner, out ownerPlaybacks)) {
+		//		IPlayback playback;
+		//		if (ownerPlaybacks.TryGetValue(reuseID, out playback)) {
+		//			playback.Stop();
+		//			return true;
+		//		}
+		//	}
+		//	return false;
+		//}
 
 		private bool _ClearPlaybacks(object owner) {
 			Dictionary<string, IPlayback> ownerPlaybacks;

@@ -101,6 +101,7 @@
 			.SetOnInterrupt(() => Debug.LogFormat("Sequence interrupt"))
 			.SetOnComplete(() => Debug.LogFormat("Sequence complete"))
 			.Play();
+
 		}
 
 		private void Update() {
