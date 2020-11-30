@@ -611,7 +611,9 @@
 
 		private void StopCoroutine() {
 			if (m_Coroutine != null) {
-				m_MonoBehaviour.StopCoroutine(m_Coroutine);
+				if (m_MonoBehaviour != null) {
+					m_MonoBehaviour.StopCoroutine(m_Coroutine);
+				}
 				m_Coroutine = null;
 			}
 		}
