@@ -113,6 +113,7 @@
 			m_IsPaused = false;
 			m_Coroutine = m_MonoBehaviour.StartCoroutine(_Play());
 			m_IsPlaying = true;
+			InvokeOnStart();
 			return this;
 		}
 
@@ -178,6 +179,29 @@
 		}
 
 		/// <summary>
+		/// Sets a callback that will be called when the timer starts on <c>Play</c>.
+		/// </summary>
+		/// <returns>The timer object.</returns>
+		/// <param name="onStart">The action to be invoked on start.</param>
+		public Timer SetOnStart(Action onStart) {
+			m_OnStartTimer = null;
+			m_OnStart = onStart;
+			return this;
+		}
+
+		/// <summary>
+		/// Sets a callback that will be called when the timer starts on <c>Play</c>. 
+		/// The callback receives the timer object as a parameter.
+		/// </summary>
+		/// <returns>The timer object.</returns>
+		/// <param name="onStart">The action to be invoked on start.</param>
+		public Timer SetOnStart(Action<Timer> onStart) {
+			m_OnStart = null;
+			m_OnStartTimer = onStart;
+			return this;
+		}
+
+		/// <summary>
 		/// Sets a callback that will be called every frame while the timer is playing 
 		/// and not paused.
 		/// </summary>
@@ -208,7 +232,7 @@
 		/// <param name="onInterrupt">The action to be invoked on interrupt.</param>
 		/// <returns>The motion object.</returns>
 		public Timer SetOnInterrupt(Action onInterrupt) {
-			m_OnInterruptMotion = null;
+			m_OnInterruptTimer = null;
 			m_OnInterrupt = onInterrupt;
 			return this;
 		}
@@ -222,7 +246,7 @@
 		/// <returns>The motion object.</returns>
 		public Timer SetOnInterrupt(Action<Timer> onInterrupt) {
 			m_OnInterrupt = null;
-			m_OnInterruptMotion = onInterrupt;
+			m_OnInterruptTimer = onInterrupt;
 			return this;
 		}
 
@@ -250,6 +274,14 @@
 		}
 
 		/// <summary>
+		/// Invokes the <c>OnStart</c> callback.
+		/// </summary>
+		public void InvokeOnStart() {
+			m_OnStart?.Invoke();
+			m_OnStartTimer?.Invoke(this);
+		}
+
+		/// <summary>
 		/// Invokes the <c>OnUpdate</c> callback.
 		/// </summary>
 		public void InvokeOnUpdate() {
@@ -262,7 +294,7 @@
 		/// </summary>
 		public void InvokeOnInterrupt() {
 			m_OnInterrupt?.Invoke();
-			m_OnInterruptMotion?.Invoke(this);
+			m_OnInterruptTimer?.Invoke(this);
 		}
 
 		/// <summary>
@@ -278,6 +310,7 @@
 		/// </summary>
 		/// <param name="cleanFlag">The clean flags.</param>
 		public void Clean(CleanFlag cleanFlag) {
+			if ((cleanFlag & CleanFlag.OnStart) == CleanFlag.OnStart) { SetOnStart((Action)null); }
 			if ((cleanFlag & CleanFlag.OnUpdate) == CleanFlag.OnUpdate) { SetOnUpdate((Action)null); }
 			if ((cleanFlag & CleanFlag.OnInterrupt) == CleanFlag.OnInterrupt) { SetOnInterrupt((Action)null); }
 			if ((cleanFlag & CleanFlag.OnComplete) == CleanFlag.OnComplete) { SetOnComplete((Action)null); }
@@ -304,6 +337,12 @@
 		private TimeMode m_TimeMode;
 
 		[NonSerialized]
+		private Action m_OnStart;
+
+		[NonSerialized]
+		private Action<Timer> m_OnStartTimer;
+
+		[NonSerialized]
 		private Action m_OnUpdate;
 
 		[NonSerialized]
@@ -313,7 +352,7 @@
 		private Action m_OnInterrupt;
 
 		[NonSerialized]
-		private Action<Timer> m_OnInterruptMotion;
+		private Action<Timer> m_OnInterruptTimer;
 
 		[NonSerialized]
 		private Action m_OnComplete;

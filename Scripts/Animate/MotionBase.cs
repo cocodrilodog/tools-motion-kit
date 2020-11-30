@@ -182,6 +182,7 @@
 			m_IsPaused = false;
 			m_Coroutine = m_MonoBehaviour.StartCoroutine(_Play());
 			m_IsPlaying = true;
+			InvokeOnStart();
 			return (MotionT)this;
 		}
 
@@ -298,6 +299,29 @@
 		}
 
 		/// <summary>
+		/// Sets a callback that will be called when the motion starts on <c>Play</c>.
+		/// </summary>
+		/// <returns>The motion object.</returns>
+		/// <param name="onStart">The action to be invoked on start.</param>
+		public MotionT SetOnStart(Action onStart) {
+			m_OnStartMotion = null;
+			m_OnStart = onStart;
+			return (MotionT)this;
+		}
+
+		/// <summary>
+		/// Sets a callback that will be called when the motion starts on <c>Play</c>. 
+		/// The callback receives the motion object as a parameter.
+		/// </summary>
+		/// <returns>The motion object.</returns>
+		/// <param name="onStart">The action to be invoked on start.</param>
+		public MotionT SetOnStart(Action<MotionT> onStart) {
+			m_OnStart = null;
+			m_OnStartMotion = onStart;
+			return (MotionT)this;
+		}
+
+		/// <summary>
 		/// Sets a callback that will be called every frame while the motion is playing 
 		/// and not paused.
 		/// </summary>
@@ -370,6 +394,14 @@
 		}
 
 		/// <summary>
+		/// Invokes the <c>OnStart</c> callback.
+		/// </summary>
+		public void InvokeOnStart() {
+			m_OnStart?.Invoke();
+			m_OnStartMotion?.Invoke(this as MotionT);
+		}
+
+		/// <summary>
 		/// Invokes the <c>OnUpdate</c> callback.
 		/// </summary>
 		public void InvokeOnUpdate() {
@@ -399,6 +431,7 @@
 		/// <param name="cleanFlag">The clean flags.</param>
 		public void Clean(CleanFlag cleanFlag) {
 			if ((cleanFlag & CleanFlag.Easing) == CleanFlag.Easing) { SetEasing(null); }
+			if ((cleanFlag & CleanFlag.OnStart) == CleanFlag.OnStart) { SetOnStart((Action)null); }
 			if ((cleanFlag & CleanFlag.OnUpdate) == CleanFlag.OnUpdate) { SetOnUpdate((Action)null); }
 			if ((cleanFlag & CleanFlag.OnInterrupt) == CleanFlag.OnInterrupt) { SetOnInterrupt((Action)null); }
 			if ((cleanFlag & CleanFlag.OnComplete) == CleanFlag.OnComplete) { SetOnComplete((Action)null); }
@@ -439,6 +472,12 @@
 
 		[NonSerialized]
 		private Easing m_DefaultEasing;
+
+		[NonSerialized]
+		private Action m_OnStart;
+
+		[NonSerialized]
+		private Action<MotionT> m_OnStartMotion;
 
 		[NonSerialized]
 		private Action m_OnUpdate;

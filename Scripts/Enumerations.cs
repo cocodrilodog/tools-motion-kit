@@ -15,9 +15,10 @@
 	public enum CleanFlag {
 		None = 0,
 		Easing = 1,
-		OnUpdate = 2,
-		OnInterrupt = 4,
-		OnComplete = 8
+		OnStart = 2,
+		OnUpdate = 4,
+		OnInterrupt = 8,
+		OnComplete = 16
 	}
 
 }

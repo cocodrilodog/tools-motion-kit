@@ -22,6 +22,7 @@
 	public interface ITimedProgressable : IDisposable {
 		float Progress { get; set; }
 		float Duration { get; }
+		void InvokeOnStart();
 		void InvokeOnUpdate();
 		void InvokeOnInterrupt();
 		void InvokeOnComplete();

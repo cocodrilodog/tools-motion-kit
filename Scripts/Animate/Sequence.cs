@@ -34,6 +34,11 @@
 			public float Position;
 
 			/// <summary>
+			/// Has this item started?
+			/// </summary>
+			public bool Started;
+
+			/// <summary>
 			/// Has this item completed?
 			/// </summary>
 			public bool Completed;
@@ -178,6 +183,7 @@
 			m_IsPaused = false;
 			m_Coroutine = m_MonoBehaviour.StartCoroutine(_Play());
 			m_IsPlaying = true;
+			InvokeOnStart();
 			return this;
 		}
 
@@ -211,7 +217,7 @@
 			StopCoroutine();
 			m_IsPlaying = false;
 			m_ProgressingItemInfo = null;
-			MarkSequenceItemsAsNotCompleted();
+			ResetItems();
 		}
 
 		/// <summary>
@@ -228,7 +234,7 @@
 
 			// Sequence objects
 			m_ProgressingItemInfo = null;
-			MarkSequenceItemsAsNotCompleted();
+			ResetItems();
 
 			// Reset all to avoid references that would prevent garbage collection
 			foreach(SequenceItemInfo sequenceItemInfo in m_SequenceItemsInfo) {
@@ -282,6 +288,29 @@
 		}
 
 		/// <summary>
+		/// Sets a callback that will be called when the sequence starts on <c>Play</c>.
+		/// </summary>
+		/// <returns>The sequence object.</returns>
+		/// <param name="onStart">The action to be invoked on start.</param>
+		public Sequence SetOnStart(Action onStart) {
+			m_OnStartSequence = null;
+			m_OnStart = onStart;
+			return this;
+		}
+
+		/// <summary>
+		/// Sets a callback that will be called when the sequence starts on <c>Play</c>. 
+		/// The callback receives the sequence object as a parameter.
+		/// </summary>
+		/// <returns>The sequence object.</returns>
+		/// <param name="onStart">The action to be invoked on start.</param>
+		public Sequence SetOnStart(Action<Sequence> onStart) {
+			m_OnStart = null;
+			m_OnStartSequence = onStart;
+			return this;
+		}
+
+		/// <summary>
 		/// Sets a callback that will be called every frame while the sequence is playing 
 		/// and not paused.
 		/// </summary>
@@ -312,7 +341,7 @@
 		/// <param name="onInterrupt">The action to be invoked on interrupt.</param>
 		/// <returns>The motion object.</returns>
 		public Sequence SetOnInterrupt(Action onInterrupt) {
-			m_OnInterruptMotion = null;
+			m_OnInterruptSequence = null;
 			m_OnInterrupt = onInterrupt;
 			return this;
 		}
@@ -326,7 +355,7 @@
 		/// <returns>The motion object.</returns>
 		public Sequence SetOnInterrupt(Action<Sequence> onInterrupt) {
 			m_OnInterrupt = null;
-			m_OnInterruptMotion = onInterrupt;
+			m_OnInterruptSequence = onInterrupt;
 			return this;
 		}
 
@@ -374,24 +403,53 @@
 		}
 
 		/// <summary>
+		/// Invokes the <c>OnStart</c> callback.
+		/// </summary>
+		public void InvokeOnStart() {
+
+			// OnStart of the first item
+			if (m_SequenceItemsInfo.Length > 0) {
+				if (!m_SequenceItemsInfo[0].Started) {
+					m_SequenceItemsInfo[0].Item.InvokeOnStart();
+					m_SequenceItemsInfo[0].Started = true;
+				}
+			}
+
+			// OnStart on the sequence itself
+			m_OnStart?.Invoke();
+			m_OnStartSequence?.Invoke(this);
+
+		}
+
+		/// <summary>
 		/// Invokes the <c>OnUpdate</c> callback.
 		/// </summary>
 		public void InvokeOnUpdate() {
-			// Complete the sequence items if time is past their end and they haven't been completed
+			// Start/Complete the sequence items if time is past their start/end and they haven't 
+			// been started/completed
 			foreach (SequenceItemInfo itemInfo in m_SequenceItemsInfo) {
+
+				float timeScale = m_Duration / m_SequenceDuration;
+				float easedCurrentTime = EasedProgress * m_Duration;
+
+				if (!itemInfo.Started) {
+					float itemStart = itemInfo.Position * timeScale;
+					if (easedCurrentTime >= itemStart) {
+						itemInfo.Item.InvokeOnStart();
+						itemInfo.Started = true;
+					}
+				}
+
 				if (!itemInfo.Completed) {
-
-					float timeScale = m_Duration / m_SequenceDuration;
 					float itemEnd = (itemInfo.Position + itemInfo.Item.Duration) * timeScale;
-
-					if (EasedProgress * m_Duration >= itemEnd) { // <- EasedProgress * m_Duration means eased currentTime
+					if (easedCurrentTime >= itemEnd) {
 						itemInfo.Item.Progress = 1;
 						itemInfo.Item.InvokeOnUpdate();
 						itemInfo.Item.InvokeOnComplete();
 						itemInfo.Completed = true;
 					}
-
 				}
+
 			}
 			// Update the progressing item as long as it haven't been completed
 			if (m_ProgressingItemInfo != null && !m_ProgressingItemInfo.Completed) {
@@ -412,7 +470,7 @@
 			}
 			// Interrupt the sequence itself
 			m_OnInterrupt?.Invoke();
-			m_OnInterruptMotion?.Invoke(this);
+			m_OnInterruptSequence?.Invoke(this);
 		}
 
 		/// <summary>
@@ -435,6 +493,7 @@
 		/// <param name="cleanFlag">The clean flags.</param>
 		public void Clean(CleanFlag cleanFlag) {
 			if ((cleanFlag & CleanFlag.Easing) == CleanFlag.Easing) { SetEasing(null); }
+			if ((cleanFlag & CleanFlag.OnStart) == CleanFlag.OnStart) { SetOnStart((Action)null); }
 			if ((cleanFlag & CleanFlag.OnUpdate) == CleanFlag.OnUpdate) { SetOnUpdate((Action)null); }
 			if ((cleanFlag & CleanFlag.OnInterrupt) == CleanFlag.OnInterrupt) { SetOnInterrupt((Action)null); }
 			if ((cleanFlag & CleanFlag.OnComplete) == CleanFlag.OnComplete) { SetOnComplete((Action)null); }
@@ -498,6 +557,12 @@
 		private Easing m_Easing;
 
 		[NonSerialized]
+		private Action m_OnStart;
+
+		[NonSerialized]
+		private Action<Sequence> m_OnStartSequence;
+
+		[NonSerialized]
 		private Action m_OnUpdate;
 
 		[NonSerialized]
@@ -507,7 +572,7 @@
 		private Action m_OnInterrupt;
 
 		[NonSerialized]
-		private Action<Sequence> m_OnInterruptMotion;
+		private Action<Sequence> m_OnInterruptSequence;
 
 		[NonSerialized]
 		private Action m_OnComplete;
@@ -587,7 +652,7 @@
 			m_CurrentTime = 0;
 			m_Progress = 0;
 
-			MarkSequenceItemsAsNotCompleted();
+			ResetItems();
 
 			// Wait one frame for the properties to be ready, in case the sequence is
 			// created and started in the same line.
@@ -635,11 +700,12 @@
 			}
 		}
 
-		private void MarkSequenceItemsAsNotCompleted() {
+		private void ResetItems() {
 			foreach (SequenceItemInfo itemInfo in m_SequenceItemsInfo) {
 				itemInfo.Completed = false;
+				itemInfo.Started = false;
 				if (itemInfo.Item is Sequence) {
-					((Sequence)itemInfo.Item).MarkSequenceItemsAsNotCompleted();
+					((Sequence)itemInfo.Item).ResetItems();
 				}
 			}
 		}
