@@ -7,10 +7,18 @@
 	using UnityEngine;
 	using UnityEngine.Events;
 
-
 	[Serializable]
 	public class Motion3DSetter : UnityEvent<Vector3> { }
 
+	/// <summary>
+	/// This is an example of how a motion can be defined in an inspector.
+	/// </summary>
+	/// 
+	/// <remarks>
+	/// The methods listed in the event popup should only be dynamic methods.
+	/// There should be a way of providing a getter via reflection for when we
+	/// want the animation to start in the current value.
+	/// </remarks>
 	public class MotionInspector_Example : MonoBehaviour {
 
 
