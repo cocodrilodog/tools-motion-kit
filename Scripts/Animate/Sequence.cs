@@ -741,9 +741,14 @@
 			CheckDisposed();
 
 			float timeOnSequence = EasedProgress * m_SequenceDuration;
-			m_ProgressingItemInfo.Item.Progress =
-				(timeOnSequence - m_SequenceItemsInfo[m_ProgressingItemInfo.Index].Position) /
-				m_ProgressingItemInfo.Item.Duration;
+
+			// Wait until it has started, otherwise it may progress before
+			// starting, which would lead to unexpected behaviour.
+			if (m_ProgressingItemInfo.Started) {
+				m_ProgressingItemInfo.Item.Progress =
+					(timeOnSequence - m_SequenceItemsInfo[m_ProgressingItemInfo.Index].Position) /
+					m_ProgressingItemInfo.Item.Duration;
+			}
 
 			// If the sequence is paused and the Progress is set to a point in time before, this updates
 			// the following sequence items so that they are not marked as completed.
