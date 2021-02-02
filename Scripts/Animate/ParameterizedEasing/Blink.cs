@@ -5,6 +5,10 @@
 	using System.Collections.Generic;
 	using UnityEngine;
 
+	/// <summary>
+	/// This interpolates the initial and final values by blinking multiple times between 
+	/// them.
+	/// </summary>
 	[Serializable]
 	public class Blink : ParameterizedEasing {
 
