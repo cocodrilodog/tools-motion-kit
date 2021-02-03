@@ -8,8 +8,9 @@
 	// TODO: It may be cool to choose between certain curves.
 
 	/// <summary>
-	/// This easing pulses a value up or down and slowly returns it to the current value 
-	/// of the property with two <c>QuadInOut</c> curves.
+	/// This easing changes the value of a property by <see cref="Offset"/> amount looking like a 
+	/// pulsation and returns it to the current value of the property with one <c>QuadInOut</c>
+	/// curve to change the value and other <c>QuadInOut</c> curve to restore it.
 	/// </summary>
 	/// 
 	/// <remarks>
@@ -23,10 +24,11 @@
 		#region Public Fields
 
 		/// <summary>
-		/// The maximumn value that will be added on top of the current value of the property.
+		/// The maximum value that will be added on top of the current value of the property
+		/// when the pulsation reachs its peak.
 		/// </summary>
 		[SerializeField]
-		public float PulseOffset = 0.5f;
+		public float Offset = 0.5f;
 
 		#endregion
 
@@ -37,9 +39,9 @@
 			// Get the base value so that the pulsation adds on top of it.
 			float baseValue = Mathf.Lerp(a, b, t);
 			if (t >= 0 && t < 0.5f) {
-				return baseValue + AnimateEasing.QuadInOut(0, PulseOffset, t * 2);
+				return baseValue + AnimateEasing.QuadInOut(0, Offset, t * 2);
 			} else {
-				return baseValue + AnimateEasing.QuadInOut(PulseOffset, 0, (t * 2) - 1);
+				return baseValue + AnimateEasing.QuadInOut(Offset, 0, (t * 2) - 1);
 			}
 		};
 
@@ -47,7 +49,7 @@
 
 			// Get the base value so that the pulsation adds on top of it.
 			Vector3 baseValue = Vector3.Lerp(a, b, t);
-			Vector3 pulseOffset = Vector3.one * PulseOffset;
+			Vector3 pulseOffset = Vector3.one * Offset;
 
 			if (t >= 0 && t< 0.5f) {
 				return baseValue + AnimateEasing.QuadInOut(Vector3.zero, pulseOffset, t* 2);
@@ -61,7 +63,7 @@
 
 			// Get the base value so that the pulsation adds on top of it.
 			Color baseValue = Color.Lerp(a, b, t);
-			Color pulseOffset = Color.white * PulseOffset;
+			Color pulseOffset = Color.white * Offset;
 
 			if (t >= 0 && t < 0.5f) {
 				return baseValue + AnimateEasing.QuadInOut(Color.black, pulseOffset, t * 2);
@@ -79,7 +81,7 @@
 		public Pulse() { }
 
 		public Pulse(float offset) {
-			PulseOffset = offset;
+			Offset = offset;
 		}
 
 		#endregion
