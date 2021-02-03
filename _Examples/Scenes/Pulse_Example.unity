@@ -98,7 +98,7 @@ LightmapSettings:
     m_TrainingDataDestination: TrainingData
     m_LightProbeSampleCountMultiplier: 4
   m_LightingDataAsset: {fileID: 0}
-  m_UseShadowmask: 1
+  m_UseShadowmask: 0
 --- !u!196 &4
 NavMeshSettings:
   serializedVersion: 2
@@ -447,7 +447,7 @@ MonoBehaviour:
       m_PersistentCalls:
         m_Calls:
         - m_Target: {fileID: 1632305730}
-          m_MethodName: InflateScale
+          m_MethodName: PulseScale
           m_Mode: 1
           m_Arguments:
             m_ObjectArgument: {fileID: 0}
@@ -510,7 +510,7 @@ MonoBehaviour:
       m_PersistentCalls:
         m_Calls:
         - m_Target: {fileID: 1632305730}
-          m_MethodName: InflateY
+          m_MethodName: PulseY
           m_Mode: 1
           m_Arguments:
             m_ObjectArgument: {fileID: 0}
@@ -606,7 +606,7 @@ GameObject:
   - component: {fileID: 1632305731}
   - component: {fileID: 1632305730}
   m_Layer: 0
-  m_Name: InflateExample
+  m_Name: PulseExample
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -624,8 +624,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c84291c5b1a3c93499384911dc0b8a7a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Inflate:
-    InflatedOffset: 0.5
+  Pulse:
+    PulseOffset: 0.5
   m_YCube: {fileID: 859730805}
   m_ScaleCube: {fileID: 721777196}
   m_ColorCube: {fileID: 2090509431}
@@ -699,7 +699,7 @@ MonoBehaviour:
       m_PersistentCalls:
         m_Calls:
         - m_Target: {fileID: 1632305730}
-          m_MethodName: InflateColor
+          m_MethodName: PulseColor
           m_Mode: 1
           m_Arguments:
             m_ObjectArgument: {fileID: 0}

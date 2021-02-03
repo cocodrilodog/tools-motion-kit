@@ -5,20 +5,20 @@
     using System.Collections.Generic;
     using UnityEngine;
 
-    public class Inflate_Example : MonoBehaviour {
+    public class Pulse_Example : MonoBehaviour {
 
 
 		#region Public Fields
 
 		[SerializeField]
-        public Inflate Inflate;
+        public Pulse Pulse;
 
 		#endregion
 
 
 		#region Public Methods
 
-		public void InflateY() {
+		public void PulseY() {
 
 			float currentY = YCube.localPosition.y;
 
@@ -26,21 +26,21 @@
 				Vector3 position = YCube.localPosition;
 				position.y = y;
 				YCube.localPosition = position;
-			}).SetEasing(new Inflate(1).FloatEasing).Play(currentY, currentY, 0.5f);
+			}).SetEasing(new Pulse(1).FloatEasing).Play(currentY, currentY, 0.5f);
 
 		}
 
-		public void InflateScale() {
+		public void PulseScale() {
 			Animate.GetMotion(this, "ScaleMotion", s => ScaleCube.localScale = s)
-				.SetEasing(Inflate.Vector3Easing).Play(Vector3.one, Vector3.one, 0.5f);
+				.SetEasing(Pulse.Vector3Easing).Play(Vector3.one, Vector3.one, 0.5f);
         }
 
-		public void InflateColor() {
+		public void PulseColor() {
 
 			Color currentColor = ColorCube.Color;
 
 			Animate.GetMotion(this, "ColorMotion", c => ColorCube.Color = c)
-				.SetEasing(new Inflate(-0.5f).ColorEasing).Play(currentColor, currentColor, 0.5f);
+				.SetEasing(new Pulse(-0.5f).ColorEasing).Play(currentColor, currentColor, 0.5f);
 
 		}
 
