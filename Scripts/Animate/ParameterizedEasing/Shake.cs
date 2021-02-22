@@ -129,6 +129,19 @@
 		#endregion
 
 
+		#region Public Constructors
+
+		public Shake() { }
+
+		public Shake(float tMultiplier, float magnitude, bool isDampered = true) {
+			TMultiplier = tMultiplier;
+			Magnitude = magnitude;
+			IsDampered = isDampered;
+		}
+
+		#endregion
+
+
 		#region Private Fields - Serialized
 
 		[SerializeField]
