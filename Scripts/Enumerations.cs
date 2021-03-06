@@ -15,11 +15,12 @@
 	[Flags]
 	public enum CleanFlag {
 		None = 0,
-		Easing = 1,
-		OnStart = 2,
-		OnUpdate = 4,
-		OnInterrupt = 8,
-		OnComplete = 16
+		All = 1,
+		Easing = 2,
+		OnStart = 4,
+		OnUpdate = 8,
+		OnInterrupt = 16,
+		OnComplete = 32
 	}
 
 }

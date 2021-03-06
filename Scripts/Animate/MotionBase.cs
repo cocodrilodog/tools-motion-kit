@@ -182,7 +182,6 @@
 			m_IsPaused = false;
 			m_Coroutine = m_MonoBehaviour.StartCoroutine(_Play());
 			m_IsPlaying = true;
-			InvokeOnStart();
 			return (MotionT)this;
 		}
 
@@ -224,7 +223,7 @@
 		public void Dispose() {
 			m_IsDisposed = true;
 			StopCoroutine();
-			Clean(CleanFlag.Easing | CleanFlag.OnStart | CleanFlag.OnUpdate | CleanFlag.OnInterrupt | CleanFlag.OnComplete);
+			Clean(CleanFlag.All);
 		}
 
 		/// <summary>
@@ -426,15 +425,18 @@
 		}
 
 		/// <summary>
-		/// Sets <c>Easing</c>, <c>OnUpdate</c>, <c>OnInterrupt</c> and/or <c>OnComplete</c> to null.
+		/// Sets <c>Easing</c>, <c>OnStart</c>, <c>OnUpdate</c>, <c>OnInterrupt</c> and/or <c>OnComplete</c> to null.
 		/// </summary>
-		/// <param name="cleanFlag">The clean flags.</param>
-		public void Clean(CleanFlag cleanFlag) {
-			if ((cleanFlag & CleanFlag.Easing) == CleanFlag.Easing) { SetEasing(null); }
-			if ((cleanFlag & CleanFlag.OnStart) == CleanFlag.OnStart) { SetOnStart((Action)null); }
-			if ((cleanFlag & CleanFlag.OnUpdate) == CleanFlag.OnUpdate) { SetOnUpdate((Action)null); }
-			if ((cleanFlag & CleanFlag.OnInterrupt) == CleanFlag.OnInterrupt) { SetOnInterrupt((Action)null); }
-			if ((cleanFlag & CleanFlag.OnComplete) == CleanFlag.OnComplete) { SetOnComplete((Action)null); }
+		/// <param name="cleanFlags">The clean flags.</param>
+		public void Clean(CleanFlag cleanFlags) {
+			if ((cleanFlags & CleanFlag.Easing) == CleanFlag.Easing) { SetEasing(null); }
+			if ((cleanFlags & CleanFlag.OnStart) == CleanFlag.OnStart) { SetOnStart((Action)null); }
+			if ((cleanFlags & CleanFlag.OnUpdate) == CleanFlag.OnUpdate) { SetOnUpdate((Action)null); }
+			if ((cleanFlags & CleanFlag.OnInterrupt) == CleanFlag.OnInterrupt) { SetOnInterrupt((Action)null); }
+			if ((cleanFlags & CleanFlag.OnComplete) == CleanFlag.OnComplete) { SetOnComplete((Action)null); }
+			if ((cleanFlags & CleanFlag.All) == CleanFlag.All) { 
+				Clean(CleanFlag.Easing | CleanFlag.OnStart | CleanFlag.OnUpdate | CleanFlag.OnInterrupt | CleanFlag.OnComplete); 
+			}
 		}
 
 		/// <summary>
@@ -574,6 +576,8 @@
 			// Wait one frame for the properties to be ready, in case the motion is
 			// created and started in the same line.
 			yield return null;
+
+			InvokeOnStart();
 
 			while (true) {
 				if (!IsPaused) {
