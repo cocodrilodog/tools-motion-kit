@@ -224,7 +224,7 @@
 		public void Dispose() {
 			m_IsDisposed = true;
 			StopCoroutine();
-			Clean(CleanFlag.Easing | CleanFlag.OnUpdate | CleanFlag.OnInterrupt | CleanFlag.OnComplete);
+			Clean(CleanFlag.Easing | CleanFlag.OnStart | CleanFlag.OnUpdate | CleanFlag.OnInterrupt | CleanFlag.OnComplete);
 		}
 
 		/// <summary>

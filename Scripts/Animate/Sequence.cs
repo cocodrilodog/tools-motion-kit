@@ -230,7 +230,7 @@
 			StopCoroutine();
 
 			// Set to null the callbacks
-			Clean(CleanFlag.Easing | CleanFlag.OnUpdate | CleanFlag.OnInterrupt | CleanFlag.OnComplete);
+			Clean(CleanFlag.Easing | CleanFlag.OnStart | CleanFlag.OnUpdate | CleanFlag.OnInterrupt | CleanFlag.OnComplete);
 
 			// Sequence objects
 			m_ProgressingItemInfo = null;

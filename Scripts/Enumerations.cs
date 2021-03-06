@@ -10,6 +10,7 @@
 		FixedUnscaled
 	}
 
+	// TODO: Implement an All option
 	// https://docs.microsoft.com/en-us/dotnet/api/system.flagsattribute?view=netcore-3.1
 	[Flags]
 	public enum CleanFlag {

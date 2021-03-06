@@ -155,7 +155,7 @@
 		public void Dispose() {
 			m_IsDisposed = true;
 			StopCoroutine();
-			Clean(CleanFlag.OnUpdate | CleanFlag.OnInterrupt | CleanFlag.OnComplete);
+			Clean(CleanFlag.OnStart | CleanFlag.OnUpdate | CleanFlag.OnInterrupt | CleanFlag.OnComplete);
 		}
 
 		/// <summary>
