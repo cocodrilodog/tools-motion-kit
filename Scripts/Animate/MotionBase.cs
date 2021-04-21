@@ -222,6 +222,7 @@
 		/// <returns>The motion object.</returns>
 		public void Dispose() {
 			m_IsDisposed = true;
+			m_Setter = null;
 			StopCoroutine();
 			Clean(CleanFlag.All);
 		}
