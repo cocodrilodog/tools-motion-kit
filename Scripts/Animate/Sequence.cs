@@ -490,7 +490,7 @@
 		/// Sets <c>Easing</c>, <c>OnStart</c>, <c>OnUpdate</c>, <c>OnInterrupt</c> and/or <c>OnComplete</c> to null.
 		/// </summary>
 		/// <param name="cleanFlags">The clean flags.</param>
-		public void Clean(CleanFlag cleanFlags) {
+		public Sequence Clean(CleanFlag cleanFlags) {
 			if ((cleanFlags & CleanFlag.Easing) == CleanFlag.Easing) { SetEasing(null); }
 			if ((cleanFlags & CleanFlag.OnStart) == CleanFlag.OnStart) { SetOnStart((Action)null); }
 			if ((cleanFlags & CleanFlag.OnUpdate) == CleanFlag.OnUpdate) { SetOnUpdate((Action)null); }
@@ -499,6 +499,7 @@
 			if ((cleanFlags & CleanFlag.All) == CleanFlag.All) {
 				Clean(CleanFlag.Easing | CleanFlag.OnStart | CleanFlag.OnUpdate | CleanFlag.OnInterrupt | CleanFlag.OnComplete);
 			}
+			return this;
 		}
 
 		/// <summary>

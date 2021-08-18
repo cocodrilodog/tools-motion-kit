@@ -308,7 +308,7 @@
 		/// Sets <c>OnStart</c>, <c>OnUpdate</c>, <c>OnInterrupt</c> and/or <c>OnComplete</c> to null.
 		/// </summary>
 		/// <param name="cleanFlag">The clean flags.</param>
-		public void Clean(CleanFlag cleanFlags) {
+		public Timer Clean(CleanFlag cleanFlags) {
 			if ((cleanFlags & CleanFlag.OnStart) == CleanFlag.OnStart) { SetOnStart((Action)null); }
 			if ((cleanFlags & CleanFlag.OnUpdate) == CleanFlag.OnUpdate) { SetOnUpdate((Action)null); }
 			if ((cleanFlags & CleanFlag.OnInterrupt) == CleanFlag.OnInterrupt) { SetOnInterrupt((Action)null); }
@@ -316,6 +316,7 @@
 			if ((cleanFlags & CleanFlag.All) == CleanFlag.All) {
 				Clean(CleanFlag.OnStart | CleanFlag.OnUpdate | CleanFlag.OnInterrupt | CleanFlag.OnComplete);
 			}
+			return this;
 		}
 
 		/// <summary>
