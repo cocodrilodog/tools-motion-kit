@@ -282,29 +282,29 @@
 		}
 
 		/// <summary>
-		/// Gets the <c>Motion</c>, <c>Timer</c> or <c>Sequence</c> registered with <paramref name="owner"/>
+		/// Finds the <c>Motion</c>, <c>Timer</c> or <c>Sequence</c> registered with <paramref name="owner"/>
 		/// and the <paramref name="reuseID"/>.
 		/// </summary>
 		/// <param name="owner"></param>
 		/// <param name="reuseID"></param>
-		/// <returns></returns>
-		public static IPlayback GetPlayback(object owner, string reuseID) {
+		/// <returns>The playback object</returns>
+		public static IPlayback FindPlayback(object owner, string reuseID) {
 			if (Instance != null) {
-				return Instance._GetPlayback(owner, reuseID);
+				return Instance._FindPlayback(owner, reuseID);
 			}
 			return null;
 		}
 
 		/// <summary>
-		/// Gets the <c>Motion</c>, <c>Timer</c> or <c>Sequence</c> registered with <paramref name="owner"/>
+		/// Finds the <c>Motion</c>, <c>Timer</c> or <c>Sequence</c> registered with <paramref name="owner"/>
 		/// and the <paramref name="reuseID"/>.
 		/// </summary>
 		/// <param name="owner"></param>
 		/// <param name="reuseID"></param>
-		/// <returns></returns>
-		public static T GetPlayback<T>(object owner, string reuseID) where T : class, IPlayback {
+		/// <returns>The playback object</returns>
+		public static T FindPlayback<T>(object owner, string reuseID) where T : class, IPlayback {
 			if (Instance != null) {
-				return Instance._GetPlayback(owner, reuseID) as T;
+				return Instance._FindPlayback(owner, reuseID) as T;
 			}
 			return default(T);
 		}
@@ -431,7 +431,7 @@
 			}
 		}
 
-		private IPlayback _GetPlayback(object owner, string reuseID) {
+		private IPlayback _FindPlayback(object owner, string reuseID) {
 			if (Playbacks.TryGetValue(owner, out Dictionary<string, IPlayback> ownerPlaybacks)) {
 				IPlayback playback;
 				if (ownerPlaybacks.TryGetValue(reuseID, out playback)) {
