@@ -148,12 +148,13 @@
 		#region Public Methods
 
 		/// <summary>
-		/// Plays the sequence that will last the <see cref="Duration"/>.
+		/// Plays the sequence which will last the current <see cref="Duration"/>.
 		/// </summary>
 		/// 
 		/// <remarks>
-		/// <see cref="Duration"/> should have been set before via 
-		/// <see cref="SetDuration(float)"/>.
+		/// <see cref="Duration"/> is equal to <see cref="SequenceDuration"/> by default, but
+		/// can be changed through <see cref="SetDuration(float)"/> which will scale the individual 
+		/// duration of the sequence items to fit the assigned <see cref="Duration"/>
 		/// </remarks>
 		/// 
 		/// <returns>The sequence object.</returns>
@@ -162,15 +163,9 @@
 		}
 
 		/// <summary>
-		/// Plays the sequence that will last the given <c>duration</c>. 
+		/// Plays the sequence that will last the provided <c>duration</c> which in turn becomes the
+		/// value for <see cref="Duration"/>.
 		/// </summary>
-		///
-		/// <remarks>
-		/// <see cref="Duration"/> can be set alternatively at <see cref="SetDuration(float)"/>.
-		/// By default the <see cref="Duration"/> will be the same as <see cref="SequenceDuration"/>,
-		/// but it can be set to another value, which will scale the individual duration of the
-		/// sequence items to fit the assigned <see cref="Duration"/>.
-		/// </remarks>
 		/// 
 		/// <returns>The sequence object.</returns>
 		/// <param name="duration">Duration.</param>
