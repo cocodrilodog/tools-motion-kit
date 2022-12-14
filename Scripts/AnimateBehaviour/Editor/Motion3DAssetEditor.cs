@@ -17,9 +17,13 @@ namespace CocodriloDog.Animation {
 
 		protected override void OnEnable() {
 			base.OnEnable();
-			OnCompleteProperty = serializedObject.FindProperty("m_OnComplete");
 			ObjectProperty = serializedObject.FindProperty("m_Object");
 			SetterStringProperty = serializedObject.FindProperty("m_SetterString");
+			InitialValueProperty = serializedObject.FindProperty("m_InitialValue");
+			FinalValueProperty = serializedObject.FindProperty("m_FinalValue");
+			DurationProperty = serializedObject.FindProperty("m_Duration");
+			EasingProperty = serializedObject.FindProperty("m_Easing");
+			OnCompleteProperty = serializedObject.FindProperty("m_OnComplete");
 		}
 
 		public override void OnInspectorGUI() {
@@ -30,6 +34,12 @@ namespace CocodriloDog.Animation {
 			EditorGUILayout.Space();
 			EditorGUILayout.LabelField("Setter", EditorStyles.boldLabel);
 			DrawObjectAndSetter();
+
+			EditorGUILayout.Space();
+			EditorGUILayout.PropertyField(InitialValueProperty);
+			EditorGUILayout.PropertyField(FinalValueProperty);
+			EditorGUILayout.PropertyField(DurationProperty);
+			EditorGUILayout.PropertyField(EasingProperty);
 
 			EditorGUILayout.Space();
 			EditorGUILayout.LabelField("Callbacks", EditorStyles.boldLabel);
@@ -44,11 +54,19 @@ namespace CocodriloDog.Animation {
 
 		#region Private Properties
 
-		private SerializedProperty OnCompleteProperty { get; set; }
-
 		private SerializedProperty ObjectProperty { get; set; }
 
 		private SerializedProperty SetterStringProperty { get; set; }
+
+		private SerializedProperty InitialValueProperty { get; set; }
+
+		private SerializedProperty FinalValueProperty { get; set; }
+
+		private SerializedProperty DurationProperty { get; set; }
+
+		private SerializedProperty EasingProperty { get; set; }
+
+		private SerializedProperty OnCompleteProperty { get; set; }
 
 		#endregion
 
@@ -69,50 +87,37 @@ namespace CocodriloDog.Animation {
 		}
 
 		private List<string> GetSetterOptions() {
+
+			var options = new List<string>();
+			options.Add("No Function");
+
 			if (ObjectProperty.objectReferenceValue != null) {
 				if (ObjectProperty.objectReferenceValue is GameObject) {
 
 					var gameObject = ObjectProperty.objectReferenceValue as GameObject;
-					var options = new List<string>();
-
-					options.Add("No Function");
-
 					var components = gameObject.GetComponents(typeof(Component));
+
 					foreach(var component in components) {
 
-						var setters3D = GetMethodsBySignature(component.GetType(), typeof(void), typeof(Vector3));
-						foreach(var setter in setters3D) {
+						var setters = GetMethodsBySignature(component.GetType(), typeof(void), typeof(Vector3));
+						foreach(var setter in setters) {
 							options.Add($"{component.GetType().Name}/{setter.Name}");
 						}
 
-						var setters2D = GetMethodsBySignature(component.GetType(), typeof(void), typeof(Vector2));
-						foreach (var setter in setters2D) {
-							options.Add($"{component.GetType().Name}/{setter.Name}");
-						}
-
-						var properties3D = GetPropertiesByType(component.GetType(), typeof(Vector3));
-						foreach(var property in properties3D) {
-							options.Add($"{component.GetType().Name}/{property.Name}");
-						}
-
-						var properties2D = GetPropertiesByType(component.GetType(), typeof(Vector2));
-						foreach (var property in properties2D) {
+						var properties = GetPropertiesByType(component.GetType(), typeof(Vector3));
+						foreach(var property in properties) {
 							options.Add($"{component.GetType().Name}/{property.Name}");
 						}
 
 					}
 
-					return options;
-
-				} else if (ObjectProperty.objectReferenceValue is Component) {
-					return null;
-				}
+				} // TODO: Implement for ScriptableObjects
 			}
-			return null;
+			return options;
 		}
 
-		private MethodInfo[] GetMethodsBySignature(Type type, Type returnType, Type parameterType) {
-			return type.GetMethods().Where((m) => {
+		private MethodInfo[] GetMethodsBySignature(Type ownerType, Type returnType, Type parameterType) {
+			return ownerType.GetMethods().Where((m) => {
 				if (m.ReturnType != returnType || m.IsSpecialName) {
 					return false;
 				}
@@ -124,8 +129,8 @@ namespace CocodriloDog.Animation {
 			}).ToArray();
 		}
 
-		private PropertyInfo[] GetPropertiesByType(Type type, Type propertyType) {
-			return type.GetProperties().Where((p) => propertyType == p.PropertyType).ToArray();
+		private PropertyInfo[] GetPropertiesByType(Type ownerType, Type propertyType) {
+			return ownerType.GetProperties().Where((p) => propertyType == p.PropertyType).ToArray();
 		}
 
 		#endregion

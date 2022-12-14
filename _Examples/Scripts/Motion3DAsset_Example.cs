@@ -5,14 +5,31 @@ namespace CocodriloDog.Animation.Examples {
 	using UnityEngine;
 
 	public class Motion3DAsset_Example : MonoBehaviour {
-		
-		public Vector3 Prop3D { get; set; }
 
-		public Vector2 Prop2D { get; set; }
 
-		public void Set3DValue(Vector3 value) { }
+		#region Public Properties
 
-		public void Set2DValue(Vector2 value) { }
+		public Vector3 Prop3D { 
+			get => transform.position; 
+			set => transform.position = value; 
+		}
+
+		public Vector2 Prop2D {
+			get => transform.position;
+			set => transform.position = value;
+		}
+
+		#endregion
+
+
+		#region Public Methods
+
+		public void Set3DValue(Vector3 value) => transform.position = value;
+
+		public void Set2DValue(Vector2 value) => transform.position = value;
+
+		#endregion
+
 
 	}
 

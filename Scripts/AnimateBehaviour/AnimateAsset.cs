@@ -8,13 +8,6 @@ namespace CocodriloDog.Animation {
 	public class AnimateAsset : MonoScriptableObject {
 
 
-		#region Public Fields
-
-		[SerializeField]
-		public string Property;
-
-		#endregion
-
 
 	}
 

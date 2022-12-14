@@ -1,25 +1,16 @@
 namespace CocodriloDog.Animation {
 
+	using System;
 	using System.Collections;
 	using System.Collections.Generic;
+	using System.Reflection;
 	using UnityEngine;
 	using UnityEngine.Events;
 
-	public class Motion3DAsset : AnimateAsset {
+	public class Motion3DAsset : MotionAsset<Vector3> {
 
 
-		#region Private Fields
-
-		[SerializeField]
-		private UnityEngine.Object m_Object;
-
-		[SerializeField]
-		private string m_SetterString;
-
-		[SerializeField]
-		private UnityEvent m_OnComplete;
-
-		#endregion
+		
 
 
 	}
