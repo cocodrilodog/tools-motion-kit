@@ -8,6 +8,14 @@ namespace CocodriloDog.Animation {
 	public class AnimateAsset : MonoScriptableObject {
 
 
+		#region Public Methods
+		
+		public void Clear() {
+			Animate.ClearPlaybacks(this);
+		}
+
+		#endregion
+
 
 	}
 

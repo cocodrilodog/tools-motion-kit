@@ -14,6 +14,11 @@ namespace CocodriloDog.Animation {
 			motionAsset.GetMotion();
 		}
 
+		private void OnDestroy() {
+			Motion3DAsset motionAsset = (Motion3DAsset)AssetField.Object;
+			motionAsset.Clear();
+		}
+
 		#endregion
 
 

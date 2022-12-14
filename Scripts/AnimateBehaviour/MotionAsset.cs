@@ -7,50 +7,67 @@ namespace CocodriloDog.Animation {
 	using UnityEngine;
 	using UnityEngine.Events;
 
-	public class MotionAsset<T> : AnimateAsset {
+	public abstract class MotionAsset<ValueT, MotionT> : AnimateAsset
+		where MotionT : MotionBase<ValueT, MotionT> {
 
 
 		#region Public Methods
 
-		public Motion3D GetMotion() {
+		public MotionT GetMotion() {
 
 			var setterStringParts = SetterString.Split('/');
 			var gameObject = Object as GameObject;
 			var component = gameObject.GetComponent(setterStringParts[0]);
 
-			Motion3D motion3D = null;
-			Action<Vector3> setterDelegate = null;
+			MotionT motion = null;
+			Action<ValueT> setterDelegate = null;
 
 			var methodInfo = component.GetType().GetMethod(setterStringParts[1]);
 			if (methodInfo != null) {
-				setterDelegate = GetDelegate<Vector3>(component, methodInfo);
+				setterDelegate = GetDelegate(component, methodInfo);
 			} else {
 				var propertyInfo = component.GetType().GetProperty(setterStringParts[1]);
-				setterDelegate = GetDelegate<Vector3>(component, propertyInfo.GetSetMethod());
+				setterDelegate = GetDelegate(component, propertyInfo.GetSetMethod());
 			}
 
-			motion3D = Animate.GetMotion(Set3DValue)
-				.SetEasing(Easing.Vector3Easing)
-				.Play(InitialValue, FinalValue, Duration);
+			motion = CreateMotion(setterDelegate);
 
-			void Set3DValue(Vector3 value) {
-				setterDelegate(value);
-			}
-
-			Action<T2> GetDelegate<T2>(object target, MethodInfo setMethod) {
-				return (Action<T2>)Delegate.CreateDelegate(typeof(Action<T2>), target, setMethod);
-			}
-
-			return motion3D;
+			return motion;
 
 		}
-
-
 
 		#endregion
 
 
-		#region Private Fields
+		#region Protected Properties
+
+		protected UnityEngine.Object Object => m_Object;
+
+		protected string ReuseID => m_ReuseID = m_ReuseID ?? Guid.NewGuid().ToString();
+
+		protected string SetterString => m_SetterString;
+
+		protected Vector3 InitialValue => m_InitialValue;
+
+		protected Vector3 FinalValue => m_FinalValue;
+
+		protected float Duration => m_Duration;
+
+		protected AnimateEasingField Easing => m_Easing;
+
+		#endregion
+
+
+		#region Protected Methods
+
+		protected virtual MotionT CreateMotion(Action<ValueT> setterDelegate) {
+			return null;
+		}
+
+		#endregion
+
+
+		#region Private Fields - Serialized
 
 		[SerializeField]
 		private UnityEngine.Object m_Object;
@@ -76,19 +93,19 @@ namespace CocodriloDog.Animation {
 		#endregion
 
 
-		#region Private Properties
+		#region Private Fields - Non Serialized
 
-		private UnityEngine.Object Object => m_Object;
+		[NonSerialized]
+		private string m_ReuseID;
 
-		private string SetterString => m_SetterString;
+		#endregion
 
-		private Vector3 InitialValue => m_InitialValue;
 
-		private Vector3 FinalValue => m_FinalValue;
+		#region Private Methods
 
-		private float Duration => m_Duration;
-
-		private AnimateEasingField Easing => m_Easing;
+		Action<ValueT> GetDelegate(object target, MethodInfo setMethod) {
+			return (Action<ValueT>)Delegate.CreateDelegate(typeof(Action<ValueT>), target, setMethod);
+		}
 
 		#endregion
 
