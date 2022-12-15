@@ -53,9 +53,9 @@ namespace CocodriloDog.Animation {
 
 		protected string SetterString => m_SetterString;
 
-		protected Vector3 InitialValue => m_InitialValue;
+		protected ValueT InitialValue => m_InitialValue;
 
-		protected Vector3 FinalValue => m_FinalValue;
+		protected ValueT FinalValue => m_FinalValue;
 
 		protected float Duration => m_Duration;
 
@@ -80,10 +80,10 @@ namespace CocodriloDog.Animation {
 		private string m_SetterString;
 
 		[SerializeField]
-		private Vector3 m_InitialValue;
+		private ValueT m_InitialValue;
 
 		[SerializeField]
-		private Vector3 m_FinalValue;
+		private ValueT m_FinalValue;
 
 		[SerializeField]
 		private float m_Duration;

@@ -18,6 +18,7 @@ namespace CocodriloDog.Animation {
 				if (m_MonoScriptableTypes == null) {
 					m_MonoScriptableTypes = new List<Type> {
 						typeof(Motion3DAsset),
+						typeof(MotionFloatAsset),
 						typeof(TimerAsset),
 					};
 				}

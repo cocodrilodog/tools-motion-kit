@@ -12,14 +12,17 @@ namespace CocodriloDog.Animation {
 		private void Start() {
 			if (PlayOnStart) {
 				Motion3DAsset?.GetMotion().Play();
+				MotionFloatAsset?.GetMotion().Play();
 			} else {
-				// This avoids errors OnDestroy in case it is not played at all.
+				// This avoids errors OnDestroy in case it was not played at all.
 				Motion3DAsset?.GetMotion();
+				MotionFloatAsset?.GetMotion();
 			}
 		}
 
 		private void OnDestroy() {
 			Motion3DAsset?.Clear();
+			MotionFloatAsset?.Clear();
 		}
 
 		#endregion
@@ -43,6 +46,8 @@ namespace CocodriloDog.Animation {
 		private bool PlayOnStart => m_PlayOnStart;
 
 		private Motion3DAsset Motion3DAsset => AssetField.Object as Motion3DAsset;
+
+		private MotionFloatAsset MotionFloatAsset => AssetField.Object as MotionFloatAsset;
 
 		#endregion
 
