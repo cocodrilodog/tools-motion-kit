@@ -53,12 +53,14 @@ namespace CocodriloDog.Animation {
 
 			var motion = Animate.GetMotion(this, ReuseID, v => setterDelegate(v))
 				.SetEasing(Easing.Vector3Easing)
-				.SetValuesAndDuration(InitialValue, FinalValue, Duration);
+				.SetValuesAndDuration(InitialValue, FinalValue, Duration)
+				.SetTimeMode(TimeMode);
 
-			// TODO: This approach would only work if the listeners are added via editor
-			if (OnComplete.GetPersistentEventCount() > 0) {
-				motion.SetOnComplete(OnComplete.Invoke);
-			}
+			// This approach will only work if the listeners are added via editor
+			if (OnStart.GetPersistentEventCount() > 0) motion.SetOnStart(OnStart.Invoke);
+			if (OnUpdate.GetPersistentEventCount() > 0) motion.SetOnUpdate(OnUpdate.Invoke);
+			if (OnInterrupt.GetPersistentEventCount() > 0) motion.SetOnInterrupt(OnInterrupt.Invoke);
+			if (OnComplete.GetPersistentEventCount() > 0) motion.SetOnComplete(OnComplete.Invoke);
 
 			return motion;
 

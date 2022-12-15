@@ -55,9 +55,13 @@ namespace CocodriloDog.Animation.Examples {
 
 		public void SetColor(Color value) => Color = value;
 
-		public void OnComplete() {
-			Debug.Log($"{name}: OnComplete");
-		}
+		public void OnStart() => Debug.Log($"{name}: OnStart");
+
+		public void OnUpdate() => Debug.Log($"{name}: OnUpdate");
+		
+		public void OnInterrupt() => Debug.Log($"{name}: OnInterrupt");
+		
+		public void OnComplete() => Debug.Log($"{name}: OnComplete");
 
 		#endregion
 

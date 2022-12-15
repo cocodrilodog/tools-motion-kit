@@ -267,6 +267,7 @@ MonoBehaviour:
   m_InitialValue: {x: -3, y: 0, z: 0}
   m_FinalValue: {x: -3, y: -3, z: 0}
   m_Duration: 3
+  m_TimeMode: 0
   m_Easing:
     m_EasingName: Elastic Out
     m_AnimateCurve:
@@ -276,6 +277,54 @@ MonoBehaviour:
         m_PreInfinity: 2
         m_PostInfinity: 2
         m_RotationOrder: 4
+  m_OnStart:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1608866451}
+        m_TargetAssemblyTypeName: CocodriloDog.Animation.Examples.AnimateAssets_Example,
+          Assembly-CSharp
+        m_MethodName: OnStart
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  m_OnUpdate:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1608866451}
+        m_TargetAssemblyTypeName: CocodriloDog.Animation.Examples.AnimateAssets_Example,
+          Assembly-CSharp
+        m_MethodName: OnUpdate
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  m_OnInterrupt:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1608866451}
+        m_TargetAssemblyTypeName: CocodriloDog.Animation.Examples.AnimateAssets_Example,
+          Assembly-CSharp
+        m_MethodName: OnInterrupt
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   m_OnComplete:
     m_PersistentCalls:
       m_Calls:
@@ -436,6 +485,7 @@ MonoBehaviour:
   m_InitialValue: 0
   m_FinalValue: 3
   m_Duration: 1
+  m_TimeMode: 0
   m_Easing:
     m_EasingName: Quad In Out
     m_AnimateCurve:
@@ -445,6 +495,15 @@ MonoBehaviour:
         m_PreInfinity: 2
         m_PostInfinity: 2
         m_RotationOrder: 4
+  m_OnStart:
+    m_PersistentCalls:
+      m_Calls: []
+  m_OnUpdate:
+    m_PersistentCalls:
+      m_Calls: []
+  m_OnInterrupt:
+    m_PersistentCalls:
+      m_Calls: []
   m_OnComplete:
     m_PersistentCalls:
       m_Calls:
@@ -605,6 +664,7 @@ MonoBehaviour:
   m_InitialValue: {x: 0, y: 0, z: 0}
   m_FinalValue: {x: 0, y: 3, z: 0}
   m_Duration: 3
+  m_TimeMode: 0
   m_Easing:
     m_EasingName: Back In Out
     m_AnimateCurve:
@@ -614,6 +674,15 @@ MonoBehaviour:
         m_PreInfinity: 2
         m_PostInfinity: 2
         m_RotationOrder: 4
+  m_OnStart:
+    m_PersistentCalls:
+      m_Calls: []
+  m_OnUpdate:
+    m_PersistentCalls:
+      m_Calls: []
+  m_OnInterrupt:
+    m_PersistentCalls:
+      m_Calls: []
   m_OnComplete:
     m_PersistentCalls:
       m_Calls:
@@ -892,6 +961,7 @@ MonoBehaviour:
   m_InitialValue: {r: 0.5019608, g: 0.5019608, b: 0.5019608, a: 1}
   m_FinalValue: {r: 1, g: 0, b: 0, a: 1}
   m_Duration: 2
+  m_TimeMode: 0
   m_Easing:
     m_EasingName: Linear
     m_AnimateCurve:
@@ -901,6 +971,15 @@ MonoBehaviour:
         m_PreInfinity: 2
         m_PostInfinity: 2
         m_RotationOrder: 4
+  m_OnStart:
+    m_PersistentCalls:
+      m_Calls: []
+  m_OnUpdate:
+    m_PersistentCalls:
+      m_Calls: []
+  m_OnInterrupt:
+    m_PersistentCalls:
+      m_Calls: []
   m_OnComplete:
     m_PersistentCalls:
       m_Calls:
