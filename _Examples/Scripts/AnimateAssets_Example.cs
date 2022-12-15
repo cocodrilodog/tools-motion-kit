@@ -1,5 +1,6 @@
 namespace CocodriloDog.Animation.Examples {
 
+	using System;
 	using System.Collections;
 	using System.Collections.Generic;
 	using UnityEngine;
@@ -28,8 +29,21 @@ namespace CocodriloDog.Animation.Examples {
 			}
 		}
 
-		#endregion
+		public Color Color {
+			get {
+				var propertyBlock = new MaterialPropertyBlock();
+				Renderer.GetPropertyBlock(propertyBlock);
+				return propertyBlock.GetColor("_BaseColor");
+			}
+			set {
+				var propertyBlock = new MaterialPropertyBlock();
+				propertyBlock.SetColor("_BaseColor", value);
+				Renderer.SetPropertyBlock(propertyBlock);
+			}
+		}
 
+		#endregion
+		
 
 		#region Public Methods
 
@@ -38,6 +52,30 @@ namespace CocodriloDog.Animation.Examples {
 		public void SetVector2(Vector2 value) => transform.position = value;
 
 		public void SetFloat(float value) => Float = value;
+
+		public void SetColor(Color value) => Color = value;
+
+		#endregion
+
+
+		#region Private Fields
+
+		[NonSerialized]
+		private Renderer m_Renderer;
+
+		#endregion
+
+
+		#region Private Properties
+
+		private Renderer Renderer {
+			get {
+				if(m_Renderer == null) {
+					m_Renderer = GetComponent<Renderer>();
+				}
+				return m_Renderer;
+			}
+		}
 
 		#endregion
 
