@@ -10,6 +10,6 @@ namespace CocodriloDog.Animation {
 	using UnityEngine;
 
 	[CustomEditor(typeof(Motion3DAsset))]
-	public class Motion3DAssetEditor : MotionBaseAssetEditor<Vector3, Motion3D> { }
+	public class Motion3DAssetEditor : MotionBaseAssetEditor<Vector3> { }
 
 }

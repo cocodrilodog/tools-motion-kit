@@ -9,7 +9,7 @@ namespace CocodriloDog.Animation {
 	using UnityEditor;
 	using UnityEngine;
 
-	[CustomEditor(typeof(MotionFloatAsset))]
-	public class MotionFloatAssetEditor : MotionBaseAssetEditor<float> { }
+	[CustomEditor(typeof(Motion2DAsset))]
+	public class Motion2DAssetEditor : MotionBaseAssetEditor<Vector2> { }
 
 }

@@ -9,8 +9,7 @@ namespace CocodriloDog.Animation {
 	using UnityEditor;
 	using UnityEngine;
 
-	public abstract class MotionBaseAssetEditor<ValueT, MotionT> : MonoScriptableObjectEditor
-		where MotionT : MotionBase<ValueT, MotionT> {
+	public abstract class MotionBaseAssetEditor<ValueT> : MonoScriptableObjectEditor {
 
 
 		#region Unity Methods

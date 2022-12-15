@@ -13,7 +13,7 @@ namespace CocodriloDog.Animation {
 
 		#region Public Methods
 
-		public MotionT GetMotion() {
+		public virtual MotionT GetMotion() {
 
 			var setterStringParts = SetterString.Split('/');
 			MotionT motion = null;
@@ -39,6 +39,10 @@ namespace CocodriloDog.Animation {
 			}
 
 			return motion;
+
+			Action<ValueT> GetDelegate(object target, MethodInfo setMethod) {
+				return (Action<ValueT>)Delegate.CreateDelegate(typeof(Action<ValueT>), target, setMethod);
+			}
 
 		}
 
@@ -101,15 +105,6 @@ namespace CocodriloDog.Animation {
 
 		[NonSerialized]
 		private string m_ReuseID;
-
-		#endregion
-
-
-		#region Private Methods
-
-		Action<ValueT> GetDelegate(object target, MethodInfo setMethod) {
-			return (Action<ValueT>)Delegate.CreateDelegate(typeof(Action<ValueT>), target, setMethod);
-		}
 
 		#endregion
 

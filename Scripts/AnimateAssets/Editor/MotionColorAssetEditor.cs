@@ -10,6 +10,6 @@ namespace CocodriloDog.Animation {
 	using UnityEngine;
 
 	[CustomEditor(typeof(MotionColorAsset))]
-	public class MotionColorAssetEditor : MotionBaseAssetEditor<Color, MotionColor> { }
+	public class MotionColorAssetEditor : MotionBaseAssetEditor<Color> { }
 
 }
