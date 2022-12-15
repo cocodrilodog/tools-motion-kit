@@ -123,6 +123,36 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
+--- !u!114 &516785527
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dc8183f4cd29066469c3e2751a5222b2, type: 3}
+  m_Name: Motion3DAsset
+  m_EditorClassIdentifier: 
+  m_Owner: {fileID: 1608866452}
+  m_Object: {fileID: 1608866446}
+  m_SetterString: Motion3DAsset_Example/Set3DValue
+  m_InitialValue: {x: 0, y: 0, z: 0}
+  m_FinalValue: {x: 3, y: 0, z: 0}
+  m_Duration: 4
+  m_Easing:
+    m_EasingName: Elastic Out
+    m_AnimateCurve:
+      Curve:
+        serializedVersion: 2
+        m_Curve: []
+        m_PreInfinity: 2
+        m_PostInfinity: 2
+        m_RotationOrder: 4
+  m_OnComplete:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!1 &1608866446
 GameObject:
   m_ObjectHideFlags: 0
@@ -247,7 +277,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_AssetField:
-    m_Object: {fileID: 2014348668}
+    m_Object: {fileID: 516785527}
+  m_PlayOnStart: 1
 --- !u!1 &2003120085
 GameObject:
   m_ObjectHideFlags: 0
@@ -366,33 +397,3 @@ MonoBehaviour:
   m_RequiresDepthTexture: 0
   m_RequiresColorTexture: 0
   m_Version: 2
---- !u!114 &2014348668
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: dc8183f4cd29066469c3e2751a5222b2, type: 3}
-  m_Name: Motion3DAsset
-  m_EditorClassIdentifier: 
-  m_Owner: {fileID: 1608866452}
-  m_Object: {fileID: 1608866446}
-  m_SetterString: Motion3DAsset_Example/Set3DValue
-  m_InitialValue: {x: 0, y: 0, z: 0}
-  m_FinalValue: {x: 3, y: 0, z: 0}
-  m_Duration: 4
-  m_Easing:
-    m_EasingName: Elastic Out
-    m_AnimateCurve:
-      Curve:
-        serializedVersion: 2
-        m_Curve: []
-        m_PreInfinity: 2
-        m_PostInfinity: 2
-        m_RotationOrder: 4
-  m_OnComplete:
-    m_PersistentCalls:
-      m_Calls: []

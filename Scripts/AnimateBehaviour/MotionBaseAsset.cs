@@ -7,7 +7,7 @@ namespace CocodriloDog.Animation {
 	using UnityEngine;
 	using UnityEngine.Events;
 
-	public abstract class MotionAsset<ValueT, MotionT> : AnimateAsset
+	public abstract class MotionBaseAsset<ValueT, MotionT> : AnimateAsset
 		where MotionT : MotionBase<ValueT, MotionT> {
 
 
@@ -16,21 +16,27 @@ namespace CocodriloDog.Animation {
 		public MotionT GetMotion() {
 
 			var setterStringParts = SetterString.Split('/');
-			var gameObject = Object as GameObject;
-			var component = gameObject.GetComponent(setterStringParts[0]);
-
 			MotionT motion = null;
-			Action<ValueT> setterDelegate = null;
+			Action<ValueT> setterDelegate;
+			
+			var gameObject = Object as GameObject;
+			if (gameObject != null) {
 
-			var methodInfo = component.GetType().GetMethod(setterStringParts[1]);
-			if (methodInfo != null) {
-				setterDelegate = GetDelegate(component, methodInfo);
+				var component = gameObject.GetComponent(setterStringParts[0]);
+
+				var methodInfo = component.GetType().GetMethod(setterStringParts[1]);
+				if (methodInfo != null) {
+					setterDelegate = GetDelegate(component, methodInfo);
+				} else {
+					var propertyInfo = component.GetType().GetProperty(setterStringParts[1]);
+					setterDelegate = GetDelegate(component, propertyInfo.GetSetMethod());
+				}
+
+				motion = CreateMotion(setterDelegate);
+
 			} else {
-				var propertyInfo = component.GetType().GetProperty(setterStringParts[1]);
-				setterDelegate = GetDelegate(component, propertyInfo.GetSetMethod());
+				// TODO: Possibly work with ScriptableObjects (and fields)
 			}
-
-			motion = CreateMotion(setterDelegate);
 
 			return motion;
 
@@ -60,9 +66,7 @@ namespace CocodriloDog.Animation {
 
 		#region Protected Methods
 
-		protected virtual MotionT CreateMotion(Action<ValueT> setterDelegate) {
-			return null;
-		}
+		protected virtual MotionT CreateMotion(Action<ValueT> setterDelegate) => null;
 
 		#endregion
 

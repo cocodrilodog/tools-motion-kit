@@ -10,13 +10,16 @@ namespace CocodriloDog.Animation {
 		#region Unity Methods
 
 		private void Start() {
-			Motion3DAsset motionAsset = (Motion3DAsset)AssetField.Object;
-			motionAsset.GetMotion();
+			if (PlayOnStart) {
+				Motion3DAsset?.GetMotion().Play();
+			} else {
+				// This avoids errors OnDestroy in case it is not played at all.
+				Motion3DAsset?.GetMotion();
+			}
 		}
 
 		private void OnDestroy() {
-			Motion3DAsset motionAsset = (Motion3DAsset)AssetField.Object;
-			motionAsset.Clear();
+			Motion3DAsset?.Clear();
 		}
 
 		#endregion
@@ -27,12 +30,19 @@ namespace CocodriloDog.Animation {
 		[SerializeField]
 		private AnimateAssetField m_AssetField;
 
+		[SerializeField]
+		private bool m_PlayOnStart;
+
 		#endregion
 
 
 		#region Private Properties
 
 		private AnimateAssetField AssetField => m_AssetField;
+
+		private bool PlayOnStart => m_PlayOnStart;
+
+		private Motion3DAsset Motion3DAsset => AssetField.Object as Motion3DAsset;
 
 		#endregion
 
