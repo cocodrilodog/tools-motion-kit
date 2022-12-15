@@ -34,8 +34,8 @@ namespace CocodriloDog.Animation {
 			DrawObjectAndSetter();
 
 			EditorGUILayout.Space();
-			EditorGUILayout.PropertyField(InitialValueProperty);
-			EditorGUILayout.PropertyField(FinalValueProperty);
+			DrawInitialValue();
+			DrawFinalValue();
 			EditorGUILayout.PropertyField(DurationProperty);
 			EditorGUILayout.PropertyField(EasingProperty);
 
@@ -46,6 +46,24 @@ namespace CocodriloDog.Animation {
 			serializedObject.ApplyModifiedProperties();
 
 		}
+
+		#endregion
+
+
+		#region Protected Properties
+
+		protected SerializedProperty InitialValueProperty { get; set; }
+
+		protected SerializedProperty FinalValueProperty { get; set; }
+
+		#endregion
+
+
+		#region Protected Methods
+
+		protected virtual void DrawInitialValue() => EditorGUILayout.PropertyField(InitialValueProperty);
+
+		protected virtual void DrawFinalValue() => EditorGUILayout.PropertyField(FinalValueProperty);
 
 		#endregion
 
@@ -62,10 +80,6 @@ namespace CocodriloDog.Animation {
 		private SerializedProperty ObjectProperty { get; set; }
 
 		private SerializedProperty SetterStringProperty { get; set; }
-
-		private SerializedProperty InitialValueProperty { get; set; }
-
-		private SerializedProperty FinalValueProperty { get; set; }
 
 		private SerializedProperty DurationProperty { get; set; }
 

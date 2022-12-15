@@ -266,7 +266,7 @@ MonoBehaviour:
   m_SetterString: AnimateAssets_Example/Vector3
   m_InitialValue: {x: -3, y: 0, z: 0}
   m_FinalValue: {x: -3, y: -3, z: 0}
-  m_Duration: 4
+  m_Duration: 3
   m_Easing:
     m_EasingName: Elastic Out
     m_AnimateCurve:
