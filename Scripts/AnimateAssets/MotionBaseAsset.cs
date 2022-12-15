@@ -65,6 +65,8 @@ namespace CocodriloDog.Animation {
 
 		protected AnimateEasingField Easing => m_Easing;
 
+		protected UnityEvent OnComplete => m_OnComplete;
+
 		#endregion
 
 

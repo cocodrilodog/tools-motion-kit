@@ -15,7 +15,12 @@ namespace CocodriloDog.Animation {
 			var motion = Animate.GetMotion(this, ReuseID, v => setterDelegate(v))
 				.SetEasing(Easing.Vector3Easing)
 				.SetValuesAndDuration(InitialValue, FinalValue, Duration);
-
+			
+			// TODO: This approach would only work if the listeners are added via editor
+			if(OnComplete.GetPersistentEventCount() > 0) {
+				motion.SetOnComplete(OnComplete.Invoke);
+			}
+			
 			return motion;
 
 		}

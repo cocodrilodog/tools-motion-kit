@@ -16,6 +16,11 @@ namespace CocodriloDog.Animation {
 				.SetEasing(Easing.FloatEasing)
 				.SetValuesAndDuration(InitialValue, FinalValue, Duration);
 
+			// TODO: This approach would only work if the listeners are added via editor
+			if (OnComplete.GetPersistentEventCount() > 0) {
+				motion.SetOnComplete(OnComplete.Invoke);
+			}
+
 			return motion;
 
 		}

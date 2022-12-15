@@ -9,7 +9,7 @@ namespace CocodriloDog.Animation {
 	public class Motion2DAsset : MotionBaseAsset<Vector3, Motion3D> {
 
 
-		#region Protected Methods
+		#region Public Methods
 
 		public override Motion3D GetMotion() {
 
@@ -44,11 +44,21 @@ namespace CocodriloDog.Animation {
 
 		}
 
+		#endregion
+
+
+		#region Private Methods
+
 		private Motion3D CreateMotion(Action<Vector2> setterDelegate) {;
 
 			var motion = Animate.GetMotion(this, ReuseID, v => setterDelegate(v))
 				.SetEasing(Easing.Vector3Easing)
 				.SetValuesAndDuration(InitialValue, FinalValue, Duration);
+
+			// TODO: This approach would only work if the listeners are added via editor
+			if (OnComplete.GetPersistentEventCount() > 0) {
+				motion.SetOnComplete(OnComplete.Invoke);
+			}
 
 			return motion;
 
