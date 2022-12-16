@@ -41,6 +41,7 @@ namespace CocodriloDog.Animation {
 			DrawObjectAndSetter();
 
 			EditorGUILayout.Space();
+			EditorGUILayout.LabelField("Settings", EditorStyles.boldLabel);
 			DrawInitialValue();
 			DrawFinalValue();
 			EditorGUILayout.PropertyField(DurationProperty);

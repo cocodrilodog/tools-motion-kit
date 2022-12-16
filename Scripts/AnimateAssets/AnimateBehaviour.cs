@@ -7,26 +7,59 @@ namespace CocodriloDog.Animation {
 	public class AnimateBehaviour : MonoBehaviour {
 
 
+		#region Public Methods
+
+		public void Play() {
+			Motion3DAsset?.GetMotion().Play();
+			Motion2DAsset?.GetMotion().Play();
+			MotionFloatAsset?.GetMotion().Play();
+			MotionColorAsset?.GetMotion().Play();
+		}
+		
+		public void Pause() {
+			Motion3DAsset?.GetMotion().Pause();
+			Motion2DAsset?.GetMotion().Pause();
+			MotionFloatAsset?.GetMotion().Pause();
+			MotionColorAsset?.GetMotion().Pause();
+		}	
+		
+		public void Resume() {
+			Motion3DAsset?.GetMotion().Resume();
+			Motion2DAsset?.GetMotion().Resume();
+			MotionFloatAsset?.GetMotion().Resume();
+			MotionColorAsset?.GetMotion().Resume();
+		}
+		
+		public void Stop() {
+			Motion3DAsset?.GetMotion().Stop();
+			Motion2DAsset?.GetMotion().Stop();
+			MotionFloatAsset?.GetMotion().Stop();
+			MotionColorAsset?.GetMotion().Stop();
+		}
+
+		public void Dispose() {
+			Motion3DAsset?.Dispose();
+			Motion2DAsset?.Dispose();
+			MotionFloatAsset?.Dispose();
+			MotionColorAsset?.Dispose();
+		}
+
+		#endregion
+
+
 		#region Unity Methods
 
 		private void Start() {
 			if (PlayOnStart) {
-				Motion3DAsset?.GetMotion().Play();
-				Motion2DAsset?.GetMotion().Play();
-				MotionFloatAsset?.GetMotion().Play();
-				MotionColorAsset?.GetMotion().Play();
+				Play();
 			} else {
 				// This avoids errors OnDestroy in case it was not played at all.
-				Motion3DAsset?.GetMotion();
-				Motion2DAsset?.GetMotion();
-				MotionFloatAsset?.GetMotion();
-				MotionColorAsset?.GetMotion();
+				Get();
 			}
 		}
 
 		private void OnDestroy() {
-			Motion3DAsset?.Clear();
-			MotionFloatAsset?.Clear();
+			Dispose();
 		}
 
 		#endregion
@@ -56,6 +89,18 @@ namespace CocodriloDog.Animation {
 		private MotionFloatAsset MotionFloatAsset => AssetField.Object as MotionFloatAsset;
 
 		private MotionColorAsset MotionColorAsset => AssetField.Object as MotionColorAsset;
+
+		#endregion
+
+
+		#region Private Methods
+
+		private void Get() {
+			Motion3DAsset?.GetMotion();
+			Motion2DAsset?.GetMotion();
+			MotionFloatAsset?.GetMotion();
+			MotionColorAsset?.GetMotion();
+		}
 
 		#endregion
 

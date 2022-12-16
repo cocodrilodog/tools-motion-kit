@@ -10,7 +10,7 @@ namespace CocodriloDog.Animation {
 
 		#region Public Methods
 		
-		public void Clear() {
+		public void Dispose() {
 			Animate.ClearPlaybacks(this);
 		}
 
