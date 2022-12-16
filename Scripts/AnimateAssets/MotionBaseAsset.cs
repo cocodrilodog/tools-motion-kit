@@ -11,6 +11,13 @@ namespace CocodriloDog.Animation {
 		where MotionT : MotionBase<ValueT, MotionT> {
 
 
+		#region Public Properties
+
+		public override float Duration => m_Duration;
+
+		#endregion
+
+
 		#region Public Methods
 
 		public virtual MotionT GetMotion() {
@@ -60,8 +67,6 @@ namespace CocodriloDog.Animation {
 		protected ValueT InitialValue => m_InitialValue;
 
 		protected ValueT FinalValue => m_FinalValue;
-
-		protected float Duration => m_Duration;
 
 		protected TimeMode TimeMode => m_TimeMode;
 
