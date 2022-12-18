@@ -74,14 +74,6 @@ namespace CocodriloDog.Animation {
 
 		private bool PlayOnStart => m_PlayOnStart;
 
-		private Motion3DAsset Motion3DAsset => AssetField.Object as Motion3DAsset;
-
-		private Motion2DAsset Motion2DAsset => AssetField.Object as Motion2DAsset;
-
-		private MotionFloatAsset MotionFloatAsset => AssetField.Object as MotionFloatAsset;
-
-		private MotionColorAsset MotionColorAsset => AssetField.Object as MotionColorAsset;
-
 		#endregion
 
 
