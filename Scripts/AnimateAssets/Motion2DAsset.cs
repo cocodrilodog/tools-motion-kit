@@ -14,7 +14,7 @@ namespace CocodriloDog.Animation {
 		public override Motion3D GetMotion() {
 
 			var setterStringParts = SetterString.Split('/');
-			Motion3D motion = null;
+
 			Action<Vector2> setterDelegate;
 
 			var gameObject = Object as GameObject;
@@ -30,13 +30,13 @@ namespace CocodriloDog.Animation {
 					setterDelegate = GetDelegate(component, propertyInfo.GetSetMethod());
 				}
 
-				motion = CreateMotion(setterDelegate);
+				Motion = CreateMotion(setterDelegate);
 
 			} else {
 				// TODO: Possibly work with ScriptableObjects (and fields)
 			}
 
-			return motion;
+			return Motion;
 
 			Action<Vector2> GetDelegate(object target, MethodInfo setMethod) {
 				return (Action<Vector2>)Delegate.CreateDelegate(typeof(Action<Vector2>), target, setMethod);
@@ -53,7 +53,7 @@ namespace CocodriloDog.Animation {
 
 			var motion = Animate.GetMotion(this, ReuseID, v => setterDelegate(v))
 				.SetEasing(Easing.Vector3Easing)
-				.SetValuesAndDuration(InitialValue, FinalValue, Duration)
+				.SetValuesAndDuration(InitialValue, FinalValue, _Duration)
 				.SetTimeMode(TimeMode);
 
 			// This approach will only work if the listeners are added via editor

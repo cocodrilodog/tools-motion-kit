@@ -14,7 +14,7 @@ namespace CocodriloDog.Animation {
 
 			var motion = Animate.GetMotion(this, ReuseID, v => setterDelegate(v))
 				.SetEasing(Easing.FloatEasing)
-				.SetValuesAndDuration(InitialValue, FinalValue, Duration)
+				.SetValuesAndDuration(InitialValue, FinalValue, _Duration)
 				.SetTimeMode(TimeMode);
 
 			// This approach will only work if the listeners are added via editor

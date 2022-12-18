@@ -7,42 +7,32 @@ namespace CocodriloDog.Animation {
 	public class AnimateBehaviour : MonoBehaviour {
 
 
+		#region Public Properties
+
+		public float Progress => AssetField.Object.Progress;
+
+		public float CurrentTime => AssetField.Object.CurrentTime;
+
+		public float Duration => AssetField.Object.Duration;
+
+		public bool IsPlaying => AssetField.Object.IsPlaying;
+
+		public bool IsPaused => AssetField.Object.IsPaused;
+
+		#endregion
+
+
 		#region Public Methods
 
-		public void Play() {
-			Motion3DAsset?.GetMotion().Play();
-			Motion2DAsset?.GetMotion().Play();
-			MotionFloatAsset?.GetMotion().Play();
-			MotionColorAsset?.GetMotion().Play();
-		}
-		
-		public void Pause() {
-			Motion3DAsset?.GetMotion().Pause();
-			Motion2DAsset?.GetMotion().Pause();
-			MotionFloatAsset?.GetMotion().Pause();
-			MotionColorAsset?.GetMotion().Pause();
-		}	
-		
-		public void Resume() {
-			Motion3DAsset?.GetMotion().Resume();
-			Motion2DAsset?.GetMotion().Resume();
-			MotionFloatAsset?.GetMotion().Resume();
-			MotionColorAsset?.GetMotion().Resume();
-		}
-		
-		public void Stop() {
-			Motion3DAsset?.GetMotion().Stop();
-			Motion2DAsset?.GetMotion().Stop();
-			MotionFloatAsset?.GetMotion().Stop();
-			MotionColorAsset?.GetMotion().Stop();
-		}
+		public void Play() => AssetField.Object.Play();
 
-		public void Dispose() {
-			Motion3DAsset?.Dispose();
-			Motion2DAsset?.Dispose();
-			MotionFloatAsset?.Dispose();
-			MotionColorAsset?.Dispose();
-		}
+		public void Stop() => AssetField.Object.Stop();
+
+		public void Pause() => AssetField.Object.Pause();
+
+		public void Resume() => AssetField.Object.Resume();
+
+		public void Dispose() => AssetField.Object.Dispose();
 
 		#endregion
 

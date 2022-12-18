@@ -13,7 +13,15 @@ namespace CocodriloDog.Animation {
 
 		#region Public Properties
 
-		public override float Duration => m_Duration;
+		public override float Progress => (float)Motion?.Progress;
+
+		public override float CurrentTime => (float)Motion?.CurrentTime;
+
+		public override float Duration => (float)Motion?.Duration;
+
+		public override bool IsPlaying => (bool)Motion?.IsPlaying;
+
+		public override bool IsPaused => (bool)Motion?.IsPaused;
 
 		#endregion
 
@@ -23,7 +31,7 @@ namespace CocodriloDog.Animation {
 		public virtual MotionT GetMotion() {
 
 			var setterStringParts = SetterString.Split('/');
-			MotionT motion = null;
+
 			Action<ValueT> setterDelegate;
 
 			var gameObject = Object as GameObject;
@@ -39,19 +47,27 @@ namespace CocodriloDog.Animation {
 					setterDelegate = GetDelegate(component, propertyInfo.GetSetMethod());
 				}
 
-				motion = CreateMotion(setterDelegate);
+				Motion = CreateMotion(setterDelegate);
 
 			} else {
 				// TODO: Possibly work with ScriptableObjects (and fields)
 			}
 
-			return motion;
+			return m_Motion;
 
 			Action<ValueT> GetDelegate(object target, MethodInfo setMethod) {
 				return (Action<ValueT>)Delegate.CreateDelegate(typeof(Action<ValueT>), target, setMethod);
 			}
 
 		}
+
+		public override void Play() => Motion?.Play();
+
+		public override void Stop() => Motion?.Stop();
+
+		public override void Pause() => Motion?.Pause();
+
+		public override void Resume() => Motion?.Resume();
 
 		#endregion
 
@@ -68,6 +84,8 @@ namespace CocodriloDog.Animation {
 
 		protected ValueT FinalValue => m_FinalValue;
 
+		protected float _Duration => m_Duration;
+
 		protected TimeMode TimeMode => m_TimeMode;
 
 		protected AnimateEasingField Easing => m_Easing;
@@ -79,6 +97,16 @@ namespace CocodriloDog.Animation {
 		protected UnityEvent OnInterrupt => m_OnInterrupt;
 		
 		protected UnityEvent OnComplete => m_OnComplete;
+
+		protected MotionT Motion {
+			get {
+				if(m_Motion == null) {
+					GetMotion();
+				}
+				return m_Motion;
+			}
+			set => m_Motion = value;
+		}
 
 		#endregion
 
@@ -129,6 +157,9 @@ namespace CocodriloDog.Animation {
 
 
 		#region Private Fields - Non Serialized
+
+		[NonSerialized]
+		private MotionT m_Motion;
 
 		[NonSerialized]
 		private string m_ReuseID;

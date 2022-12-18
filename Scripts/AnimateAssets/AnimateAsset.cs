@@ -5,33 +5,33 @@ namespace CocodriloDog.Animation {
 	using System.Collections.Generic;
 	using UnityEngine;
 
-	public class AnimateAsset : MonoScriptableObject {
+	public abstract class AnimateAsset : MonoScriptableObject {
 
 
 		#region Public Properties
 
-		public virtual float Progress => 0;
+		public abstract float Progress { get; }
 
-		public virtual float CurrentTime => 0;
+		public abstract float CurrentTime { get; }
 
-		public virtual float Duration => 0;
+		public abstract float Duration { get; }
 
-		public virtual bool IsPlaying => false;
+		public abstract bool IsPlaying { get; }
 
-		public virtual bool IsPlaused => false;
+		public abstract bool IsPaused { get; }
 
 		#endregion
 
 
 		#region Public Methods
 
-		public virtual void Play() { }
+		public abstract void Play();
 
-		public virtual void Stop() { }
+		public abstract void Stop();
 
-		public virtual void Pause() { }
+		public abstract void Pause();
 
-		public virtual void Resume() { }
+		public abstract void Resume();
 
 		public virtual void Dispose() {
 			Animate.ClearPlaybacks(this);
