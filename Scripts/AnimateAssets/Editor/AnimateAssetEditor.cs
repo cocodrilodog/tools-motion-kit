@@ -63,6 +63,8 @@ namespace CocodriloDog.Animation {
 			}
 		}
 
+		protected virtual void DrawAfterSettings() { }
+
 		#endregion
 
 

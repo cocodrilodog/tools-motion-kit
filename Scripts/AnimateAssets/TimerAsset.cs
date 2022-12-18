@@ -38,13 +38,13 @@ namespace CocodriloDog.Animation {
 
 		}
 
-		public override void Pause() => Timer.Pause();
-
 		public override void Play() => Timer.Play();
 
-		public override void Resume() => Timer.Resume();
-
 		public override void Stop() => Timer.Stop();
+
+		public override void Pause() => Timer.Pause();
+
+		public override void Resume() => Timer.Resume();
 
 		#endregion
 
