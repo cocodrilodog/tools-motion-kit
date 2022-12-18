@@ -13,22 +13,22 @@ namespace CocodriloDog.Animation {
 
 		#region Public Properties
 
-		public override float Progress => (float)Motion?.Progress;
+		public override float Progress => Motion.Progress;
 
-		public override float CurrentTime => (float)Motion?.CurrentTime;
+		public override float CurrentTime => Motion.CurrentTime;
 
-		public override float Duration => (float)Motion?.Duration;
+		public override float Duration => Motion.Duration;
 
-		public override bool IsPlaying => (bool)Motion?.IsPlaying;
+		public override bool IsPlaying => Motion.IsPlaying;
 
-		public override bool IsPaused => (bool)Motion?.IsPaused;
+		public override bool IsPaused => Motion.IsPaused;
 
 		#endregion
 
 
 		#region Public Methods
 
-		public virtual MotionT GetMotion() {
+		public override void Init() {
 
 			var setterStringParts = SetterString.Split('/');
 
@@ -47,13 +47,11 @@ namespace CocodriloDog.Animation {
 					setterDelegate = GetDelegate(component, propertyInfo.GetSetMethod());
 				}
 
-				Motion = CreateMotion(setterDelegate);
+				m_Motion = CreateMotion(setterDelegate);
 
 			} else {
 				// TODO: Possibly work with ScriptableObjects (and fields)
 			}
-
-			return m_Motion;
 
 			Action<ValueT> GetDelegate(object target, MethodInfo setMethod) {
 				return (Action<ValueT>)Delegate.CreateDelegate(typeof(Action<ValueT>), target, setMethod);
@@ -61,18 +59,35 @@ namespace CocodriloDog.Animation {
 
 		}
 
-		public override void Play() => Motion?.Play();
+		public override void Play() => Motion.Play();
 
-		public override void Stop() => Motion?.Stop();
+		public override void Stop() => Motion.Stop();
 
-		public override void Pause() => Motion?.Pause();
+		public override void Pause() => Motion.Pause();
 
-		public override void Resume() => Motion?.Resume();
+		public override void Resume() => Motion.Resume();
+
+		#endregion
+
+
+		#region Protected Fields
+
+		[NonSerialized]
+		protected MotionT m_Motion;
 
 		#endregion
 
 
 		#region Protected Properties
+
+		protected MotionT Motion {
+			get {
+				if (m_Motion == null) {
+					Init();
+				}
+				return m_Motion;
+			}
+		}
 
 		protected UnityEngine.Object Object => m_Object;
 
@@ -97,16 +112,6 @@ namespace CocodriloDog.Animation {
 		protected UnityEvent OnInterrupt => m_OnInterrupt;
 		
 		protected UnityEvent OnComplete => m_OnComplete;
-
-		protected MotionT Motion {
-			get {
-				if(m_Motion == null) {
-					GetMotion();
-				}
-				return m_Motion;
-			}
-			set => m_Motion = value;
-		}
 
 		#endregion
 
@@ -157,9 +162,6 @@ namespace CocodriloDog.Animation {
 
 
 		#region Private Fields - Non Serialized
-
-		[NonSerialized]
-		private MotionT m_Motion;
 
 		[NonSerialized]
 		private string m_ReuseID;

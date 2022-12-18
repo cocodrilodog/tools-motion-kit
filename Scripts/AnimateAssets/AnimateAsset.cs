@@ -25,6 +25,8 @@ namespace CocodriloDog.Animation {
 
 		#region Public Methods
 
+		public abstract void Init();
+
 		public abstract void Play();
 
 		public abstract void Stop();

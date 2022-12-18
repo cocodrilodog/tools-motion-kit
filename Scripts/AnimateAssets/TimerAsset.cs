@@ -22,6 +22,10 @@ namespace CocodriloDog.Animation {
 
 		public override bool IsPaused => throw new System.NotImplementedException();
 
+		public override void Init() {
+			throw new System.NotImplementedException();
+		}
+
 		public override void Pause() {
 			throw new System.NotImplementedException();
 		}

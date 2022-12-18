@@ -11,7 +11,7 @@ namespace CocodriloDog.Animation {
 
 		#region Public Methods
 
-		public override Motion3D GetMotion() {
+		public override void Init() {
 
 			var setterStringParts = SetterString.Split('/');
 
@@ -30,13 +30,11 @@ namespace CocodriloDog.Animation {
 					setterDelegate = GetDelegate(component, propertyInfo.GetSetMethod());
 				}
 
-				Motion = CreateMotion(setterDelegate);
+				m_Motion = CreateMotion(setterDelegate);
 
 			} else {
 				// TODO: Possibly work with ScriptableObjects (and fields)
 			}
-
-			return Motion;
 
 			Action<Vector2> GetDelegate(object target, MethodInfo setMethod) {
 				return (Action<Vector2>)Delegate.CreateDelegate(typeof(Action<Vector2>), target, setMethod);

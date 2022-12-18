@@ -24,6 +24,8 @@ namespace CocodriloDog.Animation {
 
 		#region Public Methods
 
+		private void Init() => AssetField.Object.Init();
+
 		public void Play() => AssetField.Object.Play();
 
 		public void Stop() => AssetField.Object.Stop();
@@ -44,7 +46,7 @@ namespace CocodriloDog.Animation {
 				Play();
 			} else {
 				// This avoids errors OnDestroy in case it was not played at all.
-				Get();
+				Init();
 			}
 		}
 
@@ -79,18 +81,6 @@ namespace CocodriloDog.Animation {
 		private MotionFloatAsset MotionFloatAsset => AssetField.Object as MotionFloatAsset;
 
 		private MotionColorAsset MotionColorAsset => AssetField.Object as MotionColorAsset;
-
-		#endregion
-
-
-		#region Private Methods
-
-		private void Get() {
-			Motion3DAsset?.GetMotion();
-			Motion2DAsset?.GetMotion();
-			MotionFloatAsset?.GetMotion();
-			MotionColorAsset?.GetMotion();
-		}
 
 		#endregion
 
