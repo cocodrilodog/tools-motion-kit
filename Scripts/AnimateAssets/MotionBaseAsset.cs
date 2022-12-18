@@ -28,7 +28,7 @@ namespace CocodriloDog.Animation {
 
 		#region Public Methods
 
-		public override void Init() {
+		public override void Initialize() {
 
 			var setterStringParts = SetterString.Split('/');
 
@@ -83,7 +83,7 @@ namespace CocodriloDog.Animation {
 		protected MotionT Motion {
 			get {
 				if (m_Motion == null) {
-					Init();
+					Initialize();
 				}
 				return m_Motion;
 			}
@@ -98,20 +98,6 @@ namespace CocodriloDog.Animation {
 		protected ValueT InitialValue => m_InitialValue;
 
 		protected ValueT FinalValue => m_FinalValue;
-
-		protected float _Duration => m_Duration;
-
-		protected TimeMode TimeMode => m_TimeMode;
-
-		protected AnimateEasingField Easing => m_Easing;
-
-		protected UnityEvent OnStart => m_OnStart;
-
-		protected UnityEvent OnUpdate => m_OnUpdate;
-		
-		protected UnityEvent OnInterrupt => m_OnInterrupt;
-		
-		protected UnityEvent OnComplete => m_OnComplete;
 
 		#endregion
 
@@ -136,27 +122,6 @@ namespace CocodriloDog.Animation {
 
 		[SerializeField]
 		private ValueT m_FinalValue;
-
-		[SerializeField]
-		private float m_Duration;
-
-		[SerializeField]
-		private TimeMode m_TimeMode;
-
-		[SerializeField]
-		private AnimateEasingField m_Easing;
-
-		[SerializeField]
-		private UnityEvent m_OnStart;
-		
-		[SerializeField]
-		private UnityEvent m_OnUpdate;	
-		
-		[SerializeField]
-		private UnityEvent m_OnInterrupt;
-		
-		[SerializeField]
-		private UnityEvent m_OnComplete;
 
 		#endregion
 

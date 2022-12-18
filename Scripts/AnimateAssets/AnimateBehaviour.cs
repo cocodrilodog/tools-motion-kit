@@ -24,7 +24,7 @@ namespace CocodriloDog.Animation {
 
 		#region Public Methods
 
-		private void Init() => AssetField.Object.Init();
+		private void Initialize() => AssetField.Object.Initialize();
 
 		public void Play() => AssetField.Object.Play();
 
@@ -46,7 +46,7 @@ namespace CocodriloDog.Animation {
 				Play();
 			} else {
 				// This avoids errors OnDestroy in case it was not played at all.
-				Init();
+				Initialize();
 			}
 		}
 

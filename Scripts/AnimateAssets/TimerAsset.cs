@@ -7,10 +7,7 @@ namespace CocodriloDog.Animation {
 	public class TimerAsset : AnimateAsset {
 
 
-		#region Public Fields
-
-		[SerializeField]
-		public string Timer;
+		#region Public Properties
 
 		public override float Progress => throw new System.NotImplementedException();
 
@@ -22,7 +19,12 @@ namespace CocodriloDog.Animation {
 
 		public override bool IsPaused => throw new System.NotImplementedException();
 
-		public override void Init() {
+		#endregion
+
+
+		#region Public Methods
+
+		public override void Initialize() {
 			throw new System.NotImplementedException();
 		}
 

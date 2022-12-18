@@ -9,48 +9,17 @@ namespace CocodriloDog.Animation {
 	using UnityEditor;
 	using UnityEngine;
 
-	public abstract class MotionBaseAssetEditor<ValueT> : MonoScriptableObjectEditor {
+	public abstract class MotionBaseAssetEditor<ValueT> : AnimateAssetEditor {
 
 
 		#region Unity Methods
 
 		protected override void OnEnable() {
 			base.OnEnable();
-
 			ObjectProperty			= serializedObject.FindProperty("m_Object");
 			SetterStringProperty	= serializedObject.FindProperty("m_SetterString");
 			InitialValueProperty	= serializedObject.FindProperty("m_InitialValue");
 			FinalValueProperty		= serializedObject.FindProperty("m_FinalValue");
-			DurationProperty		= serializedObject.FindProperty("m_Duration");
-			TimeModeProperty		= serializedObject.FindProperty("m_TimeMode");
-			EasingProperty			= serializedObject.FindProperty("m_Easing");
-
-			OnStartProperty			= serializedObject.FindProperty("m_OnStart");
-			OnUpdateProperty		= serializedObject.FindProperty("m_OnUpdate");
-			OnInterruptProperty		= serializedObject.FindProperty("m_OnInterrupt");
-			OnCompleteProperty		= serializedObject.FindProperty("m_OnComplete");
-
-		}
-
-		public override void OnInspectorGUI() {
-
-			base.OnInspectorGUI();
-			serializedObject.Update();
-
-			EditorGUILayout.Space();
-			DrawObjectAndSetter();
-
-			EditorGUILayout.Space();
-			EditorGUILayout.LabelField("Settings", EditorStyles.boldLabel);
-			DrawInitialValue();
-			DrawFinalValue();
-			EditorGUILayout.PropertyField(DurationProperty);
-			EditorGUILayout.PropertyField(TimeModeProperty);
-			EditorGUILayout.PropertyField(EasingProperty);
-			DrawCallbacks();
-
-			serializedObject.ApplyModifiedProperties();
-
 		}
 
 		#endregion
@@ -71,16 +40,22 @@ namespace CocodriloDog.Animation {
 
 		protected virtual void DrawFinalValue() => EditorGUILayout.PropertyField(FinalValueProperty);
 
+		protected override void DrawBeforeSettings() {
+			DrawObjectAndSetter();
+		}
+
+		protected override void DrawSettings() {
+			base.DrawSettings();
+			DrawInitialValue();
+			DrawFinalValue();
+		}
+
 		#endregion
 
 
 		#region Private Fields
 
 		private GUIStyle m_HorizontalLineStyle;
-
-		private int m_CallbackSelection;
-
-		private string[] m_CallbackOptions = new string[] { "On Start", "On Update", "On Interrupt", "On Complete" };
 
 		#endregion
 
@@ -90,20 +65,6 @@ namespace CocodriloDog.Animation {
 		private SerializedProperty ObjectProperty { get; set; }
 
 		private SerializedProperty SetterStringProperty { get; set; }
-
-		private SerializedProperty DurationProperty { get; set; }
-
-		private SerializedProperty TimeModeProperty { get; set; }
-
-		private SerializedProperty EasingProperty { get; set; }
-
-		private SerializedProperty OnStartProperty { get; set; }
-
-		private SerializedProperty OnUpdateProperty { get; set; }
-		
-		private SerializedProperty OnInterruptProperty { get; set; }
-		
-		private SerializedProperty OnCompleteProperty { get; set; }
 
 		private GUIStyle HorizontalLineStyle {
 			get {
@@ -124,6 +85,8 @@ namespace CocodriloDog.Animation {
 
 		private void DrawObjectAndSetter() {
 
+			EditorGUILayout.Space();
+
 			DrawLine();
 			EditorGUILayout.LabelField("Setter", EditorStyles.boldLabel);
 			EditorGUILayout.BeginHorizontal();
@@ -140,22 +103,6 @@ namespace CocodriloDog.Animation {
 
 			EditorGUILayout.EndHorizontal();
 			DrawLine();
-
-		}
-
-		private void DrawCallbacks() {
-
-			EditorGUILayout.Space();
-			EditorGUILayout.LabelField("Callbacks", EditorStyles.boldLabel);
-
-			m_CallbackSelection = GUILayout.Toolbar(m_CallbackSelection, m_CallbackOptions);
-
-			switch (m_CallbackSelection) {
-				case 0: EditorGUILayout.PropertyField(OnStartProperty); break;
-				case 1: EditorGUILayout.PropertyField(OnUpdateProperty); break;
-				case 2: EditorGUILayout.PropertyField(OnInterruptProperty); break;
-				case 3: EditorGUILayout.PropertyField(OnCompleteProperty); break;
-			}
 
 		}
 
@@ -214,8 +161,6 @@ namespace CocodriloDog.Animation {
 			GUILayout.Box(GUIContent.none, HorizontalLineStyle);
 			GUI.color = color;
 		}
-
-
 
 		#endregion
 

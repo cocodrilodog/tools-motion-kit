@@ -4,6 +4,7 @@ namespace CocodriloDog.Animation {
 	using System.Collections;
 	using System.Collections.Generic;
 	using UnityEngine;
+	using UnityEngine.Events;
 
 	public abstract class AnimateAsset : MonoScriptableObject {
 
@@ -25,7 +26,7 @@ namespace CocodriloDog.Animation {
 
 		#region Public Methods
 
-		public abstract void Init();
+		public abstract void Initialize();
 
 		public abstract void Play();
 
@@ -38,6 +39,51 @@ namespace CocodriloDog.Animation {
 		public virtual void Dispose() {
 			Animate.ClearPlaybacks(this);
 		}
+
+		#endregion
+
+
+		#region Protected Properties
+
+		protected float _Duration => m_Duration;
+
+		protected TimeMode TimeMode => m_TimeMode;
+
+		protected AnimateEasingField Easing => m_Easing;
+
+		protected UnityEvent OnStart => m_OnStart;
+
+		protected UnityEvent OnUpdate => m_OnUpdate;
+
+		protected UnityEvent OnInterrupt => m_OnInterrupt;
+
+		protected UnityEvent OnComplete => m_OnComplete;
+
+		#endregion
+
+
+		#region Private Fields
+
+		[SerializeField]
+		private float m_Duration;
+
+		[SerializeField]
+		private TimeMode m_TimeMode;
+
+		[SerializeField]
+		private AnimateEasingField m_Easing;
+
+		[SerializeField]
+		private UnityEvent m_OnStart;
+
+		[SerializeField]
+		private UnityEvent m_OnUpdate;
+
+		[SerializeField]
+		private UnityEvent m_OnInterrupt;
+
+		[SerializeField]
+		private UnityEvent m_OnComplete;
 
 		#endregion
 

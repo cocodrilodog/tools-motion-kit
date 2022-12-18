@@ -7,29 +7,22 @@ namespace CocodriloDog.Animation {
 	using UnityEngine;
 
 	[CustomEditor(typeof(TimerAsset))]
-	public class TimerAsset_Editor : MonoScriptableObjectEditor {
+	public class TimerAssetEditor : AnimateAssetEditor {
 
 
 		#region Unity Methods
 
 		protected override void OnEnable() {
 			base.OnEnable();
-			MotionProperty = serializedObject.FindProperty("Timer");
+			//MotionProperty = serializedObject.FindProperty("Timer");
 		}
 
 		public override void OnInspectorGUI() {
 			base.OnInspectorGUI();
-			serializedObject.Update();
-			EditorGUILayout.PropertyField(MotionProperty);
-			serializedObject.ApplyModifiedProperties();
+			//serializedObject.Update();
+			//EditorGUILayout.PropertyField(MotionProperty);
+			//serializedObject.ApplyModifiedProperties();
 		}
-
-		#endregion
-
-
-		#region Private Properties
-
-		private SerializedProperty MotionProperty { get; set; }
 
 		#endregion
 

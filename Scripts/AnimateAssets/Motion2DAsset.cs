@@ -11,7 +11,7 @@ namespace CocodriloDog.Animation {
 
 		#region Public Methods
 
-		public override void Init() {
+		public override void Initialize() {
 
 			var setterStringParts = SetterString.Split('/');
 
