@@ -388,10 +388,6 @@ MonoBehaviour:
   m_Name: Motion3DAsset
   m_EditorClassIdentifier: 
   m_Owner: {fileID: 1608866452}
-  m_Object: {fileID: 1608866446}
-  m_SetterString: AnimateMotionAssets_Example/SetVector3
-  m_InitialValue: {x: -3, y: 0, z: 0}
-  m_FinalValue: {x: -3, y: -3, z: 0}
   m_Duration: 3
   m_TimeMode: 0
   m_Easing:
@@ -467,6 +463,11 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+  m_CallbackSelection: 1
+  m_Object: {fileID: 1608866446}
+  m_SetterString: AnimateMotionAssets_Example/SetVector3
+  m_InitialValue: {x: -3, y: 0, z: 0}
+  m_FinalValue: {x: -3, y: -3, z: 0}
 --- !u!114 &1537102389
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -480,10 +481,6 @@ MonoBehaviour:
   m_Name: MotionColorAsset
   m_EditorClassIdentifier: 
   m_Owner: {fileID: 1793732660}
-  m_Object: {fileID: 1793732659}
-  m_SetterString: AnimateMotionAssets_Example/SetColor
-  m_InitialValue: {r: 0.49803925, g: 0.49803925, b: 0.49803925, a: 1}
-  m_FinalValue: {r: 1, g: 0, b: 0.46524477, a: 1}
   m_Duration: 2.5
   m_TimeMode: 0
   m_Easing:
@@ -507,6 +504,11 @@ MonoBehaviour:
   m_OnComplete:
     m_PersistentCalls:
       m_Calls: []
+  m_CallbackSelection: 0
+  m_Object: {fileID: 1793732659}
+  m_SetterString: AnimateMotionAssets_Example/SetColor
+  m_InitialValue: {r: 0.49803925, g: 0.49803925, b: 0.49803925, a: 1}
+  m_FinalValue: {r: 1, g: 0, b: 0.46524477, a: 1}
 --- !u!1 &1608866446
 GameObject:
   m_ObjectHideFlags: 0
@@ -772,10 +774,6 @@ MonoBehaviour:
   m_Name: Motion2DAsset
   m_EditorClassIdentifier: 
   m_Owner: {fileID: 135096075}
-  m_Object: {fileID: 135096074}
-  m_SetterString: AnimateMotionAssets_Example/SetVector2
-  m_InitialValue: {x: 0, y: 0, z: 0}
-  m_FinalValue: {x: 0, y: 3, z: 0}
   m_Duration: 1
   m_TimeMode: 0
   m_Easing:
@@ -799,6 +797,11 @@ MonoBehaviour:
   m_OnComplete:
     m_PersistentCalls:
       m_Calls: []
+  m_CallbackSelection: 0
+  m_Object: {fileID: 135096074}
+  m_SetterString: AnimateMotionAssets_Example/SetVector2
+  m_InitialValue: {x: 0, y: 0, z: 0}
+  m_FinalValue: {x: 0, y: 3, z: 0}
 --- !u!1 &2003120085
 GameObject:
   m_ObjectHideFlags: 0
@@ -930,10 +933,6 @@ MonoBehaviour:
   m_Name: MotionFloatAsset
   m_EditorClassIdentifier: 
   m_Owner: {fileID: 72812693}
-  m_Object: {fileID: 72812692}
-  m_SetterString: AnimateMotionAssets_Example/SetFloat
-  m_InitialValue: 0
-  m_FinalValue: 3
   m_Duration: 2
   m_TimeMode: 0
   m_Easing:
@@ -1008,3 +1007,8 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+  m_CallbackSelection: 3
+  m_Object: {fileID: 72812692}
+  m_SetterString: AnimateMotionAssets_Example/SetFloat
+  m_InitialValue: 0
+  m_FinalValue: 3

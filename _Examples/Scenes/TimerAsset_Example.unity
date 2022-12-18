@@ -235,7 +235,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_AssetField:
     m_Object: {fileID: 2009943740}
-  m_PlayOnStart: 0
+  m_PlayOnStart: 1
 --- !u!1 &1083925030
 GameObject:
   m_ObjectHideFlags: 0
@@ -333,7 +333,7 @@ MonoBehaviour:
   m_Name: TimerAsset
   m_EditorClassIdentifier: 
   m_Owner: {fileID: 712994215}
-  m_Duration: 0
+  m_Duration: 2
   m_TimeMode: 0
   m_Easing:
     m_EasingName: Linear
@@ -355,4 +355,16 @@ MonoBehaviour:
       m_Calls: []
   m_OnComplete:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 712994210}
+        m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
+        m_MethodName: SetActive
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2

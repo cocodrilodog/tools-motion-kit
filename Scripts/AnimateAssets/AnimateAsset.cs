@@ -1,6 +1,7 @@
 namespace CocodriloDog.Animation {
 
 	using CocodriloDog.Core;
+	using System;
 	using System.Collections;
 	using System.Collections.Generic;
 	using UnityEngine;
@@ -45,7 +46,9 @@ namespace CocodriloDog.Animation {
 
 		#region Protected Properties
 
-		protected float _Duration => m_Duration;
+		protected string ReuseID => m_ReuseID = m_ReuseID ?? Guid.NewGuid().ToString();
+
+		protected float DurationInput => m_Duration;
 
 		protected TimeMode TimeMode => m_TimeMode;
 
@@ -62,7 +65,7 @@ namespace CocodriloDog.Animation {
 		#endregion
 
 
-		#region Private Fields
+		#region Private Fields - Serialized
 
 		[SerializeField]
 		private float m_Duration;
@@ -84,6 +87,19 @@ namespace CocodriloDog.Animation {
 
 		[SerializeField]
 		private UnityEvent m_OnComplete;
+
+#if UNITY_EDITOR
+		[SerializeField]
+		private int m_CallbackSelection;
+#endif
+
+		#endregion
+
+
+		#region Private Fields - Non Serialized
+
+		[NonSerialized]
+		private string m_ReuseID;
 
 		#endregion
 

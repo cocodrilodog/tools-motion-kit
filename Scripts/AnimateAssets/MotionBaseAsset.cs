@@ -91,8 +91,6 @@ namespace CocodriloDog.Animation {
 
 		protected UnityEngine.Object Object => m_Object;
 
-		protected string ReuseID => m_ReuseID = m_ReuseID ?? Guid.NewGuid().ToString();
-
 		protected string SetterString => m_SetterString;
 
 		protected ValueT InitialValue => m_InitialValue;
@@ -122,14 +120,6 @@ namespace CocodriloDog.Animation {
 
 		[SerializeField]
 		private ValueT m_FinalValue;
-
-		#endregion
-
-
-		#region Private Fields - Non Serialized
-
-		[NonSerialized]
-		private string m_ReuseID;
 
 		#endregion
 

@@ -26,6 +26,7 @@ namespace CocodriloDog.Animation {
 			OnUpdateProperty = serializedObject.FindProperty("m_OnUpdate");
 			OnInterruptProperty = serializedObject.FindProperty("m_OnInterrupt");
 			OnCompleteProperty = serializedObject.FindProperty("m_OnComplete");
+			CallbackSelectionProperty = serializedObject.FindProperty("m_CallbackSelection");
 
 		}
 
@@ -41,6 +42,13 @@ namespace CocodriloDog.Animation {
 		#endregion
 
 
+		#region Protected Properties
+
+		protected virtual bool WillDrawEasing => true;
+
+		#endregion
+
+
 		#region Protected Methods
 
 		protected virtual void DrawBeforeSettings() { }
@@ -50,15 +58,15 @@ namespace CocodriloDog.Animation {
 			EditorGUILayout.LabelField("Settings", EditorStyles.boldLabel);
 			EditorGUILayout.PropertyField(DurationProperty);
 			EditorGUILayout.PropertyField(TimeModeProperty);
-			EditorGUILayout.PropertyField(EasingProperty);
+			if (WillDrawEasing) {
+				EditorGUILayout.PropertyField(EasingProperty);
+			}
 		}
 
 		#endregion
 
 
 		#region Private Fields
-
-		private int m_CallbackSelection;
 
 		private string[] m_CallbackOptions = new string[] { "On Start", "On Update", "On Interrupt", "On Complete" };
 
@@ -81,6 +89,8 @@ namespace CocodriloDog.Animation {
 
 		private SerializedProperty OnCompleteProperty { get; set; }
 
+		private SerializedProperty CallbackSelectionProperty { get; set; }
+
 		#endregion
 
 
@@ -91,9 +101,9 @@ namespace CocodriloDog.Animation {
 			EditorGUILayout.Space();
 			EditorGUILayout.LabelField("Callbacks", EditorStyles.boldLabel);
 
-			m_CallbackSelection = GUILayout.Toolbar(m_CallbackSelection, m_CallbackOptions);
+			CallbackSelectionProperty.intValue = GUILayout.Toolbar(CallbackSelectionProperty.intValue, m_CallbackOptions);
 
-			switch (m_CallbackSelection) {
+			switch (CallbackSelectionProperty.intValue) {
 				case 0: EditorGUILayout.PropertyField(OnStartProperty); break;
 				case 1: EditorGUILayout.PropertyField(OnUpdateProperty); break;
 				case 2: EditorGUILayout.PropertyField(OnInterruptProperty); break;
