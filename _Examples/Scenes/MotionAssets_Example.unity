@@ -156,11 +156,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0ff26841fc5d56442bfae3ff2cc804b8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_AssetField:
-    m_Object: {fileID: 2066268467}
-  m_PlayOnStart: 1
   m_AnimateAssets:
   - m_Object: {fileID: 1664119435}
+  m_PlayOnStart: 1
 --- !u!114 &72812694
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -284,11 +282,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0ff26841fc5d56442bfae3ff2cc804b8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_AssetField:
-    m_Object: {fileID: 1962219478}
-  m_PlayOnStart: 1
   m_AnimateAssets:
   - m_Object: {fileID: 1169967480}
+  m_PlayOnStart: 1
 --- !u!114 &135096076
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -379,99 +375,132 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &321037992
+--- !u!1 &752003531
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 752003537}
+  - component: {fileID: 752003536}
+  - component: {fileID: 752003535}
+  - component: {fileID: 752003534}
+  - component: {fileID: 752003533}
+  - component: {fileID: 752003532}
+  m_Layer: 0
+  m_Name: Sphere_MotionColor_ByName
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &752003532
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
+  m_GameObject: {fileID: 752003531}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: dc8183f4cd29066469c3e2751a5222b2, type: 3}
-  m_Name: Motion3DAsset
+  m_Script: {fileID: 11500000, guid: 0ff26841fc5d56442bfae3ff2cc804b8, type: 3}
+  m_Name: 
   m_EditorClassIdentifier: 
-  m_Owner: {fileID: 1608866452}
-  m_Duration: 3
-  m_TimeMode: 0
-  m_Easing:
-    m_EasingName: Elastic Out
-    m_AnimateCurve:
-      Curve:
-        serializedVersion: 2
-        m_Curve: []
-        m_PreInfinity: 2
-        m_PostInfinity: 2
-        m_RotationOrder: 4
-  m_OnStart:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 1608866451}
-        m_TargetAssemblyTypeName: CocodriloDog.Animation.Examples.AnimateMotionAssets_Example,
-          Assembly-CSharp
-        m_MethodName: OnStart
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-  m_OnUpdate:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 1608866451}
-        m_TargetAssemblyTypeName: CocodriloDog.Animation.Examples.AnimateMotionAssets_Example,
-          Assembly-CSharp
-        m_MethodName: OnUpdate
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-  m_OnInterrupt:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 1608866451}
-        m_TargetAssemblyTypeName: CocodriloDog.Animation.Examples.AnimateMotionAssets_Example,
-          Assembly-CSharp
-        m_MethodName: OnInterrupt
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-  m_OnComplete:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 1608866451}
-        m_TargetAssemblyTypeName: CocodriloDog.Animation.Examples.AnimateMotionAssets_Example,
-          Assembly-CSharp
-        m_MethodName: OnComplete
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-  m_CallbackSelection: 3
-  m_Object: {fileID: 1608866446}
-  m_SetterString: AnimateMotionAssets_Example/SetVector3
-  m_InitialValue: {x: -3, y: 0, z: 0}
-  m_FinalValue: {x: -3, y: -3, z: 0}
+  m_AnimateAssets:
+  - m_Object: {fileID: 1476707335}
+  m_PlayOnStart: 0
+--- !u!114 &752003533
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 752003531}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1c956571b0cddee4e8ebca57de92254b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!135 &752003534
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 752003531}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.5
+  m_Center: {x: 0, y: 0, z: 0}
+--- !u!23 &752003535
+MeshRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 752003531}
+  m_Enabled: 1
+  m_CastShadows: 1
+  m_ReceiveShadows: 1
+  m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
+  m_MotionVectors: 1
+  m_LightProbeUsage: 1
+  m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 2
+  m_RayTraceProcedural: 0
+  m_RenderingLayerMask: 1
+  m_RendererPriority: 0
+  m_Materials:
+  - {fileID: 2100000, guid: 31321ba15b8f8eb4c954353edc038b1d, type: 2}
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
+  m_StaticBatchRoot: {fileID: 0}
+  m_ProbeAnchor: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
+  m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
+  m_ImportantGI: 0
+  m_StitchLightmapSeams: 1
+  m_SelectedEditorRenderState: 3
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 0
+  m_AdditionalVertexStreams: {fileID: 0}
+--- !u!33 &752003536
+MeshFilter:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 752003531}
+  m_Mesh: {fileID: 10207, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!4 &752003537
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 752003531}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 6, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 5
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1169967480
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -606,7 +635,7 @@ MonoBehaviour:
   m_SetterString: AnimateMotionAssets_Example/SetVector3
   m_InitialValue: {x: -3, y: 0, z: 0}
   m_FinalValue: {x: -3, y: -3, z: 0}
---- !u!114 &1537102389
+--- !u!114 &1476707335
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -618,8 +647,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 791c851fad506304e88fc33970861b91, type: 3}
   m_Name: MotionColorAsset
   m_EditorClassIdentifier: 
-  m_Owner: {fileID: 1793732660}
-  m_Duration: 2.5
+  m_Owner: {fileID: 752003532}
+  m_Duration: 2
   m_TimeMode: 0
   m_Easing:
     m_EasingName: Linear
@@ -642,11 +671,11 @@ MonoBehaviour:
   m_OnComplete:
     m_PersistentCalls:
       m_Calls: []
-  m_CallbackSelection: 3
-  m_Object: {fileID: 1793732659}
+  m_CallbackSelection: 0
+  m_Object: {fileID: 752003531}
   m_SetterString: AnimateMotionAssets_Example/SetColor
-  m_InitialValue: {r: 0.49803925, g: 0.49803925, b: 0.49803925, a: 1}
-  m_FinalValue: {r: 1, g: 0, b: 0.46524477, a: 1}
+  m_InitialValue: {r: 0.49803925, g: 0.49803925, b: 0.49803925, a: 0}
+  m_FinalValue: {r: 0.8602166, g: 1, b: 0, a: 0}
 --- !u!1 &1608866446
 GameObject:
   m_ObjectHideFlags: 0
@@ -770,11 +799,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0ff26841fc5d56442bfae3ff2cc804b8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_AssetField:
-    m_Object: {fileID: 321037992}
-  m_PlayOnStart: 1
   m_AnimateAssets:
   - m_Object: {fileID: 1316649690}
+  m_PlayOnStart: 1
 --- !u!114 &1664119435
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -879,7 +906,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 791c851fad506304e88fc33970861b91, type: 3}
   m_Name: MotionColorAsset
   m_EditorClassIdentifier: 
-  m_Owner: {fileID: 1793732660}
+  m_Owner: {fileID: 1793732659}
   m_Duration: 2.5
   m_TimeMode: 0
   m_Easing:
@@ -893,7 +920,19 @@ MonoBehaviour:
         m_RotationOrder: 4
   m_OnStart:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 752003532}
+        m_TargetAssemblyTypeName: CocodriloDog.Animation.AnimateBehaviour, Assembly-CSharp
+        m_MethodName: Play
+        m_Mode: 5
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: MotionColorAsset
+          m_BoolArgument: 0
+        m_CallState: 2
   m_OnUpdate:
     m_PersistentCalls:
       m_Calls: []
@@ -941,11 +980,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0ff26841fc5d56442bfae3ff2cc804b8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_AssetField:
-    m_Object: {fileID: 1537102389}
-  m_PlayOnStart: 1
   m_AnimateAssets:
   - m_Object: {fileID: 1766117399}
+  m_PlayOnStart: 1
 --- !u!114 &1793732661
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1036,47 +1073,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1962219478
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 43e5ca2c76f00c44781537336c3630b8, type: 3}
-  m_Name: Motion2DAsset
-  m_EditorClassIdentifier: 
-  m_Owner: {fileID: 135096075}
-  m_Duration: 1
-  m_TimeMode: 0
-  m_Easing:
-    m_EasingName: Quint In Out
-    m_AnimateCurve:
-      Curve:
-        serializedVersion: 2
-        m_Curve: []
-        m_PreInfinity: 2
-        m_PostInfinity: 2
-        m_RotationOrder: 4
-  m_OnStart:
-    m_PersistentCalls:
-      m_Calls: []
-  m_OnUpdate:
-    m_PersistentCalls:
-      m_Calls: []
-  m_OnInterrupt:
-    m_PersistentCalls:
-      m_Calls: []
-  m_OnComplete:
-    m_PersistentCalls:
-      m_Calls: []
-  m_CallbackSelection: 1
-  m_Object: {fileID: 135096074}
-  m_SetterString: AnimateMotionAssets_Example/SetVector2
-  m_InitialValue: {x: 0, y: 0, z: 0}
-  m_FinalValue: {x: 0, y: 3, z: 0}
 --- !u!1 &2003120085
 GameObject:
   m_ObjectHideFlags: 0
@@ -1195,95 +1191,3 @@ MonoBehaviour:
   m_RequiresDepthTexture: 0
   m_RequiresColorTexture: 0
   m_Version: 2
---- !u!114 &2066268467
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5ee4a5461c1a5b2468697bc5e6b7d7e8, type: 3}
-  m_Name: MotionFloatAsset
-  m_EditorClassIdentifier: 
-  m_Owner: {fileID: 72812693}
-  m_Duration: 2
-  m_TimeMode: 0
-  m_Easing:
-    m_EasingName: Back In Out
-    m_AnimateCurve:
-      Curve:
-        serializedVersion: 2
-        m_Curve: []
-        m_PreInfinity: 2
-        m_PostInfinity: 2
-        m_RotationOrder: 4
-  m_OnStart:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 72812694}
-        m_TargetAssemblyTypeName: CocodriloDog.Animation.Examples.AnimateMotionAssets_Example,
-          Assembly-CSharp
-        m_MethodName: OnStart
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-  m_OnUpdate:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 72812694}
-        m_TargetAssemblyTypeName: CocodriloDog.Animation.Examples.AnimateMotionAssets_Example,
-          Assembly-CSharp
-        m_MethodName: OnUpdate
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-  m_OnInterrupt:
-    m_PersistentCalls:
-      m_Calls: []
-  m_OnComplete:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 1608866452}
-        m_TargetAssemblyTypeName: CocodriloDog.Animation.AnimateBehaviour, Assembly-CSharp
-        m_MethodName: Stop
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-      - m_Target: {fileID: 72812694}
-        m_TargetAssemblyTypeName: CocodriloDog.Animation.Examples.AnimateMotionAssets_Example,
-          Assembly-CSharp
-        m_MethodName: OnComplete
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-  m_CallbackSelection: 3
-  m_Object: {fileID: 72812692}
-  m_SetterString: AnimateMotionAssets_Example/SetFloat
-  m_InitialValue: 0
-  m_FinalValue: 3
