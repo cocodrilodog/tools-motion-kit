@@ -65,6 +65,9 @@ namespace CocodriloDog.Animation {
 		[SerializeField]
 		private bool m_PlayOnStart;
 
+		[SerializeField]
+		private List<AnimateAssetField> m_AnimateAssets;
+
 		#endregion
 
 
