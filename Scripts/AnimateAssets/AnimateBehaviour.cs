@@ -2,6 +2,7 @@ namespace CocodriloDog.Animation {
 
 	using System.Collections;
 	using System.Collections.Generic;
+	using System.Linq;
 	using UnityEngine;
 
 	public class AnimateBehaviour : MonoBehaviour {
@@ -9,15 +10,15 @@ namespace CocodriloDog.Animation {
 
 		#region Public Properties
 
-		public float Progress => (float)DefaultAnimateAsset?.Object?.Progress;
+		public float Progress => (float)DefaultAnimateAsset?.Progress;
 
-		public float CurrentTime => (float)DefaultAnimateAsset?.Object?.CurrentTime;
+		public float CurrentTime => (float)DefaultAnimateAsset?.CurrentTime;
 
-		public float Duration => (float)DefaultAnimateAsset?.Object?.Duration;
+		public float Duration => (float)DefaultAnimateAsset?.Duration;
 
-		public bool IsPlaying => (bool)DefaultAnimateAsset?.Object?.IsPlaying;
+		public bool IsPlaying => (bool)DefaultAnimateAsset?.IsPlaying;
 
-		public bool IsPaused => (bool)DefaultAnimateAsset?.Object?.IsPaused;
+		public bool IsPaused => (bool)DefaultAnimateAsset?.IsPaused;
 
 		#endregion
 
@@ -25,21 +26,29 @@ namespace CocodriloDog.Animation {
 		#region Public Methods
 
 		private void Initialize() {
-			foreach (var asset in AnimateAssets) {
-				asset.Object?.Initialize();
+			foreach (var assetField in AnimateAssetFields) {
+				assetField.Object?.Initialize();
 			}
 		}
 
-		public void Play() => DefaultAnimateAsset?.Object?.Play();
+		public void Play() => DefaultAnimateAsset?.Play();
 
-		public void Stop() => DefaultAnimateAsset?.Object?.Stop();
+		public void Play(string assetName) => GetAnimateAsset(assetName)?.Play();
 
-		public void Pause() => DefaultAnimateAsset?.Object?.Pause();
+		public void Stop() => DefaultAnimateAsset?.Stop();
 
-		public void Resume() => DefaultAnimateAsset?.Object?.Resume();
+		public void Stop(string assetName) => GetAnimateAsset(assetName)?.Stop();
+
+		public void Pause() => DefaultAnimateAsset?.Pause();
+
+		public void Pause(string assetName) => GetAnimateAsset(assetName)?.Pause();
+
+		public void Resume() => DefaultAnimateAsset?.Resume();
+
+		public void Resume(string assetName) => GetAnimateAsset(assetName)?.Resume();
 
 		public void Dispose() {
-			foreach (var asset in AnimateAssets) {
+			foreach (var asset in AnimateAssetFields) {
 				asset.Object?.Dispose();
 			}
 		}
@@ -67,6 +76,12 @@ namespace CocodriloDog.Animation {
 
 		#region Private Fields
 
+		/// <summary>
+		/// A list of <see cref="AnimateAssetField"/>.
+		/// </summary>
+		/// <remarks>
+		/// This name is friendlier than m_AnimateAssetFields in the inspector.
+		/// </remarks>
 		[SerializeField]
 		private List<AnimateAssetField> m_AnimateAssets;
 
@@ -78,11 +93,21 @@ namespace CocodriloDog.Animation {
 
 		#region Private Properties
 
-		private List<AnimateAssetField> AnimateAssets => m_AnimateAssets;
+		private List<AnimateAssetField> AnimateAssetFields => m_AnimateAssets;
 
-		private AnimateAssetField DefaultAnimateAsset => AnimateAssets.Count > 0 ? AnimateAssets[0] : null;
+		private AnimateAsset DefaultAnimateAsset => AnimateAssetFields.Count > 0 ? AnimateAssetFields[0].Object : null;
 
 		private bool PlayOnStart => m_PlayOnStart;
+
+		#endregion
+
+
+		#region Private Methods
+
+		private AnimateAsset GetAnimateAsset(string assetName) {
+			var assetField = AnimateAssetFields.FirstOrDefault(af => af.Object != null && af.Object.name == assetName);
+			return assetField?.Object;
+		}
 
 		#endregion
 

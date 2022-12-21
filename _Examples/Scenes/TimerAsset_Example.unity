@@ -233,8 +233,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0ff26841fc5d56442bfae3ff2cc804b8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_AssetField:
-    m_Object: {fileID: 2009943740}
+  m_AnimateAssets:
+  - m_Object: {fileID: 1957513156}
   m_PlayOnStart: 1
 --- !u!1 &1083925030
 GameObject:
@@ -320,7 +320,7 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &2009943740
+--- !u!114 &1957513156
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -368,3 +368,4 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+  m_CallbackSelection: 3
