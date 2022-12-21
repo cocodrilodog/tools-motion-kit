@@ -1,11 +1,12 @@
 namespace CocodriloDog.Animation {
 
+	using CocodriloDog.Core;
 	using System.Collections;
 	using System.Collections.Generic;
 	using System.Linq;
 	using UnityEngine;
 
-	public class AnimateBehaviour : MonoBehaviour {
+	public class AnimateBehaviour : MonoBehaviour, IMonoScriptableOwner {
 
 
 		#region Public Properties
@@ -50,6 +51,18 @@ namespace CocodriloDog.Animation {
 		public void Dispose() {
 			foreach (var asset in AnimateAssetFields) {
 				asset.Object?.Dispose();
+			}
+		}
+
+		public void UpdateMonoScriptableObjects() {
+			Debug.Log("UpdateMonoScriptableObjects");
+			foreach (var assetField in AnimateAssetFields) {
+				if (assetField.Object != null) {
+					assetField.Object = Instantiate(assetField.Object);
+					if(assetField.Object is IMonoScriptableOwner) {
+						((IMonoScriptableOwner)assetField.Object).UpdateMonoScriptableObjects();
+					}
+				}
 			}
 		}
 
