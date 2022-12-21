@@ -9,32 +9,40 @@ namespace CocodriloDog.Animation {
 
 		#region Public Properties
 
-		public float Progress => AssetField.Object.Progress;
+		public float Progress => (float)DefaultAnimateAsset?.Object?.Progress;
 
-		public float CurrentTime => AssetField.Object.CurrentTime;
+		public float CurrentTime => (float)DefaultAnimateAsset?.Object?.CurrentTime;
 
-		public float Duration => AssetField.Object.Duration;
+		public float Duration => (float)DefaultAnimateAsset?.Object?.Duration;
 
-		public bool IsPlaying => AssetField.Object.IsPlaying;
+		public bool IsPlaying => (bool)DefaultAnimateAsset?.Object?.IsPlaying;
 
-		public bool IsPaused => AssetField.Object.IsPaused;
+		public bool IsPaused => (bool)DefaultAnimateAsset?.Object?.IsPaused;
 
 		#endregion
 
 
 		#region Public Methods
 
-		private void Initialize() => AssetField.Object.Initialize();
+		private void Initialize() {
+			foreach (var asset in AnimateAssets) {
+				asset.Object?.Initialize();
+			}
+		}
 
-		public void Play() => AssetField.Object.Play();
+		public void Play() => DefaultAnimateAsset?.Object?.Play();
 
-		public void Stop() => AssetField.Object.Stop();
+		public void Stop() => DefaultAnimateAsset?.Object?.Stop();
 
-		public void Pause() => AssetField.Object.Pause();
+		public void Pause() => DefaultAnimateAsset?.Object?.Pause();
 
-		public void Resume() => AssetField.Object.Resume();
+		public void Resume() => DefaultAnimateAsset?.Object?.Resume();
 
-		public void Dispose() => AssetField.Object.Dispose();
+		public void Dispose() {
+			foreach (var asset in AnimateAssets) {
+				asset.Object?.Dispose();
+			}
+		}
 
 		#endregion
 
@@ -60,20 +68,19 @@ namespace CocodriloDog.Animation {
 		#region Private Fields
 
 		[SerializeField]
-		private AnimateAssetField m_AssetField;
+		private List<AnimateAssetField> m_AnimateAssets;
 
 		[SerializeField]
 		private bool m_PlayOnStart;
-
-		[SerializeField]
-		private List<AnimateAssetField> m_AnimateAssets;
 
 		#endregion
 
 
 		#region Private Properties
 
-		private AnimateAssetField AssetField => m_AssetField;
+		private List<AnimateAssetField> AnimateAssets => m_AnimateAssets;
+
+		private AnimateAssetField DefaultAnimateAsset => AnimateAssets.Count > 0 ? AnimateAssets[0] : null;
 
 		private bool PlayOnStart => m_PlayOnStart;
 
