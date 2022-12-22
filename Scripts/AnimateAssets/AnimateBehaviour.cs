@@ -55,20 +55,11 @@ namespace CocodriloDog.Animation {
 		}
 
 		public void RecreateMonoScriptableObjects() {
-			foreach (var assetField in AnimateAssetFields) {
-				if (assetField.Object != null) {
+			MonoScriptableUtility.RecreateMonoScriptableObjects(AnimateAssetFields.ToArray(), this);
+		}
 
-					var clone = Instantiate(assetField.Object);
-					clone.name = assetField.Object.name;
-
-					assetField.SetObject(clone);
-					assetField.Object.SetOwner(this);
-					if(assetField.Object is IMonoScriptableOwner) {
-						((IMonoScriptableOwner)assetField.Object).RecreateMonoScriptableObjects();
-					}
-
-				}
-			}
+		public void ValidateMonoScriptableArrayOrLists() {
+			MonoScriptableUtility.RecreateRepeatedMonoScriptableItem(AnimateAssetFields.ToArray(), this);
 		}
 
 		#endregion

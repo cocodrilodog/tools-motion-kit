@@ -1,10 +1,12 @@
 namespace CocodriloDog.Animation {
+
+	using CocodriloDog.Core;
 	using System;
 	using System.Collections;
 	using System.Collections.Generic;
 	using UnityEngine;
 
-	public class SequenceAsset : AnimateAsset {
+	public class SequenceAsset : AnimateAsset, IMonoScriptableOwner {
 
 
 		#region #region Public Properties
@@ -56,6 +58,14 @@ namespace CocodriloDog.Animation {
 		public override void Pause() => Sequence.Pause();
 
 		public override void Resume() => Sequence.Resume();
+
+		public void RecreateMonoScriptableObjects() {
+			MonoScriptableUtility.RecreateMonoScriptableObjects(SequenceItemsFields.ToArray(), this);
+		}
+
+		public void ValidateMonoScriptableArrayOrLists() {
+			MonoScriptableUtility.RecreateRepeatedMonoScriptableItem(SequenceItemsFields.ToArray(), this);
+		}
 
 		#endregion
 

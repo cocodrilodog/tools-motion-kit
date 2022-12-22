@@ -123,6 +123,47 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
+--- !u!114 &2984796
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dc8183f4cd29066469c3e2751a5222b2, type: 3}
+  m_Name: Motion3DAsset
+  m_EditorClassIdentifier: 
+  m_Owner: {fileID: 1151719108}
+  m_Duration: 1
+  m_TimeMode: 0
+  m_Easing:
+    m_EasingName: Linear
+    m_AnimateCurve:
+      Curve:
+        serializedVersion: 2
+        m_Curve: []
+        m_PreInfinity: 2
+        m_PostInfinity: 2
+        m_RotationOrder: 4
+  m_OnStart:
+    m_PersistentCalls:
+      m_Calls: []
+  m_OnUpdate:
+    m_PersistentCalls:
+      m_Calls: []
+  m_OnInterrupt:
+    m_PersistentCalls:
+      m_Calls: []
+  m_OnComplete:
+    m_PersistentCalls:
+      m_Calls: []
+  m_CallbackSelection: 0
+  m_Object: {fileID: 1621962136}
+  m_SetterString: Transform/localPosition
+  m_InitialValue: {x: 0, y: 3, z: 0}
+  m_FinalValue: {x: 0, y: 0, z: 0}
 --- !u!114 &93096189
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -248,6 +289,47 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &862482199
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dc8183f4cd29066469c3e2751a5222b2, type: 3}
+  m_Name: Motion3DAsset
+  m_EditorClassIdentifier: 
+  m_Owner: {fileID: 1151719108}
+  m_Duration: 1
+  m_TimeMode: 0
+  m_Easing:
+    m_EasingName: Linear
+    m_AnimateCurve:
+      Curve:
+        serializedVersion: 2
+        m_Curve: []
+        m_PreInfinity: 2
+        m_PostInfinity: 2
+        m_RotationOrder: 4
+  m_OnStart:
+    m_PersistentCalls:
+      m_Calls: []
+  m_OnUpdate:
+    m_PersistentCalls:
+      m_Calls: []
+  m_OnInterrupt:
+    m_PersistentCalls:
+      m_Calls: []
+  m_OnComplete:
+    m_PersistentCalls:
+      m_Calls: []
+  m_CallbackSelection: 0
+  m_Object: {fileID: 1621962136}
+  m_SetterString: Transform/localPosition
+  m_InitialValue: {x: 3, y: 3, z: 0}
+  m_FinalValue: {x: 0, y: 3, z: 0}
 --- !u!114 &1151719108
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -288,6 +370,8 @@ MonoBehaviour:
   m_SequenceItems:
   - m_Object: {fileID: 1184797997}
   - m_Object: {fileID: 93096189}
+  - m_Object: {fileID: 862482199}
+  - m_Object: {fileID: 2984796}
 --- !u!114 &1184797997
 MonoBehaviour:
   m_ObjectHideFlags: 0
