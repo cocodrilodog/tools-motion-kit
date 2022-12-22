@@ -1,5 +1,5 @@
 namespace CocodriloDog.Animation {
-
+	using System;
 	using System.Collections;
 	using System.Collections.Generic;
 	using UnityEngine;
@@ -8,6 +8,8 @@ namespace CocodriloDog.Animation {
 
 
 		#region Public Properties
+
+		public override ITimedProgressable TimedProgressable => Timer;
 
 		public override float Progress => Timer.Progress;
 
@@ -51,6 +53,7 @@ namespace CocodriloDog.Animation {
 
 		#region Private Fields
 
+		[NonSerialized]
 		private Timer m_Timer;
 
 		#endregion

@@ -12,6 +12,8 @@ namespace CocodriloDog.Animation {
 
 		#region Public Properties
 
+		public abstract ITimedProgressable TimedProgressable { get; }
+
 		public abstract float Progress { get; }
 
 		public abstract float CurrentTime { get; }

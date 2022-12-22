@@ -1,5 +1,5 @@
 namespace CocodriloDog.Animation {
-
+	using System;
 	using System.Collections;
 	using System.Collections.Generic;
 	using UnityEngine;
@@ -9,15 +9,17 @@ namespace CocodriloDog.Animation {
 
 		#region #region Public Properties
 
-		public override float Progress => throw new System.NotImplementedException();
+		public override ITimedProgressable TimedProgressable => Sequence;
 
-		public override float CurrentTime => throw new System.NotImplementedException();
+		public override float Progress => Sequence.Progress;
 
-		public override float Duration => throw new System.NotImplementedException();
+		public override float CurrentTime => Sequence.CurrentTime;
 
-		public override bool IsPlaying => throw new System.NotImplementedException();
+		public override float Duration => Sequence.Duration;
 
-		public override bool IsPaused => throw new System.NotImplementedException();
+		public override bool IsPlaying => Sequence.IsPlaying;
+
+		public override bool IsPaused => Sequence.IsPaused;
 
 		#endregion
 
@@ -25,24 +27,67 @@ namespace CocodriloDog.Animation {
 		#region Public Methods
 
 		public override void Initialize() {
-			throw new System.NotImplementedException();
+
+			List<ITimedProgressable> sequenceItemsList = new List<ITimedProgressable>();
+			foreach(var sequenceItemsField in SequenceItemsFields) {
+				sequenceItemsList.Add(sequenceItemsField.Object.TimedProgressable);
+			}
+
+			m_Sequence = Animate.GetSequence(this, ReuseID, sequenceItemsList.ToArray())
+				.SetEasing(Easing.SequenceEasing)
+				.SetTimeMode(TimeMode);
+
+			if (DurationInput > 0) {
+				m_Sequence.SetDuration(DurationInput);
+			}
+
+			// This approach will only work if the listeners are added via editor
+			if (OnStart.GetPersistentEventCount() > 0) m_Sequence.SetOnStart(OnStart.Invoke);
+			if (OnUpdate.GetPersistentEventCount() > 0) m_Sequence.SetOnUpdate(OnUpdate.Invoke);
+			if (OnInterrupt.GetPersistentEventCount() > 0) m_Sequence.SetOnInterrupt(OnInterrupt.Invoke);
+			if (OnComplete.GetPersistentEventCount() > 0) m_Sequence.SetOnComplete(OnComplete.Invoke);
+
 		}
 
-		public override void Play() {
-			throw new System.NotImplementedException();
+		public override void Play() => Sequence.Play();
+
+		public override void Stop() => Sequence.Stop();
+
+		public override void Pause() => Sequence.Pause();
+
+		public override void Resume() => Sequence.Resume();
+
+		#endregion
+
+
+		#region Private Fields - Serialized
+
+		[SerializeField]
+		private List<AnimateAssetField> m_SequenceItems;
+
+		#endregion
+
+
+		#region Private Fields - Non Serialized
+
+		[NonSerialized]
+		private Sequence m_Sequence;
+
+		#endregion
+
+
+		#region Private Properties
+
+		private Sequence Sequence {
+			get {
+				if (m_Sequence == null) {
+					Initialize();
+				}
+				return m_Sequence;
+			}
 		}
 
-		public override void Stop() {
-			throw new System.NotImplementedException();
-		}
-
-		public override void Pause() {
-			throw new System.NotImplementedException();
-		}
-
-		public override void Resume() {
-			throw new System.NotImplementedException();
-		}
+		private List<AnimateAssetField> SequenceItemsFields => m_SequenceItems;
 
 		#endregion
 

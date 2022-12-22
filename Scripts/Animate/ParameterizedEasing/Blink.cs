@@ -61,6 +61,9 @@
 			}
 		}
 
+		// TODO: Implement this
+		public override Sequence.Easing SequenceEasing => throw new NotImplementedException();
+
 		#endregion
 
 

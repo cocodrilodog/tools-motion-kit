@@ -13,6 +13,8 @@ namespace CocodriloDog.Animation {
 
 		#region Public Properties
 
+		public override ITimedProgressable TimedProgressable => Motion;
+
 		public override float Progress => Motion.Progress;
 
 		public override float CurrentTime => Motion.CurrentTime;

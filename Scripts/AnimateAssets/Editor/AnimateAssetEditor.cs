@@ -35,6 +35,7 @@ namespace CocodriloDog.Animation {
 			serializedObject.Update();
 			DrawBeforeSettings();
 			DrawSettings();
+			DrawAfterSettings();
 			DrawCallbacks();
 			serializedObject.ApplyModifiedProperties();
 		}

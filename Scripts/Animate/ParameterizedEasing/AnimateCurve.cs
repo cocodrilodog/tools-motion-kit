@@ -49,6 +49,10 @@
 			get { return (a, b, t) => a + (b - a) * Curve.Evaluate(t); }
 		}
 
+		public override Sequence.Easing SequenceEasing {
+			get { return (a, b, t) => a + (b - a) * Curve.Evaluate(t); }
+		}
+
 		#endregion
 
 
