@@ -8,7 +8,7 @@ namespace CocodriloDog.Animation {
 	using UnityEngine;
 
 	[CustomPropertyDrawer(typeof(AnimateAssetField))]
-	public class AnimateAssetField_PropertyDrawer : MonoScriptableFieldPropertyDrawer {
+	public class AnimateAssetFieldPropertyDrawer : MonoScriptableFieldPropertyDrawer {
 
 
 		#region Protected Properties

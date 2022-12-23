@@ -58,8 +58,8 @@ namespace CocodriloDog.Animation {
 			MonoScriptableUtility.RecreateMonoScriptableObjects(AnimateAssetFields.ToArray(), this);
 		}
 
-		public void ValidateMonoScriptableArrayOrLists() {
-			MonoScriptableUtility.RecreateRepeatedMonoScriptableItem(AnimateAssetFields.ToArray(), this);
+		public void RecreateRepeatedMonoScriptableArrayOrListItems() {
+			MonoScriptableUtility.RecreateRepeatedMonoScriptableArrayOrListItems(AnimateAssetFields.ToArray(), this);
 		}
 
 		#endregion

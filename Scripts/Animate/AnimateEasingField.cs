@@ -127,6 +127,16 @@
 			}
 		}
 
+		/// <summary>
+		/// Returns a <see cref="Sequence.Easing"/> function based on the selected <see cref="m_EasingName"/>
+		/// in the inspector.
+		/// </summary>
+		///
+		/// <remarks>
+		///	If the selected <see cref="m_EasingName"/> is <c>"AnimationCurve"</c>, it will 
+		/// return an easing function based on the provided <see cref="AnimationCurve"/>,
+		/// otherwise it will return the selected <see cref="AnimateEasing"/> function.
+		/// </remarks>
 		public Sequence.Easing SequenceEasing {
 			get {
 				switch (m_EasingName) {

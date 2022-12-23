@@ -49,6 +49,10 @@
 			get { return (a, b, t) => a + (b - a) * Curve.Evaluate(t); }
 		}
 
+		/// <summary>
+		/// Gets an easing function for <c>Sequence</c> modified by the 
+		/// <see cref="Curve"/>.
+		/// </summary>
 		public override Sequence.Easing SequenceEasing {
 			get { return (a, b, t) => a + (b - a) * Curve.Evaluate(t); }
 		}
