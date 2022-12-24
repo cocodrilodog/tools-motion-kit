@@ -7,6 +7,11 @@ namespace CocodriloDog.Animation {
 	using UnityEngine;
 	using UnityEngine.Events;
 
+	/// <summary>
+	/// Base class for motion assets.
+	/// </summary>
+	/// <typeparam name="ValueT">The animatable type of the motion objects.</typeparam>
+	/// <typeparam name="MotionT">The motion type.</typeparam>
 	public abstract class MotionBaseAsset<ValueT, MotionT> : AnimateAsset
 		where MotionT : MotionBase<ValueT, MotionT> {
 
@@ -32,29 +37,37 @@ namespace CocodriloDog.Animation {
 
 		public override void Initialize() {
 
+			// This is a string created by the editor like this: "Transform/localPosition"
 			var setterStringParts = SetterString.Split('/');
 
+			// The optimized way of invoking the setter of the animatable property
 			Action<ValueT> setterDelegate;
 
 			var gameObject = Object as GameObject;
 			if (gameObject != null) {
 
+				// The first part of the setter string is the component
 				var component = gameObject.GetComponent(setterStringParts[0]);
 
+				// The second part is the setter. First we'll look for the method setter
 				var methodInfo = component.GetType().GetMethod(setterStringParts[1]);
 				if (methodInfo != null) {
 					setterDelegate = GetDelegate(component, methodInfo);
 				} else {
+					// If a method setter is not found, then we look for a property setter
 					var propertyInfo = component.GetType().GetProperty(setterStringParts[1]);
 					setterDelegate = GetDelegate(component, propertyInfo.GetSetMethod());
 				}
 
+				// Initialize the motion
 				m_Motion = CreateMotion(setterDelegate);
 
 			} else {
 				// TODO: Possibly work with ScriptableObjects (and fields)
 			}
 
+			// Creates a delegate for the target and method info. Here is a discussion about this technique:
+			// https://blogs.msmvps.com/jonskeet/2008/08/09/making-reflection-fly-and-exploring-delegates/
 			Action<ValueT> GetDelegate(object target, MethodInfo setMethod) {
 				return (Action<ValueT>)Delegate.CreateDelegate(typeof(Action<ValueT>), target, setMethod);
 			}
@@ -82,6 +95,9 @@ namespace CocodriloDog.Animation {
 
 		#region Protected Properties
 
+		/// <summary>
+		/// The motion that this asset manages.
+		/// </summary>
 		protected MotionT Motion {
 			get {
 				if (m_Motion == null) {
@@ -91,12 +107,24 @@ namespace CocodriloDog.Animation {
 			}
 		}
 
+		/// <summary>
+		/// The object that will be target of the animatable property.
+		/// </summary>
 		protected UnityEngine.Object Object => m_Object;
 
+		/// <summary>
+		/// A string that points to the setter of the animatable property.
+		/// </summary>
 		protected string SetterString => m_SetterString;
 
+		/// <summary>
+		/// The initial value for the motion.
+		/// </summary>
 		protected ValueT InitialValue => m_InitialValue;
 
+		/// <summary>
+		/// The final value for the motion.
+		/// </summary>
 		protected ValueT FinalValue => m_FinalValue;
 
 		#endregion
@@ -104,6 +132,11 @@ namespace CocodriloDog.Animation {
 
 		#region Protected Methods
 
+		/// <summary>
+		/// This is implemented in subclasses to create the concrete type of motion that each class is related to.
+		/// </summary>
+		/// <param name="setterDelegate">The setter to be used in the motion object.</param>
+		/// <returns>The motion</returns>
 		protected virtual MotionT CreateMotion(Action<ValueT> setterDelegate) => null;
 
 		#endregion

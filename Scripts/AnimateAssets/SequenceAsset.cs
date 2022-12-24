@@ -59,6 +59,13 @@ namespace CocodriloDog.Animation {
 
 		public override void Resume() => Sequence.Resume();
 
+		public override void Dispose() {
+			base.Dispose();
+			foreach (var sequenceItemsField in SequenceItemsFields) {
+				sequenceItemsField.Object?.Dispose();
+			}
+		}
+
 		public void RecreateMonoScriptableObjects() {
 			MonoScriptableUtility.RecreateMonoScriptableObjects(SequenceItemsFields.ToArray(), this);
 		}

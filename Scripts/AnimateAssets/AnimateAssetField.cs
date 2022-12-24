@@ -6,6 +6,9 @@ namespace CocodriloDog.Animation {
 	using System.Collections.Generic;
 	using UnityEngine;
 
+	/// <summary>
+	/// This field will hold a reference to an <see cref="AnimateAsset"/>.
+	/// </summary>
 	[Serializable]
 	public class AnimateAssetField : MonoScriptableField<AnimateAsset> { }
 
