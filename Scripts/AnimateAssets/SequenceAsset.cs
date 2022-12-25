@@ -6,6 +6,9 @@ namespace CocodriloDog.Animation {
 	using System.Collections.Generic;
 	using UnityEngine;
 
+	/// <summary>
+	/// Asset for <see cref="Sequence"/> objects.
+	/// </summary>
 	public class SequenceAsset : AnimateAsset, IMonoScriptableOwner {
 
 

@@ -5,6 +5,9 @@ namespace CocodriloDog.Animation {
 	using System.Collections.Generic;
 	using UnityEngine;
 
+	/// <summary>
+	/// Asset for <see cref="Color"/> motions.
+	/// </summary>
 	public class MotionColorAsset : MotionBaseAsset<Color, MotionColor> {
 
 

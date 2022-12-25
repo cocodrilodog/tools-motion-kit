@@ -5,6 +5,9 @@ namespace CocodriloDog.Animation {
 	using System.Collections.Generic;
 	using UnityEngine;
 
+	/// <summary>
+	/// Asset for <see cref="Vector3"/> motions.
+	/// </summary>
 	public class Motion3DAsset : MotionBaseAsset<Vector3, Motion3D> {
 
 

@@ -6,11 +6,25 @@ namespace CocodriloDog.Animation {
 	using System.Reflection;
 	using UnityEngine;
 
+	/// <summary>
+	/// Asset for <see cref="Vector2"/> motions.
+	/// </summary>
+	/// 
+	/// <remarks>
+	/// This is a Motion3DAsset, but overrides the necessary members to adapt it for 2D motions.
+	/// There was no <see cref="MotionBase{ValueT, MotionT}"/> created for <see cref="Vector2"/>
+	/// because it made the <c>Animate</c> API very akward when it came to creating setters for 
+	/// <see cref="Vector3"/> vs <see cref="Vector2"/>. It showed an ambiguity error so I decided 
+	/// to only leave the <see cref="Motion3D"/>
+	/// </remarks>
 	public class Motion2DAsset : MotionBaseAsset<Vector3, Motion3D> {
 
 
 		#region Public Methods
 
+		/// <summary>
+		/// This creates a <see cref="Motion3D"/> but with a <see cref="Vector2"/> setter.
+		/// </summary>
 		public override void Initialize() {
 
 			var setterStringParts = SetterString.Split('/');
@@ -47,6 +61,13 @@ namespace CocodriloDog.Animation {
 
 		#region Private Methods
 
+		/// <summary>
+		/// Instead of overriding the base member <c>MotionT CreateMotion(Action<ValueT> setterDelegate)</c>, I
+		/// created a specific version that receives a <see cref="Vector2"/>, but returns a <see cref="Motion3D"/>
+		/// object.
+		/// </summary>
+		/// <param name="setterDelegate">A setter for <see cref="Vector2"/></param>
+		/// <returns>A <see cref="Motion3D"/> object</returns>
 		private Motion3D CreateMotion(Action<Vector2> setterDelegate) {;
 
 			var motion = Animate.GetMotion(this, ReuseID, v => setterDelegate(v))

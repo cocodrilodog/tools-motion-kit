@@ -1,9 +1,13 @@
 namespace CocodriloDog.Animation {
+
 	using System;
 	using System.Collections;
 	using System.Collections.Generic;
 	using UnityEngine;
 
+	/// <summary>
+	/// Asset for <see cref="Timer"/> objects.
+	/// </summary>
 	public class TimerAsset : AnimateAsset {
 
 
