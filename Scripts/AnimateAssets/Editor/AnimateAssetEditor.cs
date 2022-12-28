@@ -54,10 +54,6 @@ namespace CocodriloDog.Animation {
 
 		#region Protected Methods
 
-		protected virtual void DrawReuseID() {
-			EditorGUILayout.PropertyField(ReuseIDProperty);
-		}
-
 		protected virtual void DrawBeforeSettings() { }
 
 		protected virtual void DrawSettings() {
@@ -106,6 +102,8 @@ namespace CocodriloDog.Animation {
 
 
 		#region Private Methods
+
+		private void DrawReuseID() => EditorGUILayout.PropertyField(ReuseIDProperty);
 
 		private void DrawCallbacks() {
 

@@ -57,6 +57,8 @@ namespace CocodriloDog.Animation {
 
 		private GUIStyle m_HorizontalLineStyle;
 
+		private List<string> m_SetterOptions;
+
 		#endregion
 
 
@@ -65,6 +67,8 @@ namespace CocodriloDog.Animation {
 		private SerializedProperty ObjectProperty { get; set; }
 
 		private SerializedProperty SetterStringProperty { get; set; }
+
+		private List<string> SetterOptions => m_SetterOptions;
 
 		private GUIStyle HorizontalLineStyle {
 			get {
@@ -87,29 +91,37 @@ namespace CocodriloDog.Animation {
 
 			EditorGUILayout.Space();
 
+			// Title
 			DrawLine();
 			EditorGUILayout.LabelField("Setter", EditorStyles.boldLabel);
 			EditorGUILayout.BeginHorizontal();
 
+			// Object field
 			EditorGUILayout.PropertyField(
 				ObjectProperty, GUIContent.none,
 				GUILayout.Width((EditorGUIUtility.currentViewWidth - 20) * 0.33f)
 			);
 
-			var setterOptions = GetSetterOptions();
-			var index = Mathf.Clamp(setterOptions.IndexOf(SetterStringProperty.stringValue), 0, int.MaxValue);
-			var newIndex = EditorGUILayout.Popup(index, setterOptions.ToArray());
-			SetterStringProperty.stringValue = setterOptions[newIndex];
+			// Setter string field
+			//
+			// I tried to call UpdateSetterOptions() only on enable and when the object field
+			// changes, but it is creating issues with undo and handling the undo event doesn't
+			// fix the issue.
+			// This may cause an overhead on the inspector processing, but hopefully not too much.
+			UpdateSetterOptions(); 
+			var index = Mathf.Clamp(SetterOptions.IndexOf(SetterStringProperty.stringValue), 0, int.MaxValue);
+			var newIndex = EditorGUILayout.Popup(index, SetterOptions.ToArray());
+			SetterStringProperty.stringValue = SetterOptions[newIndex];
 
 			EditorGUILayout.EndHorizontal();
 			DrawLine();
 
 		}
 
-		private List<string> GetSetterOptions() {
+		private void UpdateSetterOptions() {
 
-			var options = new List<string>();
-			options.Add("No Function");
+			m_SetterOptions = new List<string>();
+			m_SetterOptions.Add("No Function");
 
 			if (ObjectProperty.objectReferenceValue != null) {
 				if (ObjectProperty.objectReferenceValue is GameObject) {
@@ -121,12 +133,12 @@ namespace CocodriloDog.Animation {
 
 						var methods = GetMethodsBySignature(component.GetType(), typeof(void), typeof(ValueT));
 						foreach (var setter in methods) {
-							options.Add($"{component.GetType().Name}/{setter.Name}");
+							m_SetterOptions.Add($"{component.GetType().Name}/{setter.Name}");
 						}
 
 						var properties = GetPropertiesByType(component.GetType(), typeof(ValueT));
 						foreach (var property in properties) {
-							options.Add($"{component.GetType().Name}/{property.Name}");
+							m_SetterOptions.Add($"{component.GetType().Name}/{property.Name}");
 						}
 
 					}
@@ -135,7 +147,7 @@ namespace CocodriloDog.Animation {
 					// TODO: Possibly work with ScriptableObjects (and fields)
 				}
 			}
-			return options;
+
 		}
 
 		private MethodInfo[] GetMethodsBySignature(Type ownerType, Type returnType, Type parameterType) {
