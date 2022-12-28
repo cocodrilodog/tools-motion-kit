@@ -514,7 +514,8 @@ MonoBehaviour:
   m_Name: Motion2DAsset
   m_EditorClassIdentifier: 
   m_Owner: {fileID: 135096075}
-  m_Duration: 0
+  m_ReuseID: 
+  m_Duration: 2
   m_TimeMode: 0
   m_Easing:
     m_EasingName: Quint In Out
@@ -555,6 +556,7 @@ MonoBehaviour:
   m_Name: Motion3DAsset
   m_EditorClassIdentifier: 
   m_Owner: {fileID: 1608866452}
+  m_ReuseID: 
   m_Duration: 3
   m_TimeMode: 0
   m_Easing:
@@ -648,6 +650,7 @@ MonoBehaviour:
   m_Name: MotionColorAsset
   m_EditorClassIdentifier: 
   m_Owner: {fileID: 752003532}
+  m_ReuseID: 
   m_Duration: 2
   m_TimeMode: 0
   m_Easing:
@@ -815,6 +818,7 @@ MonoBehaviour:
   m_Name: MotionFloatAsset
   m_EditorClassIdentifier: 
   m_Owner: {fileID: 72812693}
+  m_ReuseID: 
   m_Duration: 2
   m_TimeMode: 0
   m_Easing:
@@ -907,6 +911,7 @@ MonoBehaviour:
   m_Name: MotionColorAsset
   m_EditorClassIdentifier: 
   m_Owner: {fileID: 1793732659}
+  m_ReuseID: 
   m_Duration: 2.5
   m_TimeMode: 0
   m_Easing:

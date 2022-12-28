@@ -13,7 +13,7 @@ namespace CocodriloDog.Animation {
 
 		#region Protected Methods
 
-		protected override Motion3D CreateMotion(Action<Vector3> setterDelegate) {;
+		protected override Motion3D CreateMotion(Action<Vector3> setterDelegate) {
 
 			var motion = Animate.GetMotion(this, ReuseID, v => setterDelegate(v))
 				.SetEasing(Easing.Vector3Easing)

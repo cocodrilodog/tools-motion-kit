@@ -18,6 +18,7 @@ namespace CocodriloDog.Animation {
 
 			base.OnEnable();
 
+			ReuseIDProperty = serializedObject.FindProperty("m_ReuseID");
 			DurationProperty = serializedObject.FindProperty("m_Duration");
 			TimeModeProperty = serializedObject.FindProperty("m_TimeMode");
 			EasingProperty = serializedObject.FindProperty("m_Easing");
@@ -33,6 +34,7 @@ namespace CocodriloDog.Animation {
 		public override void OnInspectorGUI() {
 			base.OnInspectorGUI();
 			serializedObject.Update();
+			DrawReuseID();
 			DrawBeforeSettings();
 			DrawSettings();
 			DrawAfterSettings();
@@ -51,6 +53,10 @@ namespace CocodriloDog.Animation {
 
 
 		#region Protected Methods
+
+		protected virtual void DrawReuseID() {
+			EditorGUILayout.PropertyField(ReuseIDProperty);
+		}
 
 		protected virtual void DrawBeforeSettings() { }
 
@@ -77,6 +83,8 @@ namespace CocodriloDog.Animation {
 
 
 		#region Private Properties
+
+		private SerializedProperty ReuseIDProperty { get; set; }
 
 		private SerializedProperty DurationProperty { get; set; }
 

@@ -96,9 +96,20 @@ namespace CocodriloDog.Animation {
 		#region Protected Properties
 
 		/// <summary>
-		/// The unique ID to be used by the Animate object if no ID is provided in the inspector.
+		/// The unique ID to be used by the Animate object.
 		/// </summary>
-		protected string ReuseID => m_ReuseID = m_ReuseID ?? Guid.NewGuid().ToString();
+		/// <remarks>
+		/// If no ID is provided in the inspector, an automatic unique ID will be created.
+		/// </remarks>
+		protected string ReuseID {
+			get {
+				if (string.IsNullOrWhiteSpace(m_ReuseID)) {
+					return m_ReuseID_Auto = m_ReuseID_Auto ?? Guid.NewGuid().ToString();
+				} else {
+					return m_ReuseID;
+				}
+			}
+		}
 
 		/// <summary>
 		/// The duration of the Animate object as specified in the inspector.
@@ -144,6 +155,9 @@ namespace CocodriloDog.Animation {
 		#region Private Fields - Serialized
 
 		[SerializeField]
+		private string m_ReuseID;
+
+		[SerializeField]
 		private float m_Duration;
 
 		[SerializeField]
@@ -175,7 +189,7 @@ namespace CocodriloDog.Animation {
 		#region Private Fields - Non Serialized
 
 		[NonSerialized]
-		private string m_ReuseID;
+		private string m_ReuseID_Auto;
 
 		#endregion
 
