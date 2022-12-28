@@ -15,8 +15,14 @@ namespace CocodriloDog.Animation {
 
 		#region Protected Methods
 
+		/// <summary>
+		/// This override changes the initial value property from 3D to 2D.
+		/// </summary>
 		protected override void DrawInitialValue() => DrawVector2FieldFromVector3Property(InitialValueProperty);
 
+		/// <summary>
+		/// This override changes the final value property from 3D to 2D.
+		/// </summary>
 		protected override void DrawFinalValue() => DrawVector2FieldFromVector3Property(FinalValueProperty);
 
 		#endregion
@@ -24,6 +30,10 @@ namespace CocodriloDog.Animation {
 
 		#region Private Properties
 
+		/// <summary>
+		/// Draws a <see cref="Vector3"/> property in a <see cref="Vector2"/> field.
+		/// </summary>
+		/// <param name="vector3Property"></param>
 		private void DrawVector2FieldFromVector3Property(SerializedProperty vector3Property) {
 
 			var xProperty = vector3Property.FindPropertyRelative("x");

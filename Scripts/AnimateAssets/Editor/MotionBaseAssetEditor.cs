@@ -9,6 +9,10 @@ namespace CocodriloDog.Animation {
 	using UnityEditor;
 	using UnityEngine;
 
+	/// <summary>
+	/// Base class for all Motion asset inspectors.
+	/// </summary>
+	/// <typeparam name="ValueT"></typeparam>
 	public abstract class MotionBaseAssetEditor<ValueT> : AnimateAssetEditor {
 
 

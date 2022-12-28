@@ -9,6 +9,9 @@ namespace CocodriloDog.Animation {
 	using UnityEditor;
 	using UnityEngine;
 
+	/// <summary>
+	/// Base class for all <see cref="AnimateAsset"/> inspectors.
+	/// </summary>
 	public abstract class AnimateAssetEditor : MonoScriptableObjectEditor {
 
 
