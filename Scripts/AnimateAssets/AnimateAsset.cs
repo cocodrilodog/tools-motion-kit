@@ -98,8 +98,16 @@ namespace CocodriloDog.Animation {
 		/// <summary>
 		/// The unique ID to be used by the Animate object.
 		/// </summary>
+		/// 
 		/// <remarks>
 		/// If no ID is provided in the inspector, an automatic unique ID will be created.
+		/// Specifying a <c>ReuseID</c> in the inspector may be helpful to make some animations that
+		/// set values on the same properties not to conflict with each other. 
+		/// 
+		/// For example, two motions that set the position property of an object may have the same 
+		/// <c>ReuseID</c> so that when one is interrupted by the other, the new one stops the previous
+		/// one. This avoids the two animations trying to animate the same property with different 
+		/// values at the same time.
 		/// </remarks>
 		protected string ReuseID {
 			get {
