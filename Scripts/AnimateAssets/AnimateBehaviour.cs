@@ -1,6 +1,7 @@
 namespace CocodriloDog.Animation {
 
 	using CocodriloDog.Core;
+	using System.Linq;
 	using System.Collections;
 	using System.Collections.Generic;
 	using System.Linq;
@@ -52,11 +53,7 @@ namespace CocodriloDog.Animation {
 		/// <summary>
 		/// Initializes all the <see cref="AnimateAsset"/>s of this compopnent.
 		/// </summary>
-		private void Initialize() {
-			foreach (var assetField in AnimateAssetFields) {
-				assetField.Object?.Initialize();
-			}
-		}
+		private void Initialize() => AnimateAssetFields.ForEach(af => af.Object?.Initialize());
 
 		/// <summary>
 		/// Plays the <see cref="DefaultAnimateAsset"/>.
@@ -70,6 +67,11 @@ namespace CocodriloDog.Animation {
 		public void Play(string assetName) => GetAnimateAsset(assetName)?.Play();
 
 		/// <summary>
+		/// Plays all the <see cref="AnimateAsset"/>s managed by this behaviour.
+		/// </summary>
+		public void PlayAll() => AnimateAssetFields.ForEach(af => af.Object?.Play());
+
+		/// <summary>
 		/// Stops the <see cref="DefaultAnimateAsset"/>.
 		/// </summary>
 		public void Stop() => DefaultAnimateAsset?.Stop();
@@ -79,6 +81,11 @@ namespace CocodriloDog.Animation {
 		/// </summary>
 		/// <param name="assetName">The name of the asset.</param>
 		public void Stop(string assetName) => GetAnimateAsset(assetName)?.Stop();
+
+		/// <summary>
+		/// Stops all the <see cref="AnimateAsset"/>s managed by this behaviour.
+		/// </summary>
+		public void StopAll() => AnimateAssetFields.ForEach(af => af.Object?.Stop());
 
 		/// <summary>
 		/// Pauses the <see cref="DefaultAnimateAsset"/>.
@@ -92,6 +99,11 @@ namespace CocodriloDog.Animation {
 		public void Pause(string assetName) => GetAnimateAsset(assetName)?.Pause();
 
 		/// <summary>
+		/// Pauses all the <see cref="AnimateAsset"/>s managed by this behaviour.
+		/// </summary>
+		public void PauseAll() => AnimateAssetFields.ForEach(af => af.Object?.Pause());
+
+		/// <summary>
 		/// Resumes the <see cref="DefaultAnimateAsset"/>.
 		/// </summary>
 		public void Resume() => DefaultAnimateAsset?.Resume();
@@ -103,13 +115,14 @@ namespace CocodriloDog.Animation {
 		public void Resume(string assetName) => GetAnimateAsset(assetName)?.Resume();
 
 		/// <summary>
+		/// Resumes all the <see cref="AnimateAsset"/>s managed by this behaviour.
+		/// </summary>
+		public void ResumeAll() => AnimateAssetFields.ForEach(af => af.Object?.Resume());
+
+		/// <summary>
 		/// Disposes all the <see cref="AnimateAsset"/>s of this compopnent.
 		/// </summary>
-		public void Dispose() {
-			foreach (var asset in AnimateAssetFields) {
-				asset.Object?.Dispose();
-			}
-		}
+		public void Dispose() => AnimateAssetFields.ForEach(af => af.Object?.Dispose());
 
 		public void RecreateMonoScriptableObjects() {
 			MonoScriptableUtility.RecreateMonoScriptableObjects(AnimateAssetFields.ToArray(), this);
