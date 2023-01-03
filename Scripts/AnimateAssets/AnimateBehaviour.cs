@@ -125,7 +125,9 @@ namespace CocodriloDog.Animation {
 		public void Dispose() => AnimateAssetFields.ForEach(af => af.Object?.Dispose());
 
 		public void RecreateMonoScriptableObjects() {
-			MonoScriptableUtility.RecreateMonoScriptableObjects(AnimateAssetFields.ToArray(), this);
+			if(AnimateAssetFields != null) {
+				MonoScriptableUtility.RecreateMonoScriptableObjects(AnimateAssetFields.ToArray(), this);
+			}
 		}
 
 		public void RecreateRepeatedMonoScriptableArrayOrListItems() {
@@ -138,8 +140,8 @@ namespace CocodriloDog.Animation {
 		#region Unity Methods
 
 		private void Start() {
-			if (PlayOnStart) {
-				Play();
+			if (PlayAllOnStart) {
+				PlayAll();
 			} else {
 				// This avoids errors OnDestroy in case it was not played at all.
 				Initialize();
@@ -165,7 +167,7 @@ namespace CocodriloDog.Animation {
 		private List<AnimateAssetField> m_AnimateAssets;
 
 		[SerializeField]
-		private bool m_PlayOnStart;
+		private bool m_PlayAllOnStart;
 
 		#endregion
 
@@ -174,7 +176,7 @@ namespace CocodriloDog.Animation {
 
 		private List<AnimateAssetField> AnimateAssetFields => m_AnimateAssets;
 
-		private bool PlayOnStart => m_PlayOnStart;
+		private bool PlayAllOnStart => m_PlayAllOnStart;
 
 		#endregion
 

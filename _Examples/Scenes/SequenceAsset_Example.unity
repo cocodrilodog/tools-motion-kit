@@ -136,6 +136,7 @@ MonoBehaviour:
   m_Name: Motion3DAsset
   m_EditorClassIdentifier: 
   m_Owner: {fileID: 1151719108}
+  m_ReuseID: 
   m_Duration: 1
   m_TimeMode: 0
   m_Easing:
@@ -177,6 +178,7 @@ MonoBehaviour:
   m_Name: Motion3DAsset
   m_EditorClassIdentifier: 
   m_Owner: {fileID: 1151719108}
+  m_ReuseID: 
   m_Duration: 1
   m_TimeMode: 0
   m_Easing:
@@ -302,6 +304,7 @@ MonoBehaviour:
   m_Name: Motion3DAsset
   m_EditorClassIdentifier: 
   m_Owner: {fileID: 1151719108}
+  m_ReuseID: 
   m_Duration: 1
   m_TimeMode: 0
   m_Easing:
@@ -343,6 +346,7 @@ MonoBehaviour:
   m_Name: SequenceAsset
   m_EditorClassIdentifier: 
   m_Owner: {fileID: 1621962141}
+  m_ReuseID: 
   m_Duration: 0
   m_TimeMode: 0
   m_Easing:
@@ -403,6 +407,7 @@ MonoBehaviour:
   m_Name: Motion3DAsset
   m_EditorClassIdentifier: 
   m_Owner: {fileID: 1151719108}
+  m_ReuseID: 
   m_Duration: 1
   m_TimeMode: 0
   m_Easing:
@@ -543,4 +548,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_AnimateAssets:
   - m_Object: {fileID: 1151719108}
-  m_PlayOnStart: 1
+  m_PlayAllOnStart: 1

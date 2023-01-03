@@ -235,7 +235,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_AnimateAssets:
   - m_Object: {fileID: 1957513156}
-  m_PlayOnStart: 1
+  m_PlayAllOnStart: 1
 --- !u!1 &1083925030
 GameObject:
   m_ObjectHideFlags: 0
@@ -333,6 +333,7 @@ MonoBehaviour:
   m_Name: TimerAsset
   m_EditorClassIdentifier: 
   m_Owner: {fileID: 712994215}
+  m_ReuseID: 
   m_Duration: 2
   m_TimeMode: 0
   m_Easing:
