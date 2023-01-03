@@ -18,9 +18,24 @@ namespace CocodriloDog.Animation {
 
 		#region Public Properties
 
+		/// <summary>
+		/// The motion that this asset manages.
+		/// </summary>
+		public MotionT Motion {
+			get {
+				if (m_Motion == null) {
+					Initialize();
+				}
+				return m_Motion;
+			}
+		}
+
 		public override ITimedProgressable TimedProgressable => Motion;
 
-		public override float Progress => Motion.Progress;
+		public override float Progress {
+			get => Motion.Progress;
+			set => Motion.Progress = value;
+		}
 
 		public override float CurrentTime => Motion.CurrentTime;
 
@@ -94,18 +109,6 @@ namespace CocodriloDog.Animation {
 
 
 		#region Protected Properties
-
-		/// <summary>
-		/// The motion that this asset manages.
-		/// </summary>
-		protected MotionT Motion {
-			get {
-				if (m_Motion == null) {
-					Initialize();
-				}
-				return m_Motion;
-			}
-		}
 
 		/// <summary>
 		/// The object that will be target of the animatable property.

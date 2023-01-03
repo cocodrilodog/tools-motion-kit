@@ -14,9 +14,23 @@ namespace CocodriloDog.Animation {
 
 		#region #region Public Properties
 
+		public Sequence Sequence {
+			get {
+				if (m_Sequence == null) {
+					Initialize();
+				}
+				return m_Sequence;
+			}
+		}
+
+		public List<AnimateAssetField> SequenceItemsFields => m_SequenceItems;
+
 		public override ITimedProgressable TimedProgressable => Sequence;
 
-		public override float Progress => Sequence.Progress;
+		public override float Progress {
+			get => Sequence.Progress;
+			set => Sequence.Progress = value;
+		}
 
 		public override float CurrentTime => Sequence.CurrentTime;
 
@@ -92,22 +106,6 @@ namespace CocodriloDog.Animation {
 
 		[NonSerialized]
 		private Sequence m_Sequence;
-
-		#endregion
-
-
-		#region Private Properties
-
-		private Sequence Sequence {
-			get {
-				if (m_Sequence == null) {
-					Initialize();
-				}
-				return m_Sequence;
-			}
-		}
-
-		private List<AnimateAssetField> SequenceItemsFields => m_SequenceItems;
 
 		#endregion
 

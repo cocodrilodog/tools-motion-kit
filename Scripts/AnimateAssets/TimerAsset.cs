@@ -13,9 +13,21 @@ namespace CocodriloDog.Animation {
 
 		#region Public Properties
 
+		public Timer Timer {
+			get {
+				if (m_Timer == null) {
+					Initialize();
+				}
+				return m_Timer;
+			}
+		}
+
 		public override ITimedProgressable TimedProgressable => Timer;
 
-		public override float Progress => Timer.Progress;
+		public override float Progress {
+			get => Timer.Progress;
+			set => Timer.Progress = value;
+		}
 
 		public override float CurrentTime => Timer.CurrentTime;
 
@@ -59,20 +71,6 @@ namespace CocodriloDog.Animation {
 
 		[NonSerialized]
 		private Timer m_Timer;
-
-		#endregion
-
-
-		#region Private Properties
-
-		private Timer Timer {
-			get {
-				if (m_Timer == null) {
-					Initialize();
-				}
-				return m_Timer;
-			}
-		}
 
 		#endregion
 

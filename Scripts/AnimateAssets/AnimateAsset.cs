@@ -30,7 +30,7 @@ namespace CocodriloDog.Animation {
 		/// <summary>
 		/// Gets the <c>Progress</c> of the Animate object managed by this <see cref="AnimateAsset"/>.
 		/// </summary>
-		public abstract float Progress { get; }
+		public abstract float Progress { get; set; }
 
 		/// <summary>
 		/// Gets the <c>CurrentTime</c> of the Animate object managed by this <see cref="AnimateAsset"/>.

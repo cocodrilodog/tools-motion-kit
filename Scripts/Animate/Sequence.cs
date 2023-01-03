@@ -67,6 +67,11 @@
 		#region Public Properties
 
 		/// <summary>
+		/// The items of this sequence.
+		/// </summary>
+		public ITimedProgressable[] SequenceItems => m_SequenceItems;
+
+		/// <summary>
 		/// The current time of this sequence.
 		/// </summary>
 		/// 
