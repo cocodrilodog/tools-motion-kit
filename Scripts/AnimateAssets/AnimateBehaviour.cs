@@ -1,7 +1,6 @@
 namespace CocodriloDog.Animation {
 
 	using CocodriloDog.Core;
-	using System.Linq;
 	using System.Collections;
 	using System.Collections.Generic;
 	using System.Linq;
@@ -18,7 +17,14 @@ namespace CocodriloDog.Animation {
 		/// <summary>
 		/// Gets the <c>Progress</c> of the <see cref="DefaultAnimateAsset"/> managed by this MonoBehavoiur.
 		/// </summary>
-		public float Progress => (float)DefaultAnimateAsset?.Progress;
+		public float Progress {
+			get => (float)DefaultAnimateAsset?.Progress;
+			set {
+				if(DefaultAnimateAsset != null) {
+					DefaultAnimateAsset.Progress = value;
+				}
+			}
+		}
 
 		/// <summary>
 		/// Gets the <c>CurrentTime</c> of the <see cref="DefaultAnimateAsset"/> managed by this MonoBehavoiur.
