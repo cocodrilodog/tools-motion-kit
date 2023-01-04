@@ -52,30 +52,55 @@ namespace CocodriloDog.Animation {
 
 		public override void Initialize() {
 
-			// This is a string created by the editor like this: "Transform/localPosition"
+			// These are strings created by the editor like this: "Transform/localPosition"
 			var setterStringParts = SetterString.Split('/');
+			var getterStringParts = GetterString.Split('/');
 
 			// The optimized way of invoking the setter of the animatable property
 			Action<ValueT> setterDelegate;
+			Func<ValueT> getterDelegate = null;
+
+			// Variables for setter and getter
+			Component component;
+			MethodInfo methodInfo;
 
 			var gameObject = Object as GameObject;
 			if (gameObject != null) {
 
+				// SETTER
+				//
 				// The first part of the setter string is the component
-				var component = gameObject.GetComponent(setterStringParts[0]);
+				component = gameObject.GetComponent(setterStringParts[0]);
 
 				// The second part is the setter. First we'll look for the method setter
-				var methodInfo = component.GetType().GetMethod(setterStringParts[1]);
+				methodInfo = component.GetType().GetMethod(setterStringParts[1]);
 				if (methodInfo != null) {
-					setterDelegate = GetDelegate(component, methodInfo);
+					setterDelegate = GetSetterDelegate(component, methodInfo);
 				} else {
 					// If a method setter is not found, then we look for a property setter
 					var propertyInfo = component.GetType().GetProperty(setterStringParts[1]);
-					setterDelegate = GetDelegate(component, propertyInfo.GetSetMethod());
+					setterDelegate = GetSetterDelegate(component, propertyInfo.GetSetMethod());
+				}
+
+				if (InitialValueIsRelative || FinalValueIsRelative) {
+					// GETTER
+					//
+					// The first part of the getter string is the component
+					component = gameObject.GetComponent(getterStringParts[0]);
+
+					// The second part is the getter. First we'll look for the method getter
+					methodInfo = component.GetType().GetMethod(getterStringParts[1]);
+					if (methodInfo != null) {
+						getterDelegate = GetGetterDelegate(component, methodInfo);
+					} else {
+						// If a method getter is not found, then we look for a property getter
+						var propertyInfo = component.GetType().GetProperty(getterStringParts[1]);
+						getterDelegate = GetGetterDelegate(component, propertyInfo.GetGetMethod());
+					}
 				}
 
 				// Initialize the motion
-				m_Motion = CreateMotion(setterDelegate);
+				m_Motion = CreateMotion(setterDelegate, getterDelegate);
 
 			} else {
 				// TODO: Possibly work with ScriptableObjects (and fields)
@@ -83,8 +108,12 @@ namespace CocodriloDog.Animation {
 
 			// Creates a delegate for the target and method info. Here is a discussion about this technique:
 			// https://blogs.msmvps.com/jonskeet/2008/08/09/making-reflection-fly-and-exploring-delegates/
-			Action<ValueT> GetDelegate(object target, MethodInfo setMethod) {
+
+			Action<ValueT> GetSetterDelegate(object target, MethodInfo setMethod) {
 				return (Action<ValueT>)Delegate.CreateDelegate(typeof(Action<ValueT>), target, setMethod);
+			}
+			Func<ValueT> GetGetterDelegate(object target, MethodInfo getMethod) {
+				return (Func<ValueT>)Delegate.CreateDelegate(typeof(Func<ValueT>), target, getMethod);
 			}
 
 		}
@@ -165,7 +194,7 @@ namespace CocodriloDog.Animation {
 		/// </summary>
 		/// <param name="setterDelegate">The setter to be used in the motion object.</param>
 		/// <returns>The motion</returns>
-		protected virtual MotionT CreateMotion(Action<ValueT> setterDelegate) => null;
+		protected virtual MotionT CreateMotion(Action<ValueT> setterDelegate, Func<ValueT> getterDelegate) => null;
 
 		#endregion
 

@@ -31,9 +31,12 @@ namespace CocodriloDog.Animation.Examples {
 
 		public Color Color {
 			get {
-				var propertyBlock = new MaterialPropertyBlock();
-				Renderer.GetPropertyBlock(propertyBlock);
-				return propertyBlock.GetColor("_BaseColor");
+				// The MaterialPropertyBlock approach is not working
+				//
+				//var propertyBlock = new MaterialPropertyBlock();
+				//Renderer.GetPropertyBlock(propertyBlock);
+				//return propertyBlock.GetColor("_BaseColor");
+				return Renderer.material.GetColor("_BaseColor"); 
 			}
 			set {
 				var propertyBlock = new MaterialPropertyBlock();

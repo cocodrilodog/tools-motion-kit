@@ -543,7 +543,7 @@ MonoBehaviour:
   m_SetterString: AnimateMotionAssets_Example/SetVector2
   m_GetterString: AnimateMotionAssets_Example/GetVector2
   m_InitialValue: {x: 0, y: 0, z: 0}
-  m_InitialValueIsRelative: 1
+  m_InitialValueIsRelative: 0
   m_FinalValue: {x: 0, y: 3, z: 0}
   m_FinalValueIsRelative: 0
 --- !u!114 &1316649690
@@ -639,10 +639,10 @@ MonoBehaviour:
   m_Object: {fileID: 1608866446}
   m_SetterString: AnimateMotionAssets_Example/SetVector3
   m_GetterString: AnimateMotionAssets_Example/GetVector3
-  m_InitialValue: {x: -3, y: 0, z: 0}
+  m_InitialValue: {x: 0, y: 0, z: 0}
   m_InitialValueIsRelative: 1
-  m_FinalValue: {x: -3, y: -3, z: 0}
-  m_FinalValueIsRelative: 0
+  m_FinalValue: {x: 0, y: -3, z: 0}
+  m_FinalValueIsRelative: 1
 --- !u!114 &1476707335
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -685,7 +685,7 @@ MonoBehaviour:
   m_SetterString: AnimateMotionAssets_Example/SetColor
   m_GetterString: AnimateMotionAssets_Example/GetColor
   m_InitialValue: {r: 0.49803925, g: 0.49803925, b: 0.49803925, a: 1}
-  m_InitialValueIsRelative: 1
+  m_InitialValueIsRelative: 0
   m_FinalValue: {r: 0.8602166, g: 1, b: 0, a: 1}
   m_FinalValueIsRelative: 0
 --- !u!1 &1608866446
@@ -905,11 +905,11 @@ MonoBehaviour:
   m_CallbackSelection: 3
   m_Object: {fileID: 72812692}
   m_SetterString: AnimateMotionAssets_Example/SetFloat
-  m_GetterString: 
+  m_GetterString: AnimateMotionAssets_Example/GetFloat
   m_InitialValue: 0
-  m_InitialValueIsRelative: 0
+  m_InitialValueIsRelative: 1
   m_FinalValue: 3
-  m_FinalValueIsRelative: 0
+  m_FinalValueIsRelative: 1
 --- !u!114 &1766117399
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -963,7 +963,7 @@ MonoBehaviour:
   m_Object: {fileID: 1793732659}
   m_SetterString: AnimateMotionAssets_Example/SetColor
   m_GetterString: AnimateMotionAssets_Example/GetColor
-  m_InitialValue: {r: 0.49803922, g: 0.49803922, b: 0.49803922, a: 1}
+  m_InitialValue: {r: 0, g: 0, b: 0, a: 0}
   m_InitialValueIsRelative: 1
   m_FinalValue: {r: 1, g: 0, b: 0.46666667, a: 1}
   m_FinalValueIsRelative: 0
