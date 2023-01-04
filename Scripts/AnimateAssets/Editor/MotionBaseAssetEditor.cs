@@ -20,10 +20,13 @@ namespace CocodriloDog.Animation {
 
 		protected override void OnEnable() {
 			base.OnEnable();
-			ObjectProperty			= serializedObject.FindProperty("m_Object");
-			SetterStringProperty	= serializedObject.FindProperty("m_SetterString");
-			InitialValueProperty	= serializedObject.FindProperty("m_InitialValue");
-			FinalValueProperty		= serializedObject.FindProperty("m_FinalValue");
+			ObjectProperty					= serializedObject.FindProperty("m_Object");
+			SetterStringProperty			= serializedObject.FindProperty("m_SetterString");
+			GetterStringProperty			= serializedObject.FindProperty("m_GetterString");
+			InitialValueProperty			= serializedObject.FindProperty("m_InitialValue");
+			InitialValueIsRelativeProperty	= serializedObject.FindProperty("m_InitialValueIsRelative");
+			FinalValueProperty				= serializedObject.FindProperty("m_FinalValue");
+			FinalValueIsRelativeProperty	= serializedObject.FindProperty("m_FinalValueIsRelative");
 		}
 
 		#endregion
@@ -33,16 +36,34 @@ namespace CocodriloDog.Animation {
 
 		protected SerializedProperty InitialValueProperty { get; set; }
 
+		protected SerializedProperty InitialValueIsRelativeProperty { get; set; }
+
 		protected SerializedProperty FinalValueProperty { get; set; }
+
+		protected SerializedProperty FinalValueIsRelativeProperty { get; set; }
 
 		#endregion
 
 
 		#region Protected Methods
 
-		protected virtual void DrawInitialValue() => EditorGUILayout.PropertyField(InitialValueProperty);
+		protected virtual void DrawInitialValue() {
+			EditorGUILayout.BeginHorizontal();
+			EditorGUILayout.PropertyField(InitialValueProperty);
+			EditorGUIUtility.labelWidth = 64;
+			EditorGUILayout.PropertyField(InitialValueIsRelativeProperty, new GUIContent("Is Relative"), GUILayout.Width(80));
+			EditorGUIUtility.labelWidth = 0;
+			EditorGUILayout.EndHorizontal();
+		}
 
-		protected virtual void DrawFinalValue() => EditorGUILayout.PropertyField(FinalValueProperty);
+		protected virtual void DrawFinalValue() {
+			EditorGUILayout.BeginHorizontal();
+			EditorGUILayout.PropertyField(FinalValueProperty);
+			EditorGUIUtility.labelWidth = 64;
+			EditorGUILayout.PropertyField(FinalValueIsRelativeProperty, new GUIContent("Is Relative"), GUILayout.Width(80));
+			EditorGUIUtility.labelWidth = 0;
+			EditorGUILayout.EndHorizontal();
+		}
 
 		protected override void DrawBeforeSettings() {
 			DrawObjectAndSetter();
@@ -52,6 +73,9 @@ namespace CocodriloDog.Animation {
 			base.DrawSettings();
 			DrawInitialValue();
 			DrawFinalValue();
+			if (InitialValueIsRelativeProperty.boolValue || FinalValueIsRelativeProperty.boolValue) {
+				DrawDisabledObjectAndGetter();
+			}
 		}
 
 		#endregion
@@ -63,6 +87,8 @@ namespace CocodriloDog.Animation {
 
 		private List<string> m_SetterOptions;
 
+		private List<string> m_GetterOptions;
+
 		#endregion
 
 
@@ -72,7 +98,11 @@ namespace CocodriloDog.Animation {
 
 		private SerializedProperty SetterStringProperty { get; set; }
 
+		private SerializedProperty GetterStringProperty { get; set; }
+
 		private List<string> SetterOptions => m_SetterOptions;
+
+		private List<string> GetterOptions => m_GetterOptions;
 
 		private GUIStyle HorizontalLineStyle {
 			get {
@@ -122,6 +152,34 @@ namespace CocodriloDog.Animation {
 
 		}
 
+		private void DrawDisabledObjectAndGetter() {
+
+			EditorGUILayout.Space();
+
+			// Title
+			DrawLine();
+			EditorGUILayout.LabelField("Getter", EditorStyles.boldLabel);
+			EditorGUILayout.BeginHorizontal();
+
+			// Object field
+			EditorGUI.BeginDisabledGroup(true);
+			EditorGUILayout.PropertyField(
+				ObjectProperty, GUIContent.none,
+				GUILayout.Width((EditorGUIUtility.currentViewWidth - 20) * 0.33f)
+			);
+			EditorGUI.EndDisabledGroup();
+
+			// Getter string field
+			UpdateGetterOptions();
+			var index = Mathf.Clamp(GetterOptions.IndexOf(GetterStringProperty.stringValue), 0, int.MaxValue);
+			var newIndex = EditorGUILayout.Popup(index, GetterOptions.ToArray());
+			GetterStringProperty.stringValue = GetterOptions[newIndex];
+
+			EditorGUILayout.EndHorizontal();
+			DrawLine();
+
+		}
+
 		private void UpdateSetterOptions() {
 
 			m_SetterOptions = new List<string>();
@@ -154,16 +212,58 @@ namespace CocodriloDog.Animation {
 
 		}
 
-		private MethodInfo[] GetMethodsBySignature(Type ownerType, Type returnType, Type parameterType) {
+		private void UpdateGetterOptions() {
+
+			m_GetterOptions = new List<string>();
+			m_GetterOptions.Add("No Function");
+
+			if (ObjectProperty.objectReferenceValue != null) {
+				if (ObjectProperty.objectReferenceValue is GameObject) {
+
+					var gameObject = ObjectProperty.objectReferenceValue as GameObject;
+					var components = gameObject.GetComponents(typeof(Component));
+
+					foreach (var component in components) {
+
+						var methods = GetMethodsBySignature(component.GetType(), typeof(ValueT));
+						foreach (var getter in methods) {
+							m_GetterOptions.Add($"{component.GetType().Name}/{getter.Name}");
+						}
+
+						var properties = GetPropertiesByType(component.GetType(), typeof(ValueT));
+						foreach (var property in properties) {
+							m_GetterOptions.Add($"{component.GetType().Name}/{property.Name}");
+						}
+
+					}
+
+				} else {
+					// TODO: Possibly work with ScriptableObjects (and fields)
+				}
+			}
+
+		}
+
+		private MethodInfo[] GetMethodsBySignature(Type ownerType, Type returnType, Type parameterType = null) {
+
 			return ownerType.GetMethods().Where((m) => {
 				if (m.ReturnType != returnType || m.IsSpecialName) {
 					return false;
 				}
+				
 				var parameters = m.GetParameters();
-				if (parameters.Length == 1 && parameterType == parameters[0].ParameterType) {
-					return true;
+				if (parameterType != null) {
+					if (parameters.Length == 1 && parameterType == parameters[0].ParameterType) {
+						return true;
+					}
+				} else {
+					if (parameters.Length == 0) {
+						return true;
+					}
 				}
+
 				return false;
+
 			}).ToArray();
 		}
 

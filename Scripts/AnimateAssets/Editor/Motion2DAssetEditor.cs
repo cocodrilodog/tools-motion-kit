@@ -18,12 +18,26 @@ namespace CocodriloDog.Animation {
 		/// <summary>
 		/// This override changes the initial value property from 3D to 2D.
 		/// </summary>
-		protected override void DrawInitialValue() => DrawVector2FieldFromVector3Property(InitialValueProperty);
+		protected override void DrawInitialValue() {
+			EditorGUILayout.BeginHorizontal();
+			DrawVector2FieldFromVector3Property(InitialValueProperty);
+			EditorGUIUtility.labelWidth = 64;
+			EditorGUILayout.PropertyField(InitialValueIsRelativeProperty, new GUIContent("Is Relative"), GUILayout.Width(80));
+			EditorGUIUtility.labelWidth = 0;
+			EditorGUILayout.EndHorizontal();
+		}
 
 		/// <summary>
 		/// This override changes the final value property from 3D to 2D.
 		/// </summary>
-		protected override void DrawFinalValue() => DrawVector2FieldFromVector3Property(FinalValueProperty);
+		protected override void DrawFinalValue() {
+			EditorGUILayout.BeginHorizontal();
+			DrawVector2FieldFromVector3Property(FinalValueProperty);
+			EditorGUIUtility.labelWidth = 64;
+			EditorGUILayout.PropertyField(FinalValueIsRelativeProperty, new GUIContent("Is Relative"), GUILayout.Width(80));
+			EditorGUIUtility.labelWidth = 0;
+			EditorGUILayout.EndHorizontal();
+		}
 
 		#endregion
 
@@ -40,7 +54,7 @@ namespace CocodriloDog.Animation {
 			var yProperty = vector3Property.FindPropertyRelative("y");
 
 			Vector2 currentValue = new Vector2(xProperty.floatValue, yProperty.floatValue);
-			var newValue = EditorGUILayout.Vector2Field(InitialValueProperty.displayName, currentValue);
+			var newValue = EditorGUILayout.Vector2Field(vector3Property.displayName, currentValue);
 
 			xProperty.floatValue = newValue.x;
 			yProperty.floatValue = newValue.y;

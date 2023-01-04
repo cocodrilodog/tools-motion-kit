@@ -49,11 +49,19 @@ namespace CocodriloDog.Animation.Examples {
 
 		public void SetVector3(Vector3 value) => transform.position = value;
 
+		public Vector3 GetVector3() => transform.position;
+
 		public void SetVector2(Vector2 value) => transform.position = value;
+
+		public Vector2 GetVector2() => transform.position;
 
 		public void SetFloat(float value) => Float = value;
 
+		public float GetFloat() => Float;
+
 		public void SetColor(Color value) => Color = value;
+
+		public Color GetColor() => Color;
 
 		public void OnStart() => Debug.Log($"{name}: OnStart");
 

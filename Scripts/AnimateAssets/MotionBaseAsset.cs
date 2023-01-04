@@ -121,14 +121,39 @@ namespace CocodriloDog.Animation {
 		protected string SetterString => m_SetterString;
 
 		/// <summary>
+		/// A string that points to the getter of the animatable property.
+		/// </summary>
+		protected string GetterString => m_GetterString;
+
+		/// <summary>
 		/// The initial value for the motion.
 		/// </summary>
 		protected ValueT InitialValue => m_InitialValue;
+		
+		/// <summary>
+		/// Whether the initial value for the motion is relative or not.
+		/// </summary>
+		/// 
+		/// <remarks>
+		/// If it is relative, it will be summed to the current value of the property in the target object
+		/// to calculate the value that this motion starts with.
+		/// </remarks>
+		protected bool InitialValueIsRelative => m_InitialValueIsRelative;
 
 		/// <summary>
 		/// The final value for the motion.
 		/// </summary>
 		protected ValueT FinalValue => m_FinalValue;
+
+		/// <summary>
+		/// Whether the final value for the motion is relative or not.
+		/// </summary>
+		/// 
+		/// <remarks>
+		/// If it is relative, it will be summed to the current value of the property in the target object
+		/// to calculate the value that this motion finalizes with.
+		/// </remarks>
+		protected bool FinalValueIsRelative => m_FinalValueIsRelative;
 
 		#endregion
 
@@ -152,12 +177,21 @@ namespace CocodriloDog.Animation {
 
 		[SerializeField]
 		private string m_SetterString;
+		
+		[SerializeField]
+		private string m_GetterString;
 
 		[SerializeField]
 		private ValueT m_InitialValue;
 
 		[SerializeField]
+		private bool m_InitialValueIsRelative;
+
+		[SerializeField]
 		private ValueT m_FinalValue;
+
+		[SerializeField]
+		private bool m_FinalValueIsRelative;
 
 		#endregion
 
