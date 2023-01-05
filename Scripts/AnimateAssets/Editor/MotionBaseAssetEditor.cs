@@ -148,6 +148,11 @@ namespace CocodriloDog.Animation {
 			SetterStringProperty.stringValue = SetterOptions[newIndex];
 
 			EditorGUILayout.EndHorizontal();
+
+			if (ObjectProperty.objectReferenceValue == null || SetterStringProperty.stringValue == "No Function") {
+				EditorGUILayout.HelpBox("For a motion to have effect, an object and a function must be assigned.", MessageType.Error);
+			}
+
 			DrawLine();
 
 		}
@@ -176,6 +181,11 @@ namespace CocodriloDog.Animation {
 			GetterStringProperty.stringValue = GetterOptions[newIndex];
 
 			EditorGUILayout.EndHorizontal();
+
+			if (ObjectProperty.objectReferenceValue == null || GetterStringProperty.stringValue == "No Function") {
+				EditorGUILayout.HelpBox("For a relative initial or final value to work, an object and a function must be assigned.", MessageType.Error);
+			}
+
 			DrawLine();
 
 		}

@@ -64,6 +64,12 @@ namespace CocodriloDog.Animation {
 			Component component;
 			MethodInfo methodInfo;
 
+			if(Object == null) {
+				throw new InvalidOperationException($"{this.name}: Object can not be null.");
+			} else if (SetterString == "No Function") {
+				throw new InvalidOperationException($"{this.name}: A setter function must be set.");
+			}
+
 			var gameObject = Object as GameObject;
 			if (gameObject != null) {
 
@@ -83,6 +89,11 @@ namespace CocodriloDog.Animation {
 				}
 
 				if (InitialValueIsRelative || FinalValueIsRelative) {
+
+					if (GetterString == "No Function") {
+						throw new InvalidOperationException($"{this.name}: A getter function must be set.");
+					}
+
 					// GETTER
 					//
 					// The first part of the getter string is the component
@@ -97,6 +108,7 @@ namespace CocodriloDog.Animation {
 						var propertyInfo = component.GetType().GetProperty(getterStringParts[1]);
 						getterDelegate = GetGetterDelegate(component, propertyInfo.GetGetMethod());
 					}
+
 				}
 
 				// Initialize the motion
