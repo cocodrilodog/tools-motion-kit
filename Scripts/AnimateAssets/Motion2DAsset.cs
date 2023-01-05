@@ -57,7 +57,8 @@ namespace CocodriloDog.Animation {
 				component = gameObject.GetComponent(setterStringParts[0]);
 
 				// The second part is the setter. First we'll look for the method setter
-				methodInfo = component.GetType().GetMethod(setterStringParts[1]);
+				// Check for 1 Vector2 parameter to avoid ambiguity
+				methodInfo = component.GetType().GetMethod(setterStringParts[1], new Type[]{ typeof(Vector2) });
 				if (methodInfo != null) {
 					setterDelegate = GetSetterDelegate(component, methodInfo);
 				} else {
@@ -78,7 +79,8 @@ namespace CocodriloDog.Animation {
 					component = gameObject.GetComponent(getterStringParts[0]);
 
 					// The second part is the getter. First we'll look for the method getter
-					methodInfo = component.GetType().GetMethod(getterStringParts[1]);
+					// Check for 0 parameters to avoid ambiguity
+					methodInfo = component.GetType().GetMethod(getterStringParts[1], new Type[] { });
 					if (methodInfo != null) {
 						getterDelegate = GetGetterDelegate(component, methodInfo);
 					} else {

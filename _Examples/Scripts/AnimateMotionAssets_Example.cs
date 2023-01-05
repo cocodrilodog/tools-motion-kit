@@ -54,6 +54,9 @@ namespace CocodriloDog.Animation.Examples {
 
 		public Vector3 GetVector3() => transform.position;
 
+		// This is used to test that there will no be ambiguity when searching for the method
+		public Vector3 GetVector3(string param) => transform.position;
+
 		public void SetVector2(Vector2 value) => transform.position = value;
 
 		public Vector2 GetVector2() => transform.position;
