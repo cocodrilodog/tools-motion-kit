@@ -34,10 +34,6 @@ namespace CocodriloDog.Animation {
 			var setterStringParts = SetterString.Split('/');
 			var getterStringParts = GetterString.Split('/');
 
-			// The optimized way of invoking the setter of the animatable property
-			Action<Vector2> setterDelegate;
-			Func<Vector2> getterDelegate = null;
-
 			// Variables for setter and getter
 			Component component;
 			MethodInfo methodInfo;
@@ -57,14 +53,14 @@ namespace CocodriloDog.Animation {
 				component = gameObject.GetComponent(setterStringParts[0]);
 
 				// The second part is the setter. First we'll look for the method setter
-				// Check for 1 Vector2 parameter to avoid ambiguity
-				methodInfo = component.GetType().GetMethod(setterStringParts[1], new Type[]{ typeof(Vector2) });
+				// Check for 1 ValueT parameter to avoid ambiguity
+				methodInfo = component.GetType().GetMethod(setterStringParts[1], new Type[] { typeof(Vector2) });
 				if (methodInfo != null) {
-					setterDelegate = GetSetterDelegate(component, methodInfo);
+					m_SetterDelegate = GetSetterDelegate(component, methodInfo);
 				} else {
 					// If a method setter is not found, then we look for a property setter
 					var propertyInfo = component.GetType().GetProperty(setterStringParts[1]);
-					setterDelegate = GetSetterDelegate(component, propertyInfo.GetSetMethod());
+					m_SetterDelegate = GetSetterDelegate(component, propertyInfo.GetSetMethod());
 				}
 
 				if (InitialValueIsRelative || FinalValueIsRelative) {
@@ -82,17 +78,17 @@ namespace CocodriloDog.Animation {
 					// Check for 0 parameters to avoid ambiguity
 					methodInfo = component.GetType().GetMethod(getterStringParts[1], new Type[] { });
 					if (methodInfo != null) {
-						getterDelegate = GetGetterDelegate(component, methodInfo);
+						m_GetterDelegate = GetGetterDelegate(component, methodInfo);
 					} else {
 						// If a method getter is not found, then we look for a property getter
 						var propertyInfo = component.GetType().GetProperty(getterStringParts[1]);
-						getterDelegate = GetGetterDelegate(component, propertyInfo.GetGetMethod());
+						m_GetterDelegate = GetGetterDelegate(component, propertyInfo.GetGetMethod());
 					}
 
 				}
 
 				// Initialize the motion
-				m_Motion = CreateMotion(setterDelegate, getterDelegate);
+				ResetMotion();
 
 			} else {
 				// TODO: Possibly work with ScriptableObjects (and fields)
@@ -108,6 +104,10 @@ namespace CocodriloDog.Animation {
 				return (Func<Vector2>)Delegate.CreateDelegate(typeof(Func<Vector2>), target, getMethod);
 			}
 
+		}
+
+		public override void ResetMotion() {
+			m_Motion = CreateMotion(m_SetterDelegate, m_GetterDelegate);
 		}
 
 		#endregion
@@ -147,6 +147,17 @@ namespace CocodriloDog.Animation {
 			return motion;
 
 		}
+
+		#endregion
+
+
+		#region Private Fields
+
+		[NonSerialized]
+		private Action<Vector2> m_SetterDelegate;
+
+		[NonSerialized]
+		private Func<Vector2> m_GetterDelegate;
 
 		#endregion
 

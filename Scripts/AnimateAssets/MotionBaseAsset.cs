@@ -50,15 +50,14 @@ namespace CocodriloDog.Animation {
 
 		#region Public Methods
 
+		/// <summary>
+		/// Creates the setter delegate and the getter delegate, if needed and creates the motion object.
+		/// </summary>
 		public override void Initialize() {
 
 			// These are strings created by the editor like this: "Transform/localPosition"
 			var setterStringParts = SetterString.Split('/');
 			var getterStringParts = GetterString.Split('/');
-
-			// The optimized way of invoking the setter of the animatable property
-			Action<ValueT> setterDelegate;
-			Func<ValueT> getterDelegate = null;
 
 			// Variables for setter and getter
 			Component component;
@@ -82,11 +81,11 @@ namespace CocodriloDog.Animation {
 				// Check for 1 ValueT parameter to avoid ambiguity
 				methodInfo = component.GetType().GetMethod(setterStringParts[1], new Type[] { typeof(ValueT) });
 				if (methodInfo != null) {
-					setterDelegate = GetSetterDelegate(component, methodInfo);
+					m_SetterDelegate = GetSetterDelegate(component, methodInfo);
 				} else {
 					// If a method setter is not found, then we look for a property setter
 					var propertyInfo = component.GetType().GetProperty(setterStringParts[1]);
-					setterDelegate = GetSetterDelegate(component, propertyInfo.GetSetMethod());
+					m_SetterDelegate = GetSetterDelegate(component, propertyInfo.GetSetMethod());
 				}
 
 				if (InitialValueIsRelative || FinalValueIsRelative) {
@@ -104,17 +103,17 @@ namespace CocodriloDog.Animation {
 					// Check for 0 parameters to avoid ambiguity
 					methodInfo = component.GetType().GetMethod(getterStringParts[1], new Type[] { }); 
 					if (methodInfo != null) {
-						getterDelegate = GetGetterDelegate(component, methodInfo);
+						m_GetterDelegate = GetGetterDelegate(component, methodInfo);
 					} else {
 						// If a method getter is not found, then we look for a property getter
 						var propertyInfo = component.GetType().GetProperty(getterStringParts[1]);
-						getterDelegate = GetGetterDelegate(component, propertyInfo.GetGetMethod());
+						m_GetterDelegate = GetGetterDelegate(component, propertyInfo.GetGetMethod());
 					}
 
 				}
 
 				// Initialize the motion
-				m_Motion = CreateMotion(setterDelegate, getterDelegate);
+				ResetMotion();
 
 			} else {
 				// TODO: Possibly work with ScriptableObjects (and fields)
@@ -130,6 +129,18 @@ namespace CocodriloDog.Animation {
 				return (Func<ValueT>)Delegate.CreateDelegate(typeof(Func<ValueT>), target, getMethod);
 			}
 
+		}
+
+		/// <summary>
+		/// Reassigns the values of the motion.
+		/// </summary>
+		/// 
+		/// <remarks>
+		/// This can be used to update the initial and final values if they are set to be relative because they
+		/// need to be calculated before the animation begins.
+		/// </remarks>
+		public virtual void ResetMotion() {
+			m_Motion = CreateMotion(m_SetterDelegate, m_GetterDelegate);
 		}
 
 		public override void Play() => Motion.Play();
@@ -235,6 +246,17 @@ namespace CocodriloDog.Animation {
 
 		[SerializeField]
 		private bool m_FinalValueIsRelative;
+
+		#endregion
+
+
+		#region Private Fields
+
+		[NonSerialized]
+		private Action<ValueT> m_SetterDelegate;
+
+		[NonSerialized]
+		private Func<ValueT> m_GetterDelegate;
 
 		#endregion
 
