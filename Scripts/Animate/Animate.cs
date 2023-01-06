@@ -280,6 +280,47 @@
 			}
 			return null;
 		}
+		
+		/// <summary>
+		/// Gets a <see cref="Parallel"/> object ready be played.
+		/// </summary>
+		/// 
+		/// <returns>The parallel.</returns>
+		///
+		/// <param name="parallelItems">
+		/// The items that will make the sequence.
+		/// </param>
+		public static Parallel GetParallel(params ITimedProgressable[] parallelItems) {
+			if (Instance != null) {
+				return Instance._GetParallel(parallelItems);
+			}
+			return null;
+		}
+
+		/// <summary>
+		/// Gets a <see cref="Parallel"/> object ready be played and registers it with
+		/// its <paramref name="owner"/> and <paramref name="reuseID"/> for later reuse.
+		/// </summary>
+		/// 
+		/// <returns>The parallel.</returns>
+		/// 
+		/// <param name="owner">
+		/// The ownwer of this parallel.
+		/// </param>
+		/// 
+		/// <param name="reuseID">
+		/// The reuseID of this parallel.
+		/// </param>
+		///
+		/// <param name="sequenceItems">
+		/// The items that will make the sequence.
+		/// </param>
+		public static Parallel GetParallel(object owner, string reuseID, params ITimedProgressable[] sequenceItems) {
+			if (Instance != null) {
+				return Instance._GetParallel(owner, reuseID, sequenceItems);
+			}
+			return null;
+		}
 
 		/// <summary>
 		/// Finds the <c>Motion</c>, <c>Timer</c> or <c>Sequence</c> registered with <paramref name="owner"/>
@@ -409,6 +450,14 @@
 
 		private Sequence _GetSequence(object owner, string reuseID, ITimedProgressable[] sequenceItems) {
 			return (Sequence)_GetPlayback(owner, reuseID, () => new Sequence(this, sequenceItems), sequenceItems);
+		}		
+		
+		private Parallel _GetParallel(ITimedProgressable[] parallelItems) {
+			return new Parallel(this, parallelItems);
+		}
+
+		private Parallel _GetParallel(object owner, string reuseID, ITimedProgressable[] parallelItems) {
+			return (Parallel)_GetPlayback(owner, reuseID, () => new Parallel(this, parallelItems), parallelItems);
 		}
 
 		private IPlayback _GetPlayback(object owner, string reuseID, Func<IPlayback> createPlayback, object animatableElement = null) {
