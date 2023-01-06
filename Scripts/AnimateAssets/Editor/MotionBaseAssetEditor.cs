@@ -83,8 +83,6 @@ namespace CocodriloDog.Animation {
 
 		#region Private Fields
 
-		private GUIStyle m_HorizontalLineStyle;
-
 		private List<string> m_SetterOptions;
 
 		private List<string> m_GetterOptions;
@@ -104,18 +102,6 @@ namespace CocodriloDog.Animation {
 
 		private List<string> GetterOptions => m_GetterOptions;
 
-		private GUIStyle HorizontalLineStyle {
-			get {
-				if (m_HorizontalLineStyle == null) { 
-					m_HorizontalLineStyle = new GUIStyle();
-					m_HorizontalLineStyle.normal.background = EditorGUIUtility.whiteTexture;
-					m_HorizontalLineStyle.margin = new RectOffset(0, 0, 4, 4);
-					m_HorizontalLineStyle.fixedHeight = 1;
-				}
-				return m_HorizontalLineStyle;
-			}
-		}
-
 		#endregion
 
 
@@ -126,7 +112,7 @@ namespace CocodriloDog.Animation {
 			EditorGUILayout.Space();
 
 			// Title
-			DrawLine();
+			CDEditorUtility.DrawHorizontalLine();
 			EditorGUILayout.LabelField("Setter", EditorStyles.boldLabel);
 			EditorGUILayout.BeginHorizontal();
 
@@ -153,7 +139,7 @@ namespace CocodriloDog.Animation {
 				EditorGUILayout.HelpBox("For a motion to have effect, an object and a function must be assigned.", MessageType.Error);
 			}
 
-			DrawLine();
+			CDEditorUtility.DrawHorizontalLine();
 
 		}
 
@@ -162,7 +148,7 @@ namespace CocodriloDog.Animation {
 			EditorGUILayout.Space();
 
 			// Title
-			DrawLine();
+			CDEditorUtility.DrawHorizontalLine();
 			EditorGUILayout.LabelField("Getter", EditorStyles.boldLabel);
 			EditorGUILayout.BeginHorizontal();
 
@@ -186,7 +172,7 @@ namespace CocodriloDog.Animation {
 				EditorGUILayout.HelpBox("For a relative initial or final value to work, an object and a function must be assigned.", MessageType.Error);
 			}
 
-			DrawLine();
+			CDEditorUtility.DrawHorizontalLine();
 
 		}
 
@@ -279,13 +265,6 @@ namespace CocodriloDog.Animation {
 
 		private PropertyInfo[] GetPropertiesByType(Type ownerType, Type propertyType) {
 			return ownerType.GetProperties().Where((p) => propertyType == p.PropertyType).ToArray();
-		}
-
-		private void DrawLine() {
-			var color = GUI.color;
-			GUI.color = new Color(0.15f, 0.15f, 0.15f);
-			GUILayout.Box(GUIContent.none, HorizontalLineStyle);
-			GUI.color = color;
 		}
 
 		#endregion
