@@ -76,15 +76,15 @@ namespace CocodriloDog.Animation {
 		/// It is set at <see cref="Play(float)"/> or alternatively at 
 		/// <see cref="SetDuration(float)"/>. By default the <see cref="Duration"/> 
 		/// will be the same as <see cref="ParallelDuration"/>, but it can be set to
-		/// another value, which will scale the individual duration of the parallel
-		/// items to fit the assigned <see cref="Duration"/>.
+		/// another value, which will scale the duration of the parallel items to fit 
+		/// the assigned <see cref="Duration"/>.
 		/// </remarks>
 		/// 
 		/// <value>The duration.</value>
 		public float Duration { get { return m_Duration; } }
 
 		/// <summary>
-		/// The sum of the parallel items duration.
+		/// The duration of the parallel which is the duration of the longest item.
 		/// </summary>
 		public float ParallelDuration { get { return m_ParallelDuration; } }
 
@@ -215,10 +215,10 @@ namespace CocodriloDog.Animation {
 			// Set to null the callbacks
 			Clean(CleanFlag.All);
 
-			// parallel objects
+			// composite objects
 			ResetItems();
 
-			// Reset all to avoid references that would prevent garbage collection
+			// Dispose all to avoid references that would prevent garbage collection
 			foreach (ParallelItemInfo parallelItemInfo in m_ParallelItemsInfo) {
 				parallelItemInfo.Item.Dispose();
 			}
@@ -230,7 +230,7 @@ namespace CocodriloDog.Animation {
 		/// </summary>
 		/// 
 		/// <remarks>
-		/// It is can be set at <see cref="Play(float)"/> or through this method.
+		/// It can be set at <see cref="Play(float)"/> or through this method.
 		/// By default the <see cref="Duration"/> will be the same as <see cref="ParallelDuration"/>,
 		/// but it can be set to another value, which will scale the individual duration
 		/// of the parallel items to fit the assigned <see cref="Duration"/>.
@@ -254,7 +254,7 @@ namespace CocodriloDog.Animation {
 		}
 
 		/// <summary>
-		/// Sets the easing of the motion.
+		/// Sets the easing of the parallel.
 		/// </summary>
 		/// 
 		/// <remarks>
@@ -262,7 +262,7 @@ namespace CocodriloDog.Animation {
 		/// with a progress number from 0 to 1 <c>t</c>
 		/// </remarks>
 		/// 
-		/// <returns>The motion object.</returns>
+		/// <returns>The parallel object.</returns>
 		/// <param name="easing">Easing.</param>
 		public Parallel SetEasing(Easing easing) {
 			m_Easing = easing;
@@ -390,14 +390,6 @@ namespace CocodriloDog.Animation {
 		/// </summary>
 		public void InvokeOnStart() {
 
-			// OnStart of the first item
-			//if (m_ParallelItemsInfo.Length > 0) {
-			//	if (!m_ParallelItemsInfo[0].Started) {
-			//		m_ParallelItemsInfo[0].Item.InvokeOnStart();
-			//		m_ParallelItemsInfo[0].Started = true;
-			//	}
-			//}
-
 			// OnStart of all items
 			foreach(var itemInfo in m_ParallelItemsInfo) {
 				itemInfo.Item.InvokeOnStart();
@@ -444,10 +436,6 @@ namespace CocodriloDog.Animation {
 				}
 
 			}
-			//// Update the progressing item as long as it haven't been completed
-			//if (m_ProgressingItemInfo != null && !m_ProgressingItemInfo.Completed) {
-			//	m_ProgressingItemInfo.Item.InvokeOnUpdate();
-			//}
 			// Update the parallel itself
 			m_OnUpdate?.Invoke();
 			m_OnUpdateParallel?.Invoke(this);
@@ -462,10 +450,6 @@ namespace CocodriloDog.Animation {
 					itemInfo.Item.InvokeOnInterrupt();
 				}
 			}
-			//// Interrupt the progressing item as long as it haven't been completed.
-			//if (m_ProgressingItemInfo != null && !m_ProgressingItemInfo.Completed) {
-			//	m_ProgressingItemInfo.Item.InvokeOnInterrupt();
-			//}
 			// Interrupt the parallel itself
 			m_OnInterrupt?.Invoke();
 			m_OnInterruptParallel?.Invoke(this);
@@ -502,29 +486,23 @@ namespace CocodriloDog.Animation {
 		}
 
 		/// <summary>
-		/// Changes parallel items.
+		/// Sets or changes parallel items.
 		/// </summary>
 		/// <param name="animatableElement"></param>
 		public void SetAnimatableElement(object animatableElement) {
-
 			if (!(animatableElement is ITimedProgressable[])) {
 				throw new ArgumentException(
 					$"The animatableElement: {animatableElement.GetType()} is not a {m_ParallelItems.GetType()}"
 				);
 			}
-
-			ITimedProgressable[] parallelItems = (ITimedProgressable[])animatableElement;
-			for (int i = 0; i < parallelItems.Length; i++) {
-				if (Mathf.Approximately(parallelItems[i].Duration, 0)) {
-					throw new ArgumentException("Parallel items can not have duration equal to 0");
-				}
-			}
-
-			m_ParallelItems = parallelItems;
+			m_ParallelItems = (ITimedProgressable[])animatableElement;
 			EvaluateParallel();
-
 		}
 
+		/// <summary>
+		/// Resets the items of the parallel and call <see cref="IComposite.ResetItems"/> on 
+		/// the items that are <see cref="IComposite"/> recursively.
+		/// </summary>
 		public void ResetItems() {
 			foreach (ParallelItemInfo itemInfo in m_ParallelItemsInfo) {
 				itemInfo.Completed = false;
@@ -729,28 +707,6 @@ namespace CocodriloDog.Animation {
 					}
 				}
 			}
-
-			//// If the parallel is paused and the Progress is set to a point in time before, this updates
-			//// the following parallel items so that they are not marked as completed.
-			//for (int i = m_ProgressingItemInfo.Index; i < m_ParallelItemsInfo.Length; i++) {
-			//	m_ParallelItemsInfo[i].Completed = false;
-			//}
-
-			//float timeOnParallel = EasedProgress * m_ParallelDuration;
-
-			//// Wait until it has started, otherwise it may progress before
-			//// starting, which would lead to unexpected behaviour.
-			//if (m_ProgressingItemInfo.Started) {
-			//	m_ProgressingItemInfo.Item.Progress =
-			//		(timeOnParallel - m_ParallelItemsInfo[m_ProgressingItemInfo.Index].Position) /
-			//		m_ProgressingItemInfo.Item.Duration;
-			//}
-
-			//// If the parallel is paused and the Progress is set to a point in time before, this updates
-			//// the following parallel items so that they are not marked as completed.
-			//for (int i = m_ProgressingItemInfo.Index; i < m_ParallelItemsInfo.Length; i++) {
-			//	m_ParallelItemsInfo[i].Completed = false;
-			//}
 
 		}
 

@@ -25,10 +25,6 @@
 		/// <summary>
 		/// The easing function that will be used fo the animation.
 		/// </summary>
-		/// 
-		/// <remarks>
-		/// Used as parameter at the contructor of a Motion object.
-		/// </remarks>
 		public delegate ValueT Easing(ValueT a, ValueT b, float t);
 
 		#endregion

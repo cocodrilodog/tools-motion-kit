@@ -19,7 +19,8 @@
 				this, "Parallel",
 
 				Animate.GetMotion(p => Cube1.transform.position = p)
-					.SetValuesAndDuration(new Vector3(-2, -2, 0), new Vector3(-2, 2, 0), 2).SetEasing(AnimateEasing.ElasticOut)
+					.SetValuesAndDuration(new Vector3(-2, -2, 0), new Vector3(-2, 2, 0), 2)
+					.SetEasing(AnimateEasing.ElasticOut)
 					.SetOnStart(() => Debug.LogFormat("Cube1 start"))
 					.SetOnUpdate(() => Debug.LogFormat("Cube1 update"))
 					.SetOnInterrupt(() => Debug.LogFormat("Cube1 interrupt"))
@@ -34,7 +35,8 @@
 						.SetOnComplete(() => Debug.LogFormat("Timer1 complete")),
 
 					Animate.GetMotion(p => Cube2.transform.position = p)
-						.SetValuesAndDuration(new Vector3(0, -2, 0), new Vector3(0, 2, 0), 2).SetEasing(AnimateEasing.ElasticOut)
+						.SetValuesAndDuration(new Vector3(0, -2, 0), new Vector3(0, 2, 0), 2)
+						.SetEasing(AnimateEasing.ElasticOut)
 						.SetOnStart(() => Debug.LogFormat("Cube2 start"))
 						.SetOnUpdate(() => Debug.LogFormat("Cube2 update"))
 						.SetOnInterrupt(() => Debug.LogFormat("Cube2 interrupt"))
@@ -51,7 +53,8 @@
 						.SetOnComplete(() => Debug.LogFormat("Timer2 complete")),
 
 					Animate.GetMotion(p => Cube3.transform.position = p)
-						.SetValuesAndDuration(new Vector3(2, -2, 0), new Vector3(2, 2, 0), 2).SetEasing(AnimateEasing.ElasticOut)
+						.SetValuesAndDuration(new Vector3(2, -2, 0), new Vector3(2, 2, 0), 2)
+						.SetEasing(AnimateEasing.ElasticOut)
 						.SetOnStart(() => Debug.LogFormat("Cube3 start"))
 						.SetOnUpdate(() => Debug.LogFormat("Cube3 update"))
 						.SetOnInterrupt(() => Debug.LogFormat("Cube3 interrupt"))

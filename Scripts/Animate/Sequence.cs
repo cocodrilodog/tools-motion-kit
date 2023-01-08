@@ -56,10 +56,6 @@
 		/// <summary>
 		/// The easing function that will be used for the sequence.
 		/// </summary>
-		/// 
-		/// <remarks>
-		/// Used as parameter at the contructor of a Motion object.
-		/// </remarks>
 		public delegate float Easing(float a, float b, float t);
 
 		#endregion
@@ -272,7 +268,7 @@
 		}
 
 		/// <summary>
-		/// Sets the easing of the motion.
+		/// Sets the easing of the sequence.
 		/// </summary>
 		/// 
 		/// <remarks>
@@ -280,7 +276,7 @@
 		/// with a progress number from 0 to 1 <c>t</c>
 		/// </remarks>
 		/// 
-		/// <returns>The motion object.</returns>
+		/// <returns>The sequence object.</returns>
 		/// <param name="easing">Easing.</param>
 		public Sequence SetEasing(Easing easing) {
 			m_Easing = easing;
@@ -527,6 +523,10 @@
 
 		}
 
+		/// <summary>
+		/// Resets the items of the sequence and call <see cref="IComposite.ResetItems"/> on 
+		/// the items that are <see cref="IComposite"/> recursively.
+		/// </summary>
 		public void ResetItems() {
 			foreach (SequenceItemInfo itemInfo in m_SequenceItemsInfo) {
 				itemInfo.Completed = false;
