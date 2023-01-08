@@ -28,6 +28,10 @@
 		void InvokeOnComplete();
 	}
 
+	public interface IComposite {
+		void ResetItems();
+	}
+
 	#endregion
 
 	/// 

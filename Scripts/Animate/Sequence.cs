@@ -5,10 +5,11 @@
 	using UnityEngine;
 
 	/// <summary>
-	/// A sequence of <see cref="MotionBase{ValueT, MotionT}"/>, <see cref="Timer"/>
-	/// and <see cref="Sequence"/> objects.
+	/// A structure that is used to play and control multiple <see cref="ITimedProgressable"/> objects in 
+	/// a sequenced fashion. It can be used to sequence <see cref="MotionBase{ValueT, MotionT}"/>, <see cref="Timer"/>,
+	/// <see cref="Sequence"/> and <see cref="Parallel"/> objects.
 	/// </summary>
-	public class Sequence : IPlayback, ITimedProgressable {
+	public class Sequence : IPlayback, ITimedProgressable, IComposite {
 
 
 		#region Small Types
@@ -526,6 +527,16 @@
 
 		}
 
+		public void ResetItems() {
+			foreach (SequenceItemInfo itemInfo in m_SequenceItemsInfo) {
+				itemInfo.Completed = false;
+				itemInfo.Started = false;
+				if (itemInfo.Item is IComposite) {
+					((IComposite)itemInfo.Item).ResetItems();
+				}
+			}
+		}
+
 		#endregion
 
 
@@ -704,16 +715,6 @@
 					m_MonoBehaviour.StopCoroutine(m_Coroutine);
 				}
 				m_Coroutine = null;
-			}
-		}
-
-		private void ResetItems() {
-			foreach (SequenceItemInfo itemInfo in m_SequenceItemsInfo) {
-				itemInfo.Completed = false;
-				itemInfo.Started = false;
-				if (itemInfo.Item is Sequence) {
-					((Sequence)itemInfo.Item).ResetItems();
-				}
 			}
 		}
 

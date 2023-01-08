@@ -9,7 +9,7 @@ namespace CocodriloDog.Animation {
 	/// the same time. It can be used to group <see cref="MotionBase{ValueT, MotionT}"/>, <see cref="Timer"/>,
 	/// <see cref="Sequence"/> and <see cref="Parallel"/> objects.
 	/// </summary>
-	public class Parallel : IPlayback, ITimedProgressable {
+	public class Parallel : IPlayback, ITimedProgressable, IComposite {
 
 
 		#region Small Types
@@ -20,19 +20,9 @@ namespace CocodriloDog.Animation {
 		public class ParallelItemInfo {
 
 			/// <summary>
-			/// The index of the item.
-			/// </summary>
-			public int Index;
-
-			/// <summary>
 			/// The item.
 			/// </summary>
 			public ITimedProgressable Item;
-
-			/// <summary>
-			/// The position in time of the item.
-			/// </summary>
-			public float Position;
 
 			/// <summary>
 			/// Has this item started?
@@ -46,8 +36,7 @@ namespace CocodriloDog.Animation {
 
 			public ParallelItemInfo() { }
 
-			public ParallelItemInfo(int index, ITimedProgressable item) {
-				Index = index;
+			public ParallelItemInfo(ITimedProgressable item) {
 				Item = item;
 			}
 
@@ -111,7 +100,6 @@ namespace CocodriloDog.Animation {
 			set {
 				m_Progress = Mathf.Clamp01(value);
 				m_CurrentTime = m_Progress * m_Duration;
-				SetProgressingItemInfo();
 				ApplyProgress();
 			}
 		}
@@ -212,7 +200,6 @@ namespace CocodriloDog.Animation {
 			}
 			StopCoroutine();
 			m_IsPlaying = false;
-			m_ProgressingItemInfo = null;
 			ResetItems();
 		}
 
@@ -229,7 +216,6 @@ namespace CocodriloDog.Animation {
 			Clean(CleanFlag.All);
 
 			// parallel objects
-			m_ProgressingItemInfo = null;
 			ResetItems();
 
 			// Reset all to avoid references that would prevent garbage collection
@@ -380,8 +366,7 @@ namespace CocodriloDog.Animation {
 
 		/// <summary>
 		/// Updates <see cref="ParallelDuration"/> and assigns its value to <see cref="Duration"/>
-		/// so that the default duration of the parallel results from its items. Additionally
-		/// calculates the position in time of its items. 
+		/// so that the default duration of the parallel results from the longest of the items.
 		/// </summary>
 		///
 		/// <remarks>
@@ -391,9 +376,11 @@ namespace CocodriloDog.Animation {
 			m_ParallelItemsInfo = new ParallelItemInfo[m_ParallelItems.Length];
 			m_ParallelDuration = 0;
 			for (int i = 0; i < m_ParallelItems.Length; i++) {
-				m_ParallelItemsInfo[i] = new ParallelItemInfo(i, m_ParallelItems[i]);
-				m_ParallelItemsInfo[i].Position = m_ParallelDuration;
-				m_ParallelDuration += m_ParallelItemsInfo[i].Item.Duration;
+				m_ParallelItemsInfo[i] = new ParallelItemInfo(m_ParallelItems[i]);
+				if (m_ParallelItemsInfo[i].Item.Duration > m_ParallelDuration) {
+					m_ParallelDuration = m_ParallelItemsInfo[i].Item.Duration;
+					m_LongestItemInfo = m_ParallelItemsInfo[i];
+				}
 			}
 			m_Duration = m_ParallelDuration;
 		}
@@ -404,11 +391,17 @@ namespace CocodriloDog.Animation {
 		public void InvokeOnStart() {
 
 			// OnStart of the first item
-			if (m_ParallelItemsInfo.Length > 0) {
-				if (!m_ParallelItemsInfo[0].Started) {
-					m_ParallelItemsInfo[0].Item.InvokeOnStart();
-					m_ParallelItemsInfo[0].Started = true;
-				}
+			//if (m_ParallelItemsInfo.Length > 0) {
+			//	if (!m_ParallelItemsInfo[0].Started) {
+			//		m_ParallelItemsInfo[0].Item.InvokeOnStart();
+			//		m_ParallelItemsInfo[0].Started = true;
+			//	}
+			//}
+
+			// OnStart of all items
+			foreach(var itemInfo in m_ParallelItemsInfo) {
+				itemInfo.Item.InvokeOnStart();
+				itemInfo.Started = true;
 			}
 
 			// OnStart on the parallel itself
@@ -423,13 +416,13 @@ namespace CocodriloDog.Animation {
 		public void InvokeOnUpdate() {
 			// Start/Complete the parallel items if time is past their start/end and they haven't 
 			// been started/completed
-			foreach (ParallelItemInfo itemInfo in m_ParallelItemsInfo) {
+			foreach (var itemInfo in m_ParallelItemsInfo) {
 
 				float timeScale = m_Duration / m_ParallelDuration;
 				float easedCurrentTime = EasedProgress * m_Duration;
 
 				if (!itemInfo.Started) {
-					float itemStart = itemInfo.Position * timeScale;
+					float itemStart = 0;
 					if (easedCurrentTime >= itemStart) {
 						itemInfo.Item.InvokeOnStart();
 						itemInfo.Started = true;
@@ -437,7 +430,7 @@ namespace CocodriloDog.Animation {
 				}
 
 				if (!itemInfo.Completed) {
-					float itemEnd = (itemInfo.Position + itemInfo.Item.Duration) * timeScale;
+					float itemEnd = itemInfo.Item.Duration * timeScale;
 					if (easedCurrentTime >= itemEnd) {
 						itemInfo.Item.Progress = 1;
 						itemInfo.Item.InvokeOnUpdate();
@@ -446,11 +439,15 @@ namespace CocodriloDog.Animation {
 					}
 				}
 
+				if (!itemInfo.Completed) {
+					itemInfo.Item.InvokeOnUpdate();
+				}
+
 			}
-			// Update the progressing item as long as it haven't been completed
-			if (m_ProgressingItemInfo != null && !m_ProgressingItemInfo.Completed) {
-				m_ProgressingItemInfo.Item.InvokeOnUpdate();
-			}
+			//// Update the progressing item as long as it haven't been completed
+			//if (m_ProgressingItemInfo != null && !m_ProgressingItemInfo.Completed) {
+			//	m_ProgressingItemInfo.Item.InvokeOnUpdate();
+			//}
 			// Update the parallel itself
 			m_OnUpdate?.Invoke();
 			m_OnUpdateParallel?.Invoke(this);
@@ -460,10 +457,15 @@ namespace CocodriloDog.Animation {
 		/// Invokes the <c>OnInterrupt</c> callback.
 		/// </summary>
 		public void InvokeOnInterrupt() {
-			// Interrupt the progressing item as long as it haven't been completed.
-			if (m_ProgressingItemInfo != null && !m_ProgressingItemInfo.Completed) {
-				m_ProgressingItemInfo.Item.InvokeOnInterrupt();
+			foreach (var itemInfo in m_ParallelItemsInfo) {
+				if (!itemInfo.Completed) {
+					itemInfo.Item.InvokeOnInterrupt();
+				}
 			}
+			//// Interrupt the progressing item as long as it haven't been completed.
+			//if (m_ProgressingItemInfo != null && !m_ProgressingItemInfo.Completed) {
+			//	m_ProgressingItemInfo.Item.InvokeOnInterrupt();
+			//}
 			// Interrupt the parallel itself
 			m_OnInterrupt?.Invoke();
 			m_OnInterruptParallel?.Invoke(this);
@@ -473,10 +475,10 @@ namespace CocodriloDog.Animation {
 		/// Invokes the <c>OnComplete</c> callback.
 		/// </summary>
 		public void InvokeOnComplete() {
-			// Complete the progressing item as long as it haven't been completed.
-			// At this point, the m_ProgressingItemInfo must be the last item.
-			if (m_ProgressingItemInfo != null && !m_ProgressingItemInfo.Completed) {
-				m_ProgressingItemInfo.Item.InvokeOnComplete();
+			// Complete the m_LongestItemInfo as long as it haven't been completed.
+			// At this point, the m_LongestItemInfo must be the last item to be completed.
+			if (!m_LongestItemInfo.Completed) {
+				m_LongestItemInfo.Item.InvokeOnComplete();
 			}
 			// Complete the parallel itself
 			m_OnComplete?.Invoke();
@@ -523,6 +525,16 @@ namespace CocodriloDog.Animation {
 
 		}
 
+		public void ResetItems() {
+			foreach (ParallelItemInfo itemInfo in m_ParallelItemsInfo) {
+				itemInfo.Completed = false;
+				itemInfo.Started = false;
+				if (itemInfo.Item is IComposite) {
+					((IComposite)itemInfo.Item).ResetItems();
+				}
+			}
+		}
+
 		#endregion
 
 
@@ -538,14 +550,10 @@ namespace CocodriloDog.Animation {
 		private ParallelItemInfo[] m_ParallelItemsInfo;
 
 		[NonSerialized]
-		private float m_ParallelDuration;
+		private ParallelItemInfo m_LongestItemInfo;
 
-		/// <summary>
-		/// The currently progressing parallel item as calculated by
-		/// <see cref="SetProgressingItemInfo()"/>.
-		/// </summary>
 		[NonSerialized]
-		private ParallelItemInfo m_ProgressingItemInfo;
+		private float m_ParallelDuration;
 
 		[NonSerialized]
 		private Coroutine m_Coroutine;
@@ -624,7 +632,6 @@ namespace CocodriloDog.Animation {
 			get { return m_Progress; }
 			set {
 				m_Progress = Mathf.Clamp01(value);
-				SetProgressingItemInfo();
 				ApplyProgress();
 			}
 		}
@@ -704,59 +711,46 @@ namespace CocodriloDog.Animation {
 			}
 		}
 
-		private void ResetItems() {
-			foreach (ParallelItemInfo itemInfo in m_ParallelItemsInfo) {
-				itemInfo.Completed = false;
-				itemInfo.Started = false;
-				if (itemInfo.Item is Parallel) { // TODO: Review if this need to interact with Sequences too
-					((Parallel)itemInfo.Item).ResetItems();
-				}
-			}
-		}
-
-		/// <summary>
-		/// Sets the item of the parallel that coincides with <see cref="EasedProgress"/>
-		/// </summary>
-		private void SetProgressingItemInfo() {
-			if (EasedProgress < 1) {
-				// Progress translated to time units
-				float timeOnParallel = EasedProgress * m_ParallelDuration;
-				// Iterate through items
-				for (int i = 0; i < m_ParallelItemsInfo.Length; i++) {
-					if (Mathf.Approximately(m_ParallelItemsInfo[i].Item.Duration, 0)) {
-						throw new ArgumentException("Parallel items can not have duration equal to 0");
-					}
-					if (timeOnParallel >= m_ParallelItemsInfo[i].Position &&
-						timeOnParallel < m_ParallelItemsInfo[i].Position + m_ParallelItemsInfo[i].Item.Duration) {
-						m_ProgressingItemInfo = m_ParallelItemsInfo[i];
-						break;
-					}
-				}
-			} else {
-				// Handle progress == 1 (0 is already handled)
-				m_ProgressingItemInfo = m_ParallelItemsInfo[m_ParallelItemsInfo.Length - 1];
-			}
-		}
-
 		private void ApplyProgress() {
 
 			CheckDisposed();
 
-			float timeOnParallel = EasedProgress * m_ParallelDuration;
+			foreach(var itemInfo in m_ParallelItemsInfo) {
+				// Wait until it has started, otherwise it may progress before
+				// starting, which would lead to unexpected behaviour.
+				if (itemInfo.Started) {
 
-			// Wait until it has started, otherwise it may progress before
-			// starting, which would lead to unexpected behaviour.
-			if (m_ProgressingItemInfo.Started) {
-				m_ProgressingItemInfo.Item.Progress =
-					(timeOnParallel - m_ParallelItemsInfo[m_ProgressingItemInfo.Index].Position) /
-					m_ProgressingItemInfo.Item.Duration;
+					itemInfo.Item.Progress = Mathf.Clamp01(EasedProgress * m_ParallelDuration / itemInfo.Item.Duration);
+					
+					// If the parallel is paused and the Progress is set to a point in time before, this updates
+					// the parallel item so that it is not marked as completed.
+					if (itemInfo.Item.Progress < 1) {
+						itemInfo.Completed = false;
+					}
+				}
 			}
 
-			// If the parallel is paused and the Progress is set to a point in time before, this updates
-			// the following parallel items so that they are not marked as completed.
-			for (int i = m_ProgressingItemInfo.Index; i < m_ParallelItemsInfo.Length; i++) {
-				m_ParallelItemsInfo[i].Completed = false;
-			}
+			//// If the parallel is paused and the Progress is set to a point in time before, this updates
+			//// the following parallel items so that they are not marked as completed.
+			//for (int i = m_ProgressingItemInfo.Index; i < m_ParallelItemsInfo.Length; i++) {
+			//	m_ParallelItemsInfo[i].Completed = false;
+			//}
+
+			//float timeOnParallel = EasedProgress * m_ParallelDuration;
+
+			//// Wait until it has started, otherwise it may progress before
+			//// starting, which would lead to unexpected behaviour.
+			//if (m_ProgressingItemInfo.Started) {
+			//	m_ProgressingItemInfo.Item.Progress =
+			//		(timeOnParallel - m_ParallelItemsInfo[m_ProgressingItemInfo.Index].Position) /
+			//		m_ProgressingItemInfo.Item.Duration;
+			//}
+
+			//// If the parallel is paused and the Progress is set to a point in time before, this updates
+			//// the following parallel items so that they are not marked as completed.
+			//for (int i = m_ProgressingItemInfo.Index; i < m_ParallelItemsInfo.Length; i++) {
+			//	m_ParallelItemsInfo[i].Completed = false;
+			//}
 
 		}
 

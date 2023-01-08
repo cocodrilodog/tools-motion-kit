@@ -13,115 +13,58 @@
 		#region Unity Methods
 
 		private void Start() {
-			//m_Parallel = Animate.GetParallel(
-
-			//	this, "Parallel",
-
-			//	Animate.GetMotion(p => PositionCube.transform.position = p)
-			//		.SetInitialValue(new Vector3(2, -2, 0)).SetFinalValue(new Vector3(-2, -2, 0))
-			//		.SetDuration(2).SetEasing(AnimateEasing.ElasticOut)
-			//		.SetOnStart(() => Debug.LogFormat("Animation #1 Start"))
-			//		.SetOnUpdate(() => Debug.LogFormat("Animation #1 Update"))
-			//		.SetOnInterrupt(() => Debug.LogFormat("Animation #1 Interrupt"))
-			//		.SetOnComplete(() => Debug.LogFormat("Animation #1 Complete: {0}", PositionCube.transform.position)),
-
-			//	Animate.GetMotion(c => ColorSphere.Color = c)
-			//		.SetInitialValue(Color.red).SetFinalValue(Color.black)
-			//		.SetDuration(1).SetEasing(new Blink(2).ColorEasing)
-			//		.SetOnStart(() => Debug.LogFormat("Animation #2 Start"))
-			//		.SetOnUpdate(() => Debug.LogFormat("Animation #2 Update"))
-			//		.SetOnInterrupt(() => Debug.LogFormat("Animation #2 Interrupt"))
-			//		.SetOnComplete(() => Debug.LogFormat("Animation #2 Complete: {0}", ColorSphere.Color)),
-
-			//	Animate.GetTimer()
-			//		.SetDuration(2)
-			//		.SetOnStart(() => Debug.LogFormat("Timer Start"))
-			//		.SetOnUpdate(() => Debug.LogFormat("Timer Update"))
-			//		.SetOnInterrupt(() => Debug.LogFormat("Timer Interrupt"))
-			//		.SetOnComplete(() => Debug.LogFormat("Timer Complete")),
-
-			//	Animate.GetMotion(p => PositionCube.transform.position = p)
-			//		.SetInitialValue(new Vector3(-2, -2, 0)).SetFinalValue(new Vector3(-2, 2, 0))
-			//		.SetDuration(2).SetEasing(AnimateEasing.ElasticOut)
-			//		.SetOnStart(() => Debug.LogFormat("Animation #3 Start"))
-			//		.SetOnUpdate(() => Debug.LogFormat("Animation #3 Update"))
-			//		.SetOnInterrupt(() => Debug.LogFormat("Animation #3 Interrupt"))
-			//		.SetOnComplete(() => Debug.LogFormat("Animation #3 Complete: {0}", PositionCube.transform.position)),
-
-			//	Animate.GetParallel(
-
-			//		Animate.GetMotion(c => ColorSphere.Color = c)
-			//			.SetInitialValue(Color.green).SetFinalValue(Color.black)
-			//			.SetDuration(1).SetEasing(new Blink(2).ColorEasing)
-			//			.SetOnStart(() => Debug.LogFormat("Animation #4 Start"))
-			//			.SetOnUpdate(() => Debug.LogFormat("Animation #4 Update"))
-			//			.SetOnInterrupt(() => Debug.LogFormat("Animation #4 Interrupt"))
-			//			.SetOnComplete(() => Debug.LogFormat("Animation #4 Complete: {0}", ColorSphere.Color)),
-
-			//		Animate.GetMotion(p => PositionCube.transform.position = p)
-			//			.SetInitialValue(new Vector3(-2, 2, 0)).SetFinalValue(new Vector3(2, 2, 0))
-			//			.SetDuration(2).SetEasing(AnimateEasing.ElasticOut)
-			//			.SetOnStart(() => Debug.LogFormat("Animation #5 Start"))
-			//			.SetOnUpdate(() => Debug.LogFormat("Animation #5 Update"))
-			//			.SetOnInterrupt(() => Debug.LogFormat("Animation #5 Interrupt"))
-			//			.SetOnComplete(() => Debug.LogFormat("Animation #5 Complete: {0}", PositionCube.transform.position))
-
-			//	).SetOnStart(() => Debug.LogFormat("Animation #4-5 Start!!!"))
-			//	.SetOnUpdate(() => Debug.LogFormat("Animation #4-5 Update!!!"))
-			//	.SetOnInterrupt(() => Debug.LogFormat("Animation #4-5 Interrupt!!!"))
-			//	.SetOnComplete(() => Debug.LogFormat("Animation #4-5 Complete!!!")),
-
-			//	Animate.GetMotion(c => ColorSphere.Color = c)
-			//		.SetInitialValue(Color.blue).SetFinalValue(Color.black)
-			//		.SetDuration(1).SetEasing(new Blink(2).ColorEasing)
-			//		.SetOnStart(() => Debug.LogFormat("Animation #6 Start"))
-			//		.SetOnUpdate(() => Debug.LogFormat("Animation #6 Update"))
-			//		.SetOnInterrupt(() => Debug.LogFormat("Animation #6 Interrupt"))
-			//		.SetOnComplete(() => Debug.LogFormat("Animation #6 Complete: {0}", ColorSphere.Color)),
-
-			//	Animate.GetMotion(p => PositionCube.transform.position = p)
-			//		.SetInitialValue(new Vector3(2, 2, 0)).SetFinalValue(new Vector3(2, -2, 0))
-			//		.SetDuration(2).SetEasing(AnimateEasing.ElasticOut)
-			//		.SetOnStart(() => Debug.LogFormat("Animation #7 Start"))
-			//		.SetOnUpdate(() => Debug.LogFormat("Animation #7 Update"))
-			//		.SetOnInterrupt(() => Debug.LogFormat("Animation #7 Interrupt"))
-			//		.SetOnComplete(() => Debug.LogFormat("Animation #7 Complete: {0}", PositionCube.transform.position)),
-
-			//	Animate.GetMotion(c => ColorSphere.Color = c)
-			//		.SetInitialValue(Color.white).SetFinalValue(Color.black)
-			//		.SetDuration(1).SetEasing(new Blink(2).ColorEasing)
-			//		.SetOnStart(() => Debug.LogFormat("Animation #8 Start"))
-			//		.SetOnUpdate(() => Debug.LogFormat("Animation #8 Update"))
-			//		.SetOnInterrupt(() => Debug.LogFormat("Animation #8 Interrupt"))
-			//		.SetOnComplete(() => Debug.LogFormat("Animation #8 Complete: {0}", ColorSphere.Color))
-
-			//).SetEasing(AnimateEasing.QuadInOut)
-			//.SetOnStart(() => Debug.Log("Parallel start"))
-			//.SetOnUpdate(()=> Debug.LogFormat("Parallel update"))
-			//.SetOnInterrupt(() => Debug.LogFormat("Parallel interrupt"))
-			//.SetOnComplete(() => Debug.LogFormat("Parallel complete"))
-			//.Play();
 
 			m_Parallel = Animate.GetParallel(
 
 				this, "Parallel",
 
 				Animate.GetMotion(p => Cube1.transform.position = p)
-					.SetValuesAndDuration(new Vector3(-2, -2, 0), new Vector3(-2, 2, 0), 2).SetEasing(AnimateEasing.ElasticOut),
+					.SetValuesAndDuration(new Vector3(-2, -2, 0), new Vector3(-2, 2, 0), 2).SetEasing(AnimateEasing.ElasticOut)
+					.SetOnStart(() => Debug.LogFormat("Cube1 start"))
+					.SetOnUpdate(() => Debug.LogFormat("Cube1 update"))
+					.SetOnInterrupt(() => Debug.LogFormat("Cube1 interrupt"))
+					.SetOnComplete(() => Debug.LogFormat("Cube1 complete")),
 
 				Animate.GetSequence(
-					Animate.GetTimer().SetDuration(3),
+
+					Animate.GetTimer().SetDuration(0.5f)
+						.SetOnStart(() => Debug.LogFormat("Timer1 start"))
+						.SetOnUpdate(() => Debug.LogFormat("Timer1 update"))
+						.SetOnInterrupt(() => Debug.LogFormat("Timer1 interrupt"))
+						.SetOnComplete(() => Debug.LogFormat("Timer1 complete")),
+
 					Animate.GetMotion(p => Cube2.transform.position = p)
 						.SetValuesAndDuration(new Vector3(0, -2, 0), new Vector3(0, 2, 0), 2).SetEasing(AnimateEasing.ElasticOut)
+						.SetOnStart(() => Debug.LogFormat("Cube2 start"))
+						.SetOnUpdate(() => Debug.LogFormat("Cube2 update"))
+						.SetOnInterrupt(() => Debug.LogFormat("Cube2 interrupt"))
+						.SetOnComplete(() => Debug.LogFormat("Cube2 complete"))
+
 				),
 
 				Animate.GetSequence(
-					Animate.GetTimer().SetDuration(3),
+					
+					Animate.GetTimer().SetDuration(1)
+						.SetOnStart(() => Debug.LogFormat("Timer2 start"))
+						.SetOnUpdate(() => Debug.LogFormat("Timer2 update"))
+						.SetOnInterrupt(() => Debug.LogFormat("Timer2 interrupt"))
+						.SetOnComplete(() => Debug.LogFormat("Timer2 complete")),
+
 					Animate.GetMotion(p => Cube3.transform.position = p)
 						.SetValuesAndDuration(new Vector3(2, -2, 0), new Vector3(2, 2, 0), 2).SetEasing(AnimateEasing.ElasticOut)
+						.SetOnStart(() => Debug.LogFormat("Cube3 start"))
+						.SetOnUpdate(() => Debug.LogFormat("Cube3 update"))
+						.SetOnInterrupt(() => Debug.LogFormat("Cube3 interrupt"))
+						.SetOnComplete(() => Debug.LogFormat("Cube3 complete"))
+
 				)
 
-			).Play();
+			).SetEasing(AnimateEasing.QuadInOut)
+			.SetOnStart(() => Debug.Log("Parallel start"))
+			.SetOnUpdate(() => Debug.LogFormat("Parallel update"))
+			.SetOnInterrupt(() => Debug.LogFormat("Parallel interrupt"))
+			.SetOnComplete(() => Debug.LogFormat("Parallel complete"))
+			.Play();
 
 		}
 
