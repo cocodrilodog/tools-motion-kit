@@ -60,6 +60,26 @@
 						.SetOnInterrupt(() => Debug.LogFormat("Cube3 interrupt"))
 						.SetOnComplete(() => Debug.LogFormat("Cube3 complete"))
 
+				),
+
+				Animate.GetParallel(
+
+					Animate.GetMotion(p => Sphere1.transform.position = p)
+						.SetValuesAndDuration(new Vector3(-2, -4, 0), new Vector3(2, -4, 0), 2)
+						.SetEasing(AnimateEasing.BounceOut)
+						.SetOnStart(() => Debug.LogFormat("Sphere1 start"))
+						.SetOnUpdate(() => Debug.LogFormat("Sphere1 update"))
+						.SetOnInterrupt(() => Debug.LogFormat("Sphere1 interrupt"))
+						.SetOnComplete(() => Debug.LogFormat("Sphere1 complete")),
+
+					Animate.GetMotion(p => Sphere2.transform.position = p)
+						.SetValuesAndDuration(new Vector3(2, -4, 0), new Vector3(-2, -4, 0), 2)
+						.SetEasing(AnimateEasing.BounceOut)
+						.SetOnStart(() => Debug.LogFormat("Sphere2 start"))
+						.SetOnUpdate(() => Debug.LogFormat("Sphere2 update"))
+						.SetOnInterrupt(() => Debug.LogFormat("Sphere2 interrupt"))
+						.SetOnComplete(() => Debug.LogFormat("Sphere2 complete"))
+
 				)
 
 			).SetEasing(AnimateEasing.QuadInOut)
@@ -131,6 +151,12 @@
 		private Transform m_Cube3;
 
 		[SerializeField]
+		private Transform m_Sphere1;
+
+		[SerializeField]
+		private Transform m_Sphere2;
+
+		[SerializeField]
 		private Text m_PlayPauseLabel;
 
 		[SerializeField]
@@ -154,6 +180,10 @@
 		private Transform Cube2 => m_Cube2;
 
 		private Transform Cube3 => m_Cube3;
+
+		private Transform Sphere1 => m_Sphere1;
+
+		private Transform Sphere2 => m_Sphere2;
 
 		private Text PlayPauseLabel => m_PlayPauseLabel;
 
