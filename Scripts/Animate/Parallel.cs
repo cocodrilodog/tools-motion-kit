@@ -406,6 +406,12 @@ namespace CocodriloDog.Animation {
 		/// Invokes the <c>OnInterrupt</c> callback.
 		/// </summary>
 		public void InvokeOnInterrupt() {
+			float timeOnSequence = EasedProgress * m_ParallelDuration;
+			foreach (var itemInfo in m_ParallelItemsInfo) {
+				if(timeOnSequence < itemInfo.Item.Duration) {
+					itemInfo.Item.InvokeOnInterrupt();
+				}
+			}
 			m_OnInterrupt?.Invoke();
 			m_OnInterruptParallel?.Invoke(this);
 		}
@@ -593,6 +599,7 @@ namespace CocodriloDog.Animation {
 			// created and started in the same line.
 			yield return null;
 
+			// Invoke this here so that items are started before this parallel
 			UpdateItemsState();
 			InvokeOnStart();
 
@@ -671,7 +678,13 @@ namespace CocodriloDog.Animation {
 				// timeOnSequence is intersecting with the item
 				if (timeOnSequence >= startTime && timeOnSequence < endTime) {
 					if (!m_ParallelItemsInfo[i].Started) {
-						m_ParallelItemsInfo[i].Item.Progress = 0;
+						// This handles when _Play() invokes UpdateItemsState() right before invoking InvokeOnStart()
+						// and is used for all the items to start before this parallel starts, given that Progress
+						// triggers the OnStart callback on the nested items. The condition of Progress being 0 is used
+						// because we don't want to force this to be 0 when it is not actually at 0
+						if (Mathf.Approximately(m_ParallelItemsInfo[i].Item.Progress, 0)) {
+							m_ParallelItemsInfo[i].Item.Progress = 0;
+						}
 						m_ParallelItemsInfo[i].Started = true;
 						m_ParallelItemsInfo[i].Item.InvokeOnStart();
 					}

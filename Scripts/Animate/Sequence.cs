@@ -419,6 +419,7 @@
 		/// Invokes the <c>OnInterrupt</c> callback.
 		/// </summary>
 		public void InvokeOnInterrupt() {
+			m_ProgressingItemInfo?.Item.InvokeOnInterrupt();
 			m_OnInterrupt?.Invoke();
 			m_OnInterruptSequence?.Invoke(this);
 		}
@@ -621,6 +622,7 @@
 			// created and started in the same line.
 			yield return null;
 
+			// Invoke this here so that items are started before this parallel
 			UpdateItemsState();
 			InvokeOnStart();
 
@@ -730,7 +732,13 @@
 				// timeOnSequence is intersecting with the item
 				if (timeOnSequence >= startTime && timeOnSequence < endTime) {
 					if (!m_SequenceItemsInfo[i].Started) {
-						m_SequenceItemsInfo[i].Item.Progress = 0;
+						// This handles when _Play() invokes UpdateItemsState() right before invoking InvokeOnStart()
+						// and is used for all the items to start before this sequence starts, given that Progress
+						// triggers the OnStart callback on the nested items. The condition of Progress being 0 is used
+						// because we don't want to force this to be 0 when it is not actually at 0
+						if (Mathf.Approximately(m_SequenceItemsInfo[i].Item.Progress, 0)) {
+							m_SequenceItemsInfo[i].Item.Progress = 0;
+						}
 						m_SequenceItemsInfo[i].Started = true;
 						m_SequenceItemsInfo[i].Item.InvokeOnStart();
 					}

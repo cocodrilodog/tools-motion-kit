@@ -29,10 +29,10 @@
 				Animate.GetSequence(
 
 					Animate.GetTimer().SetDuration(0.5f)
-						.SetOnStart(() => Debug.LogFormat("Timer1 start"))
-						.SetOnUpdate(() => Debug.LogFormat("Timer1 update"))
-						.SetOnInterrupt(() => Debug.LogFormat("Timer1 interrupt"))
-						.SetOnComplete(() => Debug.LogFormat("Timer1 complete")),
+						.SetOnStart(() => Debug.LogFormat("Timer_Cube2 start"))
+						.SetOnUpdate(() => Debug.LogFormat("Timer_Cube2 update"))
+						.SetOnInterrupt(() => Debug.LogFormat("Timer_Cube2 interrupt"))
+						.SetOnComplete(() => Debug.LogFormat("Timer_Cube2 complete")),
 
 					Animate.GetMotion(p => Cube2.transform.position = p)
 						.SetValuesAndDuration(new Vector3(0, -2, 0), new Vector3(0, 2, 0), 2)
@@ -42,15 +42,18 @@
 						.SetOnInterrupt(() => Debug.LogFormat("Cube2 interrupt"))
 						.SetOnComplete(() => Debug.LogFormat("Cube2 complete"))
 
-				),
+				).SetOnStart(() => Debug.LogFormat("Sequence_Cube2 start"))
+				.SetOnUpdate(() => Debug.LogFormat("Sequence_Cube2 update"))
+				.SetOnInterrupt(() => Debug.LogFormat("Sequence_Cube2 interrupt"))
+				.SetOnComplete(() => Debug.LogFormat("Sequence_Cube2 complete")),
 
 				Animate.GetSequence(
 					
 					Animate.GetTimer().SetDuration(1)
-						.SetOnStart(() => Debug.LogFormat("Timer2 start"))
-						.SetOnUpdate(() => Debug.LogFormat("Timer2 update"))
-						.SetOnInterrupt(() => Debug.LogFormat("Timer2 interrupt"))
-						.SetOnComplete(() => Debug.LogFormat("Timer2 complete")),
+						.SetOnStart(() => Debug.LogFormat("Timer_Cube3 start"))
+						.SetOnUpdate(() => Debug.LogFormat("Timer_Cube3 update"))
+						.SetOnInterrupt(() => Debug.LogFormat("Timer_Cube3 interrupt"))
+						.SetOnComplete(() => Debug.LogFormat("Timer_Cube3 complete")),
 
 					Animate.GetMotion(p => Cube3.transform.position = p)
 						.SetValuesAndDuration(new Vector3(2, -2, 0), new Vector3(2, 2, 0), 2)
@@ -60,7 +63,10 @@
 						.SetOnInterrupt(() => Debug.LogFormat("Cube3 interrupt"))
 						.SetOnComplete(() => Debug.LogFormat("Cube3 complete"))
 
-				),
+				).SetOnStart(() => Debug.LogFormat("Sequence_Cube3 start"))
+				.SetOnUpdate(() => Debug.LogFormat("Sequence_Cube3 update"))
+				.SetOnInterrupt(() => Debug.LogFormat("Sequence_Cube3 interrupt"))
+				.SetOnComplete(() => Debug.LogFormat("Sequence_Cube3 complete")),
 
 				Animate.GetParallel(
 
@@ -80,13 +86,16 @@
 						.SetOnInterrupt(() => Debug.LogFormat("Sphere2 interrupt"))
 						.SetOnComplete(() => Debug.LogFormat("Sphere2 complete"))
 
-				)
+				).SetOnStart(() => Debug.LogFormat("Parallel_Spheres start"))
+				.SetOnUpdate(() => Debug.LogFormat("Parallel_Spheres update"))
+				.SetOnInterrupt(() => Debug.LogFormat("Parallel_Spheres interrupt"))
+				.SetOnComplete(() => Debug.LogFormat("Parallel_Spheres complete"))
 
 			).SetEasing(AnimateEasing.QuadInOut)
-			.SetOnStart(() => Debug.Log("Parallel start"))
-			.SetOnUpdate(() => Debug.LogFormat("Parallel update"))
-			.SetOnInterrupt(() => Debug.LogFormat("Parallel interrupt"))
-			.SetOnComplete(() => Debug.LogFormat("Parallel complete"))
+			.SetOnStart(() => Debug.Log("PARALLEL start"))
+			.SetOnUpdate(() => Debug.LogFormat("PARALLEL update"))
+			.SetOnInterrupt(() => Debug.LogFormat("PARALLEL interrupt"))
+			.SetOnComplete(() => Debug.LogFormat("PARALLEL complete"))
 			.Play();
 
 		}
