@@ -112,8 +112,8 @@
 				m_Progress = Mathf.Clamp01(value);
 				m_CurrentTime = m_Progress * m_Duration;
 				SetProgressingItemInfo();
-				UpdateItemsState();
 				ApplyProgress();
+				UpdateItemsState();
 			}
 		}
 
@@ -403,56 +403,14 @@
 		/// Invokes the <c>OnStart</c> callback.
 		/// </summary>
 		public void InvokeOnStart() {
-
-			// OnStart of the first item
-			if (m_SequenceItemsInfo.Length > 0) {
-				if (!m_SequenceItemsInfo[0].Started) {
-					m_SequenceItemsInfo[0].Item.InvokeOnStart();
-					m_SequenceItemsInfo[0].Started = true;
-				}
-			}
-
-			// OnStart on the sequence itself
 			m_OnStart?.Invoke();
 			m_OnStartSequence?.Invoke(this);
-
 		}
 
 		/// <summary>
 		/// Invokes the <c>OnUpdate</c> callback.
 		/// </summary>
 		public void InvokeOnUpdate() {
-			// Start/Complete the sequence items if time is past their start/end and they haven't 
-			// been started/completed
-			foreach (SequenceItemInfo itemInfo in m_SequenceItemsInfo) {
-
-				float timeScale = m_Duration / m_SequenceDuration;
-				float easedCurrentTime = EasedProgress * m_Duration;
-
-				if (!itemInfo.Started) {
-					float itemStart = itemInfo.Position * timeScale;
-					if (easedCurrentTime >= itemStart) {
-						itemInfo.Item.InvokeOnStart();
-						itemInfo.Started = true;
-					}
-				}
-
-				if (!itemInfo.Completed) {
-					float itemEnd = (itemInfo.Position + itemInfo.Item.Duration) * timeScale;
-					if (easedCurrentTime >= itemEnd) {
-						itemInfo.Item.Progress = 1;
-						itemInfo.Item.InvokeOnUpdate();
-						itemInfo.Item.InvokeOnComplete();
-						itemInfo.Completed = true;
-					}
-				}
-
-			}
-			// Update the progressing item as long as it haven't been completed
-			if (m_ProgressingItemInfo != null && !m_ProgressingItemInfo.Completed) {
-				m_ProgressingItemInfo.Item.InvokeOnUpdate();
-			}
-			// Update the sequence itself
 			m_OnUpdate?.Invoke();
 			m_OnUpdateSequence?.Invoke(this);
 		}
@@ -461,11 +419,6 @@
 		/// Invokes the <c>OnInterrupt</c> callback.
 		/// </summary>
 		public void InvokeOnInterrupt() {
-			// Interrupt the progressing item as long as it haven't been completed.
-			if (m_ProgressingItemInfo != null && !m_ProgressingItemInfo.Completed) {
-				m_ProgressingItemInfo.Item.InvokeOnInterrupt();
-			}
-			// Interrupt the sequence itself
 			m_OnInterrupt?.Invoke();
 			m_OnInterruptSequence?.Invoke(this);
 		}
@@ -474,12 +427,6 @@
 		/// Invokes the <c>OnComplete</c> callback.
 		/// </summary>
 		public void InvokeOnComplete() {
-			// Complete the progressing item as long as it haven't been completed.
-			// At this point, the m_ProgressingItemInfo must be the last item.
-			if (m_ProgressingItemInfo != null && !m_ProgressingItemInfo.Completed) {
-				m_ProgressingItemInfo.Item.InvokeOnComplete();
-			}
-			// Complete the sequence itself
 			m_OnComplete?.Invoke();
 			m_OnCompleteSequence?.Invoke(this);
 		}
@@ -641,6 +588,7 @@
 				m_Progress = Mathf.Clamp01(value);
 				SetProgressingItemInfo();
 				ApplyProgress();
+				UpdateItemsState();
 			}
 		}
 
@@ -673,6 +621,7 @@
 			// created and started in the same line.
 			yield return null;
 
+			UpdateItemsState();
 			InvokeOnStart();
 
 			while (true) {
@@ -707,6 +656,8 @@
 			m_CurrentTime = 0;
 
 			InvokeOnComplete();
+
+			ResetItems();
 
 		}
 
@@ -748,40 +699,6 @@
 			}
 		}
 
-		/// <summary>
-		/// Updates the state of each item to reflect the progress, in case it was set
-		/// from the public property <see cref="Progress"/>.
-		/// </summary>
-		private void UpdateItemsState() {
-
-			float timeOnSequence = EasedProgress * m_SequenceDuration;
-
-			for (int i = 0; i < m_SequenceItemsInfo.Length; i++) {
-
-				var startTime = m_SequenceItemsInfo[i].Position;
-				var endTime = m_SequenceItemsInfo[i].Position + m_SequenceItemsInfo[i].Item.Duration;
-
-				if (timeOnSequence >= startTime && timeOnSequence < endTime) {
-					m_SequenceItemsInfo[i].Started = true;
-					m_SequenceItemsInfo[i].Completed = false;
-				} else if (timeOnSequence < startTime) {
-					if (!Mathf.Approximately(m_SequenceItemsInfo[i].Item.Progress, 0)) {
-						m_SequenceItemsInfo[i].Item.Progress = 0;
-					}
-					m_SequenceItemsInfo[i].Started = false;
-					m_SequenceItemsInfo[i].Completed = false;
-				} else if (timeOnSequence >= endTime) {
-					if (!Mathf.Approximately(m_SequenceItemsInfo[i].Item.Progress, 1)) {
-						m_SequenceItemsInfo[i].Item.Progress = 1;
-					}
-					m_SequenceItemsInfo[i].Started = true;
-					m_SequenceItemsInfo[i].Completed = true;
-				}
-
-			}
-
-		}
-
 		private void ApplyProgress() {
 
 			CheckDisposed();
@@ -794,6 +711,55 @@
 				m_ProgressingItemInfo.Item.Progress =
 					(timeOnSequence - m_SequenceItemsInfo[m_ProgressingItemInfo.Index].Position) /
 					m_ProgressingItemInfo.Item.Duration;
+			}
+
+		}
+
+		/// <summary>
+		/// Updates the state of each item to reflect the <see cref="Progress"/>.
+		/// </summary>
+		private void UpdateItemsState() {
+
+			float timeOnSequence = EasedProgress * m_SequenceDuration;
+
+			for (int i = 0; i < m_SequenceItemsInfo.Length; i++) {
+
+				var startTime = m_SequenceItemsInfo[i].Position;
+				var endTime = m_SequenceItemsInfo[i].Position + m_SequenceItemsInfo[i].Item.Duration;
+
+				// timeOnSequence is intersecting with the item
+				if (timeOnSequence >= startTime && timeOnSequence < endTime) {
+					if (!m_SequenceItemsInfo[i].Started) {
+						m_SequenceItemsInfo[i].Item.Progress = 0;
+						m_SequenceItemsInfo[i].Started = true;
+						m_SequenceItemsInfo[i].Item.InvokeOnStart();
+					}
+					m_SequenceItemsInfo[i].Item.InvokeOnUpdate();
+					m_SequenceItemsInfo[i].Completed = false;
+				}
+				// timeOnSequence is before the item
+				else if (timeOnSequence < startTime) {
+					if (!Mathf.Approximately(m_SequenceItemsInfo[i].Item.Progress, 0)) {
+						m_SequenceItemsInfo[i].Item.Progress = 0;
+					}
+					m_SequenceItemsInfo[i].Started = false;
+					m_SequenceItemsInfo[i].Completed = false;
+				}
+				// timeOnSequence is after the item
+				else if (timeOnSequence >= endTime) {
+					if (!Mathf.Approximately(m_SequenceItemsInfo[i].Item.Progress, 1)) {
+						m_SequenceItemsInfo[i].Item.Progress = 1;
+					}
+					if (!m_SequenceItemsInfo[i].Started) {
+						m_SequenceItemsInfo[i].Started = true;
+						m_SequenceItemsInfo[i].Item.InvokeOnStart();
+					}
+					if (!m_SequenceItemsInfo[i].Completed) {
+						m_SequenceItemsInfo[i].Completed = true;
+						m_SequenceItemsInfo[i].Item.InvokeOnComplete();
+					}
+				}
+
 			}
 
 		}

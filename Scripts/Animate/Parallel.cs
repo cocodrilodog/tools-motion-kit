@@ -101,6 +101,7 @@ namespace CocodriloDog.Animation {
 				m_Progress = Mathf.Clamp01(value);
 				m_CurrentTime = m_Progress * m_Duration;
 				ApplyProgress();
+				UpdateItemsState();
 			}
 		}
 
@@ -389,54 +390,14 @@ namespace CocodriloDog.Animation {
 		/// Invokes the <c>OnStart</c> callback.
 		/// </summary>
 		public void InvokeOnStart() {
-
-			// OnStart of all items
-			foreach(var itemInfo in m_ParallelItemsInfo) {
-				itemInfo.Item.InvokeOnStart();
-				itemInfo.Started = true;
-			}
-
-			// OnStart on the parallel itself
 			m_OnStart?.Invoke();
 			m_OnStartParallel?.Invoke(this);
-
 		}
 
 		/// <summary>
 		/// Invokes the <c>OnUpdate</c> callback.
 		/// </summary>
 		public void InvokeOnUpdate() {
-			// Start/Complete the parallel items if time is past their start/end and they haven't 
-			// been started/completed
-			foreach (var itemInfo in m_ParallelItemsInfo) {
-
-				float timeScale = m_Duration / m_ParallelDuration;
-				float easedCurrentTime = EasedProgress * m_Duration;
-
-				if (!itemInfo.Started) {
-					float itemStart = 0;
-					if (easedCurrentTime >= itemStart) {
-						itemInfo.Item.InvokeOnStart();
-						itemInfo.Started = true;
-					}
-				}
-
-				if (!itemInfo.Completed) {
-					float itemEnd = itemInfo.Item.Duration * timeScale;
-					if (easedCurrentTime >= itemEnd) {
-						itemInfo.Item.Progress = 1;
-						itemInfo.Item.InvokeOnUpdate();
-						itemInfo.Item.InvokeOnComplete();
-						itemInfo.Completed = true;
-					}
-				}
-
-				if (!itemInfo.Completed) {
-					itemInfo.Item.InvokeOnUpdate();
-				}
-
-			}
-			// Update the parallel itself
 			m_OnUpdate?.Invoke();
 			m_OnUpdateParallel?.Invoke(this);
 		}
@@ -445,12 +406,6 @@ namespace CocodriloDog.Animation {
 		/// Invokes the <c>OnInterrupt</c> callback.
 		/// </summary>
 		public void InvokeOnInterrupt() {
-			foreach (var itemInfo in m_ParallelItemsInfo) {
-				if (!itemInfo.Completed) {
-					itemInfo.Item.InvokeOnInterrupt();
-				}
-			}
-			// Interrupt the parallel itself
 			m_OnInterrupt?.Invoke();
 			m_OnInterruptParallel?.Invoke(this);
 		}
@@ -459,12 +414,6 @@ namespace CocodriloDog.Animation {
 		/// Invokes the <c>OnComplete</c> callback.
 		/// </summary>
 		public void InvokeOnComplete() {
-			// Complete the m_LongestItemInfo as long as it haven't been completed.
-			// At this point, the m_LongestItemInfo must be the last item to be completed.
-			if (!m_LongestItemInfo.Completed) {
-				m_LongestItemInfo.Item.InvokeOnComplete();
-			}
-			// Complete the parallel itself
 			m_OnComplete?.Invoke();
 			m_OnCompleteParallel?.Invoke(this);
 		}
@@ -611,6 +560,7 @@ namespace CocodriloDog.Animation {
 			set {
 				m_Progress = Mathf.Clamp01(value);
 				ApplyProgress();
+				UpdateItemsState();
 			}
 		}
 
@@ -643,6 +593,7 @@ namespace CocodriloDog.Animation {
 			// created and started in the same line.
 			yield return null;
 
+			UpdateItemsState();
 			InvokeOnStart();
 
 			while (true) {
@@ -678,6 +629,8 @@ namespace CocodriloDog.Animation {
 
 			InvokeOnComplete();
 
+			ResetItems();
+
 		}
 
 		private void StopCoroutine() {
@@ -697,15 +650,57 @@ namespace CocodriloDog.Animation {
 				// Wait until it has started, otherwise it may progress before
 				// starting, which would lead to unexpected behaviour.
 				if (itemInfo.Started) {
-
 					itemInfo.Item.Progress = Mathf.Clamp01(EasedProgress * m_ParallelDuration / itemInfo.Item.Duration);
-					
-					// If the parallel is paused and the Progress is set to a point in time before, this updates
-					// the parallel item so that it is not marked as completed.
-					if (itemInfo.Item.Progress < 1) {
-						itemInfo.Completed = false;
+				}
+			}
+
+		}
+
+		/// <summary>
+		/// Updates the state of each item to reflect the <see cref="Progress"/>.
+		/// </summary>
+		private void UpdateItemsState() {
+
+			float timeOnSequence = EasedProgress * m_ParallelDuration;
+
+			for (int i = 0; i < m_ParallelItemsInfo.Length; i++) {
+
+				var startTime = 0;
+				var endTime = m_ParallelItemsInfo[i].Item.Duration;
+
+				// timeOnSequence is intersecting with the item
+				if (timeOnSequence >= startTime && timeOnSequence < endTime) {
+					if (!m_ParallelItemsInfo[i].Started) {
+						m_ParallelItemsInfo[i].Item.Progress = 0;
+						m_ParallelItemsInfo[i].Started = true;
+						m_ParallelItemsInfo[i].Item.InvokeOnStart();
+					}
+					m_ParallelItemsInfo[i].Item.InvokeOnUpdate();
+					m_ParallelItemsInfo[i].Completed = false;
+				}
+				// timeOnSequence is before the item
+				else if (timeOnSequence < startTime) {
+					if (!Mathf.Approximately(m_ParallelItemsInfo[i].Item.Progress, 0)) {
+						m_ParallelItemsInfo[i].Item.Progress = 0;
+					}
+					m_ParallelItemsInfo[i].Started = false;
+					m_ParallelItemsInfo[i].Completed = false;
+				}
+				// timeOnSequence is after the item
+				else if (timeOnSequence >= endTime) {
+					if (!Mathf.Approximately(m_ParallelItemsInfo[i].Item.Progress, 1)) {
+						m_ParallelItemsInfo[i].Item.Progress = 1;
+					}
+					if (!m_ParallelItemsInfo[i].Started) {
+						m_ParallelItemsInfo[i].Started = true;
+						m_ParallelItemsInfo[i].Item.InvokeOnStart();
+					}
+					if (!m_ParallelItemsInfo[i].Completed) {
+						m_ParallelItemsInfo[i].Completed = true;
+						m_ParallelItemsInfo[i].Item.InvokeOnComplete();
 					}
 				}
+
 			}
 
 		}
