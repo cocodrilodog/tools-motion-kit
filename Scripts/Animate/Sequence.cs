@@ -112,6 +112,7 @@
 				m_Progress = Mathf.Clamp01(value);
 				m_CurrentTime = m_Progress * m_Duration;
 				SetProgressingItemInfo();
+				UpdateItemsState();
 				ApplyProgress();
 			}
 		}
@@ -727,19 +728,58 @@
 				float timeOnSequence = EasedProgress * m_SequenceDuration;
 				// Iterate through items
 				for (int i = 0; i < m_SequenceItemsInfo.Length; i++) {
+
 					if (Mathf.Approximately(m_SequenceItemsInfo[i].Item.Duration, 0)) {
 						throw new ArgumentException("Sequence items can not have duration equal to 0");
 					}
-					if (timeOnSequence >= m_SequenceItemsInfo[i].Position &&
-						timeOnSequence < m_SequenceItemsInfo[i].Position + m_SequenceItemsInfo[i].Item.Duration) {
+
+					var startTime = m_SequenceItemsInfo[i].Position;
+					var endTime = m_SequenceItemsInfo[i].Position + m_SequenceItemsInfo[i].Item.Duration;
+					
+					if (timeOnSequence >= startTime && timeOnSequence < endTime) {
 						m_ProgressingItemInfo = m_SequenceItemsInfo[i];
 						break;
 					}
+
 				}
 			} else {
 				// Handle progress == 1 (0 is already handled)
 				m_ProgressingItemInfo = m_SequenceItemsInfo[m_SequenceItemsInfo.Length - 1];
 			}
+		}
+
+		/// <summary>
+		/// Updates the state of each item to reflect the progress, in case it was set
+		/// from the public property <see cref="Progress"/>.
+		/// </summary>
+		private void UpdateItemsState() {
+
+			float timeOnSequence = EasedProgress * m_SequenceDuration;
+
+			for (int i = 0; i < m_SequenceItemsInfo.Length; i++) {
+
+				var startTime = m_SequenceItemsInfo[i].Position;
+				var endTime = m_SequenceItemsInfo[i].Position + m_SequenceItemsInfo[i].Item.Duration;
+
+				if (timeOnSequence >= startTime && timeOnSequence < endTime) {
+					m_SequenceItemsInfo[i].Started = true;
+					m_SequenceItemsInfo[i].Completed = false;
+				} else if (timeOnSequence < startTime) {
+					if (!Mathf.Approximately(m_SequenceItemsInfo[i].Item.Progress, 0)) {
+						m_SequenceItemsInfo[i].Item.Progress = 0;
+					}
+					m_SequenceItemsInfo[i].Started = false;
+					m_SequenceItemsInfo[i].Completed = false;
+				} else if (timeOnSequence >= endTime) {
+					if (!Mathf.Approximately(m_SequenceItemsInfo[i].Item.Progress, 1)) {
+						m_SequenceItemsInfo[i].Item.Progress = 1;
+					}
+					m_SequenceItemsInfo[i].Started = true;
+					m_SequenceItemsInfo[i].Completed = true;
+				}
+
+			}
+
 		}
 
 		private void ApplyProgress() {
@@ -754,12 +794,6 @@
 				m_ProgressingItemInfo.Item.Progress =
 					(timeOnSequence - m_SequenceItemsInfo[m_ProgressingItemInfo.Index].Position) /
 					m_ProgressingItemInfo.Item.Duration;
-			}
-
-			// If the sequence is paused and the Progress is set to a point in time before, this updates
-			// the following sequence items so that they are not marked as completed.
-			for (int i = m_ProgressingItemInfo.Index; i < m_SequenceItemsInfo.Length; i++) {
-				m_SequenceItemsInfo[i].Completed = false;
 			}
 
 		}

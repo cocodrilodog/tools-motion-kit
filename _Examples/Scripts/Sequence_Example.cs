@@ -17,6 +17,13 @@
 
 				this, "Sequence",
 
+				Animate.GetTimer()
+					.SetDuration(0.5f)
+					.SetOnStart(() => Debug.LogFormat("Timer #1 Start"))
+					.SetOnUpdate(() => Debug.LogFormat("Timer #1 Update"))
+					.SetOnInterrupt(() => Debug.LogFormat("Timer #1 Interrupt"))
+					.SetOnComplete(() => Debug.LogFormat("Timer #1 Complete")),
+
 				Animate.GetMotion(p => PositionCube.transform.position = p)
 					.SetInitialValue(new Vector3(2, -2, 0)).SetFinalValue(new Vector3(-2, -2, 0))
 					.SetDuration(2).SetEasing(AnimateEasing.ElasticOut)
@@ -35,10 +42,10 @@
 
 				Animate.GetTimer()
 					.SetDuration(2)
-					.SetOnStart(() => Debug.LogFormat("Timer Start"))
-					.SetOnUpdate(() => Debug.LogFormat("Timer Update"))
-					.SetOnInterrupt(() => Debug.LogFormat("Timer Interrupt"))
-					.SetOnComplete(() => Debug.LogFormat("Timer Complete")),
+					.SetOnStart(() => Debug.LogFormat("Timer #2 Start"))
+					.SetOnUpdate(() => Debug.LogFormat("Timer #2 Update"))
+					.SetOnInterrupt(() => Debug.LogFormat("Timer #2 Interrupt"))
+					.SetOnComplete(() => Debug.LogFormat("Timer #2 Complete")),
 
 				Animate.GetMotion(p => PositionCube.transform.position = p)
 					.SetInitialValue(new Vector3(-2, -2, 0)).SetFinalValue(new Vector3(-2, 2, 0))
@@ -93,7 +100,14 @@
 					.SetOnStart(() => Debug.LogFormat("Animation #8 Start"))
 					.SetOnUpdate(() => Debug.LogFormat("Animation #8 Update"))
 					.SetOnInterrupt(() => Debug.LogFormat("Animation #8 Interrupt"))
-					.SetOnComplete(() => Debug.LogFormat("Animation #8 Complete: {0}", ColorSphere.Color))
+					.SetOnComplete(() => Debug.LogFormat("Animation #8 Complete: {0}", ColorSphere.Color)),
+
+				Animate.GetTimer()
+					.SetDuration(0.5f)
+					.SetOnStart(() => Debug.LogFormat("Timer #3 Start"))
+					.SetOnUpdate(() => Debug.LogFormat("Timer #3 Update"))
+					.SetOnInterrupt(() => Debug.LogFormat("Timer #3 Interrupt"))
+					.SetOnComplete(() => Debug.LogFormat("Timer #3 Complete"))
 
 			).SetEasing(AnimateEasing.QuadInOut)
 			.SetOnStart(() => Debug.Log("Sequence start"))
