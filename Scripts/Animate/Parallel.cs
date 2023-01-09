@@ -406,9 +406,9 @@ namespace CocodriloDog.Animation {
 		/// Invokes the <c>OnInterrupt</c> callback.
 		/// </summary>
 		public void InvokeOnInterrupt() {
-			float timeOnSequence = EasedProgress * m_ParallelDuration;
+			float timeOnParallel = EasedProgress * m_ParallelDuration;
 			foreach (var itemInfo in m_ParallelItemsInfo) {
-				if(timeOnSequence < itemInfo.Item.Duration) {
+				if(timeOnParallel < itemInfo.Item.Duration) {
 					itemInfo.Item.InvokeOnInterrupt();
 				}
 			}
@@ -668,15 +668,15 @@ namespace CocodriloDog.Animation {
 		/// </summary>
 		private void UpdateItemsState() {
 
-			float timeOnSequence = EasedProgress * m_ParallelDuration;
+			float timeOnParallel = EasedProgress * m_ParallelDuration;
 
 			for (int i = 0; i < m_ParallelItemsInfo.Length; i++) {
 
 				var startTime = 0;
 				var endTime = m_ParallelItemsInfo[i].Item.Duration;
 
-				// timeOnSequence is intersecting with the item
-				if (timeOnSequence >= startTime && timeOnSequence < endTime) {
+				// timeOnParallel is intersecting with the item
+				if (timeOnParallel >= startTime && timeOnParallel < endTime) {
 					if (!m_ParallelItemsInfo[i].Started) {
 						// This handles when _Play() invokes UpdateItemsState() right before invoking InvokeOnStart()
 						// and is used for all the items to start before this parallel starts, given that Progress
@@ -691,16 +691,16 @@ namespace CocodriloDog.Animation {
 					m_ParallelItemsInfo[i].Item.InvokeOnUpdate();
 					m_ParallelItemsInfo[i].Completed = false;
 				}
-				// timeOnSequence is before the item
-				else if (timeOnSequence < startTime) {
+				// timeOnParallel is before the item
+				else if (timeOnParallel < startTime) {
 					if (!Mathf.Approximately(m_ParallelItemsInfo[i].Item.Progress, 0)) {
 						m_ParallelItemsInfo[i].Item.Progress = 0;
 					}
 					m_ParallelItemsInfo[i].Started = false;
 					m_ParallelItemsInfo[i].Completed = false;
 				}
-				// timeOnSequence is after the item
-				else if (timeOnSequence >= endTime) {
+				// timeOnParallel is after the item
+				else if (timeOnParallel >= endTime) {
 					if (!Mathf.Approximately(m_ParallelItemsInfo[i].Item.Progress, 1)) {
 						m_ParallelItemsInfo[i].Item.Progress = 1;
 					}
