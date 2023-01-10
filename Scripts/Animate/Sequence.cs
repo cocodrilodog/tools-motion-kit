@@ -99,11 +99,12 @@
 		public float Progress {
 			get { return m_Progress; }
 			set {
-				m_Progress = Mathf.Clamp01(value);
-				m_CurrentTime = m_Progress * m_Duration;
-				SetProgressingItemInfo();
-				ApplyProgress();
-				UpdateState();
+				//m_Progress = Mathf.Clamp01(value);
+				//m_CurrentTime = m_Progress * m_Duration;
+				//SetProgressingItemInfo();
+				//ApplyProgress();
+				//UpdateState();
+				SetProgress(value, false);
 			}
 		}
 
@@ -118,6 +119,30 @@
 		/// </summary>
 		/// <value><c>true</c> if is paused; otherwise, <c>false</c>.</value>
 		public bool IsPaused { get { return m_IsPaused; } }
+
+		public bool Started {
+			get => m_Started;
+			set {
+				if (value != m_Started) {
+					m_Started = value;
+					if (m_Started) {
+						InvokeOnStart();
+					}
+				}
+			}
+		}
+
+		public bool Completed {
+			get => m_Completed;
+			set {
+				if (value != m_Completed) {
+					m_Completed = value;
+					if (m_Completed) {
+						InvokeOnComplete();
+					}
+				}
+			}
+		}
 
 		#endregion
 
@@ -205,6 +230,14 @@
 			m_IsPlaying = false;
 			m_ProgressingItemInfo = null;
 			ResetState();
+		}
+
+		public void SetProgress(float progress, bool invokeCallbacks) {
+			m_Progress = Mathf.Clamp01(progress);
+			m_CurrentTime = m_Progress * m_Duration;
+			SetProgressingItemInfo();
+			ApplyProgress(invokeCallbacks);
+			UpdateState(invokeCallbacks);
 		}
 
 		/// <summary>
@@ -404,9 +437,11 @@
 		/// Invokes the <c>OnInterrupt</c> callback.
 		/// </summary>
 		public void InvokeOnInterrupt() {
-			m_ProgressingItemInfo?.Item.InvokeOnInterrupt();
-			m_OnInterrupt?.Invoke();
-			m_OnInterruptSequence?.Invoke(this);
+			if (m_InvokeCallbacks) {
+				m_ProgressingItemInfo?.Item.InvokeOnInterrupt();
+				m_OnInterrupt?.Invoke();
+				m_OnInterruptSequence?.Invoke(this);
+			}
 		}
 
 		/// <summary>
@@ -531,6 +566,9 @@
 		private bool m_Completed;
 
 		[NonSerialized]
+		private bool m_InvokeCallbacks;
+
+		[NonSerialized]
 		private bool m_IsDisposed;
 
 		#endregion
@@ -542,19 +580,19 @@
 
 		private float _Time => AnimateUtility.GetTime(m_TimeMode);
 
-		/// <summary>
-		/// Internal version of <see cref="Progress"/> that doesn't update <see cref="m_CurrentTime"/>
-		/// because it was updated in the coroutine.
-		/// </summary>
-		private float _Progress {
-			get { return m_Progress; }
-			set {
-				m_Progress = Mathf.Clamp01(value);
-				SetProgressingItemInfo();
-				ApplyProgress();
-				UpdateState();
-			}
-		}
+		///// <summary>
+		///// Internal version of <see cref="Progress"/> that doesn't update <see cref="m_CurrentTime"/>
+		///// because it was updated in the coroutine.
+		///// </summary>
+		//private float _Progress {
+		//	get { return m_Progress; }
+		//	set {
+		//		m_Progress = Mathf.Clamp01(value);
+		//		SetProgressingItemInfo();
+		//		ApplyProgress();
+		//		UpdateState();
+		//	}
+		//}
 
 		/// <summary>
 		/// The <see cref="Progress"/>, but processed by <see cref="m_Easing"/>.
@@ -569,36 +607,14 @@
 			}
 		}
 
-		private bool Started {
-			get => m_Started;
-			set {
-				if (value != m_Started) {
-					m_Started = value;
-					if (m_Started) {
-						InvokeOnStart();
-					}
-				}
-			}
-		}
-
-		private bool Completed {
-			get => m_Completed;
-			set {
-				if (value != m_Completed) {
-					m_Completed = value;
-					if (m_Completed) {
-						InvokeOnComplete();
-					}
-				}
-			}
-		}
-
 		#endregion
 
 
 		#region Private Methods
 
 		private IEnumerator _Play() {
+
+			ResetState();
 
 			m_CurrentTime = 0;
 			m_Progress = 0;
@@ -616,12 +632,12 @@
 					// This avoids progress to be greater than 1
 					if (m_CurrentTime > m_Duration) {
 						m_CurrentTime = m_Duration;
-						_Progress = 1;
+						SetProgress(1, true);
 						break;
 					}
 
 					// Set the progress
-					_Progress = m_CurrentTime / m_Duration;
+					SetProgress(m_CurrentTime / m_Duration, true);
 
 				}
 				yield return null;
@@ -669,14 +685,14 @@
 			}
 		}
 
-		private void ApplyProgress() {
+		private void ApplyProgress(bool invokeCallbacks) {
 
 			CheckDisposed();
 
 			// Make sure that previous items did complete 
 			for(int i = 0; i < m_ProgressingItemInfo.Index; i++) {
 				if (m_SequenceItemsInfo[i].Item.Progress != 1) {
-					m_SequenceItemsInfo[i].Item.Progress = 1;
+					m_SequenceItemsInfo[i].Item.SetProgress(1, invokeCallbacks);
 				}
 			}
 
@@ -684,17 +700,19 @@
 			for (int i = m_SequenceItemsInfo.Length - 1; i > m_ProgressingItemInfo.Index; i--) {
 				if (m_SequenceItemsInfo[i].Item.Progress != 0) {
 					m_SequenceItemsInfo[i].Item.Progress = 0;
+					m_SequenceItemsInfo[i].Item.ResetState();
 				}
 			}
 
 			float timeOnSequence = EasedProgress * m_SequenceDuration;
 			var progress = (timeOnSequence - m_ProgressingItemInfo.Position) / m_ProgressingItemInfo.Item.Duration;
 
-			m_ProgressingItemInfo.Item.Progress = progress;
+			m_ProgressingItemInfo.Item.SetProgress(progress, invokeCallbacks);
 
 		}
 
-		private void UpdateState() {
+		private void UpdateState(bool invokeCallbacks) {
+			m_InvokeCallbacks = invokeCallbacks;
 			if (Progress >= 0) {
 				Started = true;
 			}
@@ -713,6 +731,7 @@
 				Completed = true;
 
 			}
+			m_InvokeCallbacks = true;
 		}
 
 		private void Update() {
@@ -727,24 +746,30 @@
 		/// Invokes the <c>OnStart</c> callback.
 		/// </summary>
 		private void InvokeOnStart() {
-			m_OnStart?.Invoke();
-			m_OnStartSequence?.Invoke(this);
+			if (m_InvokeCallbacks) {
+				m_OnStart?.Invoke();
+				m_OnStartSequence?.Invoke(this);
+			}
 		}
 
 		/// <summary>
 		/// Invokes the <c>OnUpdate</c> callback.
 		/// </summary>
 		private void InvokeOnUpdate() {
-			m_OnUpdate?.Invoke();
-			m_OnUpdateSequence?.Invoke(this);
+			if (m_InvokeCallbacks) {
+				m_OnUpdate?.Invoke();
+				m_OnUpdateSequence?.Invoke(this);
+			}
 		}
 
 		/// <summary>
 		/// Invokes the <c>OnComplete</c> callback.
 		/// </summary>
 		private void InvokeOnComplete() {
-			m_OnComplete?.Invoke();
-			m_OnCompleteSequence?.Invoke(this);
+			if (m_InvokeCallbacks) {
+				m_OnComplete?.Invoke();
+				m_OnCompleteSequence?.Invoke(this);
+			}
 		}
 
 		private void CheckDisposed() {

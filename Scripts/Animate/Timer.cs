@@ -46,10 +46,11 @@
 		public float Progress {
 			get { return m_Progress; }
 			set {
-				CheckDisposed();
-				m_Progress = value;
-				m_CurrentTime = m_Progress * m_Duration;
-				UpdateState();
+				//CheckDisposed();
+				//m_Progress = value;
+				//m_CurrentTime = m_Progress * m_Duration;
+				//UpdateState();
+				SetProgress(value, false);
 			}
 		}
 
@@ -64,6 +65,30 @@
 		/// </summary>
 		/// <value><c>true</c> if is paused; otherwise, <c>false</c>.</value>
 		public bool IsPaused { get { return m_IsPaused; } }
+
+		public bool Started {
+			get => m_Started;
+			set {
+				if (value != m_Started) {
+					m_Started = value;
+					if (m_Started) {
+						InvokeOnStart();
+					}
+				}
+			}
+		}
+
+		public bool Completed {
+			get => m_Completed;
+			set {
+				if (value != m_Completed) {
+					m_Completed = value;
+					if (m_Completed) {
+						InvokeOnComplete();
+					}
+				}
+			}
+		}
 
 		#endregion
 
@@ -147,6 +172,13 @@
 			StopCoroutine();
 			m_IsPlaying = false;
 			ResetState();
+		}
+
+		public void SetProgress(float progress, bool invokeCallbacks) {
+			CheckDisposed();
+			m_Progress = progress;
+			m_CurrentTime = m_Progress * m_Duration;
+			UpdateState(invokeCallbacks);
 		}
 
 		/// <summary>
@@ -287,8 +319,10 @@
 		/// Invokes the <c>OnInterrupt</c> callback.
 		/// </summary>
 		public void InvokeOnInterrupt() {
-			m_OnInterrupt?.Invoke();
-			m_OnInterruptTimer?.Invoke(this);
+			if (m_InvokeCallbacks) {
+				m_OnInterrupt?.Invoke();
+				m_OnInterruptTimer?.Invoke(this);
+			}
 		}
 
 		/// <summary>
@@ -375,6 +409,9 @@
 		private bool m_Completed;
 
 		[NonSerialized]
+		private bool m_InvokeCallbacks;
+
+		[NonSerialized]
 		private bool m_IsDisposed;
 
 		#endregion
@@ -386,42 +423,18 @@
 
 		private float _Time => AnimateUtility.GetTime(m_TimeMode);
 
-		/// <summary>
-		/// Internal version of <see cref="Progress"/> that doesn't update <see cref="m_CurrentTime"/>
-		/// because it was updated in the coroutine.
-		/// </summary>
-		private float _Progress {
-			get { return m_Progress; }
-			set {
-				CheckDisposed();
-				m_Progress = value;
-				UpdateState();
-			}
-		}
-
-		public bool Started {
-			get => m_Started;
-			set {
-				if (value != m_Started) {
-					m_Started = value;
-					if (m_Started) {
-						InvokeOnStart();
-					}
-				}
-			}
-		}
-
-		public bool Completed {
-			get => m_Completed;
-			set {
-				if (value != m_Completed) {
-					m_Completed = value;
-					if (m_Completed) {
-						InvokeOnComplete();
-					}
-				}
-			}
-		}
+		///// <summary>
+		///// Internal version of <see cref="Progress"/> that doesn't update <see cref="m_CurrentTime"/>
+		///// because it was updated in the coroutine.
+		///// </summary>
+		//private float _Progress {
+		//	get { return m_Progress; }
+		//	set {
+		//		CheckDisposed();
+		//		m_Progress = value;
+		//		UpdateState();
+		//	}
+		//}
 
 		#endregion
 
@@ -429,6 +442,8 @@
 		#region Private Methods
 
 		private IEnumerator _Play() {
+
+			ResetState();
 
 			m_CurrentTime = 0;
 			m_Progress = 0;
@@ -446,11 +461,11 @@
 					// This avoids progress to be greater than 1
 					if (m_CurrentTime > m_Duration) {
 						m_CurrentTime = m_Duration;
-						_Progress = 1;
+						SetProgress(1, true);
 						break;
 					}
 
-					_Progress = m_CurrentTime / m_Duration;
+					SetProgress(m_CurrentTime / m_Duration, true);
 
 				}
 				yield return null;
@@ -469,7 +484,8 @@
 			}
 		}
 
-		private void UpdateState() {
+		private void UpdateState(bool invokeCallbacks) {
+			m_InvokeCallbacks = invokeCallbacks;
 			if (Progress >= 0) {
 				Started = true;
 			}
@@ -488,6 +504,7 @@
 				Completed = true;
 
 			}
+			m_InvokeCallbacks = true;
 		}
 
 		private void Update() {
@@ -502,24 +519,30 @@
 		/// Invokes the <c>OnStart</c> callback.
 		/// </summary>
 		private void InvokeOnStart() {
-			m_OnStart?.Invoke();
-			m_OnStartTimer?.Invoke(this);
+			if (m_InvokeCallbacks) {
+				m_OnStart?.Invoke();
+				m_OnStartTimer?.Invoke(this);
+			}
 		}
 
 		/// <summary>
 		/// Invokes the <c>OnUpdate</c> callback.
 		/// </summary>
 		private void InvokeOnUpdate() {
-			m_OnUpdate?.Invoke();
-			m_OnUpdateTimer?.Invoke(this);
+			if (m_InvokeCallbacks) {
+				m_OnUpdate?.Invoke();
+				m_OnUpdateTimer?.Invoke(this);
+			}
 		}
 
 		/// <summary>
 		/// Invokes the <c>OnComplete</c> callback.
 		/// </summary>
 		private void InvokeOnComplete() {
-			m_OnComplete?.Invoke();
-			m_OnCompleteTimer?.Invoke(this);
+			if (m_InvokeCallbacks) {
+				m_OnComplete?.Invoke();
+				m_OnCompleteTimer?.Invoke(this);
+			}
 		}
 
 		private void CheckDisposed() {
