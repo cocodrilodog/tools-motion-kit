@@ -110,10 +110,10 @@
 					.SetOnComplete(() => Debug.LogFormat("Timer #3 Complete"))
 
 			).SetEasing(AnimateEasing.QuadInOut)
-			.SetOnStart(() => Debug.Log("Sequence start"))
-			.SetOnUpdate(()=> Debug.LogFormat("Sequence update"))
-			.SetOnInterrupt(() => Debug.LogFormat("Sequence interrupt"))
-			.SetOnComplete(() => Debug.LogFormat("Sequence complete"))
+			.SetOnStart(() => Debug.Log($"SEQUENCE START: {Time.time}"))
+			.SetOnUpdate(()=> Debug.LogFormat($"SEQUENCE UPDATE: {Time.time}"))
+			.SetOnInterrupt(() => Debug.LogFormat($"SEQUENCE INTERRUPT: {Time.time}"))
+			.SetOnComplete(() => Debug.LogFormat($"SEQUENCE COMPLETE: {Time.time}"))
 			.Play();
 
 		}

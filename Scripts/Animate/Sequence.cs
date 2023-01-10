@@ -9,7 +9,7 @@
 	/// a sequenced fashion. It can be used to sequence <see cref="MotionBase{ValueT, MotionT}"/>, <see cref="Timer"/>,
 	/// <see cref="Sequence"/> and <see cref="Parallel"/> objects.
 	/// </summary>
-	public class Sequence : IPlayback, ITimedProgressable, IComposite {
+	public class Sequence : IPlayback, ITimedProgressable {
 
 
 		#region Small Types
@@ -33,16 +33,6 @@
 			/// The position in time of the item.
 			/// </summary>
 			public float Position;
-
-			/// <summary>
-			/// Has this item started?
-			/// </summary>
-			public bool Started;
-
-			/// <summary>
-			/// Has this item completed?
-			/// </summary>
-			public bool Completed;
 
 			public SequenceItemInfo() { }
 
@@ -113,7 +103,7 @@
 				m_CurrentTime = m_Progress * m_Duration;
 				SetProgressingItemInfo();
 				ApplyProgress();
-				UpdateItemsState();
+				UpdateState();
 			}
 		}
 
@@ -214,7 +204,16 @@
 			StopCoroutine();
 			m_IsPlaying = false;
 			m_ProgressingItemInfo = null;
-			ResetItems();
+			ResetState();
+		}
+
+		public void ResetState() {
+			foreach (SequenceItemInfo itemInfo in m_SequenceItemsInfo) {
+				itemInfo.Item.ResetState();
+			}
+			m_Started = false;
+			m_UpdateTime = -1;
+			m_Completed = false;
 		}
 
 		/// <summary>
@@ -231,7 +230,6 @@
 
 			// Sequence objects
 			m_ProgressingItemInfo = null;
-			ResetItems();
 
 			// Reset all to avoid references that would prevent garbage collection
 			foreach(SequenceItemInfo sequenceItemInfo in m_SequenceItemsInfo) {
@@ -400,36 +398,12 @@
 		}
 
 		/// <summary>
-		/// Invokes the <c>OnStart</c> callback.
-		/// </summary>
-		public void InvokeOnStart() {
-			m_OnStart?.Invoke();
-			m_OnStartSequence?.Invoke(this);
-		}
-
-		/// <summary>
-		/// Invokes the <c>OnUpdate</c> callback.
-		/// </summary>
-		public void InvokeOnUpdate() {
-			m_OnUpdate?.Invoke();
-			m_OnUpdateSequence?.Invoke(this);
-		}
-
-		/// <summary>
 		/// Invokes the <c>OnInterrupt</c> callback.
 		/// </summary>
 		public void InvokeOnInterrupt() {
 			m_ProgressingItemInfo?.Item.InvokeOnInterrupt();
 			m_OnInterrupt?.Invoke();
 			m_OnInterruptSequence?.Invoke(this);
-		}
-
-		/// <summary>
-		/// Invokes the <c>OnComplete</c> callback.
-		/// </summary>
-		public void InvokeOnComplete() {
-			m_OnComplete?.Invoke();
-			m_OnCompleteSequence?.Invoke(this);
 		}
 
 		/// <summary>
@@ -470,20 +444,6 @@
 			m_SequenceItems = sequenceItems;
 			EvaluateSequence();
 
-		}
-
-		/// <summary>
-		/// Resets the items of the sequence and call <see cref="IComposite.ResetItems"/> on 
-		/// the items that are <see cref="IComposite"/> recursively.
-		/// </summary>
-		public void ResetItems() {
-			foreach (SequenceItemInfo itemInfo in m_SequenceItemsInfo) {
-				itemInfo.Completed = false;
-				itemInfo.Started = false;
-				if (itemInfo.Item is IComposite) {
-					((IComposite)itemInfo.Item).ResetItems();
-				}
-			}
 		}
 
 		#endregion
@@ -559,6 +519,15 @@
 		private bool m_IsPaused;
 
 		[NonSerialized]
+		private bool m_Started;
+
+		[NonSerialized]
+		private float m_UpdateTime;
+
+		[NonSerialized]
+		private bool m_Completed;
+
+		[NonSerialized]
 		private bool m_IsDisposed;
 
 		#endregion
@@ -566,18 +535,9 @@
 
 		#region Private Properties
 
-		private float DeltaTime {
-			get {
-				switch (m_TimeMode) {
-					case TimeMode.Normal: return Time.deltaTime;
-					case TimeMode.Unscaled: return Time.unscaledDeltaTime;
-					case TimeMode.Smooth: return Time.smoothDeltaTime;
-					case TimeMode.Fixed: return Time.fixedDeltaTime;
-					case TimeMode.FixedUnscaled: return Time.fixedUnscaledDeltaTime;
-					default: return Time.deltaTime;
-				}
-			}
-		}
+		private float DeltaTime => AnimateUtility.GetDeltaTime(m_TimeMode);
+
+		private float _Time => AnimateUtility.GetTime(m_TimeMode);
 
 		/// <summary>
 		/// Internal version of <see cref="Progress"/> that doesn't update <see cref="m_CurrentTime"/>
@@ -589,7 +549,7 @@
 				m_Progress = Mathf.Clamp01(value);
 				SetProgressingItemInfo();
 				ApplyProgress();
-				UpdateItemsState();
+				UpdateState();
 			}
 		}
 
@@ -606,6 +566,30 @@
 			}
 		}
 
+		private bool Started {
+			get => m_Started;
+			set {
+				if (value != m_Started) {
+					m_Started = value;
+					if (m_Started) {
+						InvokeOnStart();
+					}
+				}
+			}
+		}
+
+		private bool Completed {
+			get => m_Completed;
+			set {
+				if (value != m_Completed) {
+					m_Completed = value;
+					if (m_Completed) {
+						InvokeOnComplete();
+					}
+				}
+			}
+		}
+
 		#endregion
 
 
@@ -616,15 +600,9 @@
 			m_CurrentTime = 0;
 			m_Progress = 0;
 
-			ResetItems();
-
 			// Wait one frame for the properties to be ready, in case the sequence is
 			// created and started in the same line.
 			yield return null;
-
-			// Invoke this here so that items are started before this parallel
-			UpdateItemsState();
-			InvokeOnStart();
 
 			while (true) {
 				if (!IsPaused) {
@@ -642,24 +620,11 @@
 					// Set the progress
 					_Progress = m_CurrentTime / m_Duration;
 
-					InvokeOnUpdate();
-
 				}
 				yield return null;
 			}
 
-			InvokeOnUpdate();
-
-			// Set the coroutine to null before calling m_OnComplete() because m_OnComplete()
-			// may start another animation with the same motion object and we don't 
-			// want to set the coroutine to null just after starting the new animation.
-			m_Coroutine = null;
-			m_IsPlaying = false;
-			m_CurrentTime = 0;
-
-			InvokeOnComplete();
-
-			ResetItems();
+			ResetState();
 
 		}
 
@@ -705,71 +670,78 @@
 
 			CheckDisposed();
 
-			float timeOnSequence = EasedProgress * m_SequenceDuration;
-
-			// Wait until it has started, otherwise it may progress before
-			// starting, which would lead to unexpected behaviour.
-			if (m_ProgressingItemInfo.Started) {
-				m_ProgressingItemInfo.Item.Progress =
-					(timeOnSequence - m_SequenceItemsInfo[m_ProgressingItemInfo.Index].Position) /
-					m_ProgressingItemInfo.Item.Duration;
+			// Make sure that previous items did complete 
+			for(int i = 0; i < m_ProgressingItemInfo.Index; i++) {
+				if (m_SequenceItemsInfo[i].Item.Progress != 1) {
+					m_SequenceItemsInfo[i].Item.Progress = 1;
+				}
 			}
+
+			// Make sure that future items are at 0, starting from the last one
+			for (int i = m_SequenceItemsInfo.Length - 1; i > m_ProgressingItemInfo.Index; i--) {
+				if (m_SequenceItemsInfo[i].Item.Progress != 0) {
+					m_SequenceItemsInfo[i].Item.Progress = 0;
+				}
+			}
+
+			float timeOnSequence = EasedProgress * m_SequenceDuration;
+			var progress = (timeOnSequence - m_ProgressingItemInfo.Position) / m_ProgressingItemInfo.Item.Duration;
+
+			m_ProgressingItemInfo.Item.Progress = progress;
 
 		}
 
-		/// <summary>
-		/// Updates the state of each item to reflect the <see cref="Progress"/>.
-		/// </summary>
-		private void UpdateItemsState() {
+		private void UpdateState() {
+			if (Progress >= 0) {
+				Started = true;
+			}
+			if (Started && !Completed) {
+				Update();
+			}
+			if (Progress >= 1) {
 
-			float timeOnSequence = EasedProgress * m_SequenceDuration;
+				// Set the coroutine to null before calling m_OnComplete() because m_OnComplete()
+				// may start another animation with the same timer object and we don't 
+				// want to set the coroutine to null just after starting the new animation.
+				m_Coroutine = null;
+				m_IsPlaying = false;
+				m_CurrentTime = 0;
 
-			for (int i = 0; i < m_SequenceItemsInfo.Length; i++) {
-
-				var startTime = m_SequenceItemsInfo[i].Position;
-				var endTime = m_SequenceItemsInfo[i].Position + m_SequenceItemsInfo[i].Item.Duration;
-
-				// timeOnSequence is intersecting with the item
-				if (timeOnSequence >= startTime && timeOnSequence < endTime) {
-					if (!m_SequenceItemsInfo[i].Started) {
-						// This handles when _Play() invokes UpdateItemsState() right before invoking InvokeOnStart()
-						// and is used for all the items to start before this sequence starts, given that Progress
-						// triggers the OnStart callback on the nested items. The condition of Progress being 0 is used
-						// because we don't want to force this to be 0 when it is not actually at 0
-						if (Mathf.Approximately(m_SequenceItemsInfo[i].Item.Progress, 0)) {
-							m_SequenceItemsInfo[i].Item.Progress = 0;
-						}
-						m_SequenceItemsInfo[i].Started = true;
-						m_SequenceItemsInfo[i].Item.InvokeOnStart();
-					}
-					m_SequenceItemsInfo[i].Item.InvokeOnUpdate();
-					m_SequenceItemsInfo[i].Completed = false;
-				}
-				// timeOnSequence is before the item
-				else if (timeOnSequence < startTime) {
-					if (!Mathf.Approximately(m_SequenceItemsInfo[i].Item.Progress, 0)) {
-						m_SequenceItemsInfo[i].Item.Progress = 0;
-					}
-					m_SequenceItemsInfo[i].Started = false;
-					m_SequenceItemsInfo[i].Completed = false;
-				}
-				// timeOnSequence is after the item
-				else if (timeOnSequence >= endTime) {
-					if (!Mathf.Approximately(m_SequenceItemsInfo[i].Item.Progress, 1)) {
-						m_SequenceItemsInfo[i].Item.Progress = 1;
-					}
-					if (!m_SequenceItemsInfo[i].Started) {
-						m_SequenceItemsInfo[i].Started = true;
-						m_SequenceItemsInfo[i].Item.InvokeOnStart();
-					}
-					if (!m_SequenceItemsInfo[i].Completed) {
-						m_SequenceItemsInfo[i].Completed = true;
-						m_SequenceItemsInfo[i].Item.InvokeOnComplete();
-					}
-				}
+				Completed = true;
 
 			}
+		}
 
+		private void Update() {
+			var time = _Time;
+			if (!Mathf.Approximately(time, m_UpdateTime)) {
+				m_UpdateTime = _Time;
+				InvokeOnUpdate();
+			}
+		}
+
+		/// <summary>
+		/// Invokes the <c>OnStart</c> callback.
+		/// </summary>
+		private void InvokeOnStart() {
+			m_OnStart?.Invoke();
+			m_OnStartSequence?.Invoke(this);
+		}
+
+		/// <summary>
+		/// Invokes the <c>OnUpdate</c> callback.
+		/// </summary>
+		private void InvokeOnUpdate() {
+			m_OnUpdate?.Invoke();
+			m_OnUpdateSequence?.Invoke(this);
+		}
+
+		/// <summary>
+		/// Invokes the <c>OnComplete</c> callback.
+		/// </summary>
+		private void InvokeOnComplete() {
+			m_OnComplete?.Invoke();
+			m_OnCompleteSequence?.Invoke(this);
 		}
 
 		private void CheckDisposed() {

@@ -49,6 +49,7 @@
 				CheckDisposed();
 				m_Progress = value;
 				m_CurrentTime = m_Progress * m_Duration;
+				UpdateState();
 			}
 		}
 
@@ -145,6 +146,7 @@
 			}
 			StopCoroutine();
 			m_IsPlaying = false;
+			ResetState();
 		}
 
 		/// <summary>
@@ -273,19 +275,12 @@
 		}
 
 		/// <summary>
-		/// Invokes the <c>OnStart</c> callback.
+		/// Resets the state of this timer.
 		/// </summary>
-		public void InvokeOnStart() {
-			m_OnStart?.Invoke();
-			m_OnStartTimer?.Invoke(this);
-		}
-
-		/// <summary>
-		/// Invokes the <c>OnUpdate</c> callback.
-		/// </summary>
-		public void InvokeOnUpdate() {
-			m_OnUpdate?.Invoke();
-			m_OnUpdateTimer?.Invoke(this);
+		public void ResetState() {
+			m_Started = false;
+			m_UpdateTime = -1;
+			m_Completed = false;
 		}
 
 		/// <summary>
@@ -294,14 +289,6 @@
 		public void InvokeOnInterrupt() {
 			m_OnInterrupt?.Invoke();
 			m_OnInterruptTimer?.Invoke(this);
-		}
-
-		/// <summary>
-		/// Invokes the <c>OnComplete</c> callback.
-		/// </summary>
-		public void InvokeOnComplete() {
-			m_OnComplete?.Invoke();
-			m_OnCompleteTimer?.Invoke(this);
 		}
 
 		/// <summary>
@@ -379,6 +366,15 @@
 		private bool m_IsPaused;
 
 		[NonSerialized]
+		private bool m_Started;
+
+		[NonSerialized]
+		private float m_UpdateTime;
+
+		[NonSerialized]
+		private bool m_Completed;
+
+		[NonSerialized]
 		private bool m_IsDisposed;
 
 		#endregion
@@ -386,18 +382,9 @@
 
 		#region Private Properties
 
-		private float DeltaTime {
-			get {
-				switch (m_TimeMode) {
-					case TimeMode.Normal: return Time.deltaTime;
-					case TimeMode.Unscaled: return Time.unscaledDeltaTime;
-					case TimeMode.Smooth: return Time.smoothDeltaTime;
-					case TimeMode.Fixed: return Time.fixedDeltaTime;
-					case TimeMode.FixedUnscaled: return Time.fixedUnscaledDeltaTime;
-					default: return Time.deltaTime;
-				}
-			}
-		}
+		private float DeltaTime => AnimateUtility.GetDeltaTime(m_TimeMode);
+
+		private float _Time => AnimateUtility.GetTime(m_TimeMode);
 
 		/// <summary>
 		/// Internal version of <see cref="Progress"/> that doesn't update <see cref="m_CurrentTime"/>
@@ -408,13 +395,38 @@
 			set {
 				CheckDisposed();
 				m_Progress = value;
+				UpdateState();
+			}
+		}
+
+		public bool Started {
+			get => m_Started;
+			set {
+				if (value != m_Started) {
+					m_Started = value;
+					if (m_Started) {
+						InvokeOnStart();
+					}
+				}
+			}
+		}
+
+		public bool Completed {
+			get => m_Completed;
+			set {
+				if (value != m_Completed) {
+					m_Completed = value;
+					if (m_Completed) {
+						InvokeOnComplete();
+					}
+				}
 			}
 		}
 
 		#endregion
 
 
-		#region Internal Methods
+		#region Private Methods
 
 		private IEnumerator _Play() {
 
@@ -424,8 +436,6 @@
 			// Wait one frame for the properties to be ready, in case the timer is
 			// created and started in the same line.
 			yield return null;
-
-			InvokeOnStart();
 
 			while (true) {
 				if (!IsPaused) {
@@ -442,22 +452,11 @@
 
 					_Progress = m_CurrentTime / m_Duration;
 
-					InvokeOnUpdate();
-
 				}
 				yield return null;
 			}
 
-			InvokeOnUpdate();
-
-			// Set the coroutine to null before calling m_OnComplete() because m_OnComplete()
-			// may start another animation with the same timer object and we don't 
-			// want to set the coroutine to null just after starting the new animation.
-			m_Coroutine = null;
-			m_IsPlaying = false;
-			m_CurrentTime = 0;
-
-			InvokeOnComplete();
+			ResetState();
 
 		}
 
@@ -468,6 +467,59 @@
 				}
 				m_Coroutine = null;
 			}
+		}
+
+		private void UpdateState() {
+			if (Progress >= 0) {
+				Started = true;
+			}
+			if (Started && !Completed) {
+				Update();
+			}
+			if (Progress >= 1) {
+
+				// Set the coroutine to null before calling m_OnComplete() because m_OnComplete()
+				// may start another animation with the same timer object and we don't 
+				// want to set the coroutine to null just after starting the new animation.
+				m_Coroutine = null;
+				m_IsPlaying = false;
+				m_CurrentTime = 0;
+
+				Completed = true;
+
+			}
+		}
+
+		private void Update() {
+			var time = _Time;
+			if (!Mathf.Approximately(time, m_UpdateTime)) {
+				m_UpdateTime = _Time;
+				InvokeOnUpdate();
+			}
+		}
+
+		/// <summary>
+		/// Invokes the <c>OnStart</c> callback.
+		/// </summary>
+		private void InvokeOnStart() {
+			m_OnStart?.Invoke();
+			m_OnStartTimer?.Invoke(this);
+		}
+
+		/// <summary>
+		/// Invokes the <c>OnUpdate</c> callback.
+		/// </summary>
+		private void InvokeOnUpdate() {
+			m_OnUpdate?.Invoke();
+			m_OnUpdateTimer?.Invoke(this);
+		}
+
+		/// <summary>
+		/// Invokes the <c>OnComplete</c> callback.
+		/// </summary>
+		private void InvokeOnComplete() {
+			m_OnComplete?.Invoke();
+			m_OnCompleteTimer?.Invoke(this);
 		}
 
 		private void CheckDisposed() {

@@ -22,14 +22,8 @@
 	public interface ITimedProgressable : IDisposable {
 		float Progress { get; set; }
 		float Duration { get; }
-		void InvokeOnStart();
-		void InvokeOnUpdate();
+		void ResetState();
 		void InvokeOnInterrupt();
-		void InvokeOnComplete();
-	}
-
-	public interface IComposite {
-		void ResetItems();
 	}
 
 	#endregion

@@ -9,7 +9,7 @@ namespace CocodriloDog.Animation {
 	/// the same time. It can be used to group <see cref="MotionBase{ValueT, MotionT}"/>, <see cref="Timer"/>,
 	/// <see cref="Sequence"/> and <see cref="Parallel"/> objects.
 	/// </summary>
-	public class Parallel : IPlayback, ITimedProgressable, IComposite {
+	public class Parallel : IPlayback, ITimedProgressable {
 
 
 		#region Small Types
@@ -101,7 +101,7 @@ namespace CocodriloDog.Animation {
 				m_Progress = Mathf.Clamp01(value);
 				m_CurrentTime = m_Progress * m_Duration;
 				ApplyProgress();
-				UpdateItemsState();
+				UpdateState();
 			}
 		}
 
@@ -201,7 +201,16 @@ namespace CocodriloDog.Animation {
 			}
 			StopCoroutine();
 			m_IsPlaying = false;
-			ResetItems();
+			ResetState();
+		}
+
+		public void ResetState() {
+			foreach (ParallelItemInfo itemInfo in m_ParallelItemsInfo) {
+				itemInfo.Item.ResetState();
+			}
+			m_Started = false;
+			m_UpdateTime = -1;
+			m_Completed = false;
 		}
 
 		/// <summary>
@@ -215,9 +224,6 @@ namespace CocodriloDog.Animation {
 
 			// Set to null the callbacks
 			Clean(CleanFlag.All);
-
-			// composite objects
-			ResetItems();
 
 			// Dispose all to avoid references that would prevent garbage collection
 			foreach (ParallelItemInfo parallelItemInfo in m_ParallelItemsInfo) {
@@ -387,22 +393,6 @@ namespace CocodriloDog.Animation {
 		}
 
 		/// <summary>
-		/// Invokes the <c>OnStart</c> callback.
-		/// </summary>
-		public void InvokeOnStart() {
-			m_OnStart?.Invoke();
-			m_OnStartParallel?.Invoke(this);
-		}
-
-		/// <summary>
-		/// Invokes the <c>OnUpdate</c> callback.
-		/// </summary>
-		public void InvokeOnUpdate() {
-			m_OnUpdate?.Invoke();
-			m_OnUpdateParallel?.Invoke(this);
-		}
-
-		/// <summary>
 		/// Invokes the <c>OnInterrupt</c> callback.
 		/// </summary>
 		public void InvokeOnInterrupt() {
@@ -414,14 +404,6 @@ namespace CocodriloDog.Animation {
 			}
 			m_OnInterrupt?.Invoke();
 			m_OnInterruptParallel?.Invoke(this);
-		}
-
-		/// <summary>
-		/// Invokes the <c>OnComplete</c> callback.
-		/// </summary>
-		public void InvokeOnComplete() {
-			m_OnComplete?.Invoke();
-			m_OnCompleteParallel?.Invoke(this);
 		}
 
 		/// <summary>
@@ -452,20 +434,6 @@ namespace CocodriloDog.Animation {
 			}
 			m_ParallelItems = (ITimedProgressable[])animatableElement;
 			EvaluateParallel();
-		}
-
-		/// <summary>
-		/// Resets the items of the parallel and call <see cref="IComposite.ResetItems"/> on 
-		/// the items that are <see cref="IComposite"/> recursively.
-		/// </summary>
-		public void ResetItems() {
-			foreach (ParallelItemInfo itemInfo in m_ParallelItemsInfo) {
-				itemInfo.Completed = false;
-				itemInfo.Started = false;
-				if (itemInfo.Item is IComposite) {
-					((IComposite)itemInfo.Item).ResetItems();
-				}
-			}
 		}
 
 		#endregion
@@ -537,6 +505,15 @@ namespace CocodriloDog.Animation {
 		private bool m_IsPaused;
 
 		[NonSerialized]
+		private bool m_Started;
+
+		[NonSerialized]
+		private float m_UpdateTime;
+
+		[NonSerialized]
+		private bool m_Completed;
+
+		[NonSerialized]
 		private bool m_IsDisposed;
 
 		#endregion
@@ -544,18 +521,9 @@ namespace CocodriloDog.Animation {
 
 		#region Private Properties
 
-		private float DeltaTime {
-			get {
-				switch (m_TimeMode) {
-					case TimeMode.Normal: return Time.deltaTime;
-					case TimeMode.Unscaled: return Time.unscaledDeltaTime;
-					case TimeMode.Smooth: return Time.smoothDeltaTime;
-					case TimeMode.Fixed: return Time.fixedDeltaTime;
-					case TimeMode.FixedUnscaled: return Time.fixedUnscaledDeltaTime;
-					default: return Time.deltaTime;
-				}
-			}
-		}
+		private float DeltaTime => AnimateUtility.GetDeltaTime(m_TimeMode);
+
+		private float _Time => AnimateUtility.GetTime(m_TimeMode);
 
 		/// <summary>
 		/// Internal version of <see cref="Progress"/> that doesn't update <see cref="m_CurrentTime"/>
@@ -566,7 +534,7 @@ namespace CocodriloDog.Animation {
 			set {
 				m_Progress = Mathf.Clamp01(value);
 				ApplyProgress();
-				UpdateItemsState();
+				UpdateState();
 			}
 		}
 
@@ -583,6 +551,30 @@ namespace CocodriloDog.Animation {
 			}
 		}
 
+		private bool Started {
+			get => m_Started;
+			set {
+				if (value != m_Started) {
+					m_Started = value;
+					if (m_Started) {
+						InvokeOnStart();
+					}
+				}
+			}
+		}
+
+		private bool Completed {
+			get => m_Completed;
+			set {
+				if (value != m_Completed) {
+					m_Completed = value;
+					if (m_Completed) {
+						InvokeOnComplete();
+					}
+				}
+			}
+		}
+
 		#endregion
 
 
@@ -593,15 +585,9 @@ namespace CocodriloDog.Animation {
 			m_CurrentTime = 0;
 			m_Progress = 0;
 
-			ResetItems();
-
 			// Wait one frame for the properties to be ready, in case the parallel is
 			// created and started in the same line.
 			yield return null;
-
-			// Invoke this here so that items are started before this parallel
-			UpdateItemsState();
-			InvokeOnStart();
 
 			while (true) {
 				if (!IsPaused) {
@@ -619,24 +605,11 @@ namespace CocodriloDog.Animation {
 					// Set the progress
 					_Progress = m_CurrentTime / m_Duration;
 
-					InvokeOnUpdate();
-
 				}
 				yield return null;
 			}
 
-			InvokeOnUpdate();
-
-			// Set the coroutine to null before calling m_OnComplete() because m_OnComplete()
-			// may start another animation with the same motion object and we don't 
-			// want to set the coroutine to null just after starting the new animation.
-			m_Coroutine = null;
-			m_IsPlaying = false;
-			m_CurrentTime = 0;
-
-			InvokeOnComplete();
-
-			ResetItems();
+			ResetState();
 
 		}
 
@@ -650,72 +623,63 @@ namespace CocodriloDog.Animation {
 		}
 
 		private void ApplyProgress() {
-
 			CheckDisposed();
-
 			foreach(var itemInfo in m_ParallelItemsInfo) {
-				// Wait until it has started, otherwise it may progress before
-				// starting, which would lead to unexpected behaviour.
-				if (itemInfo.Started) {
-					itemInfo.Item.Progress = Mathf.Clamp01(EasedProgress * m_ParallelDuration / itemInfo.Item.Duration);
-				}
+				itemInfo.Item.Progress = Mathf.Clamp01(EasedProgress * m_ParallelDuration / itemInfo.Item.Duration);
 			}
+		}
 
+		private void UpdateState() {
+			if (Progress >= 0) {
+				Started = true;
+			}
+			if (Started && !Completed) {
+				Update();
+			}
+			if (Progress >= 1) {
+
+				// Set the coroutine to null before calling m_OnComplete() because m_OnComplete()
+				// may start another animation with the same timer object and we don't 
+				// want to set the coroutine to null just after starting the new animation.
+				m_Coroutine = null;
+				m_IsPlaying = false;
+				m_CurrentTime = 0;
+
+				Completed = true;
+
+			}
+		}
+
+		private void Update() {
+			var time = _Time;
+			if (!Mathf.Approximately(time, m_UpdateTime)) {
+				m_UpdateTime = _Time;
+				InvokeOnUpdate();
+			}
 		}
 
 		/// <summary>
-		/// Updates the state of each item to reflect the <see cref="Progress"/>.
+		/// Invokes the <c>OnStart</c> callback.
 		/// </summary>
-		private void UpdateItemsState() {
+		private void InvokeOnStart() {
+			m_OnStart?.Invoke();
+			m_OnStartParallel?.Invoke(this);
+		}
 
-			float timeOnParallel = EasedProgress * m_ParallelDuration;
+		/// <summary>
+		/// Invokes the <c>OnUpdate</c> callback.
+		/// </summary>
+		private void InvokeOnUpdate() {
+			m_OnUpdate?.Invoke();
+			m_OnUpdateParallel?.Invoke(this);
+		}
 
-			for (int i = 0; i < m_ParallelItemsInfo.Length; i++) {
-
-				var startTime = 0;
-				var endTime = m_ParallelItemsInfo[i].Item.Duration;
-
-				// timeOnParallel is intersecting with the item
-				if (timeOnParallel >= startTime && timeOnParallel < endTime) {
-					if (!m_ParallelItemsInfo[i].Started) {
-						// This handles when _Play() invokes UpdateItemsState() right before invoking InvokeOnStart()
-						// and is used for all the items to start before this parallel starts, given that Progress
-						// triggers the OnStart callback on the nested items. The condition of Progress being 0 is used
-						// because we don't want to force this to be 0 when it is not actually at 0
-						if (Mathf.Approximately(m_ParallelItemsInfo[i].Item.Progress, 0)) {
-							m_ParallelItemsInfo[i].Item.Progress = 0;
-						}
-						m_ParallelItemsInfo[i].Started = true;
-						m_ParallelItemsInfo[i].Item.InvokeOnStart();
-					}
-					m_ParallelItemsInfo[i].Item.InvokeOnUpdate();
-					m_ParallelItemsInfo[i].Completed = false;
-				}
-				// timeOnParallel is before the item
-				else if (timeOnParallel < startTime) {
-					if (!Mathf.Approximately(m_ParallelItemsInfo[i].Item.Progress, 0)) {
-						m_ParallelItemsInfo[i].Item.Progress = 0;
-					}
-					m_ParallelItemsInfo[i].Started = false;
-					m_ParallelItemsInfo[i].Completed = false;
-				}
-				// timeOnParallel is after the item
-				else if (timeOnParallel >= endTime) {
-					if (!Mathf.Approximately(m_ParallelItemsInfo[i].Item.Progress, 1)) {
-						m_ParallelItemsInfo[i].Item.Progress = 1;
-					}
-					if (!m_ParallelItemsInfo[i].Started) {
-						m_ParallelItemsInfo[i].Started = true;
-						m_ParallelItemsInfo[i].Item.InvokeOnStart();
-					}
-					if (!m_ParallelItemsInfo[i].Completed) {
-						m_ParallelItemsInfo[i].Completed = true;
-						m_ParallelItemsInfo[i].Item.InvokeOnComplete();
-					}
-				}
-
-			}
-
+		/// <summary>
+		/// Invokes the <c>OnComplete</c> callback.
+		/// </summary>
+		private void InvokeOnComplete() {
+			m_OnComplete?.Invoke();
+			m_OnCompleteParallel?.Invoke(this);
 		}
 
 		private void CheckDisposed() {
