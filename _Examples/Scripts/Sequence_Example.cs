@@ -107,7 +107,30 @@
 					.SetOnStart(() => Debug.LogFormat("Timer #3 Start"))
 					.SetOnUpdate(() => Debug.LogFormat("Timer #3 Update"))
 					.SetOnInterrupt(() => Debug.LogFormat("Timer #3 Interrupt"))
-					.SetOnComplete(() => Debug.LogFormat("Timer #3 Complete"))
+					.SetOnComplete(() => Debug.LogFormat("Timer #3 Complete")),
+
+				Animate.GetParallel(
+
+					Animate.GetMotion(p => Sphere1.transform.position = p)
+						.SetValuesAndDuration(new Vector3(-2, -4, 0), new Vector3(2, -4, 0), 2)
+						.SetEasing(AnimateEasing.BounceOut)
+						.SetOnStart(() => Debug.LogFormat("Sphere1 start"))
+						.SetOnUpdate(() => Debug.LogFormat("Sphere1 update"))
+						.SetOnInterrupt(() => Debug.LogFormat("Sphere1 interrupt"))
+						.SetOnComplete(() => Debug.LogFormat("Sphere1 complete")),
+
+					Animate.GetMotion(p => Sphere2.transform.position = p)
+						.SetValuesAndDuration(new Vector3(2, -4, 0), new Vector3(-2, -4, 0), 2)
+						.SetEasing(AnimateEasing.BounceOut)
+						.SetOnStart(() => Debug.LogFormat("Sphere2 start"))
+						.SetOnUpdate(() => Debug.LogFormat("Sphere2 update"))
+						.SetOnInterrupt(() => Debug.LogFormat("Sphere2 interrupt"))
+						.SetOnComplete(() => Debug.LogFormat("Sphere2 complete"))
+
+				).SetOnStart(() => Debug.LogFormat("Parallel_Spheres start"))
+				.SetOnUpdate(() => Debug.LogFormat("Parallel_Spheres update"))
+				.SetOnInterrupt(() => Debug.LogFormat("Parallel_Spheres interrupt"))
+				.SetOnComplete(() => Debug.LogFormat("Parallel_Spheres complete"))
 
 			).SetEasing(AnimateEasing.QuadInOut)
 			.SetOnStart(() => Debug.Log($"SEQUENCE START: {Time.time}"))
@@ -175,6 +198,12 @@
 		private ColorModifier m_ColorSphere;
 
 		[SerializeField]
+		private Transform m_Sphere1;
+
+		[SerializeField]
+		private Transform m_Sphere2;
+
+		[SerializeField]
 		private Text m_PlayPauseLabel;
 
 		[SerializeField]
@@ -196,6 +225,10 @@
 		private Transform PositionCube { get { return m_PositionCube; } }
 
 		private ColorModifier ColorSphere { get { return m_ColorSphere; } }
+
+		private Transform Sphere1 => m_Sphere1;
+
+		private Transform Sphere2 => m_Sphere2;
 
 		private Text PlayPauseLabel { get { return m_PlayPauseLabel; } }
 
