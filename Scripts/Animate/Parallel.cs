@@ -204,15 +204,6 @@ namespace CocodriloDog.Animation {
 			ResetState();
 		}
 
-		public void ResetState() {
-			foreach (ParallelItemInfo itemInfo in m_ParallelItemsInfo) {
-				itemInfo.Item.ResetState();
-			}
-			m_Started = false;
-			m_UpdateTime = -1;
-			m_Completed = false;
-		}
-
 		/// <summary>
 		/// Resets the parallel to its default state.
 		/// </summary>
@@ -390,6 +381,18 @@ namespace CocodriloDog.Animation {
 				}
 			}
 			m_Duration = m_ParallelDuration;
+		}
+
+		/// <summary>
+		/// Resets the state of this parallel and its children.
+		/// </summary>
+		public void ResetState() {
+			foreach (ParallelItemInfo itemInfo in m_ParallelItemsInfo) {
+				itemInfo.Item.ResetState();
+			}
+			m_Started = false;
+			m_UpdateTime = -1;
+			m_Completed = false;
 		}
 
 		/// <summary>

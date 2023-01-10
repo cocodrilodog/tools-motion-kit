@@ -207,15 +207,6 @@
 			ResetState();
 		}
 
-		public void ResetState() {
-			foreach (SequenceItemInfo itemInfo in m_SequenceItemsInfo) {
-				itemInfo.Item.ResetState();
-			}
-			m_Started = false;
-			m_UpdateTime = -1;
-			m_Completed = false;
-		}
-
 		/// <summary>
 		/// Resets the sequence to its default state.
 		/// </summary>
@@ -395,6 +386,18 @@
 				m_SequenceDuration += m_SequenceItemsInfo[i].Item.Duration;
 			}
 			m_Duration = m_SequenceDuration;
+		}
+
+		/// <summary>
+		/// Resets the state of this sequence and its children.
+		/// </summary>
+		public void ResetState() {
+			foreach (SequenceItemInfo itemInfo in m_SequenceItemsInfo) {
+				itemInfo.Item.ResetState();
+			}
+			m_Started = false;
+			m_UpdateTime = -1;
+			m_Completed = false;
 		}
 
 		/// <summary>
