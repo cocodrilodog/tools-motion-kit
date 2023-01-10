@@ -99,11 +99,6 @@
 		public float Progress {
 			get { return m_Progress; }
 			set {
-				//m_Progress = Mathf.Clamp01(value);
-				//m_CurrentTime = m_Progress * m_Duration;
-				//SetProgressingItemInfo();
-				//ApplyProgress();
-				//UpdateState();
 				SetProgress(value, false);
 			}
 		}
@@ -579,20 +574,6 @@
 		private float DeltaTime => AnimateUtility.GetDeltaTime(m_TimeMode);
 
 		private float _Time => AnimateUtility.GetTime(m_TimeMode);
-
-		///// <summary>
-		///// Internal version of <see cref="Progress"/> that doesn't update <see cref="m_CurrentTime"/>
-		///// because it was updated in the coroutine.
-		///// </summary>
-		//private float _Progress {
-		//	get { return m_Progress; }
-		//	set {
-		//		m_Progress = Mathf.Clamp01(value);
-		//		SetProgressingItemInfo();
-		//		ApplyProgress();
-		//		UpdateState();
-		//	}
-		//}
 
 		/// <summary>
 		/// The <see cref="Progress"/>, but processed by <see cref="m_Easing"/>.
