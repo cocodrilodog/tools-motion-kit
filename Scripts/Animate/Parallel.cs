@@ -404,7 +404,6 @@ namespace CocodriloDog.Animation {
 				itemInfo.Item.ResetState();
 			}
 			m_Started = false;
-			m_UpdateTime = -1;
 			m_Completed = false;
 		}
 
@@ -526,9 +525,6 @@ namespace CocodriloDog.Animation {
 		private bool m_Started;
 
 		[NonSerialized]
-		private float m_UpdateTime;
-
-		[NonSerialized]
 		private bool m_Completed;
 
 		[NonSerialized]
@@ -626,7 +622,7 @@ namespace CocodriloDog.Animation {
 				Started = true;
 			}
 			if (Started && !Completed) {
-				Update();
+				InvokeOnUpdate();
 			}
 			if (Progress >= 1) {
 
@@ -641,14 +637,6 @@ namespace CocodriloDog.Animation {
 
 			}
 			m_InvokeCallbacks = true;
-		}
-
-		private void Update() {
-			var time = _Time;
-			if (!Mathf.Approximately(time, m_UpdateTime)) {
-				m_UpdateTime = _Time;
-				InvokeOnUpdate();
-			}
 		}
 
 		/// <summary>
