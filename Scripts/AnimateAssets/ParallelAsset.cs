@@ -53,7 +53,7 @@ namespace CocodriloDog.Animation {
 			}
 
 			m_Parallel = Animate.GetParallel(this, ReuseID, parallelItemsList.ToArray())
-				.SetEasing(Easing.ParallelEasing)
+				.SetEasing(Easing.FloatEasing)
 				.SetTimeMode(TimeMode);
 
 			if (DurationInput > 0) {

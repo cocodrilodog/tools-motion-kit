@@ -73,27 +73,6 @@
 
 		};
 
-		// TODO: Implement this
-		public override Sequence.Easing SequenceEasing => (a, b, t) => {
-			// Get the base value so that the pulsation adds on top of it.
-			float baseValue = Mathf.Lerp(a, b, t);
-			if (t >= 0 && t < 0.5f) {
-				return baseValue + AnimateEasing.QuadInOut(0, Offset, t * 2);
-			} else {
-				return baseValue + AnimateEasing.QuadInOut(Offset, 0, (t * 2) - 1);
-			}
-		};
-
-		public override Parallel.Easing ParallelEasing => (a, b, t) => {
-			// Get the base value so that the pulsation adds on top of it.
-			float baseValue = Mathf.Lerp(a, b, t);
-			if (t >= 0 && t < 0.5f) {
-				return baseValue + AnimateEasing.QuadInOut(0, Offset, t * 2);
-			} else {
-				return baseValue + AnimateEasing.QuadInOut(Offset, 0, (t * 2) - 1);
-			}
-		};
-
 		#endregion
 
 

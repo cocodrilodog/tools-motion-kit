@@ -43,11 +43,6 @@
 
 		}
 
-		/// <summary>
-		/// The easing function that will be used for the sequence.
-		/// </summary>
-		public delegate float Easing(float a, float b, float t);
-
 		#endregion
 
 
@@ -296,7 +291,7 @@
 		/// 
 		/// <returns>The sequence object.</returns>
 		/// <param name="easing">Easing.</param>
-		public Sequence SetEasing(Easing easing) {
+		public Sequence SetEasing(MotionFloat.Easing easing) {
 			m_Easing = easing;
 			return this;
 		}
@@ -510,7 +505,7 @@
 		private TimeMode m_TimeMode;
 
 		[NonSerialized]
-		private Easing m_Easing;
+		private MotionFloat.Easing m_Easing;
 
 		[NonSerialized]
 		private Action m_OnStart;

@@ -53,7 +53,7 @@ namespace CocodriloDog.Animation {
 			}
 
 			m_Sequence = Animate.GetSequence(this, ReuseID, sequenceItemsList.ToArray())
-				.SetEasing(Easing.SequenceEasing)
+				.SetEasing(Easing.FloatEasing)
 				.SetTimeMode(TimeMode);
 
 			if (DurationInput > 0) {

@@ -16,10 +16,6 @@
 
 		public abstract MotionColor.Easing ColorEasing { get; }
 
-		public abstract Sequence.Easing SequenceEasing { get; }
-
-		public abstract Parallel.Easing ParallelEasing { get; }
-
 		#endregion
 
 

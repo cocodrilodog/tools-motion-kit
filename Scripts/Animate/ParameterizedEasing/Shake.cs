@@ -126,54 +126,6 @@
 			}
 		}
 
-		public override Sequence.Easing SequenceEasing {
-			get {
-
-				// This avoids that 2 or more animations that started at the same time look the same.
-				float timeOffset = UnityEngine.Random.Range(0, 1000);
-
-				return (a, b, t) => {
-
-					// Get the base value so that the Perlin noise adds on top of it.
-					float lerp = Mathf.Lerp(a, b, t);
-
-					float magnitude = Magnitude;
-					if (IsDampered) {
-						magnitude *= Damper.Evaluate(t);
-					}
-
-					// PerlinNoise returns values from 0 to 1. For that reason we subtract 0.5f
-					return lerp + (Mathf.PerlinNoise((t + timeOffset) * TMultiplier, 0f) - 0.5f) * magnitude;
-
-				};
-
-			}
-		}
-
-		public override Parallel.Easing ParallelEasing {
-			get {
-
-				// This avoids that 2 or more animations that started at the same time look the same.
-				float timeOffset = UnityEngine.Random.Range(0, 1000);
-
-				return (a, b, t) => {
-
-					// Get the base value so that the Perlin noise adds on top of it.
-					float lerp = Mathf.Lerp(a, b, t);
-
-					float magnitude = Magnitude;
-					if (IsDampered) {
-						magnitude *= Damper.Evaluate(t);
-					}
-
-					// PerlinNoise returns values from 0 to 1. For that reason we subtract 0.5f
-					return lerp + (Mathf.PerlinNoise((t + timeOffset) * TMultiplier, 0f) - 0.5f) * magnitude;
-
-				};
-
-			}
-		}
-
 		#endregion
 
 
