@@ -61,8 +61,33 @@
 			}
 		}
 
-		// TODO: Implement this
-		public override Sequence.Easing SequenceEasing => throw new NotImplementedException();
+		public override Sequence.Easing SequenceEasing {
+			get {
+				return (a, b, t) => {
+					if (Mathf.Approximately(t, 1)) {
+						return b;
+					}
+					// When t is exactly 1 this will return a that's why I put the
+					// previous condition.
+					int value = (int)(t * BlinkCount * 2) % 2;
+					return value == 0 ? a : b;
+				};
+			}
+		}
+
+		public override Parallel.Easing ParallelEasing {
+			get {
+				return (a, b, t) => {
+					if (Mathf.Approximately(t, 1)) {
+						return b;
+					}
+					// When t is exactly 1 this will return a that's why I put the
+					// previous condition.
+					int value = (int)(t * BlinkCount * 2) % 2;
+					return value == 0 ? a : b;
+				};
+			}
+		}
 
 		#endregion
 

@@ -35,7 +35,7 @@
 
 		#region Public Properties
 
-		public override MotionBase<float, MotionFloat>.Easing FloatEasing => (a, b, t) => {
+		public override MotionFloat.Easing FloatEasing => (a, b, t) => {
 			// Get the base value so that the pulsation adds on top of it.
 			float baseValue = Mathf.Lerp(a, b, t);
 			if (t >= 0 && t < 0.5f) {
@@ -45,7 +45,7 @@
 			}
 		};
 
-		public override MotionBase<Vector3, Motion3D>.Easing Vector3Easing => (a, b, t) => {
+		public override Motion3D.Easing Vector3Easing => (a, b, t) => {
 
 			// Get the base value so that the pulsation adds on top of it.
 			Vector3 baseValue = Vector3.Lerp(a, b, t);
@@ -59,7 +59,7 @@
 
 		};
 
-		public override MotionBase<Color, MotionColor>.Easing ColorEasing => (a, b, t) => {
+		public override MotionColor.Easing ColorEasing => (a, b, t) => {
 
 			// Get the base value so that the pulsation adds on top of it.
 			Color baseValue = Color.Lerp(a, b, t);
@@ -74,7 +74,25 @@
 		};
 
 		// TODO: Implement this
-		public override Sequence.Easing SequenceEasing => throw new NotImplementedException();
+		public override Sequence.Easing SequenceEasing => (a, b, t) => {
+			// Get the base value so that the pulsation adds on top of it.
+			float baseValue = Mathf.Lerp(a, b, t);
+			if (t >= 0 && t < 0.5f) {
+				return baseValue + AnimateEasing.QuadInOut(0, Offset, t * 2);
+			} else {
+				return baseValue + AnimateEasing.QuadInOut(Offset, 0, (t * 2) - 1);
+			}
+		};
+
+		public override Parallel.Easing ParallelEasing => (a, b, t) => {
+			// Get the base value so that the pulsation adds on top of it.
+			float baseValue = Mathf.Lerp(a, b, t);
+			if (t >= 0 && t < 0.5f) {
+				return baseValue + AnimateEasing.QuadInOut(0, Offset, t * 2);
+			} else {
+				return baseValue + AnimateEasing.QuadInOut(Offset, 0, (t * 2) - 1);
+			}
+		};
 
 		#endregion
 

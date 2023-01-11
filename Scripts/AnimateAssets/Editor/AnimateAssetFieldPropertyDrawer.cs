@@ -23,6 +23,7 @@ namespace CocodriloDog.Animation {
 						typeof(MotionColorAsset),
 						typeof(TimerAsset),
 						typeof(SequenceAsset),
+						typeof(ParallelAsset),
 					};
 				}
 				return m_MonoScriptableTypes;
