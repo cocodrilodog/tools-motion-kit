@@ -130,14 +130,20 @@ namespace CocodriloDog.Animation {
 		/// </summary>
 		public void Dispose() => AnimateAssetFields.ForEach(af => af.Object?.Dispose());
 
-		public void RecreateMonoScriptableObjects() {
+		public void OnMonoScriptableOwnerCreated() {
 			if(AnimateAssetFields != null) {
 				MonoScriptableUtility.RecreateMonoScriptableObjects(AnimateAssetFields.ToArray(), this);
 			}
 		}
 
-		public void RecreateRepeatedMonoScriptableArrayOrListItems() {
+		public void OnMonoScriptableOwnerModified() {
 			MonoScriptableUtility.RecreateRepeatedMonoScriptableArrayOrListItems(AnimateAssetFields.ToArray(), this);
+		}
+
+		public void OnMonoScriptableOwnerContextMenu(string propertyPath) {
+			if (AnimateAssetFields != null) {
+				MonoScriptableUtility.RecreateMonoScriptableObjects(AnimateAssetFields.ToArray(), this);
+			}
 		}
 
 		#endregion
