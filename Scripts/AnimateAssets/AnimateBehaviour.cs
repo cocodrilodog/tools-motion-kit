@@ -141,9 +141,7 @@ namespace CocodriloDog.Animation {
 		}
 
 		public void OnMonoScriptableOwnerContextMenu(string propertyPath) {
-			if (AnimateAssetFields != null) {
-				MonoScriptableUtility.RecreateMonoScriptableObjects(AnimateAssetFields.ToArray(), this);
-			}
+			MonoScriptableUtility.RecreateMonoScriptableObjectAtPath<AnimateAsset>(propertyPath, this);
 		}
 
 		#endregion

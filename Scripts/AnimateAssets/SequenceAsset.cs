@@ -92,7 +92,7 @@ namespace CocodriloDog.Animation {
 		}
 
 		public void OnMonoScriptableOwnerContextMenu(string propertyPath) {
-			MonoScriptableUtility.RecreateMonoScriptableObjects(SequenceItemsFields.ToArray(), this);
+			MonoScriptableUtility.RecreateMonoScriptableObjectAtPath<AnimateAsset>(propertyPath, this);
 		}
 
 		#endregion
