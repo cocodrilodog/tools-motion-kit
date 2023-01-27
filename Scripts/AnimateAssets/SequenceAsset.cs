@@ -83,16 +83,14 @@ namespace CocodriloDog.Animation {
 			}
 		}
 
-		public void OnMonoScriptableOwnerCreated() {
-			MonoScriptableUtility.RecreateMonoScriptableObjects(SequenceItemsFields.ToArray(), this);
-		}
+		public MonoScriptableFieldBase[] GetMonoScriptableFields() => SequenceItemsFields.ToArray();
 
-		public void OnMonoScriptableOwnerModified() {
-			MonoScriptableUtility.RecreateRepeatedMonoScriptableArrayOrListItems(SequenceItemsFields.ToArray(), this);
-		}
-
-		public void OnMonoScriptableOwnerContextMenu(string propertyPath) {
-			MonoScriptableUtility.RecreateMonoScriptableObjectAtPath<AnimateAsset>(propertyPath, this);
+		public void ConfirmOwnership() {
+			foreach (var field in GetMonoScriptableFields()) {
+				if (field.ObjectBase != null) {
+					field.ObjectBase.SetOwner(this);
+				}
+			}
 		}
 
 		#endregion
