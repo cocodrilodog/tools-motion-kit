@@ -12,7 +12,7 @@ namespace CocodriloDog.Animation {
 	}
 
 	/// <summary>
-	/// Base class for motion assets.
+	/// Base class for motion components.
 	/// </summary>
 	/// <typeparam name="ValueT">The animatable type of the motion objects.</typeparam>
 	/// <typeparam name="MotionT">The motion type.</typeparam>
@@ -23,7 +23,7 @@ namespace CocodriloDog.Animation {
 		#region Public Properties
 
 		/// <summary>
-		/// The motion that this asset manages.
+		/// The motion that this component manages.
 		/// </summary>
 		public MotionT Motion {
 			get {

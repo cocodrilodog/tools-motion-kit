@@ -9,80 +9,13 @@ namespace CocodriloDog.Animation {
 	/// <summary>
 	/// This is the component that will be used to contain and manage <see cref="AnimateComponent"/>s.
 	/// </summary>
+	/// <remarks>
+	/// Its interface has been designed for ease of use by <c>UnityEvents</c>.
+	/// </remarks>
 	public class AnimateBehaviour : MonoScriptableRoot {
 
 
 		#region Public Properties
-
-		/// <summary>
-		/// Gets the <c>Progress</c> of the <see cref="DefaultAnimateComponent"/> managed by this MonoBehavoiur.
-		/// </summary>
-		public float Progress {
-			get {
-				if (DefaultAnimateComponent != null) {
-					return DefaultAnimateComponent.Progress;
-				} else {
-					return 0;
-				}
-			}
-			set {
-				if (DefaultAnimateComponent != null) {
-					DefaultAnimateComponent.Progress = value;
-				}
-			}
-		}
-
-		/// <summary>
-		/// Gets the <c>CurrentTime</c> of the <see cref="DefaultAnimateComponent"/> managed by this MonoBehavoiur.
-		/// </summary>
-		public float CurrentTime { 
-			get {
-				if (DefaultAnimateComponent != null) {
-					return DefaultAnimateComponent.CurrentTime;
-				} else {
-					return 0;
-				}
-			} 
-		}
-
-		/// <summary>
-		/// Gets the <c>Duration</c> of the <see cref="DefaultAnimateComponent"/> managed by this MonoBehavoiur.
-		/// </summary>
-		public float Duration {
-			get {
-				if (DefaultAnimateComponent != null) {
-					return DefaultAnimateComponent.Duration;
-				} else {
-					return 0;
-				}
-			}
-		}
-
-		/// <summary>
-		/// Gets the <c>IsPlaying</c> property of the <see cref="DefaultAnimateComponent"/> managed by this MonoBehavoiur.
-		/// </summary>
-		public bool IsPlaying {
-			get {
-				if (DefaultAnimateComponent != null) {
-					return DefaultAnimateComponent.IsPlaying;
-				} else {
-					return false;
-				}
-			}
-		}
-
-		/// <summary>
-		/// Gets the <c>IsPaused</c> property of the <see cref="DefaultAnimateComponent"/> managed by this MonoBehavoiur.
-		/// </summary>
-		public bool IsPaused {
-			get {
-				if (DefaultAnimateComponent != null) {
-					return DefaultAnimateComponent.IsPaused;
-				} else {
-					return false;
-				}
-			}
-		}
 
 		/// <summary>
 		/// The first <see cref="AnimateComponent"/> of this <see cref="AnimateBehaviour"/> if any, or <c>null</c>.
@@ -93,15 +26,6 @@ namespace CocodriloDog.Animation {
 
 
 		#region Public Methods
-
-		/// <summary>
-		/// Initializes all the <see cref="AnimateComponent"/>s of this compopnent.
-		/// </summary>
-		private void Initialize() => AnimateAssetFields.ForEach(af => {
-			if (af.Object != null) {
-				af.Object.Initialize();
-			}
-		});
 
 		/// <summary>
 		/// Plays the <see cref="DefaultAnimateComponent"/>.
@@ -220,9 +144,32 @@ namespace CocodriloDog.Animation {
 		});
 
 		/// <summary>
-		/// Calls <see cref="IMotionBaseComponent.ResetMotion()"/> and all the motions that it finds.
+		/// Resets the default motion.
 		/// </summary>
-		public void ResetAllMotions() => AnimateAssetFields.ForEach(af => ResetMotion(af.Object));
+		public void ResetMotion() {
+			if (DefaultAnimateComponent != null) {
+				if(DefaultAnimateComponent is IMotionBaseComponent) {
+					((IMotionBaseComponent)DefaultAnimateComponent).ResetMotion();
+				}
+			}
+		}
+
+		/// <summary>
+		/// Resets the <see cref="AnimateComponent"/> with the specified <paramref name="componentName"/>
+		/// if it is a motion.
+		/// </summary>
+		/// <param name="componentName">The name of the component.</param>
+		public void ResetMotion(string componentName) {
+			var component = GetAnimateComponent(componentName);
+			if (component != null && component is IMotionBaseComponent) {
+				((IMotionBaseComponent)component).ResetMotion();
+			}
+		}
+
+		/// <summary>
+		/// Calls <see cref="IMotionBaseComponent.ResetMotion()"/> in all the motions that it finds.
+		/// </summary>
+		public void ResetAllMotions() => AnimateAssetFields.ForEach(af => _ResetMotion(af.Object));
 
 		/// <summary>
 		/// Disposes all the <see cref="AnimateComponent"/>s of this compopnent.
@@ -232,6 +179,19 @@ namespace CocodriloDog.Animation {
 				af.Object.Dispose();
 			}
 		});
+
+		/// <summary>
+		/// Gets the <see cref="AnimateComponent"/> named <paramref name="componentName"/>.
+		/// </summary>
+		/// <remarks>
+		/// This method can be used for further control over the managed <see cref="AnimateComponent"/>s.
+		/// </remarks>
+		/// <param name="componentName">The <see cref="AnimateComponent.ObjectName"/></param>
+		/// <returns>The <see cref="AnimateComponent"/></returns>
+		public AnimateComponent GetAnimateComponent(string componentName) {
+			var assetField = AnimateAssetFields.FirstOrDefault(af => af.Object != null && af.Object.ObjectName == componentName);
+			return assetField?.Object;
+		}
 
 		public override MonoScriptableFieldBase[] GetMonoScriptableFields() {
 			// HACK: This
@@ -303,12 +263,16 @@ namespace CocodriloDog.Animation {
 
 		#region Private Methods
 
-		private AnimateComponent GetAnimateComponent(string assetName) {
-			var assetField = AnimateAssetFields.FirstOrDefault(af => af.Object != null && af.Object.ObjectName == assetName);
-			return assetField?.Object;
-		}
+		/// <summary>
+		/// Initializes all the <see cref="AnimateComponent"/>s of this compopnent.
+		/// </summary>
+		private void Initialize() => AnimateAssetFields.ForEach(af => {
+			if (af.Object != null) {
+				af.Object.Initialize();
+			}
+		});
 
-		private void ResetMotion(AnimateComponent animateComponent) {
+		private void _ResetMotion(AnimateComponent animateComponent) {
 			if(animateComponent == null) {
 				return;
 			}
@@ -320,14 +284,14 @@ namespace CocodriloDog.Animation {
 				var sequenceAsset = animateComponent as SequenceComponent;
 				foreach (var itemField in sequenceAsset.SequenceItemsFields) {
 					// Recursion
-					ResetMotion(itemField.Object);
+					_ResetMotion(itemField.Object);
 				}
 			}
 			if (animateComponent is ParallelAsset) {
 				var parallelAsset = animateComponent as ParallelAsset;
 				foreach (var itemField in parallelAsset.ParallelItemsFields) {
 					// Recursion
-					ResetMotion(itemField.Object);
+					_ResetMotion(itemField.Object);
 				}
 			}
 		}
