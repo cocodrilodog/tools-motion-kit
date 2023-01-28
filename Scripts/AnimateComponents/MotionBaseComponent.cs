@@ -7,12 +7,16 @@ namespace CocodriloDog.Animation {
 	using UnityEngine;
 	using UnityEngine.Events;
 
+	public interface IMotionBaseComponent : IAnimateComponent {
+		void ResetMotion();
+	}
+
 	/// <summary>
 	/// Base class for motion assets.
 	/// </summary>
 	/// <typeparam name="ValueT">The animatable type of the motion objects.</typeparam>
 	/// <typeparam name="MotionT">The motion type.</typeparam>
-	public abstract class MotionBaseComponent<ValueT, MotionT> : AnimateComponent
+	public abstract class MotionBaseComponent<ValueT, MotionT> : AnimateComponent, IMotionBaseComponent
 		where MotionT : MotionBase<ValueT, MotionT> {
 
 

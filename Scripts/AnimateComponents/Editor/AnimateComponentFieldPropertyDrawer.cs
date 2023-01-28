@@ -22,7 +22,7 @@ namespace CocodriloDog.Animation {
 						typeof(MotionFloatComponent),
 						typeof(MotionColorComponent),
 						typeof(TimerComponent),
-						typeof(SequenceAsset),
+						typeof(SequenceComponent),
 						typeof(ParallelAsset),
 					};
 				}

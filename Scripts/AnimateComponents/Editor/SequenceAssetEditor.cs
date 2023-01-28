@@ -6,7 +6,7 @@ namespace CocodriloDog.Animation {
 	using UnityEditor;
 	using UnityEngine;
 
-	[CustomEditor(typeof(SequenceAsset))]
+	[CustomEditor(typeof(SequenceComponent))]
 	public class SequenceAssetEditor : AnimateComponentEditor {
 
 

@@ -7,7 +7,7 @@ namespace CocodriloDog.Animation {
 	using UnityEngine;
 
 	[CustomEditor(typeof(TimerComponent))]
-	public class TimerAssetEditor : AnimateComponentEditor {
+	public class TimerComponentEditor : AnimateComponentEditor {
 
 
 		#region Protected Properties

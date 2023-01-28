@@ -7,9 +7,9 @@ namespace CocodriloDog.Animation {
 	using UnityEngine;
 
 	/// <summary>
-	/// Asset for <see cref="Sequence"/> objects.
+	/// Component for <see cref="Sequence"/> objects.
 	/// </summary>
-	public class SequenceAsset : AnimateComponent, IMonoScriptableOwner {
+	public class SequenceComponent : AnimateComponent, IMonoScriptableOwner {
 
 
 		#region #region Public Properties
@@ -99,7 +99,7 @@ namespace CocodriloDog.Animation {
 		#region Private Fields - Serialized
 
 		[SerializeField]
-		private List<AnimateComponentField> m_SequenceItems;
+		private List<AnimateComponentField> m_SequenceItems = new List<AnimateComponentField>();
 
 		#endregion
 

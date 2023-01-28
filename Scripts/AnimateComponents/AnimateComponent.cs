@@ -7,6 +7,21 @@ namespace CocodriloDog.Animation {
 	using UnityEngine;
 	using UnityEngine.Events;
 
+	public interface IAnimateComponent {
+		ITimedProgressable TimedProgressable { get; }
+		float Progress { get; set; }
+		float CurrentTime { get; }
+		float Duration { get; }
+		bool IsPlaying { get; }
+		bool IsPaused { get; }
+		void Initialize();
+		void Play();
+		void Stop();
+		void Pause();
+		void Resume();
+		void Dispose();
+	}
+
 	/// <summary>
 	/// Base class for all Animate components. It provides a generic interface that applies
 	/// for all Animate objects.
@@ -17,7 +32,7 @@ namespace CocodriloDog.Animation {
 	/// Animate motion, timer, sequence or parallel and can create those objects at runtime. 
 	/// They are intended to be used as the inspector-friendly part of the Animate engine.
 	/// </remarks>
-	public abstract class AnimateComponent : MonoScriptableObject {
+	public abstract class AnimateComponent : MonoScriptableObject, IAnimateComponent {
 
 
 		#region Public Properties
