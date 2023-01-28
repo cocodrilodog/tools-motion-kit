@@ -18,7 +18,13 @@ namespace CocodriloDog.Animation {
 		/// Gets the <c>Progress</c> of the <see cref="DefaultAnimateComponent"/> managed by this MonoBehavoiur.
 		/// </summary>
 		public float Progress {
-			get => (float)DefaultAnimateComponent?.Progress;
+			get {
+				if (DefaultAnimateComponent != null) {
+					return DefaultAnimateComponent.Progress;
+				} else {
+					return 0;
+				}
+			}
 			set {
 				if (DefaultAnimateComponent != null) {
 					DefaultAnimateComponent.Progress = value;
@@ -100,13 +106,22 @@ namespace CocodriloDog.Animation {
 		/// <summary>
 		/// Plays the <see cref="DefaultAnimateComponent"/>.
 		/// </summary>
-		public void Play() => DefaultAnimateComponent.Play();
+		public void Play() {
+			if(DefaultAnimateComponent != null) {
+				DefaultAnimateComponent.Play();
+			}
+		}
 
 		/// <summary>
-		/// Plays the <see cref="AnimateComponent"/> with the specified <paramref name="assetName"/>.
+		/// Plays the <see cref="AnimateComponent"/> with the specified <paramref name="componentName"/>.
 		/// </summary>
-		/// <param name="assetName">The name of the asset.</param>
-		public void Play(string assetName) => GetAnimateAsset(assetName)?.Play();
+		/// <param name="componentName">The name of the component.</param>
+		public void Play(string componentName) {
+			var component = GetAnimateComponent(componentName);
+			if (component != null) {
+				component.Play();
+			}
+		}
 
 		/// <summary>
 		/// Plays all the <see cref="AnimateComponent"/>s managed by this behaviour.
@@ -120,13 +135,22 @@ namespace CocodriloDog.Animation {
 		/// <summary>
 		/// Stops the <see cref="DefaultAnimateComponent"/>.
 		/// </summary>
-		public void Stop() => DefaultAnimateComponent?.Stop();
+		public void Stop() {
+			if (DefaultAnimateComponent != null) {
+				DefaultAnimateComponent.Stop();
+			}
+		}
 
 		/// <summary>
-		/// Stops the <see cref="AnimateComponent"/> with the specified <paramref name="assetName"/>.
+		/// Stops the <see cref="AnimateComponent"/> with the specified <paramref name="componentName"/>.
 		/// </summary>
-		/// <param name="assetName">The name of the asset.</param>
-		public void Stop(string assetName) => GetAnimateAsset(assetName)?.Stop();
+		/// <param name="componentName">The name of the component.</param>
+		public void Stop(string componentName) {
+			var component = GetAnimateComponent(componentName);
+			if (component != null) {
+				component.Stop();
+			}
+		}
 
 		/// <summary>
 		/// Stops all the <see cref="AnimateComponent"/>s managed by this behaviour.
@@ -140,34 +164,60 @@ namespace CocodriloDog.Animation {
 		/// <summary>
 		/// Pauses the <see cref="DefaultAnimateComponent"/>.
 		/// </summary>
-		public void Pause() => DefaultAnimateComponent?.Pause();
+		public void Pause() {
+			if (DefaultAnimateComponent != null) {
+				DefaultAnimateComponent.Pause();
+			}
+		}
 
 		/// <summary>
-		/// Pauses the <see cref="AnimateComponent"/> with the specified <paramref name="assetName"/>.
+		/// Pauses the <see cref="AnimateComponent"/> with the specified <paramref name="componentName"/>.
 		/// </summary>
-		/// <param name="assetName">The name of the asset.</param>
-		public void Pause(string assetName) => GetAnimateAsset(assetName)?.Pause();
+		/// <param name="componentName">The name of the component.</param>
+		public void Pause(string componentName) {
+			var component = GetAnimateComponent(componentName);
+			if (component != null) {
+				component.Pause();
+			}
+		}
 
 		/// <summary>
 		/// Pauses all the <see cref="AnimateComponent"/>s managed by this behaviour.
 		/// </summary>
-		public void PauseAll() => AnimateAssetFields.ForEach(af => af.Object?.Pause());
+		public void PauseAll() => AnimateAssetFields.ForEach(af => {
+			if (af.Object != null) {
+				af.Object.Pause();
+			}
+		});
 
 		/// <summary>
 		/// Resumes the <see cref="DefaultAnimateComponent"/>.
 		/// </summary>
-		public void Resume() => DefaultAnimateComponent?.Resume();
+		public void Resume() {
+			if (DefaultAnimateComponent != null) {
+				DefaultAnimateComponent.Resume();
+			}
+		}
 
 		/// <summary>
-		/// Resumes the <see cref="AnimateComponent"/> with the specified <paramref name="assetName"/>.
+		/// Resumes the <see cref="AnimateComponent"/> with the specified <paramref name="componentName"/>.
 		/// </summary>
-		/// <param name="assetName">The name of the asset.</param>
-		public void Resume(string assetName) => GetAnimateAsset(assetName)?.Resume();
+		/// <param name="componentName">The name of the component.</param>
+		public void Resume(string componentName) {
+			var component = GetAnimateComponent(componentName);
+			if (component != null) {
+				component.Resume();
+			}
+		}
 
 		/// <summary>
 		/// Resumes all the <see cref="AnimateComponent"/>s managed by this behaviour.
 		/// </summary>
-		public void ResumeAll() => AnimateAssetFields.ForEach(af => af.Object?.Resume());
+		public void ResumeAll() => AnimateAssetFields.ForEach(af => {
+			if (af.Object != null) {
+				af.Object.Resume();
+			}
+		});
 
 		/// <summary>
 		/// Calls <see cref="IMotionBaseComponent.ResetMotion()"/> and all the motions that it finds.
@@ -177,7 +227,11 @@ namespace CocodriloDog.Animation {
 		/// <summary>
 		/// Disposes all the <see cref="AnimateComponent"/>s of this compopnent.
 		/// </summary>
-		public void Dispose() => AnimateAssetFields.ForEach(af => af.Object?.Dispose());
+		public void Dispose() => AnimateAssetFields.ForEach(af => {
+			if (af.Object != null) {
+				af.Object.Dispose();
+			}
+		});
 
 		public override MonoScriptableFieldBase[] GetMonoScriptableFields() {
 			// HACK: This
@@ -249,12 +303,15 @@ namespace CocodriloDog.Animation {
 
 		#region Private Methods
 
-		private AnimateComponent GetAnimateAsset(string assetName) {
+		private AnimateComponent GetAnimateComponent(string assetName) {
 			var assetField = AnimateAssetFields.FirstOrDefault(af => af.Object != null && af.Object.ObjectName == assetName);
 			return assetField?.Object;
 		}
 
 		private void ResetMotion(AnimateComponent animateComponent) {
+			if(animateComponent == null) {
+				return;
+			}
 			if (animateComponent is IMotionBaseComponent) {
 				var motionComponent = animateComponent as IMotionBaseComponent;
 				motionComponent.ResetMotion();
