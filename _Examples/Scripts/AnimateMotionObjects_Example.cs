@@ -5,7 +5,7 @@ namespace CocodriloDog.Animation.Examples {
 	using System.Collections.Generic;
 	using UnityEngine;
 
-	public class AnimateMotionAssets_Example : MonoBehaviour {
+	public class AnimateMotionObjects_Example : MonoBehaviour {
 
 
 		#region Public Properties
