@@ -294,7 +294,7 @@ namespace CocodriloDog.Animation {
 
 		private List<AnimateComponentField> AnimateAssetFields => m_AnimateAssets;
 
-		private List<AnimateComponentField> AnimateComponentFields => m_AnimateAssets;
+		private List<AnimateComponentField> AnimateComponentFields => m_AnimateComponents;
 
 		private bool PlayAllOnStart => m_PlayAllOnStart;
 

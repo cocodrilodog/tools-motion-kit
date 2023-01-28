@@ -7,14 +7,16 @@ namespace CocodriloDog.Animation {
 	using UnityEngine;
 
 	[CustomEditor(typeof(SequenceComponent))]
-	public class SequenceAssetEditor : AnimateComponentEditor {
+	public class SequenceComponentEditor : AnimateComponentEditor {
 
 
 		#region Unity Methods
 
 		protected override void OnEnable() {
 			base.OnEnable();
-			SequenceItemsProperty = serializedObject.FindProperty("m_SequenceItems");
+			if (target != null) {
+				SequenceItemsProperty = serializedObject.FindProperty("m_SequenceItems");
+			}
 		}
 
 		#endregion

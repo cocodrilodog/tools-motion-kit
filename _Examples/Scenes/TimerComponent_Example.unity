@@ -136,7 +136,8 @@ GameObject:
   - component: {fileID: 712994212}
   - component: {fileID: 712994211}
   - component: {fileID: 712994216}
-  - component: {fileID: 712994215}
+  - component: {fileID: 712994218}
+  - component: {fileID: 712994217}
   m_Layer: 0
   m_Name: Sphere_Timer
   m_TagString: Untagged
@@ -222,7 +223,25 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &712994215
+--- !u!114 &712994216
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 712994210}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0ff26841fc5d56442bfae3ff2cc804b8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_SelectedMonoScriptableObject: {fileID: 712994217}
+  m_AnimateAssets:
+  - m_Object: {fileID: 712994218}
+  m_AnimateComponents:
+  - m_Object: {fileID: 712994217}
+  m_PlayAllOnStart: 1
+--- !u!114 &712994217
 MonoBehaviour:
   m_ObjectHideFlags: 2
   m_CorrespondingSourceObject: {fileID: 0}
@@ -273,22 +292,57 @@ MonoBehaviour:
           m_BoolArgument: 0
         m_CallState: 2
   m_CallbackSelection: 3
---- !u!114 &712994216
+--- !u!114 &712994218
 MonoBehaviour:
-  m_ObjectHideFlags: 0
+  m_ObjectHideFlags: 2
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 712994210}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0ff26841fc5d56442bfae3ff2cc804b8, type: 3}
+  m_Script: {fileID: 11500000, guid: ccc65b2de9b5e90468709256837d1f60, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_SelectedMonoScriptableObject: {fileID: 0}
-  m_AnimateAssets:
-  - m_Object: {fileID: 712994215}
-  m_PlayAllOnStart: 1
+  m_Owner: {fileID: 712994216}
+  m_ObjectName: TimerComponent
+  m_ReuseID: 
+  m_Duration: 2
+  m_TimeMode: 0
+  m_Easing:
+    m_EasingName: Linear
+    m_AnimateCurve:
+      Curve:
+        serializedVersion: 2
+        m_Curve: []
+        m_PreInfinity: 2
+        m_PostInfinity: 2
+        m_RotationOrder: 4
+  m_OnStart:
+    m_PersistentCalls:
+      m_Calls: []
+  m_OnUpdate:
+    m_PersistentCalls:
+      m_Calls: []
+  m_OnInterrupt:
+    m_PersistentCalls:
+      m_Calls: []
+  m_OnComplete:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 712994210}
+        m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
+        m_MethodName: SetActive
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  m_CallbackSelection: 3
 --- !u!1 &1083925030
 GameObject:
   m_ObjectHideFlags: 0
