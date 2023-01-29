@@ -287,8 +287,8 @@ namespace CocodriloDog.Animation {
 					_ResetMotion(itemField.Object);
 				}
 			}
-			if (animateComponent is ParallelAsset) {
-				var parallelAsset = animateComponent as ParallelAsset;
+			if (animateComponent is ParallelComponent) {
+				var parallelAsset = animateComponent as ParallelComponent;
 				foreach (var itemField in parallelAsset.ParallelItemsFields) {
 					// Recursion
 					_ResetMotion(itemField.Object);

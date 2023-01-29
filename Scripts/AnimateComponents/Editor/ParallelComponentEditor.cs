@@ -6,15 +6,17 @@ namespace CocodriloDog.Animation {
 	using UnityEditor;
 	using UnityEngine;
 
-	[CustomEditor(typeof(ParallelAsset))]
-	public class ParallelAssetEditor : AnimateComponentEditor {
+	[CustomEditor(typeof(ParallelComponent))]
+	public class ParallelComponentEditor : AnimateComponentEditor {
 
 
 		#region Unity Methods
 
 		protected override void OnEnable() {
 			base.OnEnable();
-			ParallelItemsProperty = serializedObject.FindProperty("m_ParallelItems");
+			if (target != null) {
+				ParallelItemsProperty = serializedObject.FindProperty("m_ParallelItems");
+			}
 		}
 
 		#endregion

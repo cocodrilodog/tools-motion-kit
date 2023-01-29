@@ -7,9 +7,9 @@ namespace CocodriloDog.Animation {
 	using UnityEngine;
 
 	/// <summary>
-	/// Asset for <see cref="Parallel"/> objects.
+	/// Component for <see cref="Parallel"/> objects.
 	/// </summary>
-	public class ParallelAsset : AnimateComponent, IMonoScriptableOwner {
+	public class ParallelComponent : AnimateComponent, IMonoScriptableOwner {
 
 
 		#region #region Public Properties
@@ -49,6 +49,7 @@ namespace CocodriloDog.Animation {
 
 			List<ITimedProgressable> parallelItemsList = new List<ITimedProgressable>();
 			foreach(var parallelItemField in ParallelItemsFields) {
+				Debug.Log($"parallelItemField.Object: {parallelItemField.Object}");
 				parallelItemsList.Add(parallelItemField.Object.TimedProgressable);
 			}
 
@@ -99,7 +100,7 @@ namespace CocodriloDog.Animation {
 		#region Private Fields - Serialized
 
 		[SerializeField]
-		private List<AnimateComponentField> m_ParallelItems;
+		private List<AnimateComponentField> m_ParallelItems = new List<AnimateComponentField>();
 
 		#endregion
 
