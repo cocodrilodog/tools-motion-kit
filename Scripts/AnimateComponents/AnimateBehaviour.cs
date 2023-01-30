@@ -155,12 +155,12 @@ namespace CocodriloDog.Animation {
 		}
 
 		/// <summary>
-		/// Resets the <see cref="AnimateComponent"/> with the specified <paramref name="componentName"/>
+		/// Resets the <see cref="AnimateComponent"/> with the specified <paramref name="motionPath"/>
 		/// if it is a motion.
 		/// </summary>
-		/// <param name="componentName">The name of the component.</param>
-		public void ResetMotion(string componentName) {
-			var component = GetAnimateComponent(componentName);
+		/// <param name="motionPath">The name of the component.</param>
+		public void ResetMotion(string motionPath) { // TODO: Allow paths like: "Sequence/Motion1"
+			var component = GetAnimateComponent(motionPath);
 			if (component != null && component is IMotionBaseComponent) {
 				((IMotionBaseComponent)component).ResetMotion();
 			}

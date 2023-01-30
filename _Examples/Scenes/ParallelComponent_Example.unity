@@ -132,16 +132,17 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 608047217}
-  - component: {fileID: 608047237}
-  - component: {fileID: 608047236}
-  - component: {fileID: 608047235}
-  - component: {fileID: 608047234}
-  - component: {fileID: 608047233}
-  - component: {fileID: 608047232}
-  - component: {fileID: 608047231}
-  - component: {fileID: 608047230}
-  - component: {fileID: 608047229}
-  - component: {fileID: 608047238}
+  - component: {fileID: 608047219}
+  - component: {fileID: 608047218}
+  - component: {fileID: 608047222}
+  - component: {fileID: 608047221}
+  - component: {fileID: 608047220}
+  - component: {fileID: 608047228}
+  - component: {fileID: 608047227}
+  - component: {fileID: 608047226}
+  - component: {fileID: 608047225}
+  - component: {fileID: 608047224}
+  - component: {fileID: 608047223}
   m_Layer: 0
   m_Name: ParallelComponentExample
   m_TagString: Untagged
@@ -167,7 +168,7 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &608047229
+--- !u!114 &608047218
 MonoBehaviour:
   m_ObjectHideFlags: 2
   m_CorrespondingSourceObject: {fileID: 0}
@@ -176,59 +177,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 608047216}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: dc8183f4cd29066469c3e2751a5222b2, type: 3}
+  m_Script: {fileID: 11500000, guid: 48594a1efb557634b84510b8977d0e23, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_Owner: {fileID: 608047235}
-  m_ObjectName: Motion3
+  m_Parent: {fileID: 608047219}
+  m_ObjectName: TheParallel
   m_ReuseID: 
-  m_Duration: 1.5
-  m_TimeMode: 0
-  m_Easing:
-    m_EasingName: Back In Out
-    m_AnimateCurve:
-      Curve:
-        serializedVersion: 2
-        m_Curve: []
-        m_PreInfinity: 2
-        m_PostInfinity: 2
-        m_RotationOrder: 4
-  m_OnStart:
-    m_PersistentCalls:
-      m_Calls: []
-  m_OnUpdate:
-    m_PersistentCalls:
-      m_Calls: []
-  m_OnInterrupt:
-    m_PersistentCalls:
-      m_Calls: []
-  m_OnComplete:
-    m_PersistentCalls:
-      m_Calls: []
-  m_CallbackSelection: 0
-  m_Object: {fileID: 1215140195}
-  m_SetterString: Transform/localPosition
-  m_GetterString: Transform/localPosition
-  m_InitialValue: {x: 0, y: 0, z: 0}
-  m_InitialValueIsRelative: 1
-  m_FinalValue: {x: 0, y: 3, z: 0}
-  m_FinalValueIsRelative: 1
---- !u!114 &608047230
-MonoBehaviour:
-  m_ObjectHideFlags: 2
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 608047216}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ccc65b2de9b5e90468709256837d1f60, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_Owner: {fileID: 608047235}
-  m_ObjectName: Timer3
-  m_ReuseID: 
-  m_Duration: 0.9
+  m_Duration: 0
   m_TimeMode: 0
   m_Easing:
     m_EasingName: Linear
@@ -252,7 +207,27 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_CallbackSelection: 0
---- !u!114 &608047231
+  m_ParallelItems:
+  - m_Object: {fileID: 608047222}
+  - m_Object: {fileID: 608047228}
+  - m_Object: {fileID: 608047225}
+--- !u!114 &608047219
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 608047216}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0ff26841fc5d56442bfae3ff2cc804b8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_SelectedMonoCompositeObject: {fileID: 608047218}
+  m_AnimateComponents:
+  - m_Object: {fileID: 608047218}
+  m_PlayAllOnStart: 1
+--- !u!114 &608047220
 MonoBehaviour:
   m_ObjectHideFlags: 2
   m_CorrespondingSourceObject: {fileID: 0}
@@ -264,95 +239,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dc8183f4cd29066469c3e2751a5222b2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_Owner: {fileID: 608047236}
-  m_ObjectName: Motion2
-  m_ReuseID: 
-  m_Duration: 1.5
-  m_TimeMode: 0
-  m_Easing:
-    m_EasingName: Back In Out
-    m_AnimateCurve:
-      Curve:
-        serializedVersion: 2
-        m_Curve: []
-        m_PreInfinity: 2
-        m_PostInfinity: 2
-        m_RotationOrder: 4
-  m_OnStart:
-    m_PersistentCalls:
-      m_Calls: []
-  m_OnUpdate:
-    m_PersistentCalls:
-      m_Calls: []
-  m_OnInterrupt:
-    m_PersistentCalls:
-      m_Calls: []
-  m_OnComplete:
-    m_PersistentCalls:
-      m_Calls: []
-  m_CallbackSelection: 0
-  m_Object: {fileID: 903367162}
-  m_SetterString: Transform/localPosition
-  m_GetterString: Transform/localPosition
-  m_InitialValue: {x: 0, y: 0, z: 0}
-  m_InitialValueIsRelative: 1
-  m_FinalValue: {x: 0, y: 3, z: 0}
-  m_FinalValueIsRelative: 1
---- !u!114 &608047232
-MonoBehaviour:
-  m_ObjectHideFlags: 2
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 608047216}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ccc65b2de9b5e90468709256837d1f60, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_Owner: {fileID: 608047236}
-  m_ObjectName: Timer2
-  m_ReuseID: 
-  m_Duration: 0.5
-  m_TimeMode: 0
-  m_Easing:
-    m_EasingName: Linear
-    m_AnimateCurve:
-      Curve:
-        serializedVersion: 2
-        m_Curve: []
-        m_PreInfinity: 2
-        m_PostInfinity: 2
-        m_RotationOrder: 4
-  m_OnStart:
-    m_PersistentCalls:
-      m_Calls: []
-  m_OnUpdate:
-    m_PersistentCalls:
-      m_Calls: []
-  m_OnInterrupt:
-    m_PersistentCalls:
-      m_Calls: []
-  m_OnComplete:
-    m_PersistentCalls:
-      m_Calls: []
-  m_CallbackSelection: 0
---- !u!114 &608047233
-MonoBehaviour:
-  m_ObjectHideFlags: 2
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 608047216}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: dc8183f4cd29066469c3e2751a5222b2, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_Owner: {fileID: 608047237}
+  m_Parent: {fileID: 608047222}
   m_ObjectName: Motion1
   m_ReuseID: 
-  m_Duration: 1.5
+  m_Duration: 2
   m_TimeMode: 0
   m_Easing:
     m_EasingName: Back In Out
@@ -383,7 +273,7 @@ MonoBehaviour:
   m_InitialValueIsRelative: 1
   m_FinalValue: {x: 0, y: 3, z: 0}
   m_FinalValueIsRelative: 1
---- !u!114 &608047234
+--- !u!114 &608047221
 MonoBehaviour:
   m_ObjectHideFlags: 2
   m_CorrespondingSourceObject: {fileID: 0}
@@ -395,7 +285,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ccc65b2de9b5e90468709256837d1f60, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_Owner: {fileID: 608047237}
+  m_Parent: {fileID: 608047222}
   m_ObjectName: Timer1
   m_ReuseID: 
   m_Duration: 0.1
@@ -422,7 +312,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_CallbackSelection: 0
---- !u!114 &608047235
+--- !u!114 &608047222
 MonoBehaviour:
   m_ObjectHideFlags: 2
   m_CorrespondingSourceObject: {fileID: 0}
@@ -434,91 +324,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 08aee8a25e2e3ee47b904142511ae201, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_Owner: {fileID: 608047238}
-  m_ObjectName: Sequence3
-  m_ReuseID: 
-  m_Duration: 0
-  m_TimeMode: 0
-  m_Easing:
-    m_EasingName: Linear
-    m_AnimateCurve:
-      Curve:
-        serializedVersion: 2
-        m_Curve: []
-        m_PreInfinity: 2
-        m_PostInfinity: 2
-        m_RotationOrder: 4
-  m_OnStart:
-    m_PersistentCalls:
-      m_Calls: []
-  m_OnUpdate:
-    m_PersistentCalls:
-      m_Calls: []
-  m_OnInterrupt:
-    m_PersistentCalls:
-      m_Calls: []
-  m_OnComplete:
-    m_PersistentCalls:
-      m_Calls: []
-  m_CallbackSelection: 0
-  m_SequenceItems:
-  - m_Object: {fileID: 608047230}
-  - m_Object: {fileID: 608047229}
---- !u!114 &608047236
-MonoBehaviour:
-  m_ObjectHideFlags: 2
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 608047216}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 08aee8a25e2e3ee47b904142511ae201, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_Owner: {fileID: 608047238}
-  m_ObjectName: Sequence2
-  m_ReuseID: 
-  m_Duration: 0
-  m_TimeMode: 0
-  m_Easing:
-    m_EasingName: Linear
-    m_AnimateCurve:
-      Curve:
-        serializedVersion: 2
-        m_Curve: []
-        m_PreInfinity: 2
-        m_PostInfinity: 2
-        m_RotationOrder: 4
-  m_OnStart:
-    m_PersistentCalls:
-      m_Calls: []
-  m_OnUpdate:
-    m_PersistentCalls:
-      m_Calls: []
-  m_OnInterrupt:
-    m_PersistentCalls:
-      m_Calls: []
-  m_OnComplete:
-    m_PersistentCalls:
-      m_Calls: []
-  m_CallbackSelection: 0
-  m_SequenceItems:
-  - m_Object: {fileID: 608047232}
-  - m_Object: {fileID: 608047231}
---- !u!114 &608047237
-MonoBehaviour:
-  m_ObjectHideFlags: 2
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 608047216}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 08aee8a25e2e3ee47b904142511ae201, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_Owner: {fileID: 608047238}
+  m_Parent: {fileID: 608047218}
   m_ObjectName: Sequence1
   m_ReuseID: 
   m_Duration: 0
@@ -546,9 +352,9 @@ MonoBehaviour:
       m_Calls: []
   m_CallbackSelection: 0
   m_SequenceItems:
-  - m_Object: {fileID: 608047234}
-  - m_Object: {fileID: 608047233}
---- !u!114 &608047238
+  - m_Object: {fileID: 608047221}
+  - m_Object: {fileID: 608047220}
+--- !u!114 &608047223
 MonoBehaviour:
   m_ObjectHideFlags: 2
   m_CorrespondingSourceObject: {fileID: 0}
@@ -557,11 +363,96 @@ MonoBehaviour:
   m_GameObject: {fileID: 608047216}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 48594a1efb557634b84510b8977d0e23, type: 3}
+  m_Script: {fileID: 11500000, guid: dc8183f4cd29066469c3e2751a5222b2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_Owner: {fileID: 0}
-  m_ObjectName: TheParallel
+  m_Parent: {fileID: 608047225}
+  m_ObjectName: Motion3
+  m_ReuseID: 
+  m_Duration: 2
+  m_TimeMode: 0
+  m_Easing:
+    m_EasingName: Back In Out
+    m_AnimateCurve:
+      Curve:
+        serializedVersion: 2
+        m_Curve: []
+        m_PreInfinity: 2
+        m_PostInfinity: 2
+        m_RotationOrder: 4
+  m_OnStart:
+    m_PersistentCalls:
+      m_Calls: []
+  m_OnUpdate:
+    m_PersistentCalls:
+      m_Calls: []
+  m_OnInterrupt:
+    m_PersistentCalls:
+      m_Calls: []
+  m_OnComplete:
+    m_PersistentCalls:
+      m_Calls: []
+  m_CallbackSelection: 0
+  m_Object: {fileID: 1215140195}
+  m_SetterString: Transform/localPosition
+  m_GetterString: Transform/localPosition
+  m_InitialValue: {x: 0, y: 0, z: 0}
+  m_InitialValueIsRelative: 1
+  m_FinalValue: {x: 0, y: 3, z: 0}
+  m_FinalValueIsRelative: 1
+--- !u!114 &608047224
+MonoBehaviour:
+  m_ObjectHideFlags: 2
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 608047216}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ccc65b2de9b5e90468709256837d1f60, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Parent: {fileID: 608047225}
+  m_ObjectName: Timer3
+  m_ReuseID: 
+  m_Duration: 0.5
+  m_TimeMode: 0
+  m_Easing:
+    m_EasingName: Linear
+    m_AnimateCurve:
+      Curve:
+        serializedVersion: 2
+        m_Curve: []
+        m_PreInfinity: 2
+        m_PostInfinity: 2
+        m_RotationOrder: 4
+  m_OnStart:
+    m_PersistentCalls:
+      m_Calls: []
+  m_OnUpdate:
+    m_PersistentCalls:
+      m_Calls: []
+  m_OnInterrupt:
+    m_PersistentCalls:
+      m_Calls: []
+  m_OnComplete:
+    m_PersistentCalls:
+      m_Calls: []
+  m_CallbackSelection: 0
+--- !u!114 &608047225
+MonoBehaviour:
+  m_ObjectHideFlags: 2
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 608047216}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 08aee8a25e2e3ee47b904142511ae201, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Parent: {fileID: 608047218}
+  m_ObjectName: Sequence3
   m_ReuseID: 
   m_Duration: 0
   m_TimeMode: 0
@@ -587,10 +478,136 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_CallbackSelection: 0
-  m_ParallelItems:
-  - m_Object: {fileID: 608047237}
-  - m_Object: {fileID: 608047236}
-  - m_Object: {fileID: 608047235}
+  m_SequenceItems:
+  - m_Object: {fileID: 608047224}
+  - m_Object: {fileID: 608047223}
+--- !u!114 &608047226
+MonoBehaviour:
+  m_ObjectHideFlags: 2
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 608047216}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dc8183f4cd29066469c3e2751a5222b2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Parent: {fileID: 608047228}
+  m_ObjectName: Motion2
+  m_ReuseID: 
+  m_Duration: 2
+  m_TimeMode: 0
+  m_Easing:
+    m_EasingName: Back In Out
+    m_AnimateCurve:
+      Curve:
+        serializedVersion: 2
+        m_Curve: []
+        m_PreInfinity: 2
+        m_PostInfinity: 2
+        m_RotationOrder: 4
+  m_OnStart:
+    m_PersistentCalls:
+      m_Calls: []
+  m_OnUpdate:
+    m_PersistentCalls:
+      m_Calls: []
+  m_OnInterrupt:
+    m_PersistentCalls:
+      m_Calls: []
+  m_OnComplete:
+    m_PersistentCalls:
+      m_Calls: []
+  m_CallbackSelection: 0
+  m_Object: {fileID: 903367162}
+  m_SetterString: Transform/localPosition
+  m_GetterString: Transform/localPosition
+  m_InitialValue: {x: 0, y: 0, z: 0}
+  m_InitialValueIsRelative: 1
+  m_FinalValue: {x: 0, y: 3, z: 0}
+  m_FinalValueIsRelative: 1
+--- !u!114 &608047227
+MonoBehaviour:
+  m_ObjectHideFlags: 2
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 608047216}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ccc65b2de9b5e90468709256837d1f60, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Parent: {fileID: 608047228}
+  m_ObjectName: Timer2
+  m_ReuseID: 
+  m_Duration: 0.3
+  m_TimeMode: 0
+  m_Easing:
+    m_EasingName: Linear
+    m_AnimateCurve:
+      Curve:
+        serializedVersion: 2
+        m_Curve: []
+        m_PreInfinity: 2
+        m_PostInfinity: 2
+        m_RotationOrder: 4
+  m_OnStart:
+    m_PersistentCalls:
+      m_Calls: []
+  m_OnUpdate:
+    m_PersistentCalls:
+      m_Calls: []
+  m_OnInterrupt:
+    m_PersistentCalls:
+      m_Calls: []
+  m_OnComplete:
+    m_PersistentCalls:
+      m_Calls: []
+  m_CallbackSelection: 0
+--- !u!114 &608047228
+MonoBehaviour:
+  m_ObjectHideFlags: 2
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 608047216}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 08aee8a25e2e3ee47b904142511ae201, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Parent: {fileID: 608047218}
+  m_ObjectName: Sequence2
+  m_ReuseID: 
+  m_Duration: 0
+  m_TimeMode: 0
+  m_Easing:
+    m_EasingName: Linear
+    m_AnimateCurve:
+      Curve:
+        serializedVersion: 2
+        m_Curve: []
+        m_PreInfinity: 2
+        m_PostInfinity: 2
+        m_RotationOrder: 4
+  m_OnStart:
+    m_PersistentCalls:
+      m_Calls: []
+  m_OnUpdate:
+    m_PersistentCalls:
+      m_Calls: []
+  m_OnInterrupt:
+    m_PersistentCalls:
+      m_Calls: []
+  m_OnComplete:
+    m_PersistentCalls:
+      m_Calls: []
+  m_CallbackSelection: 0
+  m_SequenceItems:
+  - m_Object: {fileID: 608047227}
+  - m_Object: {fileID: 608047226}
 --- !u!1 &776496582
 GameObject:
   m_ObjectHideFlags: 0

@@ -50,7 +50,6 @@ namespace CocodriloDog.Animation {
 
 			List<ITimedProgressable> parallelItemsList = new List<ITimedProgressable>();
 			foreach(var parallelItemField in ParallelItemsFields) {
-				Debug.Log($"parallelItemField.Object: {parallelItemField.Object}");
 				parallelItemsList.Add(parallelItemField.Object.TimedProgressable);
 			}
 
