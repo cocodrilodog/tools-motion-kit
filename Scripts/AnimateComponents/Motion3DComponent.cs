@@ -8,6 +8,7 @@ namespace CocodriloDog.Animation {
 	/// <summary>
 	/// Component for <see cref="Vector3"/> motions.
 	/// </summary>
+	[AddComponentMenu("")]
 	public class Motion3DComponent : MotionBaseComponent<Vector3, Motion3D> {
 
 

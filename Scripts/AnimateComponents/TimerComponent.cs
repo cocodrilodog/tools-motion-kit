@@ -8,6 +8,7 @@ namespace CocodriloDog.Animation {
 	/// <summary>
 	/// Component for <see cref="Timer"/> objects.
 	/// </summary>
+	[AddComponentMenu("")]
 	public class TimerComponent : AnimateComponent {
 
 

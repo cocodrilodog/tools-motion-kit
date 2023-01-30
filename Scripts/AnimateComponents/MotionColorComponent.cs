@@ -8,6 +8,7 @@ namespace CocodriloDog.Animation {
 	/// <summary>
 	/// Component for <see cref="Color"/> motions.
 	/// </summary>
+	[AddComponentMenu("")]
 	public class MotionColorComponent : MotionBaseComponent<Color, MotionColor> {
 
 

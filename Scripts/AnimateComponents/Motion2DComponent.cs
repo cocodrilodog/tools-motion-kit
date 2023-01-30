@@ -17,6 +17,7 @@ namespace CocodriloDog.Animation {
 	/// <see cref="Vector3"/> vs <see cref="Vector2"/>. It showed an ambiguity error so I decided 
 	/// to only leave the <see cref="Motion3D"/>
 	/// </remarks>
+	[AddComponentMenu("")]
 	public class Motion2DComponent : MotionBaseComponent<Vector3, Motion3D> {
 
 

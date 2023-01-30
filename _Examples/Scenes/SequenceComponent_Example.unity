@@ -219,6 +219,12 @@ GameObject:
   - component: {fileID: 1576070271}
   - component: {fileID: 1576070270}
   - component: {fileID: 1576070269}
+  - component: {fileID: 1576070275}
+  - component: {fileID: 1576070274}
+  - component: {fileID: 1576070273}
+  - component: {fileID: 1576070276}
+  - component: {fileID: 1576070277}
+  - component: {fileID: 1576070278}
   m_Layer: 0
   m_Name: Sphere
   m_TagString: Untagged
@@ -304,3 +310,247 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1576070273
+MonoBehaviour:
+  m_ObjectHideFlags: 2
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1576070265}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dc8183f4cd29066469c3e2751a5222b2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Parent: {fileID: 1576070274}
+  m_ObjectName: Motion1
+  m_ReuseID: 
+  m_Duration: 1
+  m_TimeMode: 0
+  m_Easing:
+    m_EasingName: Linear
+    m_AnimateCurve:
+      Curve:
+        serializedVersion: 2
+        m_Curve: []
+        m_PreInfinity: 2
+        m_PostInfinity: 2
+        m_RotationOrder: 4
+  m_OnStart:
+    m_PersistentCalls:
+      m_Calls: []
+  m_OnUpdate:
+    m_PersistentCalls:
+      m_Calls: []
+  m_OnInterrupt:
+    m_PersistentCalls:
+      m_Calls: []
+  m_OnComplete:
+    m_PersistentCalls:
+      m_Calls: []
+  m_CallbackSelection: 0
+  m_Object: {fileID: 1576070265}
+  m_SetterString: Transform/localPosition
+  m_GetterString: 
+  m_InitialValue: {x: 0, y: 0, z: 0}
+  m_InitialValueIsRelative: 0
+  m_FinalValue: {x: 3, y: 0, z: 0}
+  m_FinalValueIsRelative: 0
+--- !u!114 &1576070274
+MonoBehaviour:
+  m_ObjectHideFlags: 2
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1576070265}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 08aee8a25e2e3ee47b904142511ae201, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Parent: {fileID: 1576070275}
+  m_ObjectName: SequenceComponent
+  m_ReuseID: 
+  m_Duration: 0
+  m_TimeMode: 0
+  m_Easing:
+    m_EasingName: Quint In Out
+    m_AnimateCurve:
+      Curve:
+        serializedVersion: 2
+        m_Curve: []
+        m_PreInfinity: 2
+        m_PostInfinity: 2
+        m_RotationOrder: 4
+  m_OnStart:
+    m_PersistentCalls:
+      m_Calls: []
+  m_OnUpdate:
+    m_PersistentCalls:
+      m_Calls: []
+  m_OnInterrupt:
+    m_PersistentCalls:
+      m_Calls: []
+  m_OnComplete:
+    m_PersistentCalls:
+      m_Calls: []
+  m_CallbackSelection: 0
+  m_SequenceItems:
+  - m_Object: {fileID: 1576070273}
+  - m_Object: {fileID: 1576070276}
+  - m_Object: {fileID: 1576070277}
+  - m_Object: {fileID: 1576070278}
+--- !u!114 &1576070275
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1576070265}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0ff26841fc5d56442bfae3ff2cc804b8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_SelectedMonoCompositeObject: {fileID: 1576070274}
+  m_AnimateComponents:
+  - m_Object: {fileID: 1576070274}
+  m_PlayAllOnStart: 1
+--- !u!114 &1576070276
+MonoBehaviour:
+  m_ObjectHideFlags: 2
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1576070265}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dc8183f4cd29066469c3e2751a5222b2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Parent: {fileID: 1576070274}
+  m_ObjectName: Motion2
+  m_ReuseID: 
+  m_Duration: 1
+  m_TimeMode: 0
+  m_Easing:
+    m_EasingName: Linear
+    m_AnimateCurve:
+      Curve:
+        serializedVersion: 2
+        m_Curve: []
+        m_PreInfinity: 2
+        m_PostInfinity: 2
+        m_RotationOrder: 4
+  m_OnStart:
+    m_PersistentCalls:
+      m_Calls: []
+  m_OnUpdate:
+    m_PersistentCalls:
+      m_Calls: []
+  m_OnInterrupt:
+    m_PersistentCalls:
+      m_Calls: []
+  m_OnComplete:
+    m_PersistentCalls:
+      m_Calls: []
+  m_CallbackSelection: 0
+  m_Object: {fileID: 1576070265}
+  m_SetterString: Transform/localPosition
+  m_GetterString: 
+  m_InitialValue: {x: 3, y: 0, z: 0}
+  m_InitialValueIsRelative: 0
+  m_FinalValue: {x: 3, y: 3, z: 0}
+  m_FinalValueIsRelative: 0
+--- !u!114 &1576070277
+MonoBehaviour:
+  m_ObjectHideFlags: 2
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1576070265}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dc8183f4cd29066469c3e2751a5222b2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Parent: {fileID: 1576070274}
+  m_ObjectName: Motion3
+  m_ReuseID: 
+  m_Duration: 1
+  m_TimeMode: 0
+  m_Easing:
+    m_EasingName: Linear
+    m_AnimateCurve:
+      Curve:
+        serializedVersion: 2
+        m_Curve: []
+        m_PreInfinity: 2
+        m_PostInfinity: 2
+        m_RotationOrder: 4
+  m_OnStart:
+    m_PersistentCalls:
+      m_Calls: []
+  m_OnUpdate:
+    m_PersistentCalls:
+      m_Calls: []
+  m_OnInterrupt:
+    m_PersistentCalls:
+      m_Calls: []
+  m_OnComplete:
+    m_PersistentCalls:
+      m_Calls: []
+  m_CallbackSelection: 0
+  m_Object: {fileID: 1576070265}
+  m_SetterString: Transform/localPosition
+  m_GetterString: 
+  m_InitialValue: {x: 3, y: 3, z: 0}
+  m_InitialValueIsRelative: 0
+  m_FinalValue: {x: 0, y: 3, z: 0}
+  m_FinalValueIsRelative: 0
+--- !u!114 &1576070278
+MonoBehaviour:
+  m_ObjectHideFlags: 2
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1576070265}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dc8183f4cd29066469c3e2751a5222b2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Parent: {fileID: 1576070274}
+  m_ObjectName: Motion4
+  m_ReuseID: 
+  m_Duration: 1
+  m_TimeMode: 0
+  m_Easing:
+    m_EasingName: Linear
+    m_AnimateCurve:
+      Curve:
+        serializedVersion: 2
+        m_Curve: []
+        m_PreInfinity: 2
+        m_PostInfinity: 2
+        m_RotationOrder: 4
+  m_OnStart:
+    m_PersistentCalls:
+      m_Calls: []
+  m_OnUpdate:
+    m_PersistentCalls:
+      m_Calls: []
+  m_OnInterrupt:
+    m_PersistentCalls:
+      m_Calls: []
+  m_OnComplete:
+    m_PersistentCalls:
+      m_Calls: []
+  m_CallbackSelection: 0
+  m_Object: {fileID: 1576070265}
+  m_SetterString: Transform/localPosition
+  m_GetterString: 
+  m_InitialValue: {x: 0, y: 3, z: 0}
+  m_InitialValueIsRelative: 0
+  m_FinalValue: {x: 0, y: 0, z: 0}
+  m_FinalValueIsRelative: 0

@@ -8,6 +8,7 @@ namespace CocodriloDog.Animation {
 	/// <summary>
 	/// Component for <see cref="float"/> motions.
 	/// </summary>
+	[AddComponentMenu("")]
 	public class MotionFloatComponent : MotionBaseComponent<float, MotionFloat> {
 
 
