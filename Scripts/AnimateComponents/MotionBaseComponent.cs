@@ -7,6 +7,14 @@ namespace CocodriloDog.Animation {
 	using UnityEngine;
 	using UnityEngine.Events;
 
+	/// <summary>
+	/// Interface to be implemented by <see cref="MotionBaseComponent{ValueT, MotionT}"/>
+	/// </summary>
+	/// 
+	/// <remarks>
+	/// It was created so that a <see cref="MotionBaseComponent{ValueT, MotionT}"/> is easily
+	/// identifiable instead of using the concrete types derived from the template.
+	/// </remarks>
 	public interface IMotionBaseComponent : IAnimateComponent {
 		void ResetMotion();
 	}

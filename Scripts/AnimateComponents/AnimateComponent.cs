@@ -7,6 +7,15 @@ namespace CocodriloDog.Animation {
 	using UnityEngine;
 	using UnityEngine.Events;
 
+	/// <summary>
+	/// Interface to be implemented by <see cref="AnimateComponent"/>
+	/// </summary>
+	/// 
+	/// <remarks>
+	/// It was created so that a <see cref="MotionBaseComponent{ValueT, MotionT}"/> is easily
+	/// identifiable with <see cref="IMotionBaseComponent"/> instead of using the concrete types
+	/// derived from the template.
+	/// </remarks>
 	public interface IAnimateComponent {
 		ITimedProgressable TimedProgressable { get; }
 		float Progress { get; set; }
