@@ -9,7 +9,7 @@ namespace CocodriloDog.Animation {
 	/// <summary>
 	/// Component for <see cref="Sequence"/> objects.
 	/// </summary>
-	public class SequenceComponent : AnimateComponent, IMonoScriptableOwner {
+	public class SequenceComponent : AnimateComponent, IMonoCompositeParent {
 
 
 		#region #region Public Properties
@@ -83,12 +83,12 @@ namespace CocodriloDog.Animation {
 			}
 		}
 
-		public MonoScriptableFieldBase[] GetMonoScriptableFields() => SequenceItemsFields.ToArray();
+		public MonoCompositeFieldBase[] GetChildren() => SequenceItemsFields.ToArray();
 
-		public void ConfirmOwnership() {
-			foreach (var field in GetMonoScriptableFields()) {
+		public void ConfirmChildren() {
+			foreach (var field in GetChildren()) {
 				if (field.ObjectBase != null) {
-					field.ObjectBase.SetOwner(this);
+					field.ObjectBase.SetParent(this);
 				}
 			}
 		}

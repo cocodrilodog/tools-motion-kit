@@ -12,7 +12,7 @@ namespace CocodriloDog.Animation {
 	/// <summary>
 	/// Base class for all <see cref="AnimateComponent"/> inspectors.
 	/// </summary>
-	public abstract class AnimateComponentEditor : MonoScriptableObjectEditor {
+	public abstract class AnimateComponentEditor : MonoCompositeObjectEditor {
 
 
 		#region Unity Methods

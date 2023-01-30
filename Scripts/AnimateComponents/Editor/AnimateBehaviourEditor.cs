@@ -7,6 +7,6 @@ namespace CocodriloDog.Animation {
 	using UnityEngine;
 
 	[CustomEditor(typeof(AnimateBehaviour))]
-	public class AnimateBehaviourEditor : MonoScriptableRootEditor { }
+	public class AnimateBehaviourEditor : MonoCompositeRootEditor { }
 
 }

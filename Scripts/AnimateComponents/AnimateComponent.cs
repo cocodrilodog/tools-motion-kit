@@ -32,7 +32,7 @@ namespace CocodriloDog.Animation {
 	/// Animate motion, timer, sequence or parallel and can create those objects at runtime. 
 	/// They are intended to be used as the inspector-friendly part of the Animate engine.
 	/// </remarks>
-	public abstract class AnimateComponent : MonoScriptableObject, IAnimateComponent {
+	public abstract class AnimateComponent : MonoCompositeObject, IAnimateComponent {
 
 
 		#region Public Properties

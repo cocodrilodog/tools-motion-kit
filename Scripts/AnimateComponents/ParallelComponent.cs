@@ -9,7 +9,7 @@ namespace CocodriloDog.Animation {
 	/// <summary>
 	/// Component for <see cref="Parallel"/> objects.
 	/// </summary>
-	public class ParallelComponent : AnimateComponent, IMonoScriptableOwner {
+	public class ParallelComponent : AnimateComponent, IMonoCompositeParent {
 
 
 		#region #region Public Properties
@@ -84,12 +84,12 @@ namespace CocodriloDog.Animation {
 			}
 		}
 
-		public MonoScriptableFieldBase[] GetMonoScriptableFields() => ParallelItemsFields.ToArray();
+		public MonoCompositeFieldBase[] GetChildren() => ParallelItemsFields.ToArray();
 
-		public void ConfirmOwnership() {
-			foreach (var field in GetMonoScriptableFields()) {
+		public void ConfirmChildren() {
+			foreach (var field in GetChildren()) {
 				if (field.ObjectBase != null) {
-					field.ObjectBase.SetOwner(this);
+					field.ObjectBase.SetParent(this);
 				}
 			}
 		}

@@ -12,7 +12,7 @@ namespace CocodriloDog.Animation {
 	/// <remarks>
 	/// Its interface has been designed for ease of use by <c>UnityEvents</c>.
 	/// </remarks>
-	public class AnimateBehaviour : MonoScriptableRoot {
+	public class AnimateBehaviour : MonoCompositeRoot {
 
 
 		#region Public Properties
@@ -20,7 +20,7 @@ namespace CocodriloDog.Animation {
 		/// <summary>
 		/// The first <see cref="AnimateComponent"/> of this <see cref="AnimateBehaviour"/> if any, or <c>null</c>.
 		/// </summary>
-		public AnimateComponent DefaultAnimateComponent => AnimateAssetFields.Count > 0 ? AnimateAssetFields[0].Object : null;
+		public AnimateComponent DefaultAnimateComponent => AnimateComponentFields.Count > 0 ? AnimateComponentFields[0].Object : null;
 
 		#endregion
 
@@ -50,7 +50,7 @@ namespace CocodriloDog.Animation {
 		/// <summary>
 		/// Plays all the <see cref="AnimateComponent"/>s managed by this behaviour.
 		/// </summary>
-		public void PlayAll() => AnimateAssetFields.ForEach(af => {
+		public void PlayAll() => AnimateComponentFields.ForEach(af => {
 			if (af.Object != null) {
 				af.Object.Play();
 			}
@@ -79,7 +79,7 @@ namespace CocodriloDog.Animation {
 		/// <summary>
 		/// Stops all the <see cref="AnimateComponent"/>s managed by this behaviour.
 		/// </summary>
-		public void StopAll() => AnimateAssetFields.ForEach(af => {
+		public void StopAll() => AnimateComponentFields.ForEach(af => {
 			if (af.Object != null) {
 				af.Object.Stop();
 			}
@@ -108,7 +108,7 @@ namespace CocodriloDog.Animation {
 		/// <summary>
 		/// Pauses all the <see cref="AnimateComponent"/>s managed by this behaviour.
 		/// </summary>
-		public void PauseAll() => AnimateAssetFields.ForEach(af => {
+		public void PauseAll() => AnimateComponentFields.ForEach(af => {
 			if (af.Object != null) {
 				af.Object.Pause();
 			}
@@ -137,7 +137,7 @@ namespace CocodriloDog.Animation {
 		/// <summary>
 		/// Resumes all the <see cref="AnimateComponent"/>s managed by this behaviour.
 		/// </summary>
-		public void ResumeAll() => AnimateAssetFields.ForEach(af => {
+		public void ResumeAll() => AnimateComponentFields.ForEach(af => {
 			if (af.Object != null) {
 				af.Object.Resume();
 			}
@@ -169,12 +169,12 @@ namespace CocodriloDog.Animation {
 		/// <summary>
 		/// Calls <see cref="IMotionBaseComponent.ResetMotion()"/> in all the motions that it finds.
 		/// </summary>
-		public void ResetAllMotions() => AnimateAssetFields.ForEach(af => _ResetMotion(af.Object));
+		public void ResetAllMotions() => AnimateComponentFields.ForEach(af => _ResetMotion(af.Object));
 
 		/// <summary>
 		/// Disposes all the <see cref="AnimateComponent"/>s of this compopnent.
 		/// </summary>
-		public void Dispose() => AnimateAssetFields.ForEach(af => {
+		public void Dispose() => AnimateComponentFields.ForEach(af => {
 			if (af.Object != null) {
 				af.Object.Dispose();
 			}
@@ -189,22 +189,18 @@ namespace CocodriloDog.Animation {
 		/// <param name="componentName">The <see cref="AnimateComponent.ObjectName"/></param>
 		/// <returns>The <see cref="AnimateComponent"/></returns>
 		public AnimateComponent GetAnimateComponent(string componentName) {
-			var assetField = AnimateAssetFields.FirstOrDefault(af => af.Object != null && af.Object.ObjectName == componentName);
+			var assetField = AnimateComponentFields.FirstOrDefault(af => af.Object != null && af.Object.ObjectName == componentName);
 			return assetField?.Object;
 		}
 
-		public override MonoScriptableFieldBase[] GetMonoScriptableFields() {
-			// HACK: This
-			var list = new List<MonoScriptableFieldBase>();
-			list.AddRange(AnimateAssetFields);
-			list.AddRange(AnimateComponentFields);
-			return list.ToArray();
+		public override MonoCompositeFieldBase[] GetChildren() {
+			return new List<MonoCompositeFieldBase>(AnimateComponentFields).ToArray();
 		}
 
-		public override void ConfirmOwnership() {
-			foreach (var field in GetMonoScriptableFields()) {
+		public override void ConfirmChildren() {
+			foreach (var field in GetChildren()) {
 				if (field.ObjectBase != null) {
-					field.ObjectBase.SetOwner(this);
+					field.ObjectBase.SetParent(this);
 				}
 			}
 		}
@@ -239,9 +235,6 @@ namespace CocodriloDog.Animation {
 		/// This name is friendlier than m_AnimateAssetFields in the inspector.
 		/// </remarks>
 		[SerializeField]
-		private List<AnimateComponentField> m_AnimateAssets = new List<AnimateComponentField>();
-
-		[SerializeField]
 		private List<AnimateComponentField> m_AnimateComponents = new List<AnimateComponentField>();
 
 		[SerializeField]
@@ -250,9 +243,7 @@ namespace CocodriloDog.Animation {
 		#endregion
 
 
-		#region Private Properties
-
-		private List<AnimateComponentField> AnimateAssetFields => m_AnimateAssets;
+		#region Private Properties		
 
 		private List<AnimateComponentField> AnimateComponentFields => m_AnimateComponents;
 
@@ -266,7 +257,7 @@ namespace CocodriloDog.Animation {
 		/// <summary>
 		/// Initializes all the <see cref="AnimateComponent"/>s of this compopnent.
 		/// </summary>
-		private void Initialize() => AnimateAssetFields.ForEach(af => {
+		private void Initialize() => AnimateComponentFields.ForEach(af => {
 			if (af.Object != null) {
 				af.Object.Initialize();
 			}

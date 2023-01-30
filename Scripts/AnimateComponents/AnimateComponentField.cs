@@ -10,6 +10,6 @@ namespace CocodriloDog.Animation {
 	/// This field will hold a reference to an <see cref="AnimateComponent"/>.
 	/// </summary>
 	[Serializable]
-	public class AnimateComponentField : MonoScriptableField<AnimateComponent> { }
+	public class AnimateComponentField : MonoCompositeField<AnimateComponent> { }
 
 }

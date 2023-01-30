@@ -8,15 +8,15 @@ namespace CocodriloDog.Animation {
 	using UnityEngine;
 
 	[CustomPropertyDrawer(typeof(AnimateComponentField))]
-	public class AnimateComponentFieldPropertyDrawer : MonoScriptableFieldPropertyDrawer {
+	public class AnimateComponentFieldPropertyDrawer : MonoCompositeFieldPropertyDrawer {
 
 
 		#region Protected Properties
 
-		protected override List<Type> MonoScriptableTypes {
+		protected override List<Type> MonoCompositeTypes {
 			get {
-				if (m_MonoScriptableTypes == null) {
-					m_MonoScriptableTypes = new List<Type> {
+				if (m_MonoCompositeTypes == null) {
+					m_MonoCompositeTypes = new List<Type> {
 						typeof(Motion3DComponent),
 						typeof(Motion2DComponent),
 						typeof(MotionFloatComponent),
@@ -26,7 +26,7 @@ namespace CocodriloDog.Animation {
 						typeof(ParallelComponent),
 					};
 				}
-				return m_MonoScriptableTypes;
+				return m_MonoCompositeTypes;
 			}
 		}
 
@@ -35,7 +35,7 @@ namespace CocodriloDog.Animation {
 
 		#region Private Fields
 
-		private List<Type> m_MonoScriptableTypes;
+		private List<Type> m_MonoCompositeTypes;
 
 		#endregion
 
