@@ -10,9 +10,9 @@ namespace CocodriloDog.Animation.Examples {
 
 		#region Public Properties
 
-		public Vector3 Vector3 { 
-			get => transform.position; 
-			set => transform.position = value; 
+		public Vector3 Vector3 {
+			get => transform.position;
+			set => transform.position = value;
 		}
 
 		public Vector2 Vector2 {
@@ -36,7 +36,7 @@ namespace CocodriloDog.Animation.Examples {
 				//var propertyBlock = new MaterialPropertyBlock();
 				//Renderer.GetPropertyBlock(propertyBlock);
 				//return propertyBlock.GetColor("_BaseColor");
-				return Renderer.material.GetColor("_BaseColor"); 
+				return Renderer.material.GetColor("_BaseColor");
 			}
 			set {
 				var propertyBlock = new MaterialPropertyBlock();
@@ -46,7 +46,7 @@ namespace CocodriloDog.Animation.Examples {
 		}
 
 		#endregion
-		
+
 
 		#region Public Methods
 
@@ -72,9 +72,9 @@ namespace CocodriloDog.Animation.Examples {
 		public void OnStart() => Debug.Log($"{name}: OnStart");
 
 		public void OnUpdate() => Debug.Log($"{name}: OnUpdate");
-		
+
 		public void OnInterrupt() => Debug.Log($"{name}: OnInterrupt");
-		
+
 		public void OnComplete() => Debug.Log($"{name}: OnComplete");
 
 		#endregion
@@ -92,7 +92,7 @@ namespace CocodriloDog.Animation.Examples {
 
 		private Renderer Renderer {
 			get {
-				if(m_Renderer == null) {
+				if (m_Renderer == null) {
 					m_Renderer = GetComponent<Renderer>();
 				}
 				return m_Renderer;
