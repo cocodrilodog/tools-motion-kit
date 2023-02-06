@@ -9,7 +9,7 @@ namespace CocodriloDog.Animation {
 	/// Component for <see cref="Timer"/> objects.
 	/// </summary>
 	[AddComponentMenu("")]
-	public class TimerComponent : AnimateComponent {
+	public class TimerComponent : AnimateBaseComponent {
 
 
 		#region Public Properties

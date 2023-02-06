@@ -10,7 +10,7 @@ namespace CocodriloDog.Animation {
 	/// Component for <see cref="Parallel"/> objects.
 	/// </summary>
 	[AddComponentMenu("")]
-	public class ParallelComponent : AnimateComponent, IMonoCompositeParent {
+	public class ParallelComponent : AnimateBaseComponent, IMonoCompositeParent {
 
 
 		#region #region Public Properties

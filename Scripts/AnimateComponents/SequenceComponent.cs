@@ -10,7 +10,7 @@ namespace CocodriloDog.Animation {
 	/// Component for <see cref="Sequence"/> objects.
 	/// </summary>
 	[AddComponentMenu("")]
-	public class SequenceComponent : AnimateComponent, IMonoCompositeParent {
+	public class SequenceComponent : AnimateBaseComponent, IMonoCompositeParent {
 
 
 		#region #region Public Properties

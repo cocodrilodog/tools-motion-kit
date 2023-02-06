@@ -7,7 +7,7 @@ namespace CocodriloDog.Animation {
 	using UnityEngine;
 
 	[CustomEditor(typeof(ParallelComponent))]
-	public class ParallelComponentEditor : AnimateComponentEditor {
+	public class ParallelComponentEditor : AnimateBaseComponentEditor {
 
 
 		#region Unity Methods

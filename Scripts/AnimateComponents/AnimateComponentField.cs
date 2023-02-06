@@ -7,9 +7,9 @@ namespace CocodriloDog.Animation {
 	using UnityEngine;
 
 	/// <summary>
-	/// This field will hold a reference to an <see cref="AnimateComponent"/>.
+	/// This field will hold a reference to an <see cref="AnimateBaseComponent"/>.
 	/// </summary>
 	[Serializable]
-	public class AnimateComponentField : MonoCompositeField<AnimateComponent> { }
+	public class AnimateComponentField : MonoCompositeField<AnimateBaseComponent> { }
 
 }

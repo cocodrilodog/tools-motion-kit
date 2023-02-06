@@ -7,7 +7,7 @@ namespace CocodriloDog.Animation {
 	using UnityEngine;
 
 	[CustomEditor(typeof(SequenceComponent))]
-	public class SequenceComponentEditor : AnimateComponentEditor {
+	public class SequenceComponentEditor : AnimateBaseComponentEditor {
 
 
 		#region Unity Methods

@@ -8,7 +8,7 @@ namespace CocodriloDog.Animation {
 	using UnityEngine.Events;
 
 	/// <summary>
-	/// Interface to be implemented by <see cref="AnimateComponent"/>
+	/// Interface to be implemented by <see cref="AnimateBaseComponent"/>
 	/// </summary>
 	/// 
 	/// <remarks>
@@ -41,7 +41,7 @@ namespace CocodriloDog.Animation {
 	/// Animate motion, timer, sequence or parallel and can create those objects at runtime. 
 	/// They are intended to be used as the inspector-friendly part of the Animate engine.
 	/// </remarks>
-	public abstract class AnimateComponent : MonoCompositeObject, IAnimateComponent {
+	public abstract class AnimateBaseComponent : MonoCompositeObject, IAnimateComponent {
 
 
 		#region Public Properties
@@ -52,27 +52,27 @@ namespace CocodriloDog.Animation {
 		public abstract ITimedProgressable TimedProgressable { get; }
 
 		/// <summary>
-		/// Gets the <c>Progress</c> of the Animate object managed by this <see cref="AnimateComponent"/>.
+		/// Gets the <c>Progress</c> of the Animate object managed by this <see cref="AnimateBaseComponent"/>.
 		/// </summary>
 		public abstract float Progress { get; set; }
 
 		/// <summary>
-		/// Gets the <c>CurrentTime</c> of the Animate object managed by this <see cref="AnimateComponent"/>.
+		/// Gets the <c>CurrentTime</c> of the Animate object managed by this <see cref="AnimateBaseComponent"/>.
 		/// </summary>
 		public abstract float CurrentTime { get; }
 
 		/// <summary>
-		/// Gets the <c>Duration</c> of the Animate object managed by this <see cref="AnimateComponent"/>.
+		/// Gets the <c>Duration</c> of the Animate object managed by this <see cref="AnimateBaseComponent"/>.
 		/// </summary>
 		public abstract float Duration { get; }
 
 		/// <summary>
-		/// Gets the <c>IsPlaying</c> property of the Animate object managed by this <see cref="AnimateComponent"/>.
+		/// Gets the <c>IsPlaying</c> property of the Animate object managed by this <see cref="AnimateBaseComponent"/>.
 		/// </summary>
 		public abstract bool IsPlaying { get; }
 
 		/// <summary>
-		/// Gets the <c>IsPaused</c> property of the Animate object managed by this <see cref="AnimateComponent"/>.
+		/// Gets the <c>IsPaused</c> property of the Animate object managed by this <see cref="AnimateBaseComponent"/>.
 		/// </summary>
 		public abstract bool IsPaused { get; }
 
@@ -88,22 +88,22 @@ namespace CocodriloDog.Animation {
 		public abstract void Initialize();
 
 		/// <summary>
-		/// Plays the Animate object managed by this <see cref="AnimateComponent"/>.
+		/// Plays the Animate object managed by this <see cref="AnimateBaseComponent"/>.
 		/// </summary>
 		public abstract void Play();
 
 		/// <summary>
-		/// Plays the Animate object managed by this <see cref="AnimateComponent"/>.
+		/// Plays the Animate object managed by this <see cref="AnimateBaseComponent"/>.
 		/// </summary>
 		public abstract void Stop();
 
 		/// <summary>
-		/// Pauses the Animate object managed by this <see cref="AnimateComponent"/>.
+		/// Pauses the Animate object managed by this <see cref="AnimateBaseComponent"/>.
 		/// </summary>
 		public abstract void Pause();
 
 		/// <summary>
-		/// Resumes the Animate object managed by this <see cref="AnimateComponent"/>.
+		/// Resumes the Animate object managed by this <see cref="AnimateBaseComponent"/>.
 		/// </summary>
 		public abstract void Resume();
 
@@ -152,32 +152,32 @@ namespace CocodriloDog.Animation {
 		protected float DurationInput => m_Duration;
 
 		/// <summary>
-		/// The time mode to be used by the Animate object managed by this <see cref="AnimateComponent"/>.
+		/// The time mode to be used by the Animate object managed by this <see cref="AnimateBaseComponent"/>.
 		/// </summary>
 		protected TimeMode TimeMode => m_TimeMode;
 
 		/// <summary>
-		/// The easing to be used by the Animate object managed by this <see cref="AnimateComponent"/>.
+		/// The easing to be used by the Animate object managed by this <see cref="AnimateBaseComponent"/>.
 		/// </summary>
 		protected AnimateEasingField Easing => m_Easing;
 
 		/// <summary>
-		/// The <c>OnStart</c> callbacks to be invoked by the Animate object managed by this <see cref="AnimateComponent"/>.
+		/// The <c>OnStart</c> callbacks to be invoked by the Animate object managed by this <see cref="AnimateBaseComponent"/>.
 		/// </summary>
 		protected UnityEvent OnStart => m_OnStart;
 
 		/// <summary>
-		/// The <c>OnUpdate</c> callbacks to be invoked by the Animate object managed by this <see cref="AnimateComponent"/>.
+		/// The <c>OnUpdate</c> callbacks to be invoked by the Animate object managed by this <see cref="AnimateBaseComponent"/>.
 		/// </summary>
 		protected UnityEvent OnUpdate => m_OnUpdate;
 
 		/// <summary>
-		/// The <c>OnInterrupt</c> callbacks to be invoked by the Animate object managed by this <see cref="AnimateComponent"/>.
+		/// The <c>OnInterrupt</c> callbacks to be invoked by the Animate object managed by this <see cref="AnimateBaseComponent"/>.
 		/// </summary>
 		protected UnityEvent OnInterrupt => m_OnInterrupt;
 
 		/// <summary>
-		/// The <c>OnComplete</c> callbacks to be invoked by the Animate object managed by this <see cref="AnimateComponent"/>.
+		/// The <c>OnComplete</c> callbacks to be invoked by the Animate object managed by this <see cref="AnimateBaseComponent"/>.
 		/// </summary>
 		protected UnityEvent OnComplete => m_OnComplete;
 

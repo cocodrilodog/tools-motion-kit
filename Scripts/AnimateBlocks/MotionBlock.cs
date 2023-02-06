@@ -8,30 +8,30 @@ namespace CocodriloDog.Animation {
 	using UnityEngine.Events;
 
 	/// <summary>
-	/// Interface to be implemented by <see cref="MotionBaseComponent{ValueT, MotionT}"/>
+	/// Interface to be implemented by <see cref="MotionBlock{ValueT, MotionT}"/>
 	/// </summary>
 	/// 
 	/// <remarks>
-	/// It was created so that a <see cref="MotionBaseComponent{ValueT, MotionT}"/> is easily
+	/// It was created so that a <see cref="MotionBlock{ValueT, MotionT}"/> is easily
 	/// identifiable instead of using the concrete types derived from the template.
 	/// </remarks>
-	public interface IMotionBaseComponent : IAnimateComponent {
+	public interface IMotionBlock : IAnimateBlock {
 		void ResetMotion();
 	}
 
 	/// <summary>
-	/// Base class for motion components.
+	/// Base class for motion blocks.
 	/// </summary>
 	/// <typeparam name="ValueT">The animatable type of the motion objects.</typeparam>
 	/// <typeparam name="MotionT">The motion type.</typeparam>
-	public abstract class MotionBaseComponent<ValueT, MotionT> : AnimateBaseComponent, IMotionBaseComponent
+	public abstract class MotionBlock<ValueT, MotionT> : AnimateBlock, IMotionBlock
 		where MotionT : MotionBase<ValueT, MotionT> {
 
 
 		#region Public Properties
 
 		/// <summary>
-		/// The motion that this component manages.
+		/// The motion that this block manages.
 		/// </summary>
 		public MotionT Motion {
 			get {
@@ -75,10 +75,10 @@ namespace CocodriloDog.Animation {
 			Component component;
 			MethodInfo methodInfo;
 
-			if(Object == null) {
-				throw new InvalidOperationException($"{this.name}: Object can not be null.");
+			if (Object == null) {
+				throw new InvalidOperationException($"{Name}: Object can not be null.");
 			} else if (SetterString == "No Function") {
-				throw new InvalidOperationException($"{this.name}: A setter function must be set.");
+				throw new InvalidOperationException($"{Name}: A setter function must be set.");
 			}
 
 			var gameObject = Object as GameObject;
@@ -103,7 +103,7 @@ namespace CocodriloDog.Animation {
 				if (InitialValueIsRelative || FinalValueIsRelative) {
 
 					if (GetterString == "No Function") {
-						throw new InvalidOperationException($"{this.name}: A getter function must be set.");
+						throw new InvalidOperationException($"{Name}: A getter function must be set.");
 					}
 
 					// GETTER
@@ -113,7 +113,7 @@ namespace CocodriloDog.Animation {
 
 					// The second part is the getter. First we'll look for the method getter
 					// Check for 0 parameters to avoid ambiguity
-					methodInfo = component.GetType().GetMethod(getterStringParts[1], new Type[] { }); 
+					methodInfo = component.GetType().GetMethod(getterStringParts[1], new Type[] { });
 					if (methodInfo != null) {
 						m_GetterDelegate = GetGetterDelegate(component, methodInfo);
 					} else {
@@ -195,7 +195,7 @@ namespace CocodriloDog.Animation {
 		/// The initial value for the motion.
 		/// </summary>
 		protected ValueT InitialValue => m_InitialValue;
-		
+
 		/// <summary>
 		/// Whether the initial value for the motion is relative or not.
 		/// </summary>
@@ -243,7 +243,7 @@ namespace CocodriloDog.Animation {
 
 		[SerializeField]
 		private string m_SetterString;
-		
+
 		[SerializeField]
 		private string m_GetterString;
 

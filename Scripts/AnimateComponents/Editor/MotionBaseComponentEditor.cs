@@ -13,7 +13,7 @@ namespace CocodriloDog.Animation {
 	/// Base class for all Motion component inspectors.
 	/// </summary>
 	/// <typeparam name="ValueT"></typeparam>
-	public abstract class MotionBaseComponentEditor<ValueT> : AnimateComponentEditor {
+	public abstract class MotionBaseComponentEditor<ValueT> : AnimateBaseComponentEditor {
 
 
 		#region Unity Methods

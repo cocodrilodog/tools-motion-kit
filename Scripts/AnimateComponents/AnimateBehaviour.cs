@@ -7,7 +7,7 @@ namespace CocodriloDog.Animation {
 	using UnityEngine;
 
 	/// <summary>
-	/// This is the component that will be used to contain and manage <see cref="AnimateComponent"/>s.
+	/// This is the component that will be used to contain and manage <see cref="AnimateBaseComponent"/>s.
 	/// </summary>
 	/// <remarks>
 	/// Its interface has been designed for ease of use by <c>UnityEvents</c>.
@@ -18,9 +18,9 @@ namespace CocodriloDog.Animation {
 		#region Public Properties
 
 		/// <summary>
-		/// The first <see cref="AnimateComponent"/> of this <see cref="AnimateBehaviour"/> if any, or <c>null</c>.
+		/// The first <see cref="AnimateBaseComponent"/> of this <see cref="AnimateBehaviour"/> if any, or <c>null</c>.
 		/// </summary>
-		public AnimateComponent DefaultAnimateComponent => AnimateComponentFields.Count > 0 ? AnimateComponentFields[0].Object : null;
+		public AnimateBaseComponent DefaultAnimateComponent => AnimateComponentFields.Count > 0 ? AnimateComponentFields[0].Object : null;
 
 		#endregion
 
@@ -37,7 +37,7 @@ namespace CocodriloDog.Animation {
 		}
 
 		/// <summary>
-		/// Plays the <see cref="AnimateComponent"/> with the specified <paramref name="componentName"/>.
+		/// Plays the <see cref="AnimateBaseComponent"/> with the specified <paramref name="componentName"/>.
 		/// </summary>
 		/// <param name="componentName">The name of the component.</param>
 		public void Play(string componentName) {
@@ -48,7 +48,7 @@ namespace CocodriloDog.Animation {
 		}
 
 		/// <summary>
-		/// Plays all the <see cref="AnimateComponent"/>s managed by this behaviour.
+		/// Plays all the <see cref="AnimateBaseComponent"/>s managed by this behaviour.
 		/// </summary>
 		public void PlayAll() => AnimateComponentFields.ForEach(af => {
 			if (af.Object != null) {
@@ -66,7 +66,7 @@ namespace CocodriloDog.Animation {
 		}
 
 		/// <summary>
-		/// Stops the <see cref="AnimateComponent"/> with the specified <paramref name="componentName"/>.
+		/// Stops the <see cref="AnimateBaseComponent"/> with the specified <paramref name="componentName"/>.
 		/// </summary>
 		/// <param name="componentName">The name of the component.</param>
 		public void Stop(string componentName) {
@@ -77,7 +77,7 @@ namespace CocodriloDog.Animation {
 		}
 
 		/// <summary>
-		/// Stops all the <see cref="AnimateComponent"/>s managed by this behaviour.
+		/// Stops all the <see cref="AnimateBaseComponent"/>s managed by this behaviour.
 		/// </summary>
 		public void StopAll() => AnimateComponentFields.ForEach(af => {
 			if (af.Object != null) {
@@ -95,7 +95,7 @@ namespace CocodriloDog.Animation {
 		}
 
 		/// <summary>
-		/// Pauses the <see cref="AnimateComponent"/> with the specified <paramref name="componentName"/>.
+		/// Pauses the <see cref="AnimateBaseComponent"/> with the specified <paramref name="componentName"/>.
 		/// </summary>
 		/// <param name="componentName">The name of the component.</param>
 		public void Pause(string componentName) {
@@ -106,7 +106,7 @@ namespace CocodriloDog.Animation {
 		}
 
 		/// <summary>
-		/// Pauses all the <see cref="AnimateComponent"/>s managed by this behaviour.
+		/// Pauses all the <see cref="AnimateBaseComponent"/>s managed by this behaviour.
 		/// </summary>
 		public void PauseAll() => AnimateComponentFields.ForEach(af => {
 			if (af.Object != null) {
@@ -124,7 +124,7 @@ namespace CocodriloDog.Animation {
 		}
 
 		/// <summary>
-		/// Resumes the <see cref="AnimateComponent"/> with the specified <paramref name="componentName"/>.
+		/// Resumes the <see cref="AnimateBaseComponent"/> with the specified <paramref name="componentName"/>.
 		/// </summary>
 		/// <param name="componentName">The name of the component.</param>
 		public void Resume(string componentName) {
@@ -135,7 +135,7 @@ namespace CocodriloDog.Animation {
 		}
 
 		/// <summary>
-		/// Resumes all the <see cref="AnimateComponent"/>s managed by this behaviour.
+		/// Resumes all the <see cref="AnimateBaseComponent"/>s managed by this behaviour.
 		/// </summary>
 		public void ResumeAll() => AnimateComponentFields.ForEach(af => {
 			if (af.Object != null) {
@@ -155,7 +155,7 @@ namespace CocodriloDog.Animation {
 		}
 
 		/// <summary>
-		/// Resets the <see cref="AnimateComponent"/> with the specified <paramref name="motionPath"/>
+		/// Resets the <see cref="AnimateBaseComponent"/> with the specified <paramref name="motionPath"/>
 		/// if it is a motion.
 		/// </summary>
 		/// <param name="motionPath">The name of the component.</param>
@@ -172,7 +172,7 @@ namespace CocodriloDog.Animation {
 		public void ResetAllMotions() => AnimateComponentFields.ForEach(af => _ResetMotion(af.Object));
 
 		/// <summary>
-		/// Disposes all the <see cref="AnimateComponent"/>s of this compopnent.
+		/// Disposes all the <see cref="AnimateBaseComponent"/>s of this compopnent.
 		/// </summary>
 		public void Dispose() => AnimateComponentFields.ForEach(af => {
 			if (af.Object != null) {
@@ -181,14 +181,14 @@ namespace CocodriloDog.Animation {
 		});
 
 		/// <summary>
-		/// Gets the <see cref="AnimateComponent"/> named <paramref name="componentName"/>.
+		/// Gets the <see cref="AnimateBaseComponent"/> named <paramref name="componentName"/>.
 		/// </summary>
 		/// <remarks>
-		/// This method can be used for further control over the managed <see cref="AnimateComponent"/>s.
+		/// This method can be used for further control over the managed <see cref="AnimateBaseComponent"/>s.
 		/// </remarks>
-		/// <param name="componentName">The <see cref="AnimateComponent.ObjectName"/></param>
-		/// <returns>The <see cref="AnimateComponent"/></returns>
-		public AnimateComponent GetAnimateComponent(string componentName) {
+		/// <param name="componentName">The <see cref="AnimateBaseComponent.ObjectName"/></param>
+		/// <returns>The <see cref="AnimateBaseComponent"/></returns>
+		public AnimateBaseComponent GetAnimateComponent(string componentName) {
 			var assetField = AnimateComponentFields.FirstOrDefault(af => af.Object != null && af.Object.ObjectName == componentName);
 			return assetField?.Object;
 		}
@@ -255,7 +255,7 @@ namespace CocodriloDog.Animation {
 		#region Private Methods
 
 		/// <summary>
-		/// Initializes all the <see cref="AnimateComponent"/>s of this compopnent.
+		/// Initializes all the <see cref="AnimateBaseComponent"/>s of this compopnent.
 		/// </summary>
 		private void Initialize() => AnimateComponentFields.ForEach(af => {
 			if (af.Object != null) {
@@ -263,7 +263,7 @@ namespace CocodriloDog.Animation {
 			}
 		});
 
-		private void _ResetMotion(AnimateComponent animateComponent) {
+		private void _ResetMotion(AnimateBaseComponent animateComponent) {
 			if(animateComponent == null) {
 				return;
 			}
