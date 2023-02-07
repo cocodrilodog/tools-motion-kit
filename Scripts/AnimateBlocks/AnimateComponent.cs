@@ -190,13 +190,13 @@ namespace CocodriloDog.Animation {
 					_ResetMotion(item);
 				}
 			}
-			//if (animateBlock is ParallelBlock) {
-			//	var parallelAsset = animateBlock as ParallelBlock;
-			//	foreach (var itemField in parallelAsset.ParallelItemsFields) {
-			//		// Recursion
-			//		_ResetMotion(itemField.Object);
-			//	}
-			//}
+			if (animateBlock is ParallelBlock) {
+				var parallelBlock = animateBlock as ParallelBlock;
+				foreach (var item in parallelBlock.ParallelItems) {
+					// Recursion
+					_ResetMotion(item);
+				}
+			}
 		}
 
 		#endregion
