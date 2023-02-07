@@ -22,6 +22,7 @@ namespace CocodriloDog.Animation {
 						typeof(MotionFloatBlock),
 						typeof(MotionColorBlock),
 						typeof(TimerBlock),
+						typeof(SequenceBlock),
 					};
 				}
 				return m_CompositeTypes;

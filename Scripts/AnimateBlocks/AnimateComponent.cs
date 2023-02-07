@@ -183,13 +183,13 @@ namespace CocodriloDog.Animation {
 				var motionBlock = animateBlock as IMotionBlock;
 				motionBlock.ResetMotion();
 			}
-			//if (animateBlock is SequenceBlock) {
-			//	var sequenceAsset = animateBlock as SequenceBlock;
-			//	foreach (var itemField in sequenceAsset.SequenceItemsFields) {
-			//		// Recursion
-			//		_ResetMotion(itemField.Object);
-			//	}
-			//}
+			if (animateBlock is SequenceBlock) {
+				var sequenceBlock = animateBlock as SequenceBlock;
+				foreach (var item in sequenceBlock.SequenceItems) {
+					// Recursion
+					_ResetMotion(item);
+				}
+			}
 			//if (animateBlock is ParallelBlock) {
 			//	var parallelAsset = animateBlock as ParallelBlock;
 			//	foreach (var itemField in parallelAsset.ParallelItemsFields) {
