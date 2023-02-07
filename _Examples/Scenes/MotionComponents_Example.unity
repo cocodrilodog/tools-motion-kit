@@ -653,7 +653,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0ff26841fc5d56442bfae3ff2cc804b8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_SelectedMonoCompositeObject: {fileID: 991250650}
+  m_SelectedMonoCompositeObject: {fileID: 0}
   m_AnimateComponents:
   - m_Object: {fileID: 991250650}
   m_PlayAllOnStart: 1
@@ -968,7 +968,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0ff26841fc5d56442bfae3ff2cc804b8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_SelectedMonoCompositeObject: {fileID: 1688711266}
+  m_SelectedMonoCompositeObject: {fileID: 0}
   m_AnimateComponents:
   - m_Object: {fileID: 1688711266}
   m_PlayAllOnStart: 1
