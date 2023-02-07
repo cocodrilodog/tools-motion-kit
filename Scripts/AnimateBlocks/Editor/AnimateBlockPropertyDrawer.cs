@@ -29,6 +29,19 @@ namespace CocodriloDog.Animation {
 
 		protected virtual float BeforeSettingsHeight => 0;
 		
+		protected virtual float SettingsHeight {
+			get {
+				var height = SpaceHeight; // <- Settings space
+				height += FieldHeight; // <- Settings label
+				height += EditorGUI.GetPropertyHeight(DurationProperty) + 2;
+				height += EditorGUI.GetPropertyHeight(TimeModeProperty) + 2;
+				if (WillDrawEasing) {
+					height += EditorGUI.GetPropertyHeight(EasingProperty) + 2;
+				}
+				return height;
+			}
+		}
+
 		protected virtual float AfterSettingsHeight => 0;
 
 		#endregion
@@ -61,15 +74,13 @@ namespace CocodriloDog.Animation {
 			// Reuse ID
 			height += EditorGUI.GetPropertyHeight(ReuseIDProperty) + 2;
 
-			// Settings
+			// Before settings
 			height += BeforeSettingsHeight;
-			height += SpaceHeight; // <- Settings space
-			height += FieldHeight; // <- Settings label
-			height += EditorGUI.GetPropertyHeight(DurationProperty) + 2;
-			height += EditorGUI.GetPropertyHeight(TimeModeProperty) + 2;
-			if (WillDrawEasing) {
-				height += EditorGUI.GetPropertyHeight(EasingProperty) + 2;
-			}
+
+			// Settings
+			height += SettingsHeight;
+			
+			// After settings
 			height += AfterSettingsHeight;
 
 			// Callbacks
