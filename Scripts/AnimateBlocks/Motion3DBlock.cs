@@ -12,6 +12,13 @@ namespace CocodriloDog.Animation {
 	public class Motion3DBlock : MotionBlock<Vector3, Motion3D> {
 
 
+		#region Public Methods
+
+		public override string DefaultName => "Motion3D";
+
+		#endregion
+
+
 		#region Protected Methods
 
 		protected override Motion3D CreateMotion(Action<Vector3> setterDelegate, Func<Vector3> getterDelegate) {

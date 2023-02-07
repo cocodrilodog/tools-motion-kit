@@ -65,6 +65,8 @@ namespace CocodriloDog.Animation {
 
 		public override void Resume() => Timer.Resume();
 
+		public override string DefaultName => "Timer";
+
 		#endregion
 
 

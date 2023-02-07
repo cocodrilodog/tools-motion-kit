@@ -111,6 +111,8 @@ namespace CocodriloDog.Animation {
 			m_Motion = CreateMotion(m_SetterDelegate, m_GetterDelegate);
 		}
 
+		public override string DefaultName => "Motion2D";
+
 		#endregion
 
 

@@ -84,6 +84,8 @@ namespace CocodriloDog.Animation {
 			}
 		}
 
+		public override string DefaultName => "Parallel";
+
 		#endregion
 
 

@@ -12,6 +12,13 @@ namespace CocodriloDog.Animation {
 	public class MotionColorBlock : MotionBlock<Color, MotionColor> {
 
 
+		#region Public Methods
+
+		public override string DefaultName => "MotionColor";
+
+		#endregion
+
+
 		#region Protected Methods
 
 		protected override MotionColor CreateMotion(Action<Color> setterDelegate, Func<Color> getterDelegate) {

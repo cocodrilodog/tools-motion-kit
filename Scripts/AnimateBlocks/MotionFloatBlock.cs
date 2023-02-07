@@ -12,6 +12,13 @@ namespace CocodriloDog.Animation {
 	public class MotionFloatBlock : MotionBlock<float, MotionFloat> {
 
 
+		#region Public Methods
+
+		public override string DefaultName => "MotionFloat";
+
+		#endregion
+
+
 		#region Protected Methods
 
 		protected override MotionFloat CreateMotion(Action<float> setterDelegate, Func<float> getterDelegate) {
