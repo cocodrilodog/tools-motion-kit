@@ -580,7 +580,7 @@ MonoBehaviour:
             m_Calls: []
         m_CallbackSelection: 0
         m_Object: {fileID: 0}
-        m_SetterString: 
+        m_SetterString: No Function
         m_GetterString: 
         m_InitialValue: {x: 0, y: 0, z: 0}
         m_InitialValueIsRelative: 0
@@ -1027,7 +1027,7 @@ MonoBehaviour:
       m_Calls: []
   m_CallbackSelection: 2
   m_Object: {fileID: 1583613619}
-  m_SetterString: Transform/localPosition
+  m_SetterString: AnimateMotionComponents_Example/SetVector3
   m_GetterString: Transform/localPosition
   m_InitialValue: {x: 0, y: 0, z: 0}
   m_InitialValueIsRelative: 1
@@ -1045,7 +1045,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0ff26841fc5d56442bfae3ff2cc804b8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_SelectedMonoCompositeObject: {fileID: 0}
+  m_SelectedMonoCompositeObject: {fileID: 1583613627}
   m_AnimateComponents:
   - m_Object: {fileID: 1583613627}
   m_PlayAllOnStart: 1

@@ -10,48 +10,6 @@ namespace CocodriloDog.Animation {
 	[CustomPropertyDrawer(typeof(AnimateBlock))]
 	public class AnimateBlockPropertyDrawer : CompositePropertyDrawer {
 
-		protected override float GetEditPropertyHeight(SerializedProperty property, GUIContent label) {
-
-			// Base height
-			var height = base.GetEditPropertyHeight(property, label);
-
-			// Reuse ID
-			height += EditorGUI.GetPropertyHeight(ReuseIDProperty) + 2;
-
-			// Settings
-			height += BeforeSettingsHeight;
-			height += SpaceHeight; // <- Settings space
-			height += FieldHeight; // <- Settings label
-			height += EditorGUI.GetPropertyHeight(DurationProperty) + 2;
-			height += EditorGUI.GetPropertyHeight(TimeModeProperty) + 2;
-			if (WillDrawEasing) {
-				height += EditorGUI.GetPropertyHeight(EasingProperty) + 2;
-			}
-			height += AfterSettingsHeight;
-			
-			// Callbacks
-			height += SpaceHeight; // <- Callbacks space
-			height += FieldHeight; // <- Callbacks label
-			height += FieldHeight; // <- Callbacks selection toolbar
-
-			switch (CallbackSelectionProperty.intValue) {
-				case 0: height += EditorGUI.GetPropertyHeight(OnStartProperty); break;
-				case 1: height += EditorGUI.GetPropertyHeight(OnUpdateProperty); break;
-				case 2: height += EditorGUI.GetPropertyHeight(OnInterruptProperty); break;
-				case 3: height += EditorGUI.GetPropertyHeight(OnCompleteProperty); break;
-			}
-
-			return height;
-		}
-
-		protected override void OnEditGUI(Rect position, SerializedProperty property, GUIContent label) {
-			base.OnEditGUI(position, property, label);
-			DrawReuseID();
-			DrawBeforeSettings();
-			DrawSettings();
-			DrawAfterSettings();
-			DrawCallbacks();
-		}
 
 		#region Protected Properties
 
@@ -93,6 +51,49 @@ namespace CocodriloDog.Animation {
 			OnCompleteProperty			= Property.FindPropertyRelative("m_OnComplete");
 			CallbackSelectionProperty	= Property.FindPropertyRelative("m_CallbackSelection");
 
+		}
+
+		protected override float GetEditPropertyHeight(SerializedProperty property, GUIContent label) {
+
+			// Base height
+			var height = base.GetEditPropertyHeight(property, label);
+
+			// Reuse ID
+			height += EditorGUI.GetPropertyHeight(ReuseIDProperty) + 2;
+
+			// Settings
+			height += BeforeSettingsHeight;
+			height += SpaceHeight; // <- Settings space
+			height += FieldHeight; // <- Settings label
+			height += EditorGUI.GetPropertyHeight(DurationProperty) + 2;
+			height += EditorGUI.GetPropertyHeight(TimeModeProperty) + 2;
+			if (WillDrawEasing) {
+				height += EditorGUI.GetPropertyHeight(EasingProperty) + 2;
+			}
+			height += AfterSettingsHeight;
+
+			// Callbacks
+			height += SpaceHeight; // <- Callbacks space
+			height += FieldHeight; // <- Callbacks label
+			height += FieldHeight; // <- Callbacks selection toolbar
+
+			switch (CallbackSelectionProperty.intValue) {
+				case 0: height += EditorGUI.GetPropertyHeight(OnStartProperty); break;
+				case 1: height += EditorGUI.GetPropertyHeight(OnUpdateProperty); break;
+				case 2: height += EditorGUI.GetPropertyHeight(OnInterruptProperty); break;
+				case 3: height += EditorGUI.GetPropertyHeight(OnCompleteProperty); break;
+			}
+
+			return height;
+		}
+
+		protected override void OnEditGUI(Rect position, SerializedProperty property, GUIContent label) {
+			base.OnEditGUI(position, property, label);
+			DrawReuseID();
+			DrawBeforeSettings();
+			DrawSettings();
+			DrawAfterSettings();
+			DrawCallbacks();
 		}
 
 		protected virtual void DrawBeforeSettings() { }
