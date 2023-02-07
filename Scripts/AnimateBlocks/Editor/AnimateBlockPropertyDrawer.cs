@@ -18,6 +18,7 @@ namespace CocodriloDog.Animation {
 				if (m_CompositeTypes == null) {
 					m_CompositeTypes = new List<Type> {
 						typeof(Motion3DBlock),
+						typeof(Motion2DBlock),
 						typeof(MotionFloatBlock),
 					};
 				}

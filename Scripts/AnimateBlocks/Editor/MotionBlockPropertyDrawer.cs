@@ -12,6 +12,15 @@ namespace CocodriloDog.Animation {
 	public class MotionBlockPropertyDrawer<ValueT> : AnimateBlockPropertyDrawer {
 
 
+		#region Protected Constants
+
+		protected const string NoFunctionString = "No Function";
+
+		protected const string IsRelativeString = "Is Relative";
+
+		#endregion
+
+
 		#region Protected Methods
 
 		protected override void InitializePropertiesForGetHeight() {
@@ -126,15 +135,6 @@ namespace CocodriloDog.Animation {
 			EditorGUIUtility.labelWidth = 0;
 
 		}
-
-		#endregion
-
-
-		#region Private Constants
-
-		private const string NoFunctionString = "No Function";
-
-		private const string IsRelativeString = "Is Relative";
 
 		#endregion
 
