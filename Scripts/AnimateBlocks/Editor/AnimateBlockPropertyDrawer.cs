@@ -21,23 +21,24 @@ namespace CocodriloDog.Animation {
 						typeof(Motion2DBlock),
 						typeof(MotionFloatBlock),
 						typeof(MotionColorBlock),
+						typeof(TimerBlock),
 					};
 				}
 				return m_CompositeTypes;
 			}
 		}
 
-		protected virtual bool WillDrawEasing => true;
+		protected virtual bool DoesDrawEasing => true;
 
 		protected virtual float BeforeSettingsHeight => 0;
 		
 		protected virtual float SettingsHeight {
 			get {
-				var height = SpaceHeight; // <- Settings space
-				height += FieldHeight; // <- Settings label
+				var height = SpaceHeight;	// <- Settings space
+				height += FieldHeight;		// <- Settings label
 				height += EditorGUI.GetPropertyHeight(DurationProperty) + 2;
 				height += EditorGUI.GetPropertyHeight(TimeModeProperty) + 2;
-				if (WillDrawEasing) {
+				if (DoesDrawEasing) {
 					height += EditorGUI.GetPropertyHeight(EasingProperty) + 2;
 				}
 				return height;
@@ -116,7 +117,7 @@ namespace CocodriloDog.Animation {
 			EditorGUI.LabelField(GetNextPosition(), "Settings", EditorStyles.boldLabel);
 			EditorGUI.PropertyField(GetNextPosition(DurationProperty), DurationProperty);
 			EditorGUI.PropertyField(GetNextPosition(TimeModeProperty), TimeModeProperty);
-			if (WillDrawEasing) {
+			if (DoesDrawEasing) {
 				EditorGUI.PropertyField(GetNextPosition(EasingProperty), EasingProperty);
 			}
 		}
