@@ -16,17 +16,13 @@ namespace CocodriloDog.Animation {
 		/// </summary>
 		protected override void DrawInitialValue() {
 
-			var rect = GetNextPosition(InitialValueProperty);
+			GetValueRects(GetNextPosition(InitialValueProperty), out Rect valueRect, out Rect isRelativeRect);
 
 			// Value field
-			var valueRect = rect;
-			valueRect.width -= 90;
 			DrawVector2FieldFromVector3Property(valueRect, InitialValueProperty);
 
 			// Is relative field
-			var isRelativeRect = rect;
-			isRelativeRect.xMin = valueRect.xMax + 5;
-			EditorGUIUtility.labelWidth = 64;
+			EditorGUIUtility.labelWidth = IsRelativeLabelWidth;
 			EditorGUI.PropertyField(isRelativeRect, InitialValueIsRelativeProperty, new GUIContent(IsRelativeString));
 			EditorGUIUtility.labelWidth = 0;
 
@@ -37,17 +33,13 @@ namespace CocodriloDog.Animation {
 		/// </summary>
 		protected override void DrawFinalValue() {
 
-			var rect = GetNextPosition(FinalValueProperty);
+			GetValueRects(GetNextPosition(InitialValueProperty), out Rect valueRect, out Rect isRelativeRect);
 
 			// Value field
-			var valueRect = rect;
-			valueRect.width -= 90;
 			DrawVector2FieldFromVector3Property(valueRect, FinalValueProperty);
 
 			// Is relative field
-			var isRelativeRect = rect;
-			isRelativeRect.xMin = valueRect.xMax + 5;
-			EditorGUIUtility.labelWidth = 64;
+			EditorGUIUtility.labelWidth = IsRelativeLabelWidth;
 			EditorGUI.PropertyField(isRelativeRect, FinalValueIsRelativeProperty, new GUIContent(IsRelativeString));
 			EditorGUIUtility.labelWidth = 0;
 

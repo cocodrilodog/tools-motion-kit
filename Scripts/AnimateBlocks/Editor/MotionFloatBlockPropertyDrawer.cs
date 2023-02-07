@@ -6,8 +6,6 @@ namespace CocodriloDog.Animation {
 	using UnityEngine;
 
 	[CustomPropertyDrawer(typeof(MotionFloatBlock))]
-	public class MotionFloatBlockPropertyDrawer : MotionBlockPropertyDrawer<float> {
-		
-	}
+	public class MotionFloatBlockPropertyDrawer : MotionBlockPropertyDrawer<float> { }
 
 }

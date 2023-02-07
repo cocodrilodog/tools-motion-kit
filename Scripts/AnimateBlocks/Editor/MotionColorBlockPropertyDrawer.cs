@@ -5,7 +5,7 @@ namespace CocodriloDog.Animation {
 	using UnityEditor;
 	using UnityEngine;
 
-	[CustomPropertyDrawer(typeof(Motion3DBlock))]
-	public class Motion3DBlockPropertyDrawer : MotionBlockPropertyDrawer<Vector3> { }
+	[CustomPropertyDrawer(typeof(MotionColorBlock))]
+	public class MotionColorBlockPropertyDrawer : MotionBlockPropertyDrawer<Color> { }
 
 }

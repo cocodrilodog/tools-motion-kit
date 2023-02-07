@@ -42,7 +42,7 @@ namespace CocodriloDog.Animation {
 		#endregion
 
 
-		#region Private Properties
+		#region Private Methods
 
 		/// <summary>
 		/// Draws a <see cref="Vector3"/> property in a <see cref="Vector2"/> field.
