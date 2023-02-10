@@ -235,13 +235,54 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_InitialValue: {x: 0, y: 0, z: 0}
   m_FinalValue: {x: 5, y: 0, z: 0}
-  m_Duration: 1
+  m_Duration: 3
   m_Easing:
     m_EasingName: Elastic Out
     m_AnimateCurve:
       Curve:
         serializedVersion: 2
         m_Curve: []
+        m_PreInfinity: 2
+        m_PostInfinity: 2
+        m_RotationOrder: 4
+    m_Blink:
+      BlinkCount: 4
+    m_Pulse:
+      Offset: 0.5
+    m_Shake:
+      TMultiplier: 10
+      Magnitude: 2
+      IsDampered: 1
+      m_Damper:
+        serializedVersion: 2
+        m_Curve:
+        - serializedVersion: 3
+          time: 0
+          value: 1
+          inSlope: 0
+          outSlope: 0
+          tangentMode: 0
+          weightedMode: 0
+          inWeight: 0
+          outWeight: 0
+        - serializedVersion: 3
+          time: 0.9
+          value: 0.33
+          inSlope: -2
+          outSlope: -2
+          tangentMode: 0
+          weightedMode: 0
+          inWeight: 0
+          outWeight: 0
+        - serializedVersion: 3
+          time: 1
+          value: 0
+          inSlope: -5.65
+          outSlope: -5.65
+          tangentMode: 0
+          weightedMode: 0
+          inWeight: 0
+          outWeight: 0
         m_PreInfinity: 2
         m_PostInfinity: 2
         m_RotationOrder: 4

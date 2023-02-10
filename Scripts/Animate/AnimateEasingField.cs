@@ -45,8 +45,11 @@
 			get {
 				if (m_EasingNames == null) {
 					List<string> easingNames = new List<string>();
-					easingNames.Add(AnimateCurveName);
 					easingNames.AddRange(AllEasings.Keys);
+					easingNames.Add(AnimateCurveName);
+					easingNames.Add(BlinkName);
+					easingNames.Add(PulseName);
+					easingNames.Add(ShakeName);
 					m_EasingNames = new ReadOnlyCollection<string>(easingNames);
 				}
 				return m_EasingNames;
@@ -71,10 +74,11 @@
 		public MotionFloat.Easing FloatEasing {
 			get {
 				switch (m_EasingName) {
-					case AnimateCurveName:
-						return AnimateCurve.FloatEasing;
-					default:
-						return AllEasings[m_EasingName].FloatEasing;
+					case AnimateCurveName:	return AnimateCurve.FloatEasing;
+					case BlinkName:			return Blink.FloatEasing;
+					case PulseName:			return Pulse.FloatEasing;
+					case ShakeName:			return Shake.FloatEasing;
+					default:				return AllEasings[m_EasingName].FloatEasing;
 				}
 			}
 		}
@@ -93,10 +97,11 @@
 		public Motion3D.Easing Vector3Easing {
 			get {
 				switch (m_EasingName) {
-					case AnimateCurveName:
-						return AnimateCurve.Vector3Easing;
-					default:
-						return AllEasings[m_EasingName].Vector3Easing;
+					case AnimateCurveName:	return AnimateCurve.Vector3Easing;
+					case BlinkName:			return Blink.Vector3Easing;
+					case PulseName:			return Pulse.Vector3Easing;
+					case ShakeName:			return Shake.Vector3Easing;
+					default:				return AllEasings[m_EasingName].Vector3Easing;
 				}
 			}
 		}
@@ -115,10 +120,11 @@
 		public MotionColor.Easing ColorEasing {
 			get {
 				switch (m_EasingName) {
-					case AnimateCurveName:
-						return AnimateCurve.ColorEasing;
-					default:
-						return AllEasings[m_EasingName].ColorEasing;
+					case AnimateCurveName:	return AnimateCurve.ColorEasing;
+					case BlinkName:			return Blink.ColorEasing;
+					case PulseName:			return Pulse.ColorEasing;
+					case ShakeName:			return Shake.ColorEasing;
+					default:				return AllEasings[m_EasingName].ColorEasing;
 				}
 			}
 		}
@@ -140,6 +146,12 @@
 		#region Private Constants
 
 		public const string AnimateCurveName = "Animate Curve";
+
+		public const string BlinkName = "Blink";
+
+		public const string PulseName = "Pulse";
+
+		public const string ShakeName = "Shake";
 
 		#endregion
 
@@ -206,12 +218,27 @@
 		[SerializeField]
 		private AnimateCurve m_AnimateCurve;
 
+		[SerializeField]
+		private Blink m_Blink = new Blink();
+		
+		[SerializeField]
+		private Pulse m_Pulse = new Pulse();
+
+		[SerializeField]
+		private Shake m_Shake = new Shake();
+
 		#endregion
 
 
 		#region Private Properties
 
-		private AnimateCurve AnimateCurve { get { return m_AnimateCurve; } }
+		private AnimateCurve AnimateCurve => m_AnimateCurve;
+
+		private Blink Blink => m_Blink;
+
+		private Pulse Pulse => m_Pulse;
+
+		private Shake Shake => m_Shake;
 
 		#endregion
 
