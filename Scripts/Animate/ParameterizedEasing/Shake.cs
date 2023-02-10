@@ -131,6 +131,8 @@
 
 		#region Public Constructors
 
+		public Shake() { }
+
 		public Shake(float tMultiplier = 10, float magnitude = 2, bool isDampered = true) {
 			TMultiplier = tMultiplier;
 			Magnitude = magnitude;

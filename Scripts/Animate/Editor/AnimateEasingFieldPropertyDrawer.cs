@@ -5,6 +5,7 @@
 	using System.Collections.Generic;
 	using UnityEngine;
 	using UnityEditor;
+	using System;
 
 	[CustomPropertyDrawer(typeof(AnimateEasingField))]
 	public class AnimateEasingFieldPropertyDrawer : PropertyDrawerBase {
@@ -16,10 +17,12 @@
 			base.GetPropertyHeight(property, label);
 			var height = FieldHeight;
 			switch (EasingNameProperty.stringValue) {
-				case AnimateEasingField.AnimateCurveName: height += EditorGUI.GetPropertyHeight(AnimateCurveProperty) + 2; break;
-				case AnimateEasingField.BlinkName:		  height += EditorGUI.GetPropertyHeight(BlinkProperty) + 2; break;
-				case AnimateEasingField.PulseName:		  height += EditorGUI.GetPropertyHeight(PulseProperty) + 2; break;
-				case AnimateEasingField.ShakeName:		  height += EditorGUI.GetPropertyHeight(ShakeProperty) + 2; break;
+				case AnimateEasingField.AnimateCurveName:
+				case AnimateEasingField.BlinkName:
+				case AnimateEasingField.PulseName:
+				case AnimateEasingField.ShakeName:	  
+					height += EditorGUI.GetPropertyHeight(ParameterizedEasingProperty) + 2; 
+					break;
 			}
 			return height;
 		}
@@ -49,10 +52,10 @@
 			}
 
 			// Draw parameterized easing, if any of them is selected
-			DrawAnimateCurve();
-			DrawBlink();
-			DrawPulse();
-			DrawShake();
+			DrawParameterizedEasingProperty<AnimateCurve>(AnimateEasingField.AnimateCurveName);
+			DrawParameterizedEasingProperty<Blink>(AnimateEasingField.BlinkName);
+			DrawParameterizedEasingProperty<Pulse>(AnimateEasingField.PulseName);
+			DrawParameterizedEasingProperty<Shake>(AnimateEasingField.ShakeName);
 
 			EditorGUI.EndProperty();
 
@@ -65,17 +68,9 @@
 
 		protected override void InitializePropertiesForGetHeight() {
 			base.InitializePropertiesForGetHeight();
-			EasingNameProperty		= Property.FindPropertyRelative("m_EasingName");
-			AnimateCurveProperty	= Property.FindPropertyRelative("m_AnimateCurve");
-			BlinkProperty			= Property.FindPropertyRelative("m_Blink");
-			PulseProperty			= Property.FindPropertyRelative("m_Pulse");
-			ShakeProperty			= Property.FindPropertyRelative("m_Shake");
+			EasingNameProperty			= Property.FindPropertyRelative("m_EasingName");
+			ParameterizedEasingProperty = Property.FindPropertyRelative("m_ParameterizedEasing");
 		}
-
-		//protected override void InitializePropertiesForOnGUI() {
-		//	base.InitializePropertiesForOnGUI();
-		//	AnimateCurveProperty = Property.FindPropertyRelative("m_AnimateCurve");
-		//}
 
 		#endregion
 
@@ -91,13 +86,7 @@
 
 		private SerializedProperty EasingNameProperty { get; set; }
 
-		private SerializedProperty AnimateCurveProperty { get; set; }
-
-		private SerializedProperty BlinkProperty { get; set; }
-
-		private SerializedProperty PulseProperty { get; set; }
-
-		private SerializedProperty ShakeProperty { get; set; }
+		private SerializedProperty ParameterizedEasingProperty { get; set; }
 
 		private string[] EasingNamesArray {
 			get {
@@ -114,34 +103,13 @@
 
 		#region Private Methods
 
-		private void DrawAnimateCurve() {
-			if (EasingNameProperty.stringValue == AnimateEasingField.AnimateCurveName) {
+		private void DrawParameterizedEasingProperty<T>(string easingName) where T : new() {
+			if (EasingNameProperty.stringValue == easingName) {
+				if (!(ParameterizedEasingProperty.managedReferenceValue is T)) {
+					ParameterizedEasingProperty.managedReferenceValue = new T();
+				}
 				EditorGUI.indentLevel++;
-				EditorGUI.PropertyField(GetNextPosition(), AnimateCurveProperty);
-				EditorGUI.indentLevel--;
-			}
-		}
-
-		private void DrawBlink() {
-			if (EasingNameProperty.stringValue == AnimateEasingField.BlinkName) {
-				EditorGUI.indentLevel++;
-				EditorGUI.PropertyField(GetNextPosition(), BlinkProperty, new GUIContent("Blink Parameters"), true);
-				EditorGUI.indentLevel--;
-			}
-		}
-
-		private void DrawPulse() {
-			if (EasingNameProperty.stringValue == AnimateEasingField.PulseName) {
-				EditorGUI.indentLevel++;
-				EditorGUI.PropertyField(GetNextPosition(), PulseProperty, new GUIContent("Pulse Parameters"), true);
-				EditorGUI.indentLevel--;
-			}
-		}
-
-		private void DrawShake() {
-			if (EasingNameProperty.stringValue == AnimateEasingField.ShakeName) {
-				EditorGUI.indentLevel++;
-				EditorGUI.PropertyField(GetNextPosition(), ShakeProperty, new GUIContent("Shake Parameters"), true);
+				EditorGUI.PropertyField(GetNextPosition(), ParameterizedEasingProperty, new GUIContent(easingName), true);
 				EditorGUI.indentLevel--;
 			}
 		}
