@@ -16,13 +16,9 @@
 		public override float GetPropertyHeight(SerializedProperty property, GUIContent label) {
 			base.GetPropertyHeight(property, label);
 			var height = FieldHeight;
-			switch (EasingNameProperty.stringValue) {
-				case AnimateEasingField.AnimateCurveName:
-				case AnimateEasingField.BlinkName:
-				case AnimateEasingField.PulseName:
-				case AnimateEasingField.ShakeName:	  
-					height += EditorGUI.GetPropertyHeight(ParameterizedEasingProperty) + 2; 
-					break;
+			if (IsParameterized) {
+				// Add the height of the parameterized property.
+				height += EditorGUI.GetPropertyHeight(ParameterizedEasingProperty) + 2;
 			}
 			return height;
 		}
@@ -95,6 +91,20 @@
 					AnimateEasingField.EasingNames.CopyTo(m_EasingNamesArray, 0);
 				}
 				return m_EasingNamesArray;
+			}
+		}
+
+		private bool IsParameterized {
+			get {
+				switch (EasingNameProperty.stringValue) {
+					case AnimateEasingField.AnimateCurveName:
+					case AnimateEasingField.BlinkName:
+					case AnimateEasingField.PulseName:
+					case AnimateEasingField.ShakeName:
+						return true;
+					default:
+						return false;
+				}
 			}
 		}
 

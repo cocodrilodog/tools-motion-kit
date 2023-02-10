@@ -71,19 +71,7 @@
 		/// return an easing function based on the provided <see cref="AnimationCurve"/>,
 		/// otherwise it will return the selected <see cref="AnimateEasing"/> function.
 		/// </remarks>
-		public MotionFloat.Easing FloatEasing {
-			get {
-				switch (m_EasingName) {
-					case AnimateCurveName:	
-					case BlinkName:			
-					case PulseName:			
-					case ShakeName:			
-						return ParameterizedEasing.FloatEasing;
-					default:				
-						return AllEasings[m_EasingName].FloatEasing;
-				}
-			}
-		}
+		public MotionFloat.Easing FloatEasing => IsParameterized ? ParameterizedEasing.FloatEasing : AllEasings[m_EasingName].FloatEasing;
 
 
 		/// <summary>
@@ -96,19 +84,7 @@
 		/// return an easing function based on the provided <see cref="AnimationCurve"/>,
 		/// otherwise it will return the selected <see cref="AnimateEasing"/> function.
 		/// </remarks>
-		public Motion3D.Easing Vector3Easing {
-			get {
-				switch (m_EasingName) {
-					case AnimateCurveName:
-					case BlinkName:
-					case PulseName:
-					case ShakeName:
-						return ParameterizedEasing.Vector3Easing;
-					default:
-						return AllEasings[m_EasingName].Vector3Easing;
-				}
-			}
-		}
+		public Motion3D.Easing Vector3Easing => IsParameterized ? ParameterizedEasing.Vector3Easing : AllEasings[m_EasingName].Vector3Easing;
 
 
 		/// <summary>
@@ -121,16 +97,21 @@
 		/// return an easing function based on the provided <see cref="AnimationCurve"/>,
 		/// otherwise it will return the selected <see cref="AnimateEasing"/> function.
 		/// </remarks>
-		public MotionColor.Easing ColorEasing {
+		public MotionColor.Easing ColorEasing => IsParameterized ? ParameterizedEasing.ColorEasing : AllEasings[m_EasingName].ColorEasing;
+
+		/// <summary>
+		/// Is the selected easing a parameterized one?
+		/// </summary>
+		public bool IsParameterized {
 			get {
 				switch (m_EasingName) {
 					case AnimateCurveName:
 					case BlinkName:
 					case PulseName:
 					case ShakeName:
-						return ParameterizedEasing.ColorEasing;
+						return true;
 					default:
-						return AllEasings[m_EasingName].ColorEasing;
+						return false;
 				}
 			}
 		}
@@ -229,6 +210,10 @@
 
 		#region Private Properties
 
+		/// <summary>
+		/// This can be any of these: <see cref="AnimateCurve"/>, <see cref="Blink"/>,
+		/// <see cref="Pulse"/> or <see cref="Shake"/>.
+		/// </summary>
 		private ParameterizedEasing ParameterizedEasing => m_ParameterizedEasing;
 
 		#endregion

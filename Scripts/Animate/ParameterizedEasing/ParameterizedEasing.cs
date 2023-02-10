@@ -5,6 +5,9 @@
 	using System.Collections.Generic;
 	using UnityEngine;
 
+	/// <summary>
+	/// A base class for easings that require parameters.
+	/// </summary>
 	public abstract class ParameterizedEasing {
 
 
