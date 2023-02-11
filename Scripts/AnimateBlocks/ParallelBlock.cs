@@ -4,13 +4,14 @@ namespace CocodriloDog.Animation {
 	using System;
 	using System.Collections;
 	using System.Collections.Generic;
+	using System.Linq;
 	using UnityEngine;
 
 	/// <summary>
 	/// Block for <see cref="Parallel"/> objects.
 	/// </summary>
 	[Serializable]
-	public class ParallelBlock : AnimateBlock {
+	public class ParallelBlock : AnimateBlock, IAnimateParent {
 
 
 		#region #region Public Properties
@@ -83,6 +84,10 @@ namespace CocodriloDog.Animation {
 				parallelItem?.Dispose();
 			}
 		}
+
+		public AnimateBlock GetChildBlock(string name) => ParallelItems.FirstOrDefault(b => b != null && b.Name == name);
+
+		public AnimateBlock[] GetChildBlocks() => ParallelItems.ToArray();
 
 		public override string DefaultName => "Parallel";
 

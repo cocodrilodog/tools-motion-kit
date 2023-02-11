@@ -4,13 +4,14 @@ namespace CocodriloDog.Animation {
 	using System;
 	using System.Collections;
 	using System.Collections.Generic;
+	using System.Linq;
 	using UnityEngine;
 
 	/// <summary>
 	/// Block for <see cref="Sequence"/> objects.
 	/// </summary>
 	[Serializable]
-	public class SequenceBlock : AnimateBlock {
+	public class SequenceBlock : AnimateBlock, IAnimateParent {
 
 
 		#region #region Public Properties
@@ -83,6 +84,10 @@ namespace CocodriloDog.Animation {
 				sequenceItem?.Dispose();
 			}
 		}
+
+		public AnimateBlock GetChildBlock(string name) => SequenceItems.FirstOrDefault(b => b != null && b.Name == name);
+
+		public AnimateBlock[] GetChildBlocks() => SequenceItems.ToArray();
 
 		public override string DefaultName => "Sequence";
 

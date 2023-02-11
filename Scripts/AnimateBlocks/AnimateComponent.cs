@@ -1,10 +1,24 @@
 namespace CocodriloDog.Animation {
 
 	using CocodriloDog.Core;
+	using System;
 	using System.Collections;
 	using System.Collections.Generic;
 	using System.Linq;
 	using UnityEngine;
+
+	public interface IAnimateParent {
+
+		/// <summary>
+		/// Gets the <see cref="AnimateBlock"/> named <paramref name="name"/>.
+		/// </summary>
+		/// <param name="name">The <see cref="AnimateBlock.Name"/></param>
+		/// <returns>The <see cref="AnimateBlock"/></returns>
+		AnimateBlock GetChildBlock(string name);
+
+		AnimateBlock[] GetChildBlocks();
+
+	}
 
 	/// <summary>
 	/// This is the component that will be used to own and manage <see cref="AnimateBlock"/>s.
@@ -12,7 +26,7 @@ namespace CocodriloDog.Animation {
 	/// <remarks>
 	/// Its interface has been designed for ease of use by <c>UnityEvents</c>.
 	/// </remarks>
-	public class AnimateComponent : CompositeRoot {
+	public class AnimateComponent : CompositeRoot, IAnimateParent {
 
 
 		#region Public Properties
@@ -36,7 +50,7 @@ namespace CocodriloDog.Animation {
 		/// Plays the <see cref="AnimateBlock"/> with the specified <paramref name="blockName"/>.
 		/// </summary>
 		/// <param name="blockName">The name of the block.</param>
-		public void Play(string blockName) => GetAnimateBlock(blockName)?.Play();
+		public void Play(string blockName) => GetChildBlock(blockName)?.Play();
 
 		/// <summary>
 		/// Plays all the <see cref="AnimateBlock"/>s managed by this behaviour.
@@ -52,7 +66,7 @@ namespace CocodriloDog.Animation {
 		/// Stops the <see cref="AnimateBlock"/> with the specified <paramref name="blockName"/>.
 		/// </summary>
 		/// <param name="blockName">The name of the block.</param>
-		public void Stop(string blockName) => GetAnimateBlock(blockName)?.Stop();
+		public void Stop(string blockName) => GetChildBlock(blockName)?.Stop();
 
 		/// <summary>
 		/// Stops all the <see cref="AnimateBlock"/>s managed by this behaviour.
@@ -68,7 +82,7 @@ namespace CocodriloDog.Animation {
 		/// Pauses the <see cref="AnimateBlock"/> with the specified <paramref name="blockName"/>.
 		/// </summary>
 		/// <param name="blockName">The name of the block.</param>
-		public void Pause(string blockName) => GetAnimateBlock(blockName)?.Pause();
+		public void Pause(string blockName) => GetChildBlock(blockName)?.Pause();
 
 
 		/// <summary>
@@ -85,7 +99,7 @@ namespace CocodriloDog.Animation {
 		/// Resumes the <see cref="AnimateBlock"/> with the specified <paramref name="blockName"/>.
 		/// </summary>
 		/// <param name="blockName">The name of the block.</param>
-		public void Resume(string blockName) => GetAnimateBlock(blockName)?.Resume();
+		public void Resume(string blockName) => GetChildBlock(blockName)?.Resume();
 
 		/// <summary>
 		/// Resumes all the <see cref="AnimateBlock"/>s managed by this behaviour.
@@ -94,38 +108,61 @@ namespace CocodriloDog.Animation {
 
 
 		/// <summary>
-		/// Resets the default motion.
+		/// Resets the <see cref="DefaultAnimateBlock"/> if it is a <see cref="IMotionBlock"/>.
 		/// </summary>
 		public void ResetMotion() => (DefaultAnimateBlock as IMotionBlock)?.ResetMotion();
 
 		/// <summary>
-		/// Resets the <see cref="AnimateBlock"/> with the specified <paramref name="motionPath"/>
+		/// Resets the <see cref="AnimateBlock"/> with the specified <paramref name="blockPath"/>
 		/// if it is a motion.
 		/// </summary>
-		/// <param name="motionPath">The path of the block.</param>
-		public void ResetMotion(string motionPath) { // TODO: Allow paths like: "Sequence/Motion1"
-			(GetAnimateBlock(motionPath) as IMotionBlock)?.ResetMotion();
-		}
+		/// <param name="blockPath">The path of the block. For example "Parallel/Sequence1/Motion2D"</param>
+		public void ResetMotion(string blockPath) => (GetChildBlockAtPath(blockPath) as IMotionBlock)?.ResetMotion();
 
 		/// <summary>
-		/// Calls <see cref="IMotionBlock.ResetMotion()"/> in all the motions that it finds.
+		/// Calls <see cref="IMotionBlock.ResetMotion()"/> in all the motions that it in this <see cref="AnimateComponent"/>.
+		/// If <paramref name="recursive"/> is <c>true</c>, it looks for children blocks too.
 		/// </summary>
-		public void ResetAllMotions() => AnimateBlocks.ForEach(b => _ResetMotion(b));
+		public void ResetAllMotions(bool recursive = false) {
+			if (recursive) {
+				AnimateBlocks.ForEach(B => ForAllAnimateBlocks(B, b => (b as IMotionBlock)?.ResetMotion()));
+			} else {
+				AnimateBlocks.ForEach(B => (B as IMotionBlock)?.ResetMotion());
+			}
+		}
 
 		/// <summary>
 		/// Disposes all the <see cref="AnimateBlock"/>s of this compopnent.
 		/// </summary>
 		public void Dispose() => AnimateBlocks.ForEach(b => b?.Dispose());
 
+		public AnimateBlock GetChildBlock(string name) => AnimateBlocks.FirstOrDefault(b => b != null && b.Name == name);
+
 		/// <summary>
-		/// Gets the <see cref="AnimateBlock"/> named <paramref name="name"/>.
+		/// Finds a block at the specified path.
 		/// </summary>
-		/// <remarks>
-		/// This method can be used for further control over the managed <see cref="AnimateBlock"/>s.
-		/// </remarks>
-		/// <param name="name">The <see cref="AnimateBlock.Name"/></param>
-		/// <returns>The <see cref="AnimateBlock"/></returns>
-		public AnimateBlock GetAnimateBlock(string name) => AnimateBlocks.FirstOrDefault(b => b != null && b.Name == name);
+		/// <param name="blockPath">The path of the block. For example "Parallel/Sequence1/Motion2D"</param>
+		/// <returns>The <see cref="AnimateBlock"/> if it was found</returns>
+		public AnimateBlock GetChildBlockAtPath(string blockPath) {
+
+			var pathParts = blockPath.Split('/');
+
+			IAnimateParent parent = this;
+			AnimateBlock block = null;
+
+			for (int i = 0; i < pathParts.Length; i++) {
+				block = parent.GetChildBlock(pathParts[i]);
+				if (block is IAnimateParent) {
+					parent = (block as IAnimateParent);
+				} else {
+					break;
+				}
+			}
+			return block;
+
+		}
+
+		public AnimateBlock[] GetChildBlocks() => AnimateBlocks.ToArray();
 
 		#endregion
 
@@ -175,28 +212,28 @@ namespace CocodriloDog.Animation {
 		/// </summary>
 		private void Initialize() => AnimateBlocks.ForEach(bf => bf?.Initialize());
 
-		private void _ResetMotion(AnimateBlock animateBlock) {
+		/// <summary>
+		/// Performs an action in all <see cref="AnimateBlock"/>s under <paramref name="animateBlock"/>.
+		/// </summary>
+		/// <param name="animateBlock">The root <see cref="AnimateBlock"/></param>
+		/// <param name="action">The action to perform in it.</param>
+		private void ForAllAnimateBlocks(AnimateBlock animateBlock, Action<AnimateBlock> action) {
+
 			if (animateBlock == null) {
 				return;
 			}
-			if (animateBlock is IMotionBlock) {
-				var motionBlock = animateBlock as IMotionBlock;
-				motionBlock.ResetMotion();
-			}
-			if (animateBlock is SequenceBlock) {
-				var sequenceBlock = animateBlock as SequenceBlock;
-				foreach (var item in sequenceBlock.SequenceItems) {
+
+			// Do the action
+			action(animateBlock);
+
+			if (animateBlock is IAnimateParent) {
+				var animateParent = animateBlock as IAnimateParent;
+				foreach (var item in animateParent.GetChildBlocks()) {
 					// Recursion
-					_ResetMotion(item);
+					ForAllAnimateBlocks(item, action);
 				}
 			}
-			if (animateBlock is ParallelBlock) {
-				var parallelBlock = animateBlock as ParallelBlock;
-				foreach (var item in parallelBlock.ParallelItems) {
-					// Recursion
-					_ResetMotion(item);
-				}
-			}
+
 		}
 
 		#endregion
