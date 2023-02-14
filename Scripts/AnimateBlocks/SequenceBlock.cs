@@ -87,7 +87,7 @@ namespace CocodriloDog.Animation {
 
 		public AnimateBlock GetChildBlock(string name) => SequenceItems.FirstOrDefault(b => b != null && b.Name == name);
 
-		public AnimateBlock[] GetChildBlocks() => SequenceItems.ToArray();
+		public AnimateBlock[] GetChildrenBlocks() => SequenceItems.ToArray();
 
 		public override string DefaultName => "Sequence";
 

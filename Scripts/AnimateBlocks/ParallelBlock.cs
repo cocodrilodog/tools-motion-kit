@@ -87,7 +87,7 @@ namespace CocodriloDog.Animation {
 
 		public AnimateBlock GetChildBlock(string name) => ParallelItems.FirstOrDefault(b => b != null && b.Name == name);
 
-		public AnimateBlock[] GetChildBlocks() => ParallelItems.ToArray();
+		public AnimateBlock[] GetChildrenBlocks() => ParallelItems.ToArray();
 
 		public override string DefaultName => "Parallel";
 

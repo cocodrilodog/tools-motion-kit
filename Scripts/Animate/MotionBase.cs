@@ -615,10 +615,17 @@
 
 		private void ApplyProgress() {
 			CheckDisposed();
-			if (m_Easing != null) {
-				m_Setter(m_Easing(m_InitialValue, m_FinalValue, m_Progress));
-			} else {
-				m_Setter(DefaultEasing(m_InitialValue, m_FinalValue, m_Progress));
+			// Only apply changes once the motion has started.
+			//
+			// This condition allows the OnStart to be triggered before any value has been set,
+			// hence being able to grab the value of the property just before staring which is
+			// a very common need.
+			if (Started) { 
+				if (m_Easing != null) {
+					m_Setter(m_Easing(m_InitialValue, m_FinalValue, m_Progress));
+				} else {
+					m_Setter(DefaultEasing(m_InitialValue, m_FinalValue, m_Progress));
+				}
 			}
 		}
 

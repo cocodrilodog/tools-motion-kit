@@ -16,7 +16,11 @@ namespace CocodriloDog.Animation {
 		/// <returns>The <see cref="AnimateBlock"/></returns>
 		AnimateBlock GetChildBlock(string name);
 
-		AnimateBlock[] GetChildBlocks();
+		/// <summary>
+		/// Gets all the children <see cref="AnimateBlock"/>.
+		/// </summary>
+		/// <returns>An array with the children.</returns>
+		AnimateBlock[] GetChildrenBlocks();
 
 	}
 
@@ -47,10 +51,10 @@ namespace CocodriloDog.Animation {
 		public void Play() => DefaultAnimateBlock?.Play();
 
 		/// <summary>
-		/// Plays the <see cref="AnimateBlock"/> with the specified <paramref name="blockName"/>.
+		/// Plays the <see cref="AnimateBlock"/> with the specified <paramref name="blockPath"/>.
 		/// </summary>
-		/// <param name="blockName">The name of the block.</param>
-		public void Play(string blockName) => GetChildBlock(blockName)?.Play();
+		/// <param name="blockPath">The name of the block.</param>
+		public void Play(string blockPath) => GetChildBlockAtPath(blockPath)?.Play();
 
 		/// <summary>
 		/// Plays all the <see cref="AnimateBlock"/>s managed by this behaviour.
@@ -63,10 +67,10 @@ namespace CocodriloDog.Animation {
 		public void Stop() => DefaultAnimateBlock?.Stop();
 
 		/// <summary>
-		/// Stops the <see cref="AnimateBlock"/> with the specified <paramref name="blockName"/>.
+		/// Stops the <see cref="AnimateBlock"/> with the specified <paramref name="blockPath"/>.
 		/// </summary>
-		/// <param name="blockName">The name of the block.</param>
-		public void Stop(string blockName) => GetChildBlock(blockName)?.Stop();
+		/// <param name="blockPath">The name of the block.</param>
+		public void Stop(string blockPath) => GetChildBlockAtPath(blockPath)?.Stop();
 
 		/// <summary>
 		/// Stops all the <see cref="AnimateBlock"/>s managed by this behaviour.
@@ -79,10 +83,10 @@ namespace CocodriloDog.Animation {
 		public void Pause() => DefaultAnimateBlock?.Pause();
 
 		/// <summary>
-		/// Pauses the <see cref="AnimateBlock"/> with the specified <paramref name="blockName"/>.
+		/// Pauses the <see cref="AnimateBlock"/> with the specified <paramref name="blockPath"/>.
 		/// </summary>
-		/// <param name="blockName">The name of the block.</param>
-		public void Pause(string blockName) => GetChildBlock(blockName)?.Pause();
+		/// <param name="blockPath">The name of the block.</param>
+		public void Pause(string blockPath) => GetChildBlockAtPath(blockPath)?.Pause();
 
 
 		/// <summary>
@@ -96,10 +100,10 @@ namespace CocodriloDog.Animation {
 		public void Resume() => DefaultAnimateBlock?.Resume();
 
 		/// <summary>
-		/// Resumes the <see cref="AnimateBlock"/> with the specified <paramref name="blockName"/>.
+		/// Resumes the <see cref="AnimateBlock"/> with the specified <paramref name="blockPath"/>.
 		/// </summary>
-		/// <param name="blockName">The name of the block.</param>
-		public void Resume(string blockName) => GetChildBlock(blockName)?.Resume();
+		/// <param name="blockPath">The name of the block.</param>
+		public void Resume(string blockPath) => GetChildBlockAtPath(blockPath)?.Resume();
 
 		/// <summary>
 		/// Resumes all the <see cref="AnimateBlock"/>s managed by this behaviour.
@@ -162,7 +166,7 @@ namespace CocodriloDog.Animation {
 
 		}
 
-		public AnimateBlock[] GetChildBlocks() => AnimateBlocks.ToArray();
+		public AnimateBlock[] GetChildrenBlocks() => AnimateBlocks.ToArray();
 
 		#endregion
 
@@ -228,7 +232,7 @@ namespace CocodriloDog.Animation {
 
 			if (animateBlock is IAnimateParent) {
 				var animateParent = animateBlock as IAnimateParent;
-				foreach (var item in animateParent.GetChildBlocks()) {
+				foreach (var item in animateParent.GetChildrenBlocks()) {
 					// Recursion
 					ForAllAnimateBlocks(item, action);
 				}
