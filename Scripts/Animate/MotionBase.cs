@@ -123,6 +123,23 @@
 			}
 		}
 
+		/// <summary>
+		/// Will this motion set the value on the first progress, before the <c>OnStart</c> callback?
+		/// </summary>
+		/// 
+		/// <remarks>
+		/// The <c>OnStart</c> callback is invoked in right after the first progress in the same call stack.
+		/// If this is set to <c>true</c>, the animated property will be modified prior to <c>OnStart</c> 
+		/// during the first progress stack.
+		/// 
+		/// This is <c>false</c> by default to allow <c>OnStart</c> one last opportunity to use the current 
+		/// value of the animated property before it is modified by this motion.
+		/// </remarks>
+		public bool SetValueBeforeOnStart {
+			get => m_SetValueBeforeOnStart;
+			set => m_SetValueBeforeOnStart = value;
+		}
+
 		public bool Completed {
 			get => m_Completed;
 			set {
@@ -538,6 +555,9 @@
 		private bool m_Started;
 
 		[NonSerialized]
+		private bool m_SetValueBeforeOnStart;
+
+		[NonSerialized]
 		private bool m_Completed;
 
 		[NonSerialized]
@@ -620,7 +640,7 @@
 			// This condition allows the OnStart to be triggered before any value has been set,
 			// hence being able to grab the value of the property just before staring which is
 			// a very common need.
-			if (Started) { 
+			if (SetValueBeforeOnStart || Started) { 
 				if (m_Easing != null) {
 					m_Setter(m_Easing(m_InitialValue, m_FinalValue, m_Progress));
 				} else {

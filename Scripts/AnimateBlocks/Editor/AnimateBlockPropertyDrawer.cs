@@ -69,6 +69,11 @@ namespace CocodriloDog.Animation {
 			OnCompleteProperty			= Property.FindPropertyRelative("m_OnComplete");
 			CallbackSelectionProperty	= Property.FindPropertyRelative("m_CallbackSelection");
 
+			OnStartCallsProperty		= OnStartProperty.FindPropertyRelative("m_PersistentCalls.m_Calls");
+			OnUpdateCallsProperty		= OnUpdateProperty.FindPropertyRelative("m_PersistentCalls.m_Calls");
+			OnInterruptCallsProperty	= OnInterruptProperty.FindPropertyRelative("m_PersistentCalls.m_Calls");
+			OnCompleteCallsProperty		= OnCompleteProperty.FindPropertyRelative("m_PersistentCalls.m_Calls");
+
 		}
 
 		protected override float GetEditPropertyHeight(SerializedProperty property, GUIContent label) {
@@ -149,6 +154,14 @@ namespace CocodriloDog.Animation {
 
 		private SerializedProperty CallbackSelectionProperty { get; set; }
 
+		private SerializedProperty OnStartCallsProperty { get; set; }
+
+		private SerializedProperty OnUpdateCallsProperty { get; set; }
+
+		private SerializedProperty OnInterruptCallsProperty { get; set; }
+
+		private SerializedProperty OnCompleteCallsProperty { get; set; }
+
 		#endregion
 
 
@@ -170,7 +183,13 @@ namespace CocodriloDog.Animation {
 			GetNextPosition(SpaceHeight);
 			EditorGUI.LabelField(GetNextPosition(), "Callbacks", EditorStyles.boldLabel);
 
-			CallbackSelectionProperty.intValue = GUI.Toolbar(GetNextPosition(), CallbackSelectionProperty.intValue, m_CallbackOptions);
+			var options = new string[4];
+			options[0] = m_CallbackOptions[0] + (OnStartCallsProperty.arraySize > 0 ? $" ({OnStartCallsProperty.arraySize})" : "");
+			options[1] = m_CallbackOptions[1] + (OnUpdateCallsProperty.arraySize > 0 ? $" ({OnUpdateCallsProperty.arraySize})" : "");
+			options[2] = m_CallbackOptions[2] + (OnInterruptCallsProperty.arraySize > 0 ? $" ({OnInterruptCallsProperty.arraySize})" : "");
+			options[3] = m_CallbackOptions[3] + (OnCompleteCallsProperty.arraySize > 0 ? $" ({OnCompleteCallsProperty.arraySize})" : "");
+
+			CallbackSelectionProperty.intValue = GUI.Toolbar(GetNextPosition(), CallbackSelectionProperty.intValue, options);
 
 			switch (CallbackSelectionProperty.intValue) {
 				case 0: EditorGUI.PropertyField(GetNextPosition(OnStartProperty), OnStartProperty); break;

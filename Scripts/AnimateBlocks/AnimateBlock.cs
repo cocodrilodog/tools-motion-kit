@@ -19,6 +19,7 @@ namespace CocodriloDog.Animation {
 	public interface IAnimateBlock {
 		ITimedProgressable TimedProgressable { get; }
 		float Progress { get; set; }
+		//void SetProgress(float progress, bool invokeCallbacks);
 		float CurrentTime { get; }
 		float Duration { get; }
 		bool IsPlaying { get; }

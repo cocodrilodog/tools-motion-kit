@@ -239,7 +239,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d4b805bccb538e942876de804f580167, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_SelectedCompositePath: m_AnimateBlocks.Array.data[0].m_SequenceItems.Array.data[3]
+  m_SelectedCompositePath: m_AnimateBlocks.Array.data[0].m_SequenceItems.Array.data[1]
   m_AnimateBlocks:
   - rid: 7857419217149624321
   m_PlayAllOnStart: 1
@@ -314,7 +314,7 @@ MonoBehaviour:
       type: {class: Motion3DBlock, ns: CocodriloDog.Animation, asm: Assembly-CSharp}
       data:
         m_Name: Motion2
-        m_Edit: 0
+        m_Edit: 1
         m_ReuseID: 
         m_Duration: 1
         m_TimeMode: 0
@@ -404,7 +404,7 @@ MonoBehaviour:
       type: {class: Motion3DBlock, ns: CocodriloDog.Animation, asm: Assembly-CSharp}
       data:
         m_Name: Motion4
-        m_Edit: 1
+        m_Edit: 0
         m_ReuseID: 
         m_Duration: 1
         m_TimeMode: 0
