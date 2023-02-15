@@ -608,10 +608,6 @@ namespace CocodriloDog.Animation {
 			CheckDisposed();
 			foreach(var itemInfo in m_ParallelItemsInfo) {
 				var progress = Mathf.Clamp01(EasedProgress * m_ParallelDuration / itemInfo.Item.Duration);
-				// Make sure that active items are "un-completed"
-				if (progress < 1) {
-					itemInfo.Item.Completed = false;
-				}
 				itemInfo.Item.SetProgress(progress, invokeCallbacks);
 			}
 		}
@@ -635,6 +631,9 @@ namespace CocodriloDog.Animation {
 
 				Completed = true;
 
+			} else {
+				// This is useful if the animation is played in reverse
+				Completed = false;
 			}
 			m_InvokeCallbacks = true;
 		}

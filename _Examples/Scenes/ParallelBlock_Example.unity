@@ -134,7 +134,7 @@ GameObject:
   - component: {fileID: 316423282}
   - component: {fileID: 316423283}
   m_Layer: 0
-  m_Name: ParallelComponentExample
+  m_Name: ParallelBlockExample
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -177,6 +177,8 @@ MonoBehaviour:
   references:
     version: 2
     RefIds:
+    - rid: -2
+      type: {class: , ns: , asm: }
     - rid: 7857419217149624330
       type: {class: ParallelBlock, ns: CocodriloDog.Animation, asm: Assembly-CSharp}
       data:
@@ -187,13 +189,8 @@ MonoBehaviour:
         m_TimeMode: 0
         m_Easing:
           m_EasingName: Linear
-          m_AnimateCurve:
-            Curve:
-              serializedVersion: 2
-              m_Curve: []
-              m_PreInfinity: 2
-              m_PostInfinity: 2
-              m_RotationOrder: 4
+          m_ParameterizedEasing:
+            rid: -2
         m_OnStart:
           m_PersistentCalls:
             m_Calls: []
@@ -221,13 +218,8 @@ MonoBehaviour:
         m_TimeMode: 0
         m_Easing:
           m_EasingName: Linear
-          m_AnimateCurve:
-            Curve:
-              serializedVersion: 2
-              m_Curve: []
-              m_PreInfinity: 2
-              m_PostInfinity: 2
-              m_RotationOrder: 4
+          m_ParameterizedEasing:
+            rid: -2
         m_OnStart:
           m_PersistentCalls:
             m_Calls: []
@@ -254,13 +246,8 @@ MonoBehaviour:
         m_TimeMode: 0
         m_Easing:
           m_EasingName: Linear
-          m_AnimateCurve:
-            Curve:
-              serializedVersion: 2
-              m_Curve: []
-              m_PreInfinity: 2
-              m_PostInfinity: 2
-              m_RotationOrder: 4
+          m_ParameterizedEasing:
+            rid: -2
         m_OnStart:
           m_PersistentCalls:
             m_Calls: []
@@ -284,13 +271,8 @@ MonoBehaviour:
         m_TimeMode: 0
         m_Easing:
           m_EasingName: Back In Out
-          m_AnimateCurve:
-            Curve:
-              serializedVersion: 2
-              m_Curve: []
-              m_PreInfinity: 2
-              m_PostInfinity: 2
-              m_RotationOrder: 4
+          m_ParameterizedEasing:
+            rid: -2
         m_OnStart:
           m_PersistentCalls:
             m_Calls: []
@@ -321,13 +303,8 @@ MonoBehaviour:
         m_TimeMode: 0
         m_Easing:
           m_EasingName: Linear
-          m_AnimateCurve:
-            Curve:
-              serializedVersion: 2
-              m_Curve: []
-              m_PreInfinity: 2
-              m_PostInfinity: 2
-              m_RotationOrder: 4
+          m_ParameterizedEasing:
+            rid: -2
         m_OnStart:
           m_PersistentCalls:
             m_Calls: []
@@ -354,13 +331,8 @@ MonoBehaviour:
         m_TimeMode: 0
         m_Easing:
           m_EasingName: Linear
-          m_AnimateCurve:
-            Curve:
-              serializedVersion: 2
-              m_Curve: []
-              m_PreInfinity: 2
-              m_PostInfinity: 2
-              m_RotationOrder: 4
+          m_ParameterizedEasing:
+            rid: -2
         m_OnStart:
           m_PersistentCalls:
             m_Calls: []
@@ -384,13 +356,8 @@ MonoBehaviour:
         m_TimeMode: 0
         m_Easing:
           m_EasingName: Back In Out
-          m_AnimateCurve:
-            Curve:
-              serializedVersion: 2
-              m_Curve: []
-              m_PreInfinity: 2
-              m_PostInfinity: 2
-              m_RotationOrder: 4
+          m_ParameterizedEasing:
+            rid: -2
         m_OnStart:
           m_PersistentCalls:
             m_Calls: []
@@ -421,13 +388,8 @@ MonoBehaviour:
         m_TimeMode: 0
         m_Easing:
           m_EasingName: Linear
-          m_AnimateCurve:
-            Curve:
-              serializedVersion: 2
-              m_Curve: []
-              m_PreInfinity: 2
-              m_PostInfinity: 2
-              m_RotationOrder: 4
+          m_ParameterizedEasing:
+            rid: -2
         m_OnStart:
           m_PersistentCalls:
             m_Calls: []
@@ -454,13 +416,8 @@ MonoBehaviour:
         m_TimeMode: 0
         m_Easing:
           m_EasingName: Linear
-          m_AnimateCurve:
-            Curve:
-              serializedVersion: 2
-              m_Curve: []
-              m_PreInfinity: 2
-              m_PostInfinity: 2
-              m_RotationOrder: 4
+          m_ParameterizedEasing:
+            rid: -2
         m_OnStart:
           m_PersistentCalls:
             m_Calls: []
@@ -484,13 +441,8 @@ MonoBehaviour:
         m_TimeMode: 0
         m_Easing:
           m_EasingName: Back In Out
-          m_AnimateCurve:
-            Curve:
-              serializedVersion: 2
-              m_Curve: []
-              m_PreInfinity: 2
-              m_PostInfinity: 2
-              m_RotationOrder: 4
+          m_ParameterizedEasing:
+            rid: -2
         m_OnStart:
           m_PersistentCalls:
             m_Calls: []

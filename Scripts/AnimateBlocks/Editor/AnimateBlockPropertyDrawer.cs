@@ -54,34 +54,36 @@ namespace CocodriloDog.Animation {
 
 		#region Protected Methods
 
-		protected override void InitializePropertiesForGetHeight() {
+		protected override void Edit_InitializePropertiesForGetHeight() {
 
-			base.InitializePropertiesForGetHeight();
+			base.Edit_InitializePropertiesForGetHeight();
 
-			ReuseIDProperty		= Property.FindPropertyRelative("m_ReuseID");
-			DurationProperty	= Property.FindPropertyRelative("m_Duration");
-			TimeModeProperty	= Property.FindPropertyRelative("m_TimeMode");
-			EasingProperty		= Property.FindPropertyRelative("m_Easing");
+			OwnerProperty = Property.FindPropertyRelative("m_Owner");
+			ReuseIDProperty = Property.FindPropertyRelative("m_ReuseID");
+			DurationProperty = Property.FindPropertyRelative("m_Duration");
+			TimeModeProperty = Property.FindPropertyRelative("m_TimeMode");
+			EasingProperty = Property.FindPropertyRelative("m_Easing");
 
-			OnStartProperty				= Property.FindPropertyRelative("m_OnStart");
-			OnUpdateProperty			= Property.FindPropertyRelative("m_OnUpdate");
-			OnInterruptProperty			= Property.FindPropertyRelative("m_OnInterrupt");
-			OnCompleteProperty			= Property.FindPropertyRelative("m_OnComplete");
-			CallbackSelectionProperty	= Property.FindPropertyRelative("m_CallbackSelection");
+			OnStartProperty = Property.FindPropertyRelative("m_OnStart");
+			OnUpdateProperty = Property.FindPropertyRelative("m_OnUpdate");
+			OnInterruptProperty = Property.FindPropertyRelative("m_OnInterrupt");
+			OnCompleteProperty = Property.FindPropertyRelative("m_OnComplete");
+			CallbackSelectionProperty = Property.FindPropertyRelative("m_CallbackSelection");
 
-			OnStartCallsProperty		= OnStartProperty.FindPropertyRelative("m_PersistentCalls.m_Calls");
-			OnUpdateCallsProperty		= OnUpdateProperty.FindPropertyRelative("m_PersistentCalls.m_Calls");
-			OnInterruptCallsProperty	= OnInterruptProperty.FindPropertyRelative("m_PersistentCalls.m_Calls");
-			OnCompleteCallsProperty		= OnCompleteProperty.FindPropertyRelative("m_PersistentCalls.m_Calls");
+			OnStartCallsProperty = OnStartProperty.FindPropertyRelative("m_PersistentCalls.m_Calls");
+			OnUpdateCallsProperty = OnUpdateProperty.FindPropertyRelative("m_PersistentCalls.m_Calls");
+			OnInterruptCallsProperty = OnInterruptProperty.FindPropertyRelative("m_PersistentCalls.m_Calls");
+			OnCompleteCallsProperty = OnCompleteProperty.FindPropertyRelative("m_PersistentCalls.m_Calls");
 
 		}
 
-		protected override float GetEditPropertyHeight(SerializedProperty property, GUIContent label) {
+		protected override float Edit_GetPropertyHeight(SerializedProperty property, GUIContent label) {
 
 			// Base height
-			var height = base.GetEditPropertyHeight(property, label);
+			var height = base.Edit_GetPropertyHeight(property, label);
 
-			// Reuse ID
+			// Owner and Reuse ID
+			height += EditorGUI.GetPropertyHeight(OwnerProperty) + 2;
 			height += EditorGUI.GetPropertyHeight(ReuseIDProperty) + 2;
 
 			// Before settings
@@ -108,9 +110,10 @@ namespace CocodriloDog.Animation {
 			return height;
 		}
 
-		protected override void OnEditGUI(Rect position, SerializedProperty property, GUIContent label) {
-			base.OnEditGUI(position, property, label);
-			DrawReuseID();
+		protected override void Edit_OnGUI(Rect position, SerializedProperty property, GUIContent label) {
+			base.Edit_OnGUI(position, property, label);
+			EditorGUI.PropertyField(GetNextPosition(OwnerProperty), OwnerProperty);
+			EditorGUI.PropertyField(GetNextPosition(ReuseIDProperty), ReuseIDProperty);
 			DrawBeforeSettings();
 			DrawSettings();
 			DrawAfterSettings();
@@ -135,6 +138,8 @@ namespace CocodriloDog.Animation {
 
 
 		#region Private Properties
+
+		private SerializedProperty OwnerProperty { get; set; }
 
 		private SerializedProperty ReuseIDProperty { get; set; }
 
@@ -175,8 +180,6 @@ namespace CocodriloDog.Animation {
 
 
 		#region Private Methods
-
-		private void DrawReuseID() => EditorGUI.PropertyField(GetNextPosition(ReuseIDProperty), ReuseIDProperty);
 
 		private void DrawCallbacks() {
 

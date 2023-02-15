@@ -25,8 +25,8 @@ namespace CocodriloDog.Animation {
 
 		#region Protected Methods
 
-		protected override void InitializePropertiesForGetHeight() {
-			base.InitializePropertiesForGetHeight();
+		protected override void Edit_InitializePropertiesForGetHeight() {
+			base.Edit_InitializePropertiesForGetHeight();
 			ObjectProperty					= Property.FindPropertyRelative("m_Object");
 			SetterStringProperty			= Property.FindPropertyRelative("m_SetterString");
 			GetterStringProperty			= Property.FindPropertyRelative("m_GetterString");

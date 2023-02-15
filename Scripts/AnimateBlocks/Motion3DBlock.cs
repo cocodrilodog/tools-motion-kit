@@ -24,7 +24,7 @@ namespace CocodriloDog.Animation {
 		protected override Motion3D CreateMotion(Action<Vector3> setterDelegate, Func<Vector3> getterDelegate) {
 
 			// Motion, easing and time mode
-			var motion = Animate.GetMotion(this, ReuseID, v => setterDelegate(v))
+			var motion = Animate.GetMotion(Owner, ReuseID, v => setterDelegate(v))
 				.SetEasing(Easing.Vector3Easing)
 				.SetTimeMode(TimeMode);
 

@@ -24,7 +24,7 @@ namespace CocodriloDog.Animation {
 		protected override MotionFloat CreateMotion(Action<float> setterDelegate, Func<float> getterDelegate) {
 
 			// Motion, easing and time mode
-			var motion = Animate.GetMotion(this, ReuseID, v => setterDelegate(v))
+			var motion = Animate.GetMotion(Owner, ReuseID, v => setterDelegate(v))
 				.SetEasing(Easing.FloatEasing)
 				.SetTimeMode(TimeMode);
 

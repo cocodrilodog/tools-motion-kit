@@ -646,6 +646,9 @@
 
 				Completed = true;
 
+			} else {
+				// This is useful if the animation is played in reverse
+				Completed = false;
 			}
 			m_InvokeCallbacks = true;
 		}

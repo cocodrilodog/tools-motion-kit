@@ -45,7 +45,7 @@ namespace CocodriloDog.Animation {
 
 		public override void Initialize() {
 
-			m_Timer = Animate.GetTimer(this, ReuseID)
+			m_Timer = Animate.GetTimer(Owner, ReuseID)
 				.SetDuration(DurationInput)
 				.SetTimeMode(TimeMode);
 

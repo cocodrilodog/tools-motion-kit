@@ -54,7 +54,7 @@ namespace CocodriloDog.Animation {
 				sequenceItemsList.Add(sequenceItems.TimedProgressable);
 			}
 
-			m_Sequence = Animate.GetSequence(this, ReuseID, sequenceItemsList.ToArray())
+			m_Sequence = Animate.GetSequence(Owner, ReuseID, sequenceItemsList.ToArray())
 				.SetEasing(Easing.FloatEasing)
 				.SetTimeMode(TimeMode);
 

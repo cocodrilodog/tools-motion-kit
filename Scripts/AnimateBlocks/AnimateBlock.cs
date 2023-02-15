@@ -113,7 +113,7 @@ namespace CocodriloDog.Animation {
 		/// Disposes any Animate object that was created with this asset as owner.
 		/// </summary>
 		public virtual void Dispose() {
-			Animate.ClearPlaybacks(this);
+			Animate.ClearPlayback(Animate.Instance, ReuseID);
 		}
 
 		#endregion
@@ -122,18 +122,47 @@ namespace CocodriloDog.Animation {
 		#region Protected Properties
 
 		/// <summary>
+		/// The owner to be used by the animate object.
+		/// </summary>
+		/// 
+		/// <remarks>
+		/// If no <see cref="Owner"/>  is provided in the inspector, it will default to the <see cref="Animate"/> 
+		/// singleton.
+		/// 
+		/// Specifying the same <see cref="Owner"/> in more than one animation in the inspector may be helpful 
+		/// to make animations that set values on the same properties not to conflict with each other. The 
+		/// animations should share the same <see cref="ReuseID"/> as well.
+		/// 
+		/// For example, two motions that set the position property of an object may have the same 
+		/// <see cref="Owner"/> and <see cref="ReuseID"/> so that when one is interrupted by the other, 
+		/// the new one stops the previous one. This avoids the two animations trying to animate the same 
+		/// property with different values at the same time.
+		/// </remarks>
+		protected UnityEngine.Object Owner {
+			get {
+				if (m_Owner != null) {
+					return m_Owner;
+				} else {
+					return Animate.Instance;
+				}
+			}
+		}
+
+		/// <summary>
 		/// The unique ID to be used by the Animate object.
 		/// </summary>
 		/// 
 		/// <remarks>
 		/// If no ID is provided in the inspector, an automatic unique ID will be created.
-		/// Specifying a <c>ReuseID</c> in the inspector may be helpful to make some animations that
-		/// set values on the same properties not to conflict with each other. 
+		/// 
+		/// Specifying the same <see cref="ReuseID"/> in more than one animation in the inspector may be helpful 
+		/// to make animations that set values on the same properties not to conflict with each other. The 
+		/// animations should share the same <see cref="Owner"/> as well.
 		/// 
 		/// For example, two motions that set the position property of an object may have the same 
-		/// <c>ReuseID</c> so that when one is interrupted by the other, the new one stops the previous
-		/// one. This avoids the two animations trying to animate the same property with different 
-		/// values at the same time.
+		/// <see cref="Owner"/> and <see cref="ReuseID"/> so that when one is interrupted by the other, 
+		/// the new one stops the previous one. This avoids the two animations trying to animate the same 
+		/// property with different values at the same time.
 		/// </remarks>
 		protected string ReuseID {
 			get {
@@ -187,6 +216,9 @@ namespace CocodriloDog.Animation {
 
 
 		#region Private Fields - Serialized
+
+		[SerializeField]
+		private UnityEngine.Object m_Owner;
 
 		[SerializeField]
 		private string m_ReuseID;

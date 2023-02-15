@@ -54,7 +54,7 @@ namespace CocodriloDog.Animation {
 				parallelItemsList.Add(parallelItem.TimedProgressable);
 			}
 
-			m_Parallel = Animate.GetParallel(this, ReuseID, parallelItemsList.ToArray())
+			m_Parallel = Animate.GetParallel(Owner, ReuseID, parallelItemsList.ToArray())
 				.SetEasing(Easing.FloatEasing)
 				.SetTimeMode(TimeMode);
 

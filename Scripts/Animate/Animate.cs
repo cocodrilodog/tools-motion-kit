@@ -352,6 +352,24 @@
 		}
 
 		/// <summary>
+		/// Removes the cached <c>Playback</c> object that is owner by <paramref name="owner"/> 
+		/// and has the <paramref name="reuseId"/>.
+		/// </summary>
+		/// <returns>
+		/// <c>true</c>, if the playback was cleared, <c>false</c> otherwise.
+		/// </returns>
+		/// <param name="owner">Owner.</param>
+		public static bool ClearPlayback(object owner, string reuseId) {
+			// Check for null because this may be called from OnDestroy() of another 
+			// object and at that point, it is possible that the animate instance is 
+			// already destroyed.
+			if (Instance != null) {
+				return Instance._ClearPlayback(owner, reuseId);
+			}
+			return false;
+		}
+
+		/// <summary>
 		/// Removes all cached <c>Playback</c> objects that are related to 
 		/// <c>owner</c>
 		/// </summary>
@@ -492,12 +510,24 @@
 		}
 
 		private bool _ClearPlaybacks(object owner) {
-			Dictionary<string, IPlayback> ownerPlaybacks;
-			if (Playbacks.TryGetValue(owner, out ownerPlaybacks)) {
+			if (Playbacks.TryGetValue(owner, out var ownerPlaybacks)) {
 				foreach (KeyValuePair<string, IPlayback> entry in ownerPlaybacks) {
 					entry.Value.Dispose();
 				}
 				Playbacks.Remove(owner);
+				return true;
+			} else {
+				return false;
+			}
+		}
+
+		private bool _ClearPlayback(object owner, string reuseID) {
+			if (Playbacks.TryGetValue(owner, out var ownerPlaybacks)) {
+				ownerPlaybacks[reuseID].Dispose();
+				ownerPlaybacks.Remove(reuseID);
+				if (ownerPlaybacks.Count == 0) {
+					Playbacks.Remove(owner);
+				}
 				return true;
 			} else {
 				return false;

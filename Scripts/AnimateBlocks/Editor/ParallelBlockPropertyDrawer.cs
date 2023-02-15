@@ -11,13 +11,13 @@ namespace CocodriloDog.Animation {
 
 		#region Protected Methods
 
-		protected override void InitializePropertiesForGetHeight() {
-			base.InitializePropertiesForGetHeight();
+		protected override void Edit_InitializePropertiesForGetHeight() {
+			base.Edit_InitializePropertiesForGetHeight();
 			ParallelItemsProperty = Property.FindPropertyRelative("m_ParallelItems");
 		}
 
-		protected override float GetEditPropertyHeight(SerializedProperty property, GUIContent label) {
-			var height = base.GetEditPropertyHeight(property, label);
+		protected override float Edit_GetPropertyHeight(SerializedProperty property, GUIContent label) {
+			var height = base.Edit_GetPropertyHeight(property, label);
 			height += SpaceHeight;
 			height += EditorGUI.GetPropertyHeight(ParallelItemsProperty);
 			return height;
@@ -25,7 +25,7 @@ namespace CocodriloDog.Animation {
 
 		protected override void DrawAfterSettings() {
 			GetNextPosition(SpaceHeight);
-			EditorGUI.PropertyField(GetNextPosition(ParallelItemsProperty), ParallelItemsProperty);
+			EditorGUI.PropertyField(GetNextPosition(ParallelItemsProperty), ParallelItemsProperty, true);
 		}
 
 		#endregion

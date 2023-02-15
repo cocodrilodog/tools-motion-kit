@@ -133,7 +133,7 @@ namespace CocodriloDog.Animation {
 			// but casting the values to Vector2 to solve the ambiguity.
 
 			// Motion, easing and time mode
-			var motion = Animate.GetMotion(this, ReuseID, v => setterDelegate(v))
+			var motion = Animate.GetMotion(Owner, ReuseID, v => setterDelegate(v))
 				.SetEasing(Easing.Vector3Easing)
 				.SetTimeMode(TimeMode);
 
