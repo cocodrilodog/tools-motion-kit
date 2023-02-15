@@ -123,23 +123,6 @@
 			}
 		}
 
-		/// <summary>
-		/// Will this motion set the value on the first progress, before the <c>OnStart</c> callback?
-		/// </summary>
-		/// 
-		/// <remarks>
-		/// The <c>OnStart</c> callback is invoked in right after the first progress in the same call stack.
-		/// If this is set to <c>true</c>, the animated property will be modified prior to <c>OnStart</c> 
-		/// during the first progress stack.
-		/// 
-		/// This is <c>false</c> by default to allow <c>OnStart</c> one last opportunity to use the current 
-		/// value of the animated property before it is modified by this motion.
-		/// </remarks>
-		public bool SetValueBeforeOnStart {
-			get => m_SetValueBeforeOnStart;
-			set => m_SetValueBeforeOnStart = value;
-		}
-
 		public bool Completed {
 			get => m_Completed;
 			set {
@@ -255,7 +238,6 @@
 		public void SetProgress(float progress, bool invokeCallbacks) {
 			m_Progress = progress;
 			m_CurrentTime = m_Progress * m_Duration;
-			ApplyProgress();
 			UpdateState(invokeCallbacks);
 		}
 
@@ -635,17 +617,10 @@
 
 		private void ApplyProgress() {
 			CheckDisposed();
-			// Only apply changes once the motion has started.
-			//
-			// This condition allows the OnStart to be triggered before any value has been set,
-			// hence being able to grab the value of the property just before staring which is
-			// a very common need.
-			if (SetValueBeforeOnStart || Started) { 
-				if (m_Easing != null) {
-					m_Setter(m_Easing(m_InitialValue, m_FinalValue, m_Progress));
-				} else {
-					m_Setter(DefaultEasing(m_InitialValue, m_FinalValue, m_Progress));
-				}
+			if (m_Easing != null) {
+				m_Setter(m_Easing(m_InitialValue, m_FinalValue, m_Progress));
+			} else {
+				m_Setter(DefaultEasing(m_InitialValue, m_FinalValue, m_Progress));
 			}
 		}
 
@@ -655,12 +630,15 @@
 				Started = true;
 			}
 			if (Started && !Completed) {
+				// Putting ApplyProgress() here solves the issue of the target property being changed
+				// before OnStart. Now OnStart is invoked before the motion starts modifying the property
+				ApplyProgress();
 				InvokeOnUpdate();
 			}
 			if (Progress >= 1) {
 
 				// Set the coroutine to null before calling m_OnComplete() because m_OnComplete()
-				// may start another animation with the same timer object and we don't 
+				// may start another animation with the same motion object and we don't 
 				// want to set the coroutine to null just after starting the new animation.
 				m_Coroutine = null;
 				m_IsPlaying = false;

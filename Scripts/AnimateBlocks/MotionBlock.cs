@@ -16,7 +16,6 @@ namespace CocodriloDog.Animation {
 	/// identifiable instead of using the concrete types derived from the template.
 	/// </remarks>
 	public interface IMotionBlock : IAnimateBlock {
-		bool SetValueBeforeOnStart { get; set; }
 		void ResetMotion();
 	}
 
@@ -55,11 +54,6 @@ namespace CocodriloDog.Animation {
 		public override float Duration => Motion.Duration;
 
 		public override bool IsPlaying => Motion.IsPlaying;
-
-		public bool SetValueBeforeOnStart { 
-			get => Motion.SetValueBeforeOnStart;
-			set => Motion.SetValueBeforeOnStart = value; 
-		}
 
 		public override bool IsPaused => Motion.IsPaused;
 
