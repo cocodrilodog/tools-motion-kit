@@ -180,6 +180,9 @@ namespace CocodriloDog.Animation {
 				// This avoids errors OnDestroy in case it was not played at all.
 				Initialize();
 			}
+			if (SetInitialValuesOnStart) {
+				AnimateBlocks.ForEach(b => AnimateBlocksUtility.SetInitialValue(b));
+			}
 		}
 
 		private void OnDestroy() {
@@ -197,6 +200,9 @@ namespace CocodriloDog.Animation {
 		[SerializeField]
 		private bool m_PlayAllOnStart;
 
+		[SerializeField]
+		private bool m_SetInitialValuesOnStart;
+
 		#endregion
 
 
@@ -205,6 +211,8 @@ namespace CocodriloDog.Animation {
 		private List<AnimateBlock> AnimateBlocks => m_AnimateBlocks;
 
 		private bool PlayAllOnStart => m_PlayAllOnStart;
+
+		private bool SetInitialValuesOnStart => m_SetInitialValuesOnStart;
 
 		#endregion
 
