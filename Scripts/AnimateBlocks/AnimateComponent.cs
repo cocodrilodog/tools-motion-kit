@@ -166,6 +166,10 @@ namespace CocodriloDog.Animation {
 
 		}
 
+		public T GetChildBlockAtPath<T>(string blockPath) where T : AnimateBlock {
+			return GetChildBlockAtPath(blockPath) as T;
+		}
+
 		public AnimateBlock[] GetChildrenBlocks() => AnimateBlocks.ToArray();
 
 		#endregion

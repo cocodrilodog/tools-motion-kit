@@ -143,7 +143,10 @@ namespace CocodriloDog.Animation {
 			motion.SetDuration(DurationInput);
 
 			// Callbacks: This approach will only work if the listeners are added via editor
-			if (OnStart.GetPersistentEventCount() > 0) motion.SetOnStart(OnStart.Invoke);
+			motion.SetOnStart(() => {
+				if ((InitialValueIsRelative || FinalValueIsRelative) && ResetRelativeOnStart) ResetMotion();
+				if (OnStart.GetPersistentEventCount() > 0) OnStart.Invoke();
+			});
 			if (OnUpdate.GetPersistentEventCount() > 0) motion.SetOnUpdate(OnUpdate.Invoke);
 			if (OnInterrupt.GetPersistentEventCount() > 0) motion.SetOnInterrupt(OnInterrupt.Invoke);
 			if (OnComplete.GetPersistentEventCount() > 0) motion.SetOnComplete(OnComplete.Invoke);

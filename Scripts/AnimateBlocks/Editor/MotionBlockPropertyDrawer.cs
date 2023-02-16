@@ -34,6 +34,7 @@ namespace CocodriloDog.Animation {
 			InitialValueIsRelativeProperty	= Property.FindPropertyRelative("m_InitialValueIsRelative");
 			FinalValueProperty				= Property.FindPropertyRelative("m_FinalValue");
 			FinalValueIsRelativeProperty	= Property.FindPropertyRelative("m_FinalValueIsRelative");
+			ResetRelativeOnStartProperty	= Property.FindPropertyRelative("m_ResetRelativeOnStart");
 		}
 
 		#endregion
@@ -48,6 +49,8 @@ namespace CocodriloDog.Animation {
 		protected SerializedProperty FinalValueProperty { get; set; }
 
 		protected SerializedProperty FinalValueIsRelativeProperty { get; set; }
+
+		protected SerializedProperty ResetRelativeOnStartProperty { get; set; }
 
 		protected override float BeforeSettingsHeight {
 			get {
@@ -69,6 +72,9 @@ namespace CocodriloDog.Animation {
 				var height = base.SettingsHeight;
 				height += EditorGUI.GetPropertyHeight(InitialValueProperty) + 2;
 				height += EditorGUI.GetPropertyHeight(FinalValueProperty) + 2;
+				if (InitialValueIsRelativeProperty.boolValue || FinalValueIsRelativeProperty.boolValue) {
+					height += EditorGUI.GetPropertyHeight(ResetRelativeOnStartProperty) + 2;
+				}
 				if (ShowGetter) {
 					height += SpaceHeight;			// <- Getter space
 					height += HorizontalLineHeight; // <- Initial horizontal line
@@ -97,6 +103,9 @@ namespace CocodriloDog.Animation {
 			base.DrawSettings();
 			DrawInitialValue();
 			DrawFinalValue();
+			if (InitialValueIsRelativeProperty.boolValue || FinalValueIsRelativeProperty.boolValue) {
+				EditorGUI.PropertyField(GetNextPosition(ResetRelativeOnStartProperty), ResetRelativeOnStartProperty);
+			}
 			if (ShowGetter) {
 				DrawDisabledObjectAndGetter();
 			}

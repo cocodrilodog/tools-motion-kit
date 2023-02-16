@@ -134,6 +134,7 @@ GameObject:
   - component: {fileID: 776496585}
   - component: {fileID: 776496584}
   - component: {fileID: 776496583}
+  - component: {fileID: 776496586}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -207,6 +208,39 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &776496586
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 776496582}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a79441f348de89743a2939f4d699eac1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_RenderShadows: 1
+  m_RequiresDepthTextureOption: 2
+  m_RequiresOpaqueTextureOption: 2
+  m_CameraType: 0
+  m_Cameras: []
+  m_RendererIndex: -1
+  m_VolumeLayerMask:
+    serializedVersion: 2
+    m_Bits: 1
+  m_VolumeTrigger: {fileID: 0}
+  m_VolumeFrameworkUpdateModeOption: 2
+  m_RenderPostProcessing: 0
+  m_Antialiasing: 0
+  m_AntialiasingQuality: 2
+  m_StopNaN: 0
+  m_Dithering: 0
+  m_ClearDepth: 1
+  m_AllowXRRendering: 1
+  m_RequiresDepthTexture: 0
+  m_RequiresColorTexture: 0
+  m_Version: 2
 --- !u!1 &1645218934
 GameObject:
   m_ObjectHideFlags: 0
@@ -239,10 +273,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d4b805bccb538e942876de804f580167, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_SelectedCompositePath: m_AnimateBlocks.Array.data[0].m_SequenceItems.Array.data[1]
+  m_SelectedCompositePath: m_AnimateBlocks.Array.data[0].m_SequenceItems.Array.data[3]
   m_AnimateBlocks:
   - rid: 7857419217149624321
   m_PlayAllOnStart: 1
+  m_SetInitialValuesOnStart: 0
   references:
     version: 2
     RefIds:
@@ -253,6 +288,7 @@ MonoBehaviour:
       data:
         m_Name: SequenceBlock
         m_Edit: 0
+        m_Owner: {fileID: 0}
         m_ReuseID: 
         m_Duration: 0
         m_TimeMode: 0
@@ -283,6 +319,7 @@ MonoBehaviour:
       data:
         m_Name: Motion1
         m_Edit: 0
+        m_Owner: {fileID: 0}
         m_ReuseID: 
         m_Duration: 1
         m_TimeMode: 0
@@ -310,11 +347,13 @@ MonoBehaviour:
         m_InitialValueIsRelative: 1
         m_FinalValue: {x: 3, y: 0, z: 0}
         m_FinalValueIsRelative: 1
+        m_ResetOnStart: 0
     - rid: 7857419217149624324
       type: {class: Motion3DBlock, ns: CocodriloDog.Animation, asm: Assembly-CSharp}
       data:
         m_Name: Motion2
-        m_Edit: 1
+        m_Edit: 0
+        m_Owner: {fileID: 0}
         m_ReuseID: 
         m_Duration: 1
         m_TimeMode: 0
@@ -324,20 +363,7 @@ MonoBehaviour:
             rid: -2
         m_OnStart:
           m_PersistentCalls:
-            m_Calls:
-            - m_Target: {fileID: 1645218935}
-              m_TargetAssemblyTypeName: CocodriloDog.Animation.AnimateComponent,
-                Assembly-CSharp
-              m_MethodName: ResetMotion
-              m_Mode: 5
-              m_Arguments:
-                m_ObjectArgument: {fileID: 0}
-                m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-                m_IntArgument: 0
-                m_FloatArgument: 0
-                m_StringArgument: SequenceBlock/Motion2
-                m_BoolArgument: 0
-              m_CallState: 2
+            m_Calls: []
         m_OnUpdate:
           m_PersistentCalls:
             m_Calls: []
@@ -355,11 +381,13 @@ MonoBehaviour:
         m_InitialValueIsRelative: 1
         m_FinalValue: {x: 0, y: 3, z: 0}
         m_FinalValueIsRelative: 1
+        m_ResetOnStart: 1
     - rid: 7857419217149624326
       type: {class: Motion3DBlock, ns: CocodriloDog.Animation, asm: Assembly-CSharp}
       data:
         m_Name: Motion3
         m_Edit: 0
+        m_Owner: {fileID: 0}
         m_ReuseID: 
         m_Duration: 1
         m_TimeMode: 0
@@ -369,20 +397,7 @@ MonoBehaviour:
             rid: -2
         m_OnStart:
           m_PersistentCalls:
-            m_Calls:
-            - m_Target: {fileID: 1645218935}
-              m_TargetAssemblyTypeName: CocodriloDog.Animation.AnimateComponent,
-                Assembly-CSharp
-              m_MethodName: ResetMotion
-              m_Mode: 5
-              m_Arguments:
-                m_ObjectArgument: {fileID: 0}
-                m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-                m_IntArgument: 0
-                m_FloatArgument: 0
-                m_StringArgument: SequenceBlock/Motion3
-                m_BoolArgument: 0
-              m_CallState: 2
+            m_Calls: []
         m_OnUpdate:
           m_PersistentCalls:
             m_Calls: []
@@ -400,11 +415,13 @@ MonoBehaviour:
         m_InitialValueIsRelative: 1
         m_FinalValue: {x: -3, y: 0, z: 0}
         m_FinalValueIsRelative: 1
+        m_ResetOnStart: 1
     - rid: 7857419217149624329
       type: {class: Motion3DBlock, ns: CocodriloDog.Animation, asm: Assembly-CSharp}
       data:
         m_Name: Motion4
-        m_Edit: 0
+        m_Edit: 1
+        m_Owner: {fileID: 0}
         m_ReuseID: 
         m_Duration: 1
         m_TimeMode: 0
@@ -414,20 +431,7 @@ MonoBehaviour:
             rid: -2
         m_OnStart:
           m_PersistentCalls:
-            m_Calls:
-            - m_Target: {fileID: 1645218935}
-              m_TargetAssemblyTypeName: CocodriloDog.Animation.AnimateComponent,
-                Assembly-CSharp
-              m_MethodName: ResetMotion
-              m_Mode: 5
-              m_Arguments:
-                m_ObjectArgument: {fileID: 0}
-                m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-                m_IntArgument: 0
-                m_FloatArgument: 0
-                m_StringArgument: SequenceBlock/Motion4
-                m_BoolArgument: 0
-              m_CallState: 2
+            m_Calls: []
         m_OnUpdate:
           m_PersistentCalls:
             m_Calls: []
@@ -445,6 +449,7 @@ MonoBehaviour:
         m_InitialValueIsRelative: 1
         m_FinalValue: {x: 0, y: -3, z: 0}
         m_FinalValueIsRelative: 1
+        m_ResetOnStart: 1
 --- !u!135 &1645218936
 SphereCollider:
   m_ObjectHideFlags: 0

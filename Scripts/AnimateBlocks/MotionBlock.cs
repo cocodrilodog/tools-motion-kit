@@ -221,6 +221,8 @@ namespace CocodriloDog.Animation {
 		/// </remarks>
 		protected bool FinalValueIsRelative => m_FinalValueIsRelative;
 
+		protected bool ResetRelativeOnStart => m_ResetRelativeOnStart;
+
 		#endregion
 
 
@@ -258,6 +260,9 @@ namespace CocodriloDog.Animation {
 
 		[SerializeField]
 		private bool m_FinalValueIsRelative;
+
+		[SerializeField]
+		private bool m_ResetRelativeOnStart;
 
 		#endregion
 
