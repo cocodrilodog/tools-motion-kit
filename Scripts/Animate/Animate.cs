@@ -22,8 +22,6 @@
 	public interface ITimedProgressable : IDisposable {
 		float Progress { get; set; }
 		float Duration { get; }
-		bool Started { get; set; }
-		bool Completed { get; set; }
 		void SetProgress(float progress, bool invokeCallbacks);
 		void ResetState();
 		void InvokeOnInterrupt();

@@ -18,7 +18,12 @@ namespace CocodriloDog.Animation {
 		public static bool SetInitialValue(AnimateBlock animateBlock) {
 			if (animateBlock is IMotionBlock) {
 				var motionBlock = animateBlock as IMotionBlock;
+				// The motion is initialized first and its relative values are calculated before applying
+				// progress
 				motionBlock.Progress = 0;
+				// This will prevent the OnStart callback to realculate the relative values when the object
+				// has moved from its original position.
+				motionBlock.ResetRelativeOnStart = false;
 				return true;
 			}
 			if (animateBlock is SequenceBlock) {

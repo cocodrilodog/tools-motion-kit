@@ -17,6 +17,9 @@ namespace CocodriloDog.Animation {
 	/// </remarks>
 	public interface IMotionBlock : IAnimateBlock {
 		void ResetMotion();
+
+		bool ResetRelativeOnStart { get; set; }
+
 	}
 
 	/// <summary>
@@ -56,6 +59,11 @@ namespace CocodriloDog.Animation {
 		public override bool IsPlaying => Motion.IsPlaying;
 
 		public override bool IsPaused => Motion.IsPaused;
+
+		public bool ResetRelativeOnStart {
+			get => m_ResetRelativeOnStart;
+			set => m_ResetRelativeOnStart = value;
+		}
 
 		#endregion
 
@@ -221,8 +229,6 @@ namespace CocodriloDog.Animation {
 		/// </remarks>
 		protected bool FinalValueIsRelative => m_FinalValueIsRelative;
 
-		protected bool ResetRelativeOnStart => m_ResetRelativeOnStart;
-
 		#endregion
 
 
@@ -261,9 +267,6 @@ namespace CocodriloDog.Animation {
 		[SerializeField]
 		private bool m_FinalValueIsRelative;
 
-		[SerializeField]
-		private bool m_ResetRelativeOnStart = true;
-
 		#endregion
 
 
@@ -274,6 +277,9 @@ namespace CocodriloDog.Animation {
 
 		[NonSerialized]
 		private Func<ValueT> m_GetterDelegate;
+
+		[NonSerialized]
+		private bool m_ResetRelativeOnStart = true;
 
 		#endregion
 

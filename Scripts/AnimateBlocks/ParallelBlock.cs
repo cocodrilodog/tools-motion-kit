@@ -25,7 +25,12 @@ namespace CocodriloDog.Animation {
 			}
 		}
 
-		public List<AnimateBlock> ParallelItems => m_ParallelItems;
+		public List<AnimateBlock> ParallelItems {
+			get {
+				_ = Parallel; // <- Force init
+				return m_ParallelItems;
+			}
+		}
 
 		public override ITimedProgressable TimedProgressable => Parallel;
 
@@ -50,7 +55,7 @@ namespace CocodriloDog.Animation {
 		public override void Initialize() {
 
 			List<ITimedProgressable> parallelItemsList = new List<ITimedProgressable>();
-			foreach (var parallelItem in ParallelItems) {
+			foreach (var parallelItem in m_ParallelItems) {
 				parallelItemsList.Add(parallelItem.TimedProgressable);
 			}
 

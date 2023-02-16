@@ -25,7 +25,12 @@ namespace CocodriloDog.Animation {
 			}
 		}
 
-		public List<AnimateBlock> SequenceItems => m_SequenceItems;
+		public List<AnimateBlock> SequenceItems {
+			get {
+				_ = Sequence; // <- Force init
+				return m_SequenceItems;
+			}
+		}
 
 		public override ITimedProgressable TimedProgressable => Sequence;
 
@@ -50,7 +55,7 @@ namespace CocodriloDog.Animation {
 		public override void Initialize() {
 
 			List<ITimedProgressable> sequenceItemsList = new List<ITimedProgressable>();
-			foreach (var sequenceItems in SequenceItems) {
+			foreach (var sequenceItems in m_SequenceItems) {
 				sequenceItemsList.Add(sequenceItems.TimedProgressable);
 			}
 

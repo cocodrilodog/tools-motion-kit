@@ -62,30 +62,6 @@
 		/// <value><c>true</c> if is paused; otherwise, <c>false</c>.</value>
 		public bool IsPaused { get { return m_IsPaused; } }
 
-		public bool Started {
-			get => m_Started;
-			set {
-				if (value != m_Started) {
-					m_Started = value;
-					if (m_Started) {
-						InvokeOnStart();
-					}
-				}
-			}
-		}
-
-		public bool Completed {
-			get => m_Completed;
-			set {
-				if (value != m_Completed) {
-					m_Completed = value;
-					if (m_Completed) {
-						InvokeOnComplete();
-					}
-				}
-			}
-		}
-
 		#endregion
 
 
@@ -413,7 +389,29 @@
 
 		private float DeltaTime => AnimateUtility.GetDeltaTime(m_TimeMode);
 
-		private float _Time => AnimateUtility.GetTime(m_TimeMode);
+		private bool Started {
+			get => m_Started;
+			set {
+				if (value != m_Started) {
+					m_Started = value;
+					if (m_Started) {
+						InvokeOnStart();
+					}
+				}
+			}
+		}
+
+		private bool Completed {
+			get => m_Completed;
+			set {
+				if (value != m_Completed) {
+					m_Completed = value;
+					if (m_Completed) {
+						InvokeOnComplete();
+					}
+				}
+			}
+		}
 
 		#endregion
 
