@@ -17,9 +17,7 @@ namespace CocodriloDog.Animation {
 	/// </remarks>
 	public interface IMotionBlock : IAnimateBlock {
 		void ResetMotion();
-
-		bool ResetRelativeOnStart { get; set; }
-
+		void DontResetRelativeValuesOnStart();
 	}
 
 	/// <summary>
@@ -60,9 +58,8 @@ namespace CocodriloDog.Animation {
 
 		public override bool IsPaused => Motion.IsPaused;
 
-		public bool ResetRelativeOnStart {
-			get => m_ResetRelativeOnStart;
-			set => m_ResetRelativeOnStart = value;
+		public void DontResetRelativeValuesOnStart() {
+			m_DontResetRelativeValuesOnStart = true;
 		}
 
 		#endregion
@@ -160,7 +157,7 @@ namespace CocodriloDog.Animation {
 		/// need to be calculated before the animation begins.
 		/// </remarks>
 		public virtual void ResetMotion() {
-			m_Motion = CreateMotion(m_SetterDelegate, m_GetterDelegate);
+			m_Motion = GetMotion(m_SetterDelegate, m_GetterDelegate);
 		}
 
 		public override void Play() => Motion.Play();
@@ -178,6 +175,9 @@ namespace CocodriloDog.Animation {
 
 		[NonSerialized]
 		protected MotionT m_Motion;
+
+		[NonSerialized]
+		protected bool m_DontResetRelativeValuesOnStart;
 
 		#endregion
 
@@ -239,7 +239,7 @@ namespace CocodriloDog.Animation {
 		/// </summary>
 		/// <param name="setterDelegate">The setter to be used in the motion object.</param>
 		/// <returns>The motion</returns>
-		protected virtual MotionT CreateMotion(Action<ValueT> setterDelegate, Func<ValueT> getterDelegate) => null;
+		protected virtual MotionT GetMotion(Action<ValueT> setterDelegate, Func<ValueT> getterDelegate) => null;
 
 		#endregion
 
@@ -277,9 +277,6 @@ namespace CocodriloDog.Animation {
 
 		[NonSerialized]
 		private Func<ValueT> m_GetterDelegate;
-
-		[NonSerialized]
-		private bool m_ResetRelativeOnStart = true;
 
 		#endregion
 

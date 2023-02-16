@@ -108,7 +108,7 @@ namespace CocodriloDog.Animation {
 		}
 
 		public override void ResetMotion() {
-			m_Motion = CreateMotion(m_SetterDelegate, m_GetterDelegate);
+			m_Motion = GetMotion(m_SetterDelegate, m_GetterDelegate);
 		}
 
 		public override string DefaultName => "Motion2D";
@@ -119,15 +119,14 @@ namespace CocodriloDog.Animation {
 		#region Private Methods
 
 		/// <summary>
-		/// Instead of overriding the base member <c>MotionT CreateMotion(Action<ValueT> setterDelegate, Func<ValueT> getterDelegate)</c>,
+		/// Instead of overriding the base member <c>MotionT GetMotion(Action<ValueT> setterDelegate, Func<ValueT> getterDelegate)</c>,
 		/// I created a specific version that receives a <see cref="Vector2"/>, but returns a <see cref="Motion3D"/>
 		/// object.
 		/// </summary>
 		/// <param name="setterDelegate">A setter for <see cref="Vector2"/></param>
 		/// <param name="getterDelegate">A getter for <see cref="Vector2"/></param>
 		/// <returns>A <see cref="Motion3D"/> object</returns>
-		private Motion3D CreateMotion(Action<Vector2> setterDelegate, Func<Vector2> getterDelegate) {
-			;
+		private Motion3D GetMotion(Action<Vector2> setterDelegate, Func<Vector2> getterDelegate) {
 
 			// HACK: The code in this method is copied from the MotionBaseAsset implementation, 
 			// but casting the values to Vector2 to solve the ambiguity.
@@ -144,7 +143,15 @@ namespace CocodriloDog.Animation {
 
 			// Callbacks: This approach will only work if the listeners are added via editor
 			motion.SetOnStart(() => {
-				if ((InitialValueIsRelative || FinalValueIsRelative) && ResetRelativeOnStart) ResetMotion();
+				if (InitialValueIsRelative || FinalValueIsRelative) {
+					if (m_DontResetRelativeValuesOnStart) {
+						// Reset the flag
+						m_DontResetRelativeValuesOnStart = false;
+					} else {
+						// By default, reset the motion when we have relative values
+						ResetMotion();
+					}
+				}
 				if (OnStart.GetPersistentEventCount() > 0) OnStart.Invoke();
 			});
 			if (OnUpdate.GetPersistentEventCount() > 0) motion.SetOnUpdate(OnUpdate.Invoke);

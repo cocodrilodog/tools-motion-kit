@@ -23,7 +23,7 @@ namespace CocodriloDog.Animation {
 				motionBlock.Progress = 0;
 				// This will prevent the OnStart callback to realculate the relative values when the object
 				// has moved from its original position.
-				motionBlock.ResetRelativeOnStart = false;
+				motionBlock.DontResetRelativeValuesOnStart();
 				return true;
 			}
 			if (animateBlock is SequenceBlock) {

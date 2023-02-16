@@ -21,7 +21,7 @@ namespace CocodriloDog.Animation {
 
 		#region Protected Methods
 
-		protected override Motion3D CreateMotion(Action<Vector3> setterDelegate, Func<Vector3> getterDelegate) {
+		protected override Motion3D GetMotion(Action<Vector3> setterDelegate, Func<Vector3> getterDelegate) {
 
 			// Motion, easing and time mode
 			var motion = Animate.GetMotion(Owner, ReuseID, v => setterDelegate(v))
@@ -35,7 +35,15 @@ namespace CocodriloDog.Animation {
 
 			// Callbacks: This approach will only work if the listeners are added via editor
 			motion.SetOnStart(() => {
-				if ((InitialValueIsRelative || FinalValueIsRelative) && ResetRelativeOnStart) ResetMotion();
+				if (InitialValueIsRelative || FinalValueIsRelative) {
+					if (m_DontResetRelativeValuesOnStart) {
+						// Reset the flag
+						m_DontResetRelativeValuesOnStart = false;
+					} else {
+						// By default, reset the motion when we have relative values
+						ResetMotion();
+					}
+				}
 				if (OnStart.GetPersistentEventCount() > 0) OnStart.Invoke();
 			});
 			if (OnUpdate.GetPersistentEventCount() > 0) motion.SetOnUpdate(OnUpdate.Invoke);

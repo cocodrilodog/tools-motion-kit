@@ -394,6 +394,8 @@
 			foreach (SequenceItemInfo itemInfo in m_SequenceItemsInfo) {
 				itemInfo.Item.ResetState();
 			}
+			m_CurrentTime = 0;
+			m_Progress = 0;
 			m_Started = false;
 			m_Completed = false;
 		}
@@ -586,9 +588,6 @@
 
 			ResetState();
 
-			m_CurrentTime = 0;
-			m_Progress = 0;
-
 			// Wait one frame for the properties to be ready, in case the sequence is
 			// created and started in the same line.
 			yield return null;
@@ -663,6 +662,8 @@
 			for(int i = 0; i < m_ProgressingItemInfo.Index; i++) {
 				if (m_SequenceItemsInfo[i].Item.Progress != 1) {
 					m_SequenceItemsInfo[i].Item.SetProgress(1, invokeCallbacks);
+					// Don't reset the state here, because since progress goes back to 0 it would
+					// cause this condition to trigger again next time
 				}
 			}
 
@@ -698,6 +699,8 @@
 				m_IsPlaying = false;
 				m_CurrentTime = 0;
 
+				// Don't reset the state here because we need this to remain complete as long
+				// as it is part of a sequence.
 				Completed = true;
 
 			} else {

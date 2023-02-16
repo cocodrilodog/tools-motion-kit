@@ -185,7 +185,7 @@ namespace CocodriloDog.Animation {
 				Initialize();
 			}
 			if (SetInitialValuesOnStart) {
-				AnimateBlocks.ForEach(b => AnimateBlocksUtility.SetInitialValue(b));
+				AnimateBlocksUtility.SetInitialValue(DefaultAnimateBlock);
 			}
 		}
 

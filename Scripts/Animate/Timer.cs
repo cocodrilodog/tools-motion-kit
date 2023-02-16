@@ -282,6 +282,8 @@
 		/// Resets the state of this timer.
 		/// </summary>
 		public void ResetState() {
+			m_CurrentTime = 0;
+			m_Progress = 0;
 			m_Started = false;
 			m_Completed = false;
 		}
@@ -422,9 +424,6 @@
 
 			ResetState();
 
-			m_CurrentTime = 0;
-			m_Progress = 0;
-
 			// Wait one frame for the properties to be ready, in case the timer is
 			// created and started in the same line.
 			yield return null;
@@ -478,6 +477,8 @@
 				m_IsPlaying = false;
 				m_CurrentTime = 0;
 
+				// Don't reset the state here because we need this to remain complete as long
+				// as it is part of a sequence.
 				Completed = true;
 
 			} else {

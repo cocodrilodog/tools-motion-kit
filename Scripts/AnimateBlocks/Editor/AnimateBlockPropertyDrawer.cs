@@ -112,8 +112,8 @@ namespace CocodriloDog.Animation {
 
 		protected override void Edit_OnGUI(Rect position, SerializedProperty property, GUIContent label) {
 			base.Edit_OnGUI(position, property, label);
-			EditorGUI.PropertyField(GetNextPosition(OwnerProperty), OwnerProperty);
-			EditorGUI.PropertyField(GetNextPosition(ReuseIDProperty), ReuseIDProperty);
+			EditorGUI.PropertyField(GetNextPosition(OwnerProperty), OwnerProperty, new GUIContent("Owner (Optional)"));
+			EditorGUI.PropertyField(GetNextPosition(ReuseIDProperty), ReuseIDProperty, new GUIContent("Reuse ID (Optional)"));
 			DrawBeforeSettings();
 			DrawSettings();
 			DrawAfterSettings();
