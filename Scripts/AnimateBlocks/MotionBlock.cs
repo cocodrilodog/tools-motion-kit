@@ -262,7 +262,7 @@ namespace CocodriloDog.Animation {
 		private bool m_FinalValueIsRelative;
 
 		[SerializeField]
-		private bool m_ResetRelativeOnStart;
+		private bool m_ResetRelativeOnStart = true;
 
 		#endregion
 

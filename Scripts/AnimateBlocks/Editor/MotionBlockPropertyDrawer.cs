@@ -104,7 +104,13 @@ namespace CocodriloDog.Animation {
 			DrawInitialValue();
 			DrawFinalValue();
 			if (InitialValueIsRelativeProperty.boolValue || FinalValueIsRelativeProperty.boolValue) {
-				EditorGUI.PropertyField(GetNextPosition(ResetRelativeOnStartProperty), ResetRelativeOnStartProperty);
+				EditorGUIUtility.labelWidth += 60;
+				EditorGUI.PropertyField(
+					GetNextPosition(ResetRelativeOnStartProperty), 
+					ResetRelativeOnStartProperty, 
+					new GUIContent("Reset Relative Values On Start")
+				);
+				EditorGUIUtility.labelWidth = 0;
 			}
 			if (ShowGetter) {
 				DrawDisabledObjectAndGetter();
