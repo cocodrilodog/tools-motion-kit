@@ -287,7 +287,7 @@
 		/// <returns>The parallel.</returns>
 		///
 		/// <param name="parallelItems">
-		/// The items that will make the sequence.
+		/// The items that will make the parallel.
 		/// </param>
 		public static Parallel GetParallel(params ITimedProgressable[] parallelItems) {
 			if (Instance != null) {
@@ -311,19 +311,19 @@
 		/// The reuseID of this parallel.
 		/// </param>
 		///
-		/// <param name="sequenceItems">
-		/// The items that will make the sequence.
+		/// <param name="parallelItems">
+		/// The items that will make the parallel.
 		/// </param>
-		public static Parallel GetParallel(object owner, string reuseID, params ITimedProgressable[] sequenceItems) {
+		public static Parallel GetParallel(object owner, string reuseID, params ITimedProgressable[] parallelItems) {
 			if (Instance != null) {
-				return Instance._GetParallel(owner, reuseID, sequenceItems);
+				return Instance._GetParallel(owner, reuseID, parallelItems);
 			}
 			return null;
 		}
 
 		/// <summary>
-		/// Finds the <c>Motion</c>, <c>Timer</c> or <c>Sequence</c> registered with <paramref name="owner"/>
-		/// and the <paramref name="reuseID"/>.
+		/// Finds the <c>Motion</c>, <c>Timer</c>, <c>Sequence</c> or <c>Parallel</c> registered with 
+		/// <paramref name="owner"/> and the <paramref name="reuseID"/>.
 		/// </summary>
 		/// <param name="owner"></param>
 		/// <param name="reuseID"></param>
@@ -336,8 +336,8 @@
 		}
 
 		/// <summary>
-		/// Finds the <c>Motion</c>, <c>Timer</c> or <c>Sequence</c> registered with <paramref name="owner"/>
-		/// and the <paramref name="reuseID"/>.
+		/// Finds the <c>Motion</c>, <c>Timer</c>, <c>Sequence</c> or <c>Parallel</c> registered with 
+		/// <paramref name="owner"/> and the <paramref name="reuseID"/>.
 		/// </summary>
 		/// <param name="owner"></param>
 		/// <param name="reuseID"></param>
@@ -350,7 +350,7 @@
 		}
 
 		/// <summary>
-		/// Removes the cached <c>Playback</c> object that is owner by <paramref name="owner"/> 
+		/// Removes the cached <c>Playback</c> object that is owned by <paramref name="owner"/> 
 		/// and has the <paramref name="reuseId"/>.
 		/// </summary>
 		/// <returns>

@@ -59,9 +59,14 @@ namespace CocodriloDog.Animation {
 				sequenceItemsList.Add(sequenceItems.TimedProgressable);
 			}
 
-			m_Sequence = Animate.GetSequence(Owner, ReuseID, sequenceItemsList.ToArray())
-				.SetEasing(Easing.FloatEasing)
-				.SetTimeMode(TimeMode);
+			try {
+				m_Sequence = Animate.GetSequence(Owner, ReuseID, sequenceItemsList.ToArray())
+					.SetEasing(Easing.FloatEasing)
+					.SetTimeMode(TimeMode);
+			} catch (ArgumentException e){
+				// This helps to identify which is the one with the error
+				throw new ArgumentException($"{Name}: {e}");
+			}
 
 			if (DurationInput > 0) {
 				m_Sequence.SetDuration(DurationInput);
