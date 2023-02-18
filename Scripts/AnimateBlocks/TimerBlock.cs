@@ -45,15 +45,19 @@ namespace CocodriloDog.Animation {
 
 		public override void Initialize() {
 
-			m_Timer = Animate.GetTimer(Owner, ReuseID)
-				.SetDuration(DurationInput)
-				.SetTimeMode(TimeMode);
+			if (Application.isPlaying) {
 
-			// This approach will only work if the listeners are added via editor
-			if (OnStart.GetPersistentEventCount() > 0) m_Timer.SetOnStart(OnStart.Invoke);
-			if (OnUpdate.GetPersistentEventCount() > 0) m_Timer.SetOnUpdate(OnUpdate.Invoke);
-			if (OnInterrupt.GetPersistentEventCount() > 0) m_Timer.SetOnInterrupt(OnInterrupt.Invoke);
-			if (OnComplete.GetPersistentEventCount() > 0) m_Timer.SetOnComplete(OnComplete.Invoke);
+				m_Timer = Animate.GetTimer(Owner, ReuseID)
+					.SetDuration(DurationInput)
+					.SetTimeMode(TimeMode);
+
+				// This approach will only work if the listeners are added via editor
+				if (OnStart.GetPersistentEventCount() > 0) m_Timer.SetOnStart(OnStart.Invoke);
+				if (OnUpdate.GetPersistentEventCount() > 0) m_Timer.SetOnUpdate(OnUpdate.Invoke);
+				if (OnInterrupt.GetPersistentEventCount() > 0) m_Timer.SetOnInterrupt(OnInterrupt.Invoke);
+				if (OnComplete.GetPersistentEventCount() > 0) m_Timer.SetOnComplete(OnComplete.Invoke);
+
+			}
 
 		}
 
@@ -65,7 +69,7 @@ namespace CocodriloDog.Animation {
 
 		public override void Resume() => Timer.Resume();
 
-		public override string DefaultName => "Timer";
+		public override string DefaultName => $"Timer";
 
 		#endregion
 

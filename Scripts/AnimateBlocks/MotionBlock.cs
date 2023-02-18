@@ -72,78 +72,82 @@ namespace CocodriloDog.Animation {
 		/// </summary>
 		public override void Initialize() {
 
-			// These are strings created by the editor like this: "Transform/localPosition"
-			var setterStringParts = SetterString.Split('/');
-			var getterStringParts = GetterString.Split('/');
+			if (Application.isPlaying) {
 
-			// Variables for setter and getter
-			Component component;
-			MethodInfo methodInfo;
+				// These are strings created by the editor like this: "Transform/localPosition"
+				var setterStringParts = SetterString.Split('/');
+				var getterStringParts = GetterString.Split('/');
 
-			if (Object == null) {
-				throw new InvalidOperationException($"{Name}: Object can not be null.");
-			} else if (SetterString == "No Function") {
-				throw new InvalidOperationException($"{Name}: A setter function must be set.");
-			}
+				// Variables for setter and getter
+				Component component;
+				MethodInfo methodInfo;
 
-			var gameObject = Object as GameObject;
-			if (gameObject != null) {
-
-				// SETTER
-				//
-				// The first part of the setter string is the component
-				component = gameObject.GetComponent(setterStringParts[0]);
-
-				// The second part is the setter. First we'll look for the method setter
-				// Check for 1 ValueT parameter to avoid ambiguity
-				methodInfo = component.GetType().GetMethod(setterStringParts[1], new Type[] { typeof(ValueT) });
-				if (methodInfo != null) {
-					m_SetterDelegate = GetSetterDelegate(component, methodInfo);
-				} else {
-					// If a method setter is not found, then we look for a property setter
-					var propertyInfo = component.GetType().GetProperty(setterStringParts[1]);
-					m_SetterDelegate = GetSetterDelegate(component, propertyInfo.GetSetMethod());
+				if (Object == null) {
+					throw new InvalidOperationException($"{Name}: Object can not be null.");
+				} else if (SetterString == "No Function") {
+					throw new InvalidOperationException($"{Name}: A setter function must be set.");
 				}
 
-				if (InitialValueIsRelative || FinalValueIsRelative) {
+				var gameObject = Object as GameObject;
+				if (gameObject != null) {
 
-					if (GetterString == "No Function") {
-						throw new InvalidOperationException($"{Name}: A getter function must be set.");
-					}
-
-					// GETTER
+					// SETTER
 					//
-					// The first part of the getter string is the component
-					component = gameObject.GetComponent(getterStringParts[0]);
+					// The first part of the setter string is the component
+					component = gameObject.GetComponent(setterStringParts[0]);
 
-					// The second part is the getter. First we'll look for the method getter
-					// Check for 0 parameters to avoid ambiguity
-					methodInfo = component.GetType().GetMethod(getterStringParts[1], new Type[] { });
+					// The second part is the setter. First we'll look for the method setter
+					// Check for 1 ValueT parameter to avoid ambiguity
+					methodInfo = component.GetType().GetMethod(setterStringParts[1], new Type[] { typeof(ValueT) });
 					if (methodInfo != null) {
-						m_GetterDelegate = GetGetterDelegate(component, methodInfo);
+						m_SetterDelegate = GetSetterDelegate(component, methodInfo);
 					} else {
-						// If a method getter is not found, then we look for a property getter
-						var propertyInfo = component.GetType().GetProperty(getterStringParts[1]);
-						m_GetterDelegate = GetGetterDelegate(component, propertyInfo.GetGetMethod());
+						// If a method setter is not found, then we look for a property setter
+						var propertyInfo = component.GetType().GetProperty(setterStringParts[1]);
+						m_SetterDelegate = GetSetterDelegate(component, propertyInfo.GetSetMethod());
 					}
 
+					if (InitialValueIsRelative || FinalValueIsRelative) {
+
+						if (GetterString == "No Function") {
+							throw new InvalidOperationException($"{Name}: A getter function must be set.");
+						}
+
+						// GETTER
+						//
+						// The first part of the getter string is the component
+						component = gameObject.GetComponent(getterStringParts[0]);
+
+						// The second part is the getter. First we'll look for the method getter
+						// Check for 0 parameters to avoid ambiguity
+						methodInfo = component.GetType().GetMethod(getterStringParts[1], new Type[] { });
+						if (methodInfo != null) {
+							m_GetterDelegate = GetGetterDelegate(component, methodInfo);
+						} else {
+							// If a method getter is not found, then we look for a property getter
+							var propertyInfo = component.GetType().GetProperty(getterStringParts[1]);
+							m_GetterDelegate = GetGetterDelegate(component, propertyInfo.GetGetMethod());
+						}
+
+					}
+
+					// Initialize the motion
+					ResetMotion();
+
+				} else {
+					// TODO: Possibly work with ScriptableObjects (and fields)
 				}
 
-				// Initialize the motion
-				ResetMotion();
+				// Creates a delegate for the target and method info. Here is a discussion about this technique:
+				// https://blogs.msmvps.com/jonskeet/2008/08/09/making-reflection-fly-and-exploring-delegates/
 
-			} else {
-				// TODO: Possibly work with ScriptableObjects (and fields)
-			}
+				Action<ValueT> GetSetterDelegate(object target, MethodInfo setMethod) {
+					return (Action<ValueT>)Delegate.CreateDelegate(typeof(Action<ValueT>), target, setMethod);
+				}
+				Func<ValueT> GetGetterDelegate(object target, MethodInfo getMethod) {
+					return (Func<ValueT>)Delegate.CreateDelegate(typeof(Func<ValueT>), target, getMethod);
+				}
 
-			// Creates a delegate for the target and method info. Here is a discussion about this technique:
-			// https://blogs.msmvps.com/jonskeet/2008/08/09/making-reflection-fly-and-exploring-delegates/
-
-			Action<ValueT> GetSetterDelegate(object target, MethodInfo setMethod) {
-				return (Action<ValueT>)Delegate.CreateDelegate(typeof(Action<ValueT>), target, setMethod);
-			}
-			Func<ValueT> GetGetterDelegate(object target, MethodInfo getMethod) {
-				return (Func<ValueT>)Delegate.CreateDelegate(typeof(Func<ValueT>), target, getMethod);
 			}
 
 		}

@@ -8,7 +8,9 @@ namespace CocodriloDog.Animation {
 	using UnityEngine.Events;
 
 	/// <summary>
-	/// Interface to be implemented by <see cref="AnimateBlock"/>
+	/// Interface to be implemented by <see cref="AnimateBlock"/>. It exposes the members 
+	/// that are used for playback and initialization of the compound <see cref="Animate"/> 
+	/// objects: <see cref="Sequence"/> and <see cref="Parallel"/>.
 	/// </summary>
 	/// 
 	/// <remarks>
@@ -69,6 +71,23 @@ namespace CocodriloDog.Animation {
 		public abstract float Duration { get; }
 
 		/// <summary>
+		/// The duration of the Animate object as specified in the inspector.
+		/// </summary>
+		/// <remarks>
+		/// This was named differently in order to differentiate it from <see cref="Duration"/>.
+		/// </remarks>
+		public float DurationInput => m_Duration;
+
+		/// <summary>
+		/// The duration that will be used for the animate object.
+		/// </summary>
+		/// <remarks>
+		/// By default, it will be <see cref="DurationInput"/>, but <see cref="SequenceBlock"/> and
+		/// <see cref="ParallelBlock"/> implement a different logic.
+		/// </remarks>
+		public virtual float DurationToBeUsed => DurationInput;
+
+		/// <summary>
 		/// Gets the <c>IsPlaying</c> property of the Animate object managed by this <see cref="AnimateBlock"/>.
 		/// </summary>
 		public abstract bool IsPlaying { get; }
@@ -77,6 +96,8 @@ namespace CocodriloDog.Animation {
 		/// Gets the <c>IsPaused</c> property of the Animate object managed by this <see cref="AnimateBlock"/>.
 		/// </summary>
 		public abstract bool IsPaused { get; }
+
+		public override string NamePostfix => $" ({DurationToBeUsed}s)";
 
 		#endregion
 
@@ -173,14 +194,6 @@ namespace CocodriloDog.Animation {
 				}
 			}
 		}
-
-		/// <summary>
-		/// The duration of the Animate object as specified in the inspector.
-		/// </summary>
-		/// <remarks>
-		/// This was named differently in order to differentiate it from <see cref="Duration"/>.
-		/// </remarks>
-		protected float DurationInput => m_Duration;
 
 		/// <summary>
 		/// The time mode to be used by the Animate object managed by this <see cref="AnimateBlock"/>.

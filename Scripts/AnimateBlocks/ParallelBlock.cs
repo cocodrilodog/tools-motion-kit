@@ -47,6 +47,24 @@ namespace CocodriloDog.Animation {
 
 		public override bool IsPaused => Parallel.IsPaused;
 
+		/// <summary>
+		/// <see cref="DurationInput"/> if it is above 0, otherwise the longest duration among
+		/// the <see cref="ParallelItems"/>.
+		/// </summary>
+		public override float DurationToBeUsed {
+			get {
+				var duration = 0f;
+				if (DurationInput > 0) {
+					duration = DurationInput;
+				} else {
+					foreach (var item in ParallelItems) {
+						duration = Mathf.Max(item != null ? item.DurationToBeUsed : 0, duration);
+					}
+				}
+				return duration;
+			}
+		}
+
 		#endregion
 
 
@@ -54,24 +72,28 @@ namespace CocodriloDog.Animation {
 
 		public override void Initialize() {
 
-			List<ITimedProgressable> parallelItemsList = new List<ITimedProgressable>();
-			foreach (var parallelItem in m_ParallelItems) {
-				parallelItemsList.Add(parallelItem.TimedProgressable);
+			if (Application.isPlaying) {
+
+				List<ITimedProgressable> parallelItemsList = new List<ITimedProgressable>();
+				foreach (var parallelItem in m_ParallelItems) {
+					parallelItemsList.Add(parallelItem.TimedProgressable);
+				}
+
+				m_Parallel = Animate.GetParallel(Owner, ReuseID, parallelItemsList.ToArray())
+					.SetEasing(Easing.FloatEasing)
+					.SetTimeMode(TimeMode);
+
+				if (DurationInput > 0) {
+					m_Parallel.SetDuration(DurationInput);
+				}
+
+				// This approach will only work if the listeners are added via editor
+				if (OnStart.GetPersistentEventCount() > 0) m_Parallel.SetOnStart(OnStart.Invoke);
+				if (OnUpdate.GetPersistentEventCount() > 0) m_Parallel.SetOnUpdate(OnUpdate.Invoke);
+				if (OnInterrupt.GetPersistentEventCount() > 0) m_Parallel.SetOnInterrupt(OnInterrupt.Invoke);
+				if (OnComplete.GetPersistentEventCount() > 0) m_Parallel.SetOnComplete(OnComplete.Invoke);
+
 			}
-
-			m_Parallel = Animate.GetParallel(Owner, ReuseID, parallelItemsList.ToArray())
-				.SetEasing(Easing.FloatEasing)
-				.SetTimeMode(TimeMode);
-
-			if (DurationInput > 0) {
-				m_Parallel.SetDuration(DurationInput);
-			}
-
-			// This approach will only work if the listeners are added via editor
-			if (OnStart.GetPersistentEventCount() > 0) m_Parallel.SetOnStart(OnStart.Invoke);
-			if (OnUpdate.GetPersistentEventCount() > 0) m_Parallel.SetOnUpdate(OnUpdate.Invoke);
-			if (OnInterrupt.GetPersistentEventCount() > 0) m_Parallel.SetOnInterrupt(OnInterrupt.Invoke);
-			if (OnComplete.GetPersistentEventCount() > 0) m_Parallel.SetOnComplete(OnComplete.Invoke);
 
 		}
 

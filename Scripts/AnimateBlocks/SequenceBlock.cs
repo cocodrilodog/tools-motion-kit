@@ -47,6 +47,24 @@ namespace CocodriloDog.Animation {
 
 		public override bool IsPaused => Sequence.IsPaused;
 
+		/// <summary>
+		/// <see cref="DurationInput"/> if it is above 0, otherwise the sum of the duration of 
+		/// the <see cref="SequenceItems"/>.
+		/// </summary>
+		public override float DurationToBeUsed {
+			get {
+				var duration = 0f;
+				if(DurationInput > 0) {
+					duration = DurationInput;
+				} else {
+					foreach(var item in SequenceItems) {
+						duration += item != null ? item.DurationToBeUsed : 0;
+					}
+				}
+				return duration;
+			}
+		}
+
 		#endregion
 
 
@@ -54,29 +72,33 @@ namespace CocodriloDog.Animation {
 
 		public override void Initialize() {
 
-			List<ITimedProgressable> sequenceItemsList = new List<ITimedProgressable>();
-			foreach (var sequenceItems in m_SequenceItems) {
-				sequenceItemsList.Add(sequenceItems.TimedProgressable);
-			}
+			if (Application.isPlaying) {
 
-			try {
-				m_Sequence = Animate.GetSequence(Owner, ReuseID, sequenceItemsList.ToArray())
-					.SetEasing(Easing.FloatEasing)
-					.SetTimeMode(TimeMode);
-			} catch (ArgumentException e){
-				// This helps to identify which is the one with the error
-				throw new ArgumentException($"{Name}: {e}");
-			}
+				List<ITimedProgressable> sequenceItemsList = new List<ITimedProgressable>();
+				foreach (var sequenceItems in m_SequenceItems) {
+					sequenceItemsList.Add(sequenceItems.TimedProgressable);
+				}
 
-			if (DurationInput > 0) {
-				m_Sequence.SetDuration(DurationInput);
-			}
+				try {
+					m_Sequence = Animate.GetSequence(Owner, ReuseID, sequenceItemsList.ToArray())
+						.SetEasing(Easing.FloatEasing)
+						.SetTimeMode(TimeMode);
+				} catch (ArgumentException e) {
+					// This helps to identify which is the one with the error
+					throw new ArgumentException($"{Name}: {e}");
+				}
 
-			// This approach will only work if the listeners are added via editor
-			if (OnStart.GetPersistentEventCount() > 0) m_Sequence.SetOnStart(OnStart.Invoke);
-			if (OnUpdate.GetPersistentEventCount() > 0) m_Sequence.SetOnUpdate(OnUpdate.Invoke);
-			if (OnInterrupt.GetPersistentEventCount() > 0) m_Sequence.SetOnInterrupt(OnInterrupt.Invoke);
-			if (OnComplete.GetPersistentEventCount() > 0) m_Sequence.SetOnComplete(OnComplete.Invoke);
+				if (DurationInput > 0) {
+					m_Sequence.SetDuration(DurationInput);
+				}
+
+				// This approach will only work if the listeners are added via editor
+				if (OnStart.GetPersistentEventCount() > 0) m_Sequence.SetOnStart(OnStart.Invoke);
+				if (OnUpdate.GetPersistentEventCount() > 0) m_Sequence.SetOnUpdate(OnUpdate.Invoke);
+				if (OnInterrupt.GetPersistentEventCount() > 0) m_Sequence.SetOnInterrupt(OnInterrupt.Invoke);
+				if (OnComplete.GetPersistentEventCount() > 0) m_Sequence.SetOnComplete(OnComplete.Invoke);
+
+			}
 
 		}
 
