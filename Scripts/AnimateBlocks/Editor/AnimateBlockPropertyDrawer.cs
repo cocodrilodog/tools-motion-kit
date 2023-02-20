@@ -58,22 +58,23 @@ namespace CocodriloDog.Animation {
 
 			base.Edit_InitializePropertiesForGetHeight();
 
-			OwnerProperty = Property.FindPropertyRelative("m_Owner");
-			ReuseIDProperty = Property.FindPropertyRelative("m_ReuseID");
-			DurationProperty = Property.FindPropertyRelative("m_Duration");
-			TimeModeProperty = Property.FindPropertyRelative("m_TimeMode");
-			EasingProperty = Property.FindPropertyRelative("m_Easing");
+			OwnerProperty				= Property.FindPropertyRelative("m_Owner");
+			ReuseIDProperty				= Property.FindPropertyRelative("m_ReuseID");
+			EditOwnerAndReuseIDProperty	= Property.FindPropertyRelative("m_EditOwnerAndReuseID");
+			DurationProperty			= Property.FindPropertyRelative("m_Duration");
+			TimeModeProperty			= Property.FindPropertyRelative("m_TimeMode");
+			EasingProperty				= Property.FindPropertyRelative("m_Easing");
 
-			OnStartProperty = Property.FindPropertyRelative("m_OnStart");
-			OnUpdateProperty = Property.FindPropertyRelative("m_OnUpdate");
-			OnInterruptProperty = Property.FindPropertyRelative("m_OnInterrupt");
-			OnCompleteProperty = Property.FindPropertyRelative("m_OnComplete");
-			CallbackSelectionProperty = Property.FindPropertyRelative("m_CallbackSelection");
+			OnStartProperty				= Property.FindPropertyRelative("m_OnStart");
+			OnUpdateProperty			= Property.FindPropertyRelative("m_OnUpdate");
+			OnInterruptProperty			= Property.FindPropertyRelative("m_OnInterrupt");
+			OnCompleteProperty			= Property.FindPropertyRelative("m_OnComplete");
+			CallbackSelectionProperty	= Property.FindPropertyRelative("m_CallbackSelection");
 
-			OnStartCallsProperty = OnStartProperty.FindPropertyRelative("m_PersistentCalls.m_Calls");
-			OnUpdateCallsProperty = OnUpdateProperty.FindPropertyRelative("m_PersistentCalls.m_Calls");
-			OnInterruptCallsProperty = OnInterruptProperty.FindPropertyRelative("m_PersistentCalls.m_Calls");
-			OnCompleteCallsProperty = OnCompleteProperty.FindPropertyRelative("m_PersistentCalls.m_Calls");
+			OnStartCallsProperty		= OnStartProperty.FindPropertyRelative("m_PersistentCalls.m_Calls");
+			OnUpdateCallsProperty		= OnUpdateProperty.FindPropertyRelative("m_PersistentCalls.m_Calls");
+			OnInterruptCallsProperty	= OnInterruptProperty.FindPropertyRelative("m_PersistentCalls.m_Calls");
+			OnCompleteCallsProperty		= OnCompleteProperty.FindPropertyRelative("m_PersistentCalls.m_Calls");
 
 		}
 
@@ -84,7 +85,6 @@ namespace CocodriloDog.Animation {
 
 			// Owner and Reuse ID
 			height += EditorGUI.GetPropertyHeight(OwnerProperty) + 2;
-			height += EditorGUI.GetPropertyHeight(ReuseIDProperty) + 2;
 
 			// Before settings
 			height += BeforeSettingsHeight;
@@ -112,8 +112,7 @@ namespace CocodriloDog.Animation {
 
 		protected override void Edit_OnGUI(Rect position, SerializedProperty property, GUIContent label) {
 			base.Edit_OnGUI(position, property, label);
-			EditorGUI.PropertyField(GetNextPosition(OwnerProperty), OwnerProperty, new GUIContent("Owner (Optional)"));
-			EditorGUI.PropertyField(GetNextPosition(ReuseIDProperty), ReuseIDProperty, new GUIContent("Reuse ID (Optional)"));
+			DrawOwnerAndReuseID();
 			DrawBeforeSettings();
 			DrawSettings();
 			DrawAfterSettings();
@@ -142,6 +141,8 @@ namespace CocodriloDog.Animation {
 		private SerializedProperty OwnerProperty { get; set; }
 
 		private SerializedProperty ReuseIDProperty { get; set; }
+
+		private SerializedProperty EditOwnerAndReuseIDProperty { get; set; }
 
 		private SerializedProperty DurationProperty { get; set; }
 
@@ -180,6 +181,46 @@ namespace CocodriloDog.Animation {
 
 
 		#region Private Methods
+
+		private void DrawOwnerAndReuseID() {
+
+			var mainRect = GetNextPosition(OwnerProperty);
+			if (Property.managedReferenceValue != null && EditOwnerAndReuseIDProperty.boolValue) {
+
+				var fieldsRect = mainRect;
+				fieldsRect.xMax -= 60;
+
+				EditorGUIUtility.labelWidth = 70;
+
+				var ownerRect = fieldsRect;
+				ownerRect.width = (fieldsRect.width / 2) - 5;
+				EditorGUI.PropertyField(ownerRect, OwnerProperty);
+
+				var reuseIDRect = fieldsRect;
+				reuseIDRect.xMin += (fieldsRect.width / 2) + 5;
+				EditorGUI.PropertyField(reuseIDRect, ReuseIDProperty);
+
+				var closeButtonRect = mainRect;
+				closeButtonRect.xMin += fieldsRect.width + 10;
+
+				if (GUI.Button(closeButtonRect, "Close")) {
+					EditOwnerAndReuseIDProperty.boolValue = false;
+				}
+
+				EditorGUIUtility.labelWidth = 0;
+
+			} else {
+				var buttonRect = mainRect;
+				var ownerString = OwnerProperty.objectReferenceValue != null ? $"[{OwnerProperty.objectReferenceValue.name}] " : "";
+				var reuseIDString = !string.IsNullOrEmpty(ReuseIDProperty.stringValue) ? $"[{ReuseIDProperty.stringValue}] " : "";
+				if (GUI.Button(buttonRect, $"Edit Owner {ownerString}and/or Reuse ID {reuseIDString}")) {
+					if (Property.managedReferenceValue != null) {
+						EditOwnerAndReuseIDProperty.boolValue = true;
+					}
+				}
+			}
+
+		}
 
 		private void DrawCallbacks() {
 

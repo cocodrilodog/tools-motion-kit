@@ -258,8 +258,13 @@ namespace CocodriloDog.Animation {
 		private UnityEvent m_OnComplete;
 
 #if UNITY_EDITOR
+
 		[SerializeField]
 		private int m_CallbackSelection;
+
+		[SerializeField]
+		private bool m_EditOwnerAndReuseID;
+
 #endif
 
 		#endregion
