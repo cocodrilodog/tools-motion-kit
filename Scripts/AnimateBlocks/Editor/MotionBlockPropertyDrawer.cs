@@ -67,6 +67,8 @@ namespace CocodriloDog.Animation {
 		protected override float SettingsHeight {
 			get {
 				var height = base.SettingsHeight;
+				height += SpaceHeight;				// <- Values space
+				height += FieldHeight;				// <- Values label
 				height += EditorGUI.GetPropertyHeight(InitialValueProperty) + 2;
 				height += EditorGUI.GetPropertyHeight(FinalValueProperty) + 2;
 				if (ShowGetter) {
@@ -95,6 +97,8 @@ namespace CocodriloDog.Animation {
 
 		protected override void DrawSettings() {
 			base.DrawSettings();
+			GetNextPosition(SpaceHeight);
+			EditorGUI.LabelField(GetNextPosition(), "Values", EditorStyles.boldLabel);
 			DrawInitialValue();
 			DrawFinalValue();
 			if (ShowGetter) {
