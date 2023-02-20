@@ -97,7 +97,7 @@ namespace CocodriloDog.Animation {
 		/// </summary>
 		public abstract bool IsPaused { get; }
 
-		public override string NamePostfix => $" ({DurationToBeUsed}s)";
+		public override string DisplayName => $"{base.DisplayName} ({DurationToBeUsed}s)";
 
 		#endregion
 
