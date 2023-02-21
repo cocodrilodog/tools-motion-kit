@@ -52,6 +52,18 @@ namespace CocodriloDog.Animation {
 		#endregion
 
 
+		private SerializedObject m_SerializedSharedSettings;
+
+		private SerializedObject SerializedSharedSettings {
+			get {
+				if(m_SerializedSharedSettings == null) {
+					m_SerializedSharedSettings = new SerializedObject(SharedSettingsProperty.objectReferenceValue);
+				}
+				return m_SerializedSharedSettings;
+			}
+		}
+
+
 		#region Protected Methods
 
 		protected override void Edit_InitializePropertiesForGetHeight() {
@@ -61,9 +73,18 @@ namespace CocodriloDog.Animation {
 			OwnerProperty				= Property.FindPropertyRelative("m_Owner");
 			ReuseIDProperty				= Property.FindPropertyRelative("m_ReuseID");
 			EditOwnerAndReuseIDProperty	= Property.FindPropertyRelative("m_EditOwnerAndReuseID");
-			DurationProperty			= Property.FindPropertyRelative("m_Duration");
-			TimeModeProperty			= Property.FindPropertyRelative("m_TimeMode");
-			EasingProperty				= Property.FindPropertyRelative("m_Easing");
+
+			SharedSettingsProperty		= Property.FindPropertyRelative("m_SharedSettings");
+			
+			if (SharedSettingsProperty.objectReferenceValue != null) {
+				DurationProperty	= SerializedSharedSettings.FindProperty("m_Duration");
+				TimeModeProperty	= SerializedSharedSettings.FindProperty("m_TimeMode");
+				EasingProperty		= SerializedSharedSettings.FindProperty("m_Easing");
+			} else {
+				DurationProperty	= Property.FindPropertyRelative("m_Duration");
+				TimeModeProperty	= Property.FindPropertyRelative("m_TimeMode");
+				EasingProperty		= Property.FindPropertyRelative("m_Easing");
+			}
 
 			OnStartProperty				= Property.FindPropertyRelative("m_OnStart");
 			OnUpdateProperty			= Property.FindPropertyRelative("m_OnUpdate");
@@ -122,13 +143,37 @@ namespace CocodriloDog.Animation {
 		protected virtual void DrawBeforeSettings() { }
 
 		protected virtual void DrawSettings() {
+
+			var sharedSettings = SharedSettingsProperty.objectReferenceValue != null;
+
+			if (sharedSettings) {
+				SerializedSharedSettings.Update();
+			}
+
 			GetNextPosition(SpaceHeight);
-			EditorGUI.LabelField(GetNextPosition(), "Settings", EditorStyles.boldLabel);
+			
+			var rect = GetNextPosition();
+
+			var labelRect = rect;
+			labelRect.width = EditorGUIUtility.labelWidth;
+			EditorGUI.LabelField(labelRect, sharedSettings ? "Settings (Shared)" : "Settings", EditorStyles.boldLabel);
+
+			var sharedSettingsRect = rect;
+			sharedSettingsRect.xMin += labelRect.width;
+			EditorGUIUtility.labelWidth = 50;
+			EditorGUI.PropertyField(sharedSettingsRect, SharedSettingsProperty, new GUIContent("Shared"));
+			EditorGUIUtility.labelWidth = 0;
+
 			EditorGUI.PropertyField(GetNextPosition(DurationProperty), DurationProperty);
 			EditorGUI.PropertyField(GetNextPosition(TimeModeProperty), TimeModeProperty);
 			if (DoesDrawEasing) {
 				EditorGUI.PropertyField(GetNextPosition(EasingProperty), EasingProperty);
 			}
+
+			if (sharedSettings) {
+				SerializedSharedSettings.ApplyModifiedProperties();
+			}
+
 		}
 
 		protected virtual void DrawAfterSettings() { }
@@ -149,6 +194,8 @@ namespace CocodriloDog.Animation {
 		private SerializedProperty TimeModeProperty { get; set; }
 
 		private SerializedProperty EasingProperty { get; set; }
+
+		private SerializedProperty SharedSettingsProperty { get; set; }
 
 		private SerializedProperty OnStartProperty { get; set; }
 

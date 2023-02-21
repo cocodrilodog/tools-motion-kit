@@ -76,7 +76,7 @@ namespace CocodriloDog.Animation {
 		/// <remarks>
 		/// This was named differently in order to differentiate it from <see cref="Duration"/>.
 		/// </remarks>
-		public float DurationInput => m_Duration;
+		public float DurationInput => SharedSettings != null ? SharedSettings.Duration : m_Duration;
 
 		/// <summary>
 		/// The duration that will be used for the animate object.
@@ -198,12 +198,12 @@ namespace CocodriloDog.Animation {
 		/// <summary>
 		/// The time mode to be used by the Animate object managed by this <see cref="AnimateBlock"/>.
 		/// </summary>
-		protected TimeMode TimeMode => m_TimeMode;
+		protected TimeMode TimeMode => SharedSettings != null ? SharedSettings.TimeMode : m_TimeMode;
 
 		/// <summary>
 		/// The easing to be used by the Animate object managed by this <see cref="AnimateBlock"/>.
 		/// </summary>
-		protected AnimateEasingField Easing => m_Easing;
+		protected AnimateEasingField Easing => SharedSettings != null ? SharedSettings.Easing : m_Easing;
 
 		/// <summary>
 		/// The <c>OnStart</c> callbacks to be invoked by the Animate object managed by this <see cref="AnimateBlock"/>.
@@ -246,6 +246,9 @@ namespace CocodriloDog.Animation {
 		private AnimateEasingField m_Easing;
 
 		[SerializeField]
+		private AnimateSharedSettings m_SharedSettings;
+
+		[SerializeField]
 		private UnityEvent m_OnStart;
 
 		[SerializeField]
@@ -274,6 +277,13 @@ namespace CocodriloDog.Animation {
 
 		[NonSerialized]
 		private string m_ReuseID_Auto;
+
+		#endregion
+
+
+		#region Private Properties
+
+		private AnimateSharedSettings SharedSettings => m_SharedSettings;
 
 		#endregion
 
