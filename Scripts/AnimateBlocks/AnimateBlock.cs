@@ -246,7 +246,7 @@ namespace CocodriloDog.Animation {
 		private AnimateEasingField m_Easing;
 
 		[SerializeField]
-		private AnimateSharedSettings m_SharedSettings;
+		private AnimateSettings m_SharedSettings;
 
 		[SerializeField]
 		private UnityEvent m_OnStart;
@@ -283,7 +283,7 @@ namespace CocodriloDog.Animation {
 
 		#region Private Properties
 
-		private AnimateSharedSettings SharedSettings => m_SharedSettings;
+		private AnimateSettings SharedSettings => m_SharedSettings;
 
 		#endregion
 

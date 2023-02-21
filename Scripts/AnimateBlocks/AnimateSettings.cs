@@ -4,8 +4,8 @@ namespace CocodriloDog.Animation {
 	using System.Collections.Generic;
 	using UnityEngine;
 
-	[CreateAssetMenu(menuName = "Cocodrilo Dog/Animate/Shared Settings")]
-	public class AnimateSharedSettings : ScriptableObject {
+	[CreateAssetMenu(menuName = "Cocodrilo Dog/Animate/Settings")]
+	public class AnimateSettings : ScriptableObject {
 
 
 		#region Public Properties
