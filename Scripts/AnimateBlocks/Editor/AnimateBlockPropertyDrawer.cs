@@ -155,6 +155,7 @@ namespace CocodriloDog.Animation {
 				EditorStyles.boldLabel.normal.textColor = SharedColor;
 			}
 
+			// Settings label
 			var labelRect = rect;
 			labelRect.width = EditorGUIUtility.labelWidth;
 			EditorGUI.LabelField(
@@ -163,6 +164,7 @@ namespace CocodriloDog.Animation {
 				EditorStyles.boldLabel
 			);
 
+			// Shared settings
 			SerializedSharedSettings?.Update();
 			var sharedSettingsRect = rect;
 			sharedSettingsRect.xMin += labelRect.width;
@@ -174,7 +176,6 @@ namespace CocodriloDog.Animation {
 				m_SerializedSharedSettings = null;
 			}
 			EditorGUIUtility.labelWidth = 0;
-			
 
 			// Settings properties
 			EditorGUI.PropertyField(GetNextPosition(DurationProperty), DurationProperty);
@@ -189,6 +190,24 @@ namespace CocodriloDog.Animation {
 
 			SerializedSharedSettings?.ApplyModifiedProperties();
 
+			// Restore the color when the seelection changes.
+			//
+			// If the user double clicks the shared settings assset, the shared color would remain, causing
+			// other inspectors to use that color. For that reason, we need to handle the selectionChange
+			// event and reset the color there too. Since the MotionBlock classes inherit AnimateBlock,
+			// thi code will handle also the case in which the user double clicks the shared values assset.
+			if (!m_IsSubscribedToSelectionChange) {
+				m_IsSubscribedToSelectionChange = true;
+				Selection.selectionChanged += Selection_selectionChanged;
+			}
+
+			void Selection_selectionChanged() {
+				m_IsSubscribedToSelectionChange = false;
+				Selection.selectionChanged -= Selection_selectionChanged;
+				EditorStyles.label.normal.textColor = color;
+				EditorStyles.boldLabel.normal.textColor = color;
+			}
+
 		}
 
 		protected virtual void DrawAfterSettings() { }
@@ -199,6 +218,8 @@ namespace CocodriloDog.Animation {
 		#region Private Fields
 
 		private SerializedObject m_SerializedSharedSettings;
+
+		private bool m_IsSubscribedToSelectionChange;
 
 		#endregion
 

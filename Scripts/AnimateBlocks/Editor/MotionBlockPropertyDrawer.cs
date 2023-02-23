@@ -126,7 +126,7 @@ namespace CocodriloDog.Animation {
 				EditorStyles.boldLabel.normal.textColor = SharedColor;
 			}
 
-			// Settings label
+			// Values label
 			var labelRect = rect;
 			labelRect.width = EditorGUIUtility.labelWidth;
 			EditorGUI.LabelField(
