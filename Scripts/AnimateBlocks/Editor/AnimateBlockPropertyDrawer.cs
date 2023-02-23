@@ -11,6 +11,16 @@ namespace CocodriloDog.Animation {
 	public class AnimateBlockPropertyDrawer : CompositePropertyDrawer {
 
 
+		#region Public Static Properties
+
+		/// <summary>
+		/// Taken from the ScriptableObject icon.
+		/// </summary>
+		public static Color SharedColor => new Color(121f / 255, 204f / 255, 239f / 255);
+
+		#endregion
+
+
 		#region Protected Properties
 
 		protected override List<Type> CompositeTypes {
@@ -52,18 +62,6 @@ namespace CocodriloDog.Animation {
 		#endregion
 
 
-		private SerializedObject m_SerializedSharedSettings;
-
-		private SerializedObject SerializedSharedSettings {
-			get {
-				if(m_SerializedSharedSettings == null) {
-					m_SerializedSharedSettings = new SerializedObject(SharedSettingsProperty.objectReferenceValue);
-				}
-				return m_SerializedSharedSettings;
-			}
-		}
-
-
 		#region Protected Methods
 
 		protected override void Edit_InitializePropertiesForGetHeight() {
@@ -77,10 +75,12 @@ namespace CocodriloDog.Animation {
 			SharedSettingsProperty		= Property.FindPropertyRelative("m_SharedSettings");
 			
 			if (SharedSettingsProperty.objectReferenceValue != null) {
+				// Use the properties from the shared asset
 				DurationProperty	= SerializedSharedSettings.FindProperty("m_Duration");
 				TimeModeProperty	= SerializedSharedSettings.FindProperty("m_TimeMode");
 				EasingProperty		= SerializedSharedSettings.FindProperty("m_Easing");
 			} else {
+				// Use the propreties from the AnimateBlock
 				DurationProperty	= Property.FindPropertyRelative("m_Duration");
 				TimeModeProperty	= Property.FindPropertyRelative("m_TimeMode");
 				EasingProperty		= Property.FindPropertyRelative("m_Easing");
@@ -144,39 +144,61 @@ namespace CocodriloDog.Animation {
 
 		protected virtual void DrawSettings() {
 
-			var sharedSettings = SharedSettingsProperty.objectReferenceValue != null;
-
-			if (sharedSettings) {
-				SerializedSharedSettings.Update();
-			}
-
 			GetNextPosition(SpaceHeight);
-			
+
 			var rect = GetNextPosition();
+
+			// Change the color to shared
+			var color = GUI.contentColor;
+			if (SharedSettingsProperty.objectReferenceValue != null) {
+				EditorStyles.label.normal.textColor = SharedColor;
+				EditorStyles.boldLabel.normal.textColor = SharedColor;
+			}
 
 			var labelRect = rect;
 			labelRect.width = EditorGUIUtility.labelWidth;
-			EditorGUI.LabelField(labelRect, sharedSettings ? "Settings (Shared)" : "Settings", EditorStyles.boldLabel);
+			EditorGUI.LabelField(
+				labelRect, 
+				SharedSettingsProperty.objectReferenceValue != null ? "Settings (Shared)" : "Settings",
+				EditorStyles.boldLabel
+			);
 
+			SerializedSharedSettings?.Update();
 			var sharedSettingsRect = rect;
 			sharedSettingsRect.xMin += labelRect.width;
 			EditorGUIUtility.labelWidth = 50;
+			EditorGUI.BeginChangeCheck();
 			EditorGUI.PropertyField(sharedSettingsRect, SharedSettingsProperty, new GUIContent("Shared"));
+			if (EditorGUI.EndChangeCheck()) {
+				// This renews SerializedSharedSettings either if the new value is null or not
+				m_SerializedSharedSettings = null;
+			}
 			EditorGUIUtility.labelWidth = 0;
+			
 
+			// Settings properties
 			EditorGUI.PropertyField(GetNextPosition(DurationProperty), DurationProperty);
 			EditorGUI.PropertyField(GetNextPosition(TimeModeProperty), TimeModeProperty);
 			if (DoesDrawEasing) {
 				EditorGUI.PropertyField(GetNextPosition(EasingProperty), EasingProperty);
 			}
 
-			if (sharedSettings) {
-				SerializedSharedSettings.ApplyModifiedProperties();
-			}
+			// Reset the color
+			EditorStyles.label.normal.textColor = color;
+			EditorStyles.boldLabel.normal.textColor = color;
+
+			SerializedSharedSettings?.ApplyModifiedProperties();
 
 		}
 
 		protected virtual void DrawAfterSettings() { }
+
+		#endregion
+
+
+		#region Private Fields
+
+		private SerializedObject m_SerializedSharedSettings;
 
 		#endregion
 
@@ -196,6 +218,15 @@ namespace CocodriloDog.Animation {
 		private SerializedProperty EasingProperty { get; set; }
 
 		private SerializedProperty SharedSettingsProperty { get; set; }
+
+		private SerializedObject SerializedSharedSettings {
+			get {
+				if (SharedSettingsProperty.objectReferenceValue != null && m_SerializedSharedSettings == null) {
+					m_SerializedSharedSettings = new SerializedObject(SharedSettingsProperty.objectReferenceValue);
+				}
+				return m_SerializedSharedSettings;
+			}
+		}
 
 		private SerializedProperty OnStartProperty { get; set; }
 

@@ -25,8 +25,9 @@ namespace CocodriloDog.Animation {
 	/// </summary>
 	/// <typeparam name="ValueT">The animatable type of the motion objects.</typeparam>
 	/// <typeparam name="MotionT">The motion type.</typeparam>
-	public abstract class MotionBlock<ValueT, MotionT> : AnimateBlock, IMotionBlock
-		where MotionT : MotionBase<ValueT, MotionT> {
+	public abstract class MotionBlock<ValueT, MotionT, SharedValuesT> : AnimateBlock, IMotionBlock
+		where MotionT : MotionBase<ValueT, MotionT>
+		where SharedValuesT : MotionValues<ValueT> {
 
 
 		#region Public Properties
@@ -206,7 +207,7 @@ namespace CocodriloDog.Animation {
 		/// <summary>
 		/// The initial value for the motion.
 		/// </summary>
-		protected ValueT InitialValue => m_InitialValue;
+		protected ValueT InitialValue => SharedValues != null ? SharedValues.InitialValue : m_InitialValue;
 
 		/// <summary>
 		/// Whether the initial value for the motion is relative or not.
@@ -216,12 +217,12 @@ namespace CocodriloDog.Animation {
 		/// If it is relative, it will be summed to the current value of the property in the target object
 		/// to calculate the value that this motion starts with.
 		/// </remarks>
-		protected bool InitialValueIsRelative => m_InitialValueIsRelative;
+		protected bool InitialValueIsRelative => SharedValues != null ? SharedValues.InitialValueIsRelative : m_InitialValueIsRelative;
 
 		/// <summary>
 		/// The final value for the motion.
 		/// </summary>
-		protected ValueT FinalValue => m_FinalValue;
+		protected ValueT FinalValue => SharedValues != null ? SharedValues.FinalValue : m_FinalValue;
 
 		/// <summary>
 		/// Whether the final value for the motion is relative or not.
@@ -231,7 +232,9 @@ namespace CocodriloDog.Animation {
 		/// If it is relative, it will be summed to the current value of the property in the target object
 		/// to calculate the value that this motion finalizes with.
 		/// </remarks>
-		protected bool FinalValueIsRelative => m_FinalValueIsRelative;
+		protected bool FinalValueIsRelative => SharedValues != null ? SharedValues.FinalValueIsRelative : m_FinalValueIsRelative;
+
+		protected SharedValuesT SharedValues => m_SharedValues;
 
 		#endregion
 
@@ -270,6 +273,9 @@ namespace CocodriloDog.Animation {
 
 		[SerializeField]
 		private bool m_FinalValueIsRelative;
+
+		[SerializeField]
+		private SharedValuesT m_SharedValues;
 
 		#endregion
 

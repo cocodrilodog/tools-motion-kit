@@ -26,14 +26,29 @@ namespace CocodriloDog.Animation {
 		#region Protected Methods
 
 		protected override void Edit_InitializePropertiesForGetHeight() {
+
 			base.Edit_InitializePropertiesForGetHeight();
+
 			ObjectProperty					= Property.FindPropertyRelative("m_Object");
 			SetterStringProperty			= Property.FindPropertyRelative("m_SetterString");
 			GetterStringProperty			= Property.FindPropertyRelative("m_GetterString");
-			InitialValueProperty			= Property.FindPropertyRelative("m_InitialValue");
-			InitialValueIsRelativeProperty	= Property.FindPropertyRelative("m_InitialValueIsRelative");
-			FinalValueProperty				= Property.FindPropertyRelative("m_FinalValue");
-			FinalValueIsRelativeProperty	= Property.FindPropertyRelative("m_FinalValueIsRelative");
+
+			SharedValuesProperty = Property.FindPropertyRelative("m_SharedValues");
+
+			if (SharedValuesProperty.objectReferenceValue != null) {
+				// use the properties from the shared asset
+				InitialValueProperty = SerializedSharedValues.FindProperty("m_InitialValue");
+				InitialValueIsRelativeProperty = SerializedSharedValues.FindProperty("m_InitialValueIsRelative");
+				FinalValueProperty = SerializedSharedValues.FindProperty("m_FinalValue");
+				FinalValueIsRelativeProperty = SerializedSharedValues.FindProperty("m_FinalValueIsRelative");
+			} else {
+				// Use the propreties from the MotionBlock
+				InitialValueProperty = Property.FindPropertyRelative("m_InitialValue");
+				InitialValueIsRelativeProperty = Property.FindPropertyRelative("m_InitialValueIsRelative");
+				FinalValueProperty = Property.FindPropertyRelative("m_FinalValue");
+				FinalValueIsRelativeProperty = Property.FindPropertyRelative("m_FinalValueIsRelative");
+			}
+			
 		}
 
 		#endregion
@@ -48,6 +63,8 @@ namespace CocodriloDog.Animation {
 		protected SerializedProperty FinalValueProperty { get; set; }
 
 		protected SerializedProperty FinalValueIsRelativeProperty { get; set; }
+
+		protected SerializedProperty SharedValuesProperty { get; set; }
 
 		protected override float BeforeSettingsHeight {
 			get {
@@ -96,14 +113,54 @@ namespace CocodriloDog.Animation {
 		}
 
 		protected override void DrawSettings() {
+
 			base.DrawSettings();
 			GetNextPosition(SpaceHeight);
-			EditorGUI.LabelField(GetNextPosition(), "Values", EditorStyles.boldLabel);
+
+			var rect = GetNextPosition();
+
+			// Change the color to shared
+			var color = GUI.contentColor;
+			if (SharedValuesProperty.objectReferenceValue != null) {
+				EditorStyles.label.normal.textColor = SharedColor;
+				EditorStyles.boldLabel.normal.textColor = SharedColor;
+			}
+
+			// Settings label
+			var labelRect = rect;
+			labelRect.width = EditorGUIUtility.labelWidth;
+			EditorGUI.LabelField(
+				labelRect,
+				SharedValuesProperty.objectReferenceValue != null ? "Values (Shared)" : "Values",
+				EditorStyles.boldLabel
+			);
+
+			// Shared settings field
+			SerializedSharedValues?.Update();
+			var sharedSettingsRect = rect;
+			sharedSettingsRect.xMin += labelRect.width;
+			EditorGUIUtility.labelWidth = 50;
+			EditorGUI.BeginChangeCheck();
+			EditorGUI.PropertyField(sharedSettingsRect, SharedValuesProperty, new GUIContent("Shared"));
+			if (EditorGUI.EndChangeCheck()) {
+				// This renews SerializedSharedValues either if the new value is null or not
+				m_SerializedSharedValues = null;
+			}
+			EditorGUIUtility.labelWidth = 0;
+
+			// Draw the values
 			DrawInitialValue();
 			DrawFinalValue();
+			SerializedSharedValues?.ApplyModifiedProperties();
+
+			// Reset the color
+			EditorStyles.label.normal.textColor = color;
+			EditorStyles.boldLabel.normal.textColor = color;
+
 			if (ShowGetter) {
 				DrawDisabledObjectAndGetter();
 			}
+
 		}
 
 		protected virtual void DrawInitialValue() {
@@ -150,6 +207,8 @@ namespace CocodriloDog.Animation {
 
 		private List<string> m_GetterOptions;
 
+		private SerializedObject m_SerializedSharedValues;
+
 		#endregion
 
 
@@ -172,6 +231,15 @@ namespace CocodriloDog.Animation {
 		private bool ShowGetterHelp => ObjectProperty.objectReferenceValue == null || GetterStringProperty.stringValue == NoFunctionString;
 
 		private float HorizontalLineHeight => 5;
+
+		private SerializedObject SerializedSharedValues {
+			get {
+				if (SharedValuesProperty.objectReferenceValue != null && m_SerializedSharedValues == null) {
+					m_SerializedSharedValues = new SerializedObject(SharedValuesProperty.objectReferenceValue);
+				}
+				return m_SerializedSharedValues;
+			}
+		}
 
 		#endregion
 
