@@ -11,7 +11,7 @@ namespace CocodriloDog.Animation {
 	/// Block for <see cref="Sequence"/> objects.
 	/// </summary>
 	[Serializable]
-	public class SequenceBlock : AnimateBlock, IAnimateParent {
+	public class SequenceBlock : CompoundBlock, IAnimateParent {
 
 
 		#region #region Public Properties
@@ -118,6 +118,8 @@ namespace CocodriloDog.Animation {
 		}
 
 		public AnimateBlock GetChildBlock(string name) => SequenceItems.FirstOrDefault(b => b != null && b.Name == name);
+
+		public AnimateBlock GetChildBlockAtPath(string blockPath) => AnimateBlocksUtility.GetChildBlockAtPath(this, blockPath);
 
 		public AnimateBlock[] GetChildrenBlocks() => SequenceItems.ToArray();
 

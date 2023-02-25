@@ -11,7 +11,7 @@ namespace CocodriloDog.Animation {
 	/// Block for <see cref="Parallel"/> objects.
 	/// </summary>
 	[Serializable]
-	public class ParallelBlock : AnimateBlock, IAnimateParent {
+	public class ParallelBlock : CompoundBlock, IAnimateParent {
 
 
 		#region #region Public Properties
@@ -113,6 +113,8 @@ namespace CocodriloDog.Animation {
 		}
 
 		public AnimateBlock GetChildBlock(string name) => ParallelItems.FirstOrDefault(b => b != null && b.Name == name);
+
+		public AnimateBlock GetChildBlockAtPath(string blockPath) => AnimateBlocksUtility.GetChildBlockAtPath(this, blockPath);
 
 		public AnimateBlock[] GetChildrenBlocks() => ParallelItems.ToArray();
 

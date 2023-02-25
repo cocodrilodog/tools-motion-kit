@@ -14,18 +14,21 @@ namespace CocodriloDog.Animation {
 		protected override void Edit_InitializePropertiesForGetHeight() {
 			base.Edit_InitializePropertiesForGetHeight();
 			SequenceItemsProperty = Property.FindPropertyRelative("m_SequenceItems");
+			BatchOperationsProperty = Property.FindPropertyRelative("m_BatchOperations");
 		}
 
 		protected override float Edit_GetPropertyHeight(SerializedProperty property, GUIContent label) {
 			var height = base.Edit_GetPropertyHeight(property, label);
 			height += SpaceHeight;
 			height += EditorGUI.GetPropertyHeight(SequenceItemsProperty);
+			height += EditorGUI.GetPropertyHeight(BatchOperationsProperty);
 			return height;
 		}
 
 		protected override void DrawAfterSettings() {
 			GetNextPosition(SpaceHeight);
 			EditorGUI.PropertyField(GetNextPosition(SequenceItemsProperty), SequenceItemsProperty);
+			EditorGUI.PropertyField(GetNextPosition(BatchOperationsProperty), BatchOperationsProperty);
 		}
 
 		#endregion
@@ -34,6 +37,8 @@ namespace CocodriloDog.Animation {
 		#region Private Properties
 
 		private SerializedProperty SequenceItemsProperty { get; set; }
+
+		private SerializedProperty BatchOperationsProperty { get; set; }
 
 		#endregion
 

@@ -9,6 +9,27 @@ namespace CocodriloDog.Animation {
 
 		#region Public Static Methods
 
+
+		/// <summary>
+		/// Finds a child block at the specified path.
+		/// </summary>
+		/// <param name="parent">The <see cref="IAnimateParent"/> where the search starts</param>
+		/// <param name="blockPath">The path of the block. For example "Parallel/Sequence1/Motion2D"</param>
+		/// <returns>The <see cref="AnimateBlock"/> if it was found</returns>
+		public static AnimateBlock GetChildBlockAtPath(IAnimateParent parent, string blockPath) {
+			var pathParts = blockPath.Split('/');			
+			AnimateBlock block = null;
+			for (int i = 0; i < pathParts.Length; i++) {
+				block = parent.GetChildBlock(pathParts[i]);
+				if (block is IAnimateParent) {
+					parent = (block as IAnimateParent);
+				} else {
+					break;
+				}
+			}
+			return block;
+		}
+
 		/// <summary>
 		/// Searches recursively for the first motion that can modify a property and sets its progress
 		/// to 0 so that the value of the property is set to the initial value.

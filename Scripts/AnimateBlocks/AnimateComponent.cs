@@ -7,23 +7,6 @@ namespace CocodriloDog.Animation {
 	using System.Linq;
 	using UnityEngine;
 
-	public interface IAnimateParent {
-
-		/// <summary>
-		/// Gets the <see cref="AnimateBlock"/> named <paramref name="name"/>.
-		/// </summary>
-		/// <param name="name">The <see cref="AnimateBlock.Name"/></param>
-		/// <returns>The <see cref="AnimateBlock"/></returns>
-		AnimateBlock GetChildBlock(string name);
-
-		/// <summary>
-		/// Gets all the children <see cref="AnimateBlock"/>.
-		/// </summary>
-		/// <returns>An array with the children.</returns>
-		AnimateBlock[] GetChildrenBlocks();
-
-	}
-
 	/// <summary>
 	/// This is the component that will be used to own and manage <see cref="AnimateBlock"/>s.
 	/// </summary>
@@ -142,29 +125,7 @@ namespace CocodriloDog.Animation {
 
 		public AnimateBlock GetChildBlock(string name) => AnimateBlocks.FirstOrDefault(b => b != null && b.Name == name);
 
-		/// <summary>
-		/// Finds a block at the specified path.
-		/// </summary>
-		/// <param name="blockPath">The path of the block. For example "Parallel/Sequence1/Motion2D"</param>
-		/// <returns>The <see cref="AnimateBlock"/> if it was found</returns>
-		public AnimateBlock GetChildBlockAtPath(string blockPath) {
-
-			var pathParts = blockPath.Split('/');
-
-			IAnimateParent parent = this;
-			AnimateBlock block = null;
-
-			for (int i = 0; i < pathParts.Length; i++) {
-				block = parent.GetChildBlock(pathParts[i]);
-				if (block is IAnimateParent) {
-					parent = (block as IAnimateParent);
-				} else {
-					break;
-				}
-			}
-			return block;
-
-		}
+		public AnimateBlock GetChildBlockAtPath(string blockPath) => AnimateBlocksUtility.GetChildBlockAtPath(this, blockPath);
 
 		public T GetChildBlockAtPath<T>(string blockPath) where T : AnimateBlock {
 			return GetChildBlockAtPath(blockPath) as T;
