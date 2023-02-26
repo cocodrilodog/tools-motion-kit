@@ -6,32 +6,30 @@ namespace CocodriloDog.Animation {
 	using System.Collections.Generic;
 	using UnityEngine;
 
+	/// <summary>
+	/// Sets the duration of the provided <see cref="AnimateBlock"/> in a incremental way
+	/// proportional to the <c>index</c> of the block.
+	/// </summary>
 	[Serializable]
-	public class IncrementalDuration : AnimateBlockOperation {
+	public class IncrementalDuration : PathBlockOperation {
 
 
-		#region Public Methods
+		#region Protected Methods
 
-		public override void Perform(AnimateBlock animateBlock, int index) {
-			if (string.IsNullOrEmpty(Path)) {
-				if (animateBlock != null) {
-					animateBlock.DurationInput = BaseDuration + index * DurationIncrement;
-				}
-			} else {
-				var childBlock = (animateBlock as IAnimateParent)?.GetChildBlockAtPath(Path);
-				if (childBlock != null) {
-					childBlock.DurationInput = BaseDuration + index * DurationIncrement;
-				}
-			}
+		/// <summary>
+		/// Sets the duration of the provided <paramref name="animateBlock"/> in a incremental way
+		/// proportional to the <paramref name="index"/> of the block.
+		/// </summary>
+		/// <param name="animateBlock">The <see cref="AnimateBlock"/>.</param>
+		/// <param name="index">The index of the <see cref="AnimateBlock"/> when it belongs to a list or array.</param>
+		protected override void PerformOnPathBlock(AnimateBlock pathBlock, int index) {
+			pathBlock.DurationInput = BaseDuration + index * DurationIncrement;
 		}
 
 		#endregion
 
 
 		#region Private Fields
-
-		[SerializeField]
-		private string m_Path;
 
 		[SerializeField]
 		private float m_BaseDuration;
@@ -43,8 +41,6 @@ namespace CocodriloDog.Animation {
 
 
 		#region Private Properties
-
-		private string Path => m_Path;
 
 		private float BaseDuration => m_BaseDuration;
 

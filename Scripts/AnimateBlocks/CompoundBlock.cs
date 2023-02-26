@@ -15,6 +15,9 @@ namespace CocodriloDog.Animation {
 
 		#region Public Properties
 
+		/// <summary>
+		/// The items of this <see cref="CompoundBlock"/>.
+		/// </summary>
 		public abstract List<AnimateBlock> Items { get; }
 
 		#endregion
@@ -22,6 +25,12 @@ namespace CocodriloDog.Animation {
 
 		#region Public Methods
 
+		/// <summary>
+		/// Performs the batch operations of this <see cref="CompoundBlock"/>.
+		/// </summary>
+		/// <remarks>
+		/// This is used only by <see cref="Animate"/> the editor tools.
+		/// </remarks>
 		public void PerformBatchOperations() { 
 			foreach(var operation in BatchOperations) {
 				for(int i = 0; i < Items.Count; i++) {
@@ -35,6 +44,9 @@ namespace CocodriloDog.Animation {
 
 		#region Protected Properties
 
+		/// <summary>
+		/// The list of batch operations to be performed by this <see cref="CompoundBlock"/>.
+		/// </summary>
 		protected abstract List<AnimateBlockOperation> BatchOperations { get; }
 
 		#endregion
