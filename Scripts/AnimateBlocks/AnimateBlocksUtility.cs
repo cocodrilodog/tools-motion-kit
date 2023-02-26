@@ -49,7 +49,7 @@ namespace CocodriloDog.Animation {
 			}
 			if (animateBlock is SequenceBlock) {
 				var sequenceBlock = animateBlock as SequenceBlock;
-				foreach (var item in sequenceBlock.SequenceItems) {
+				foreach (var item in sequenceBlock.Items) {
 					// Recursion
 					if (SetInitialValue(item)) {
 						// Break on the first value set on the sequence
@@ -59,7 +59,7 @@ namespace CocodriloDog.Animation {
 			}
 			if (animateBlock is ParallelBlock) {
 				var parallelBlock = animateBlock as ParallelBlock;
-				foreach (var item in parallelBlock.ParallelItems) {
+				foreach (var item in parallelBlock.Items) {
 					// Recursion
 					SetInitialValue(item);
 				}

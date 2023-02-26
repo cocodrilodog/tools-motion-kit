@@ -76,7 +76,10 @@ namespace CocodriloDog.Animation {
 		/// <remarks>
 		/// This was named differently in order to differentiate it from <see cref="Duration"/>.
 		/// </remarks>
-		public float DurationInput => SharedSettings != null ? SharedSettings.Duration : m_Duration;
+		public float DurationInput {
+			get => SharedSettings != null ? SharedSettings.Duration : m_Duration;
+			set => m_Duration = value;
+		}
 
 		/// <summary>
 		/// The duration that will be used for the animate object.

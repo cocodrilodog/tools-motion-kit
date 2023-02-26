@@ -25,7 +25,7 @@ namespace CocodriloDog.Animation {
 			}
 		}
 
-		public List<AnimateBlock> SequenceItems {
+		public override List<AnimateBlock> Items {
 			get {
 				_ = Sequence; // <- Force init
 				return m_SequenceItems;
@@ -49,7 +49,7 @@ namespace CocodriloDog.Animation {
 
 		/// <summary>
 		/// <see cref="DurationInput"/> if it is above 0, otherwise the sum of the duration of 
-		/// the <see cref="SequenceItems"/>.
+		/// the <see cref="Items"/>.
 		/// </summary>
 		public override float DurationToBeUsed {
 			get {
@@ -57,7 +57,7 @@ namespace CocodriloDog.Animation {
 				if(DurationInput > 0) {
 					duration = DurationInput;
 				} else {
-					foreach(var item in SequenceItems) {
+					foreach(var item in Items) {
 						duration += item != null ? item.DurationToBeUsed : 0;
 					}
 				}
@@ -112,26 +112,41 @@ namespace CocodriloDog.Animation {
 
 		public override void Dispose() {
 			base.Dispose();
-			foreach (var sequenceItem in SequenceItems) {
+			foreach (var sequenceItem in Items) {
 				sequenceItem?.Dispose();
 			}
 		}
 
-		public AnimateBlock GetChildBlock(string name) => SequenceItems.FirstOrDefault(b => b != null && b.Name == name);
+		public AnimateBlock GetChildBlock(string name) => Items.FirstOrDefault(b => b != null && b.Name == name);
 
 		public AnimateBlock GetChildBlockAtPath(string blockPath) => AnimateBlocksUtility.GetChildBlockAtPath(this, blockPath);
 
-		public AnimateBlock[] GetChildrenBlocks() => SequenceItems.ToArray();
+		public AnimateBlock[] GetChildrenBlocks() => Items.ToArray();
 
 		public override string DefaultName => "Sequence";
 
 		#endregion
 
 
+		#region Protected Properties
+
+		protected override List<AnimateBlockOperation> BatchOperations => m_BatchOperations;
+
+		#endregion
+
+
 		#region Private Fields - Serialized
 
+		/// <summary>
+		/// The property was renamed to <see cref="Items"/>, but this field was left as is because
+		/// at the time of the change, there was a lot of work already done that I didn't wnat to lose. 
+		/// Additionally it reads more clear for the user in the inspector.
+		/// </summary>
 		[SerializeReference]
 		private List<AnimateBlock> m_SequenceItems = new List<AnimateBlock>();
+
+		[SerializeReference]
+		private List<AnimateBlockOperation> m_BatchOperations = new List<AnimateBlockOperation>();
 
 		#endregion
 

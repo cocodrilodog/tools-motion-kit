@@ -6,7 +6,7 @@ namespace CocodriloDog.Animation {
 	using UnityEngine;
 
 	[CustomPropertyDrawer(typeof(ParallelBlock))]
-	public class ParallelBlockPropertyDrawer : AnimateBlockPropertyDrawer {
+	public class ParallelBlockPropertyDrawer : CompoundBlockPropertyDrawer {
 
 
 		#region Protected Methods
@@ -14,7 +14,6 @@ namespace CocodriloDog.Animation {
 		protected override void Edit_InitializePropertiesForGetHeight() {
 			base.Edit_InitializePropertiesForGetHeight();
 			ParallelItemsProperty = Property.FindPropertyRelative("m_ParallelItems");
-			BatchOperationsProperty = Property.FindPropertyRelative("m_BatchOperations");
 		}
 
 		protected override float Edit_GetPropertyHeight(SerializedProperty property, GUIContent label) {
@@ -22,6 +21,7 @@ namespace CocodriloDog.Animation {
 			height += SpaceHeight;
 			height += EditorGUI.GetPropertyHeight(ParallelItemsProperty);
 			height += EditorGUI.GetPropertyHeight(BatchOperationsProperty);
+			height += FieldHeight; // <- Batch Operations button
 			return height;
 		}
 
@@ -29,6 +29,7 @@ namespace CocodriloDog.Animation {
 			GetNextPosition(SpaceHeight);
 			EditorGUI.PropertyField(GetNextPosition(ParallelItemsProperty), ParallelItemsProperty, true);
 			EditorGUI.PropertyField(GetNextPosition(BatchOperationsProperty), BatchOperationsProperty, true);
+			DrawRunBatchOperationsButton();
 		}
 
 		#endregion
@@ -37,8 +38,6 @@ namespace CocodriloDog.Animation {
 		#region Private Properties
 
 		private SerializedProperty ParallelItemsProperty { get; set; }
-
-		private SerializedProperty BatchOperationsProperty { get; set; }
 
 		#endregion
 

@@ -7,6 +7,16 @@ namespace CocodriloDog.Animation {
 	using UnityEngine;
 
 	[Serializable]
-	public class AnimateBlockOperation : CompositeObject { }
+	public class AnimateBlockOperation : CompositeObject {
+
+
+		#region Public Methods
+
+		public virtual void Perform(AnimateBlock animateBlock, int index) { }
+
+		#endregion
+
+
+	}
 
 }

@@ -25,7 +25,7 @@ namespace CocodriloDog.Animation {
 			}
 		}
 
-		public List<AnimateBlock> ParallelItems {
+		public override List<AnimateBlock> Items {
 			get {
 				_ = Parallel; // <- Force init
 				return m_ParallelItems;
@@ -49,7 +49,7 @@ namespace CocodriloDog.Animation {
 
 		/// <summary>
 		/// <see cref="DurationInput"/> if it is above 0, otherwise the longest duration among
-		/// the <see cref="ParallelItems"/>.
+		/// the <see cref="Items"/>.
 		/// </summary>
 		public override float DurationToBeUsed {
 			get {
@@ -57,7 +57,7 @@ namespace CocodriloDog.Animation {
 				if (DurationInput > 0) {
 					duration = DurationInput;
 				} else {
-					foreach (var item in ParallelItems) {
+					foreach (var item in Items) {
 						duration = Mathf.Max(item != null ? item.DurationToBeUsed : 0, duration);
 					}
 				}
@@ -107,26 +107,41 @@ namespace CocodriloDog.Animation {
 
 		public override void Dispose() {
 			base.Dispose();
-			foreach (var parallelItem in ParallelItems) {
+			foreach (var parallelItem in Items) {
 				parallelItem?.Dispose();
 			}
 		}
 
-		public AnimateBlock GetChildBlock(string name) => ParallelItems.FirstOrDefault(b => b != null && b.Name == name);
+		public AnimateBlock GetChildBlock(string name) => Items.FirstOrDefault(b => b != null && b.Name == name);
 
 		public AnimateBlock GetChildBlockAtPath(string blockPath) => AnimateBlocksUtility.GetChildBlockAtPath(this, blockPath);
 
-		public AnimateBlock[] GetChildrenBlocks() => ParallelItems.ToArray();
+		public AnimateBlock[] GetChildrenBlocks() => Items.ToArray();
 
 		public override string DefaultName => "Parallel";
 
 		#endregion
 
 
+		#region Protected Properties
+
+		protected override List<AnimateBlockOperation> BatchOperations => m_BatchOperations;
+
+		#endregion
+
+
 		#region Private Fields - Serialized
 
+		/// <summary>
+		/// The property was renamed to <see cref="Items"/>, but this field was left as is because
+		/// at the time of the change, there was a lot of work already done that I didn't wnat to lose. 
+		/// Additionally it reads more clear for the user in the inspector.
+		/// </summary>
 		[SerializeReference]
 		private List<AnimateBlock> m_ParallelItems = new List<AnimateBlock>();
+
+		[SerializeReference]
+		private List<AnimateBlockOperation> m_BatchOperations = new List<AnimateBlockOperation>();
 
 		#endregion
 
