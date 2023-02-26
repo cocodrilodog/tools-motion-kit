@@ -142,6 +142,13 @@
 		#endregion
 
 
+		#region Public Methods
+
+		public override ParameterizedEasing Copy() => new Shake(TMultiplier, Magnitude, IsDampered);
+
+		#endregion
+
+
 		#region Private Fields - Serialized
 
 		[SerializeField]

@@ -52,6 +52,17 @@
 		#endregion
 
 
+		#region Public Methods
+
+		public override ParameterizedEasing Copy() {
+			var copy = new AnimateCurve();
+			copy.Curve = new AnimationCurve(Curve.keys);
+			return copy;
+		}
+
+		#endregion
+
+
 	}
 
 }

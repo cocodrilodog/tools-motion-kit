@@ -87,6 +87,13 @@
 		#endregion
 
 
+		#region Public Methods
+
+		public override ParameterizedEasing Copy() => new Pulse(Offset);
+
+		#endregion
+
+
 	}
 
 }

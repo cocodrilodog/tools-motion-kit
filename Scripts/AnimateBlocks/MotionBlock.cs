@@ -207,34 +207,53 @@ namespace CocodriloDog.Animation {
 		/// <summary>
 		/// The initial value for the motion.
 		/// </summary>
-		protected ValueT InitialValue => SharedValues != null ? SharedValues.InitialValue : m_InitialValue;
+		protected ValueT InitialValue {
+			get => SharedValues != null ? SharedValues.InitialValue : m_InitialValue;
+			set => m_InitialValue = value;
+		}
 
 		/// <summary>
 		/// Whether the initial value for the motion is relative or not.
 		/// </summary>
 		/// 
 		/// <remarks>
-		/// If it is relative, it will be summed to the current value of the property in the target object
-		/// to calculate the value that this motion starts with.
+		/// If it is relative, the <see cref="InitialValue"/> will be summed to the current value of the property
+		/// at the beginning of the animation and the result will be used as the initial value for the motion.
 		/// </remarks>
-		protected bool InitialValueIsRelative => SharedValues != null ? SharedValues.InitialValueIsRelative : m_InitialValueIsRelative;
+		protected bool InitialValueIsRelative {
+			get => SharedValues != null ? SharedValues.InitialValueIsRelative : m_InitialValueIsRelative;
+			set => m_InitialValueIsRelative = value;
+		}
 
 		/// <summary>
 		/// The final value for the motion.
 		/// </summary>
-		protected ValueT FinalValue => SharedValues != null ? SharedValues.FinalValue : m_FinalValue;
+		protected ValueT FinalValue {
+			get => SharedValues != null ? SharedValues.FinalValue : m_FinalValue;
+			set => m_FinalValue = value;
+		}
 
 		/// <summary>
 		/// Whether the final value for the motion is relative or not.
 		/// </summary>
 		/// 
 		/// <remarks>
-		/// If it is relative, it will be summed to the current value of the property in the target object
-		/// to calculate the value that this motion finalizes with.
+		/// If it is relative, the <see cref="FinalValue"/> will be summed to the current value of the property
+		/// at the beginning of the animation and the result will be used as the initial value for the motion.
 		/// </remarks>
-		protected bool FinalValueIsRelative => SharedValues != null ? SharedValues.FinalValueIsRelative : m_FinalValueIsRelative;
+		protected bool FinalValueIsRelative {
+			get => SharedValues != null ? SharedValues.FinalValueIsRelative : m_FinalValueIsRelative;
+			set => m_FinalValueIsRelative = value;
+		}
 
-		protected SharedValuesT SharedValues => m_SharedValues;
+		/// <summary>
+		/// An asset that can be used as the overriding source of the <see cref="InitialValue"/> and <see cref="FinalValue"/>
+		/// and their corresponding <see cref="InitialValueIsRelative"/> and <see cref="FinalValueIsRelative"/> properties.
+		/// </summary>
+		protected SharedValuesT SharedValues {
+			get => m_SharedValues;
+			set => m_SharedValues = value;
+		}
 
 		#endregion
 

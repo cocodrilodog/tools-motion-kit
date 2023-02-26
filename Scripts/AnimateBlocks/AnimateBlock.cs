@@ -71,6 +71,16 @@ namespace CocodriloDog.Animation {
 		public abstract float Duration { get; }
 
 		/// <summary>
+		/// Gets the <c>IsPlaying</c> property of the Animate object managed by this <see cref="AnimateBlock"/>.
+		/// </summary>
+		public abstract bool IsPlaying { get; }
+
+		/// <summary>
+		/// Gets the <c>IsPaused</c> property of the Animate object managed by this <see cref="AnimateBlock"/>.
+		/// </summary>
+		public abstract bool IsPaused { get; }
+
+		/// <summary>
 		/// The duration of the Animate object as specified in the inspector.
 		/// </summary>
 		/// <remarks>
@@ -91,16 +101,25 @@ namespace CocodriloDog.Animation {
 		public virtual float DurationToBeUsed => DurationInput;
 
 		/// <summary>
-		/// Gets the <c>IsPlaying</c> property of the Animate object managed by this <see cref="AnimateBlock"/>.
+		/// Shows the <see cref="DisplayName"/> with the <see cref="DurationToBeUsed"/> in seconds.
 		/// </summary>
-		public abstract bool IsPlaying { get; }
+		public override string DisplayName => $"{base.DisplayName} ({DurationToBeUsed}s)";
 
 		/// <summary>
-		/// Gets the <c>IsPaused</c> property of the Animate object managed by this <see cref="AnimateBlock"/>.
+		/// The time mode to be used by the Animate object managed by this <see cref="AnimateBlock"/>.
 		/// </summary>
-		public abstract bool IsPaused { get; }
+		public TimeMode TimeMode {
+			get => SharedSettings != null ? SharedSettings.TimeMode : m_TimeMode;
+			set => m_TimeMode = value;
+		}
 
-		public override string DisplayName => $"{base.DisplayName} ({DurationToBeUsed}s)";
+		/// <summary>
+		/// The easing to be used by the Animate object managed by this <see cref="AnimateBlock"/>.
+		/// </summary>
+		public AnimateEasingField Easing {
+			get => SharedSettings != null ? SharedSettings.Easing : m_Easing;
+			set => m_Easing = value;
+		}
 
 		#endregion
 
@@ -197,16 +216,6 @@ namespace CocodriloDog.Animation {
 				}
 			}
 		}
-
-		/// <summary>
-		/// The time mode to be used by the Animate object managed by this <see cref="AnimateBlock"/>.
-		/// </summary>
-		protected TimeMode TimeMode => SharedSettings != null ? SharedSettings.TimeMode : m_TimeMode;
-
-		/// <summary>
-		/// The easing to be used by the Animate object managed by this <see cref="AnimateBlock"/>.
-		/// </summary>
-		protected AnimateEasingField Easing => SharedSettings != null ? SharedSettings.Easing : m_Easing;
 
 		/// <summary>
 		/// The <c>OnStart</c> callbacks to be invoked by the Animate object managed by this <see cref="AnimateBlock"/>.

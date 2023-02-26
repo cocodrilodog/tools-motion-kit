@@ -22,6 +22,13 @@
 		#endregion
 
 
+		#region Public Methods
+
+		public abstract ParameterizedEasing Copy();
+
+		#endregion
+
+
 	}
 
 }

@@ -75,6 +75,13 @@
 		#endregion
 
 
+		#region Public Methods
+
+		public override ParameterizedEasing Copy() => new Blink(BlinkCount);
+
+		#endregion
+
+
 	}
 
 }

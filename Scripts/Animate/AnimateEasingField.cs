@@ -119,6 +119,18 @@
 		#endregion
 
 
+		#region Public Methods
+
+		public AnimateEasingField Copy() {
+			var copy = new AnimateEasingField();
+			copy.m_EasingName = m_EasingName;
+			copy.m_ParameterizedEasing = m_ParameterizedEasing.Copy();
+			return copy;
+		}
+
+		#endregion
+
+
 		#region Private Static Fields
 
 		[NonSerialized]
