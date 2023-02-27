@@ -22,6 +22,7 @@ namespace CocodriloDog.Animation {
 		/// <param name="index">The index of the <see cref="AnimateBlock"/> in the list.</param>
 		/// <returns>The copy of <see cref="TemplateBlock"/></returns>
 		public override AnimateBlock Perform(AnimateBlock animateBlock, int index) {
+			base.Perform(animateBlock, index);
 			CompositeCopier.Copy(TemplateBlock);
 			return CompositeCopier.Paste() as AnimateBlock;
 		}

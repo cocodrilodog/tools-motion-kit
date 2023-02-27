@@ -17,6 +17,28 @@ namespace CocodriloDog.Animation {
 	public abstract class AnimateBatchOperation : CompositeObject {
 
 
+		#region Public Properties
+
+#if UNITY_EDITOR
+		
+		public override CompositeFieldAction FieldAction {
+			get {
+				if (m_FieldAction == null) {
+					m_FieldAction = new CompositeFieldAction();
+					m_FieldAction.Label = "Run";
+					m_FieldAction.Action = () => m_FieldActionIsPending = true;
+				}
+				return m_FieldAction;
+			}
+		}
+
+		public bool FieldActionIsPending => m_FieldActionIsPending;
+
+#endif
+
+		#endregion
+
+
 		#region Public Methods
 
 		/// <summary>
@@ -26,9 +48,23 @@ namespace CocodriloDog.Animation {
 		/// <param name="animateBlock">Each <see cref="AnimateBlock"/> in the list.</param>
 		/// <param name="index">The index of the <see cref="AnimateBlock"/> in the list.</param>
 		/// <returns>The modified <paramref name="animateBlock"/> or a new <see cref="AnimateBlock"/></returns>
-		public abstract AnimateBlock Perform(AnimateBlock animateBlock, int index);
+		public virtual AnimateBlock Perform(AnimateBlock animateBlock, int index) {
+			m_FieldActionIsPending = false;
+			return animateBlock;
+		}
 
 		#endregion
+
+
+#if UNITY_EDITOR
+
+		[NonSerialized]
+		private CompositeFieldAction m_FieldAction;
+
+		[NonSerialized]
+		private bool m_FieldActionIsPending;
+
+#endif
 
 
 	}

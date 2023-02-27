@@ -25,6 +25,7 @@ namespace CocodriloDog.Animation {
 		/// <param name="index">The index of the <see cref="AnimateBlock"/> in the list.</param>
 		/// <returns>The modified <paramref name="animateBlock"/></returns>
 		public sealed override AnimateBlock Perform(AnimateBlock animateBlock, int index) {
+			base.Perform(animateBlock, index);
 			if (string.IsNullOrEmpty(Path)) {
 				if (animateBlock != null) {
 					PerformOnChildBlock(animateBlock, index);

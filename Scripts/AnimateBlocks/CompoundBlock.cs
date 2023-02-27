@@ -29,16 +29,25 @@ namespace CocodriloDog.Animation {
 		#region Public Methods
 
 		/// <summary>
-		/// Performs the batch operations of this <see cref="CompoundBlock"/>.
+		/// Performs all the batch operations of this <see cref="CompoundBlock"/>.
 		/// </summary>
 		/// <remarks>
 		/// This is used only by <see cref="Animate"/> the editor tools.
 		/// </remarks>
-		public void PerformBatchOperations() { 
-			foreach(var operation in BatchOperations) {
-				for(int i = 0; i < Items.Count; i++) {
-					Items[i] = operation.Perform(Items[i], i);
-				}
+		public void PerformAllBatchOperations() { 
+			for(int i = 0; i < BatchOperations.Count; i++) {
+				PerformBatchOperation(i);
+			}
+		}
+
+		/// <summary>
+		/// Performs the batch operation at <paramref name="index"/>
+		/// </summary>
+		/// <param name="index">The indexx of the operation</param>
+		public void PerformBatchOperation(int index) {
+			var operation = BatchOperations[index];
+			for (int i = 0; i < Items.Count; i++) {
+				Items[i] = operation.Perform(Items[i], i);
 			}
 		}
 

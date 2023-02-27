@@ -23,10 +23,31 @@ namespace CocodriloDog.Animation {
 			BatchOperationsProperty = Property.FindPropertyRelative("m_BatchOperations");
 		}
 
+		protected void DrawBatchOperations() {
+			
+			// Draw the list
+			EditorGUI.PropertyField(GetNextPosition(BatchOperationsProperty), BatchOperationsProperty);
+
+			// Check if any operation is pending
+			for(int i = 0; i < BatchOperationsProperty.arraySize; i++) {
+				var operationProperty = BatchOperationsProperty.GetArrayElementAtIndex(i);
+				if (operationProperty.managedReferenceValue != null && 
+					(operationProperty.managedReferenceValue as AnimateBatchOperation).FieldActionIsPending) {
+
+					var operation = operationProperty.managedReferenceValue as AnimateBatchOperation;
+					Undo.RecordObject(Property.serializedObject.targetObject, $"{ObjectNames.NicifyVariableName(operation.DisplayName)}");
+
+					(Property.managedReferenceValue as CompoundBlock).PerformBatchOperation(i);
+
+				}
+			}
+
+		}
+
 		protected void DrawRunBatchOperationsButton() {
 			if (GUI.Button(GetNextPosition(), "Run All Batch Operations")) {
 				Undo.RecordObject(Property.serializedObject.targetObject, "Batch operations");
-				(Property.managedReferenceValue as CompoundBlock).PerformBatchOperations();
+				(Property.managedReferenceValue as CompoundBlock).PerformAllBatchOperations();
 			}
 		}
 

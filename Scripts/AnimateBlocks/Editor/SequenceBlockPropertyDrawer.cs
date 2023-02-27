@@ -28,7 +28,7 @@ namespace CocodriloDog.Animation {
 		protected override void DrawAfterSettings() {
 			GetNextPosition(SpaceHeight);
 			EditorGUI.PropertyField(GetNextPosition(SequenceItemsProperty), SequenceItemsProperty);
-			EditorGUI.PropertyField(GetNextPosition(BatchOperationsProperty), BatchOperationsProperty);
+			DrawBatchOperations();
 			DrawRunBatchOperationsButton();
 		}
 
