@@ -24,6 +24,8 @@ namespace CocodriloDog.Animation {
 		#endregion
 
 
+#if UNITY_EDITOR
+
 		#region Public Methods
 
 		/// <summary>
@@ -51,6 +53,8 @@ namespace CocodriloDog.Animation {
 		protected abstract List<AnimateBatchOperation> BatchOperations { get; }
 
 		#endregion
+
+#endif
 
 
 	}
