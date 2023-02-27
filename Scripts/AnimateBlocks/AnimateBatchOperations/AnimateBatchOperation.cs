@@ -18,8 +18,6 @@ namespace CocodriloDog.Animation {
 
 
 		#region Public Properties
-
-#if UNITY_EDITOR
 		
 		public override CompositeFieldAction FieldAction {
 			get {
@@ -33,8 +31,6 @@ namespace CocodriloDog.Animation {
 		}
 
 		public bool FieldActionIsPending => m_FieldActionIsPending;
-
-#endif
 
 		#endregion
 
@@ -56,7 +52,7 @@ namespace CocodriloDog.Animation {
 		#endregion
 
 
-#if UNITY_EDITOR
+		#region Private Fields
 
 		[NonSerialized]
 		private CompositeFieldAction m_FieldAction;
@@ -64,7 +60,7 @@ namespace CocodriloDog.Animation {
 		[NonSerialized]
 		private bool m_FieldActionIsPending;
 
-#endif
+		#endregion
 
 
 	}

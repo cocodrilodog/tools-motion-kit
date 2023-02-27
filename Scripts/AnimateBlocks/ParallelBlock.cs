@@ -126,9 +126,7 @@ namespace CocodriloDog.Animation {
 		#region Protected Properties
 
 #if UNITY_EDITOR
-
 		protected override List<AnimateBatchOperation> BatchOperations => m_BatchOperations;
-
 #endif
 
 		#endregion
@@ -145,10 +143,8 @@ namespace CocodriloDog.Animation {
 		private List<AnimateBlock> m_ParallelItems = new List<AnimateBlock>();
 
 #if UNITY_EDITOR
-
 		[SerializeReference]
 		private List<AnimateBatchOperation> m_BatchOperations = new List<AnimateBatchOperation>();
-
 #endif
 
 		#endregion
