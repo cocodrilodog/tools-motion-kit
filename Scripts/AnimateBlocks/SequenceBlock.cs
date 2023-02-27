@@ -130,7 +130,7 @@ namespace CocodriloDog.Animation {
 
 		#region Protected Properties
 
-		protected override List<AnimateBlockOperation> BatchOperations => m_BatchOperations;
+		protected override List<AnimateBatchOperation> BatchOperations => m_BatchOperations;
 
 		#endregion
 
@@ -146,7 +146,7 @@ namespace CocodriloDog.Animation {
 		private List<AnimateBlock> m_SequenceItems = new List<AnimateBlock>();
 
 		[SerializeReference]
-		private List<AnimateBlockOperation> m_BatchOperations = new List<AnimateBlockOperation>();
+		private List<AnimateBatchOperation> m_BatchOperations = new List<AnimateBatchOperation>();
 
 		#endregion
 

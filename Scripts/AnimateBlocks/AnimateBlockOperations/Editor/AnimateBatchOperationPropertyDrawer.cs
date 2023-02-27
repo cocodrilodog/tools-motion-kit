@@ -7,8 +7,8 @@ namespace CocodriloDog.Animation {
 	using UnityEditor;
 	using UnityEngine;
 
-	[CustomPropertyDrawer(typeof(AnimateBlockOperation))]
-	public class AnimateBlockOperationPropertyDrawer : CompositePropertyDrawer {
+	[CustomPropertyDrawer(typeof(AnimateBatchOperation))]
+	public class AnimateBatchOperationPropertyDrawer : CompositePropertyDrawer {
 
 
 		#region Protected Properties
@@ -17,9 +17,10 @@ namespace CocodriloDog.Animation {
 			get {
 				if (m_CompositeTypes == null) {
 					m_CompositeTypes = new List<Type> {
+						typeof(CopyTemplateBlock),
 						typeof(RenameBlock),
-						typeof(CopyBlock),
-						typeof(IncrementalDuration),
+						typeof(SetSetterObject),
+						typeof(SetIncrementalDuration),
 					};
 				}
 				return m_CompositeTypes;

@@ -16,6 +16,7 @@ namespace CocodriloDog.Animation {
 	/// identifiable instead of using the concrete types derived from the template.
 	/// </remarks>
 	public interface IMotionBlock : IAnimateBlock {
+		public UnityEngine.Object Object { get; set; }
 		void ResetMotion();
 		void DontResetRelativeValuesOnStart();
 	}

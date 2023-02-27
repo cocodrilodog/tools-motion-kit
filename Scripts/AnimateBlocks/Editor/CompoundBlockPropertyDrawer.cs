@@ -24,7 +24,7 @@ namespace CocodriloDog.Animation {
 		}
 
 		protected void DrawRunBatchOperationsButton() {
-			if (GUI.Button(GetNextPosition(), "Run Batch Operations")) {
+			if (GUI.Button(GetNextPosition(), "Run All Batch Operations")) {
 				Undo.RecordObject(Property.serializedObject.targetObject, "Batch operations");
 				(Property.managedReferenceValue as CompoundBlock).PerformBatchOperations();
 			}

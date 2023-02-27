@@ -6,7 +6,7 @@ namespace CocodriloDog.Animation {
 	using UnityEngine;
 
 	[CustomPropertyDrawer(typeof(RenameBlock))]
-	public class RenamePropertyDrawer : PathBlockOperationPropertyDrawer {
+	public class RenamePropertyDrawer : AnimateBatchOperationPathPropertyDrawer {
 
 
 		#region Protected Methods

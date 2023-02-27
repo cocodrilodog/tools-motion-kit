@@ -48,7 +48,7 @@ namespace CocodriloDog.Animation {
 		/// <summary>
 		/// The list of batch operations to be performed by this <see cref="CompoundBlock"/>.
 		/// </summary>
-		protected abstract List<AnimateBlockOperation> BatchOperations { get; }
+		protected abstract List<AnimateBatchOperation> BatchOperations { get; }
 
 		#endregion
 

@@ -5,8 +5,8 @@ namespace CocodriloDog.Animation {
 	using UnityEditor;
 	using UnityEngine;
 
-	[CustomPropertyDrawer(typeof(IncrementalDuration))]
-	public class IncrementalDurationPropertyDrawer : PathBlockOperationPropertyDrawer {
+	[CustomPropertyDrawer(typeof(SetIncrementalDuration))]
+	public class SetIncrementalDurationPropertyDrawer : AnimateBatchOperationPathPropertyDrawer {
 
 
 		#region Protected Methods
