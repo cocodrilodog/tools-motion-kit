@@ -7,9 +7,9 @@ namespace CocodriloDog.Animation {
 	using UnityEngine;
 
 	/// <summary>
-	/// Base class for operations that will be performed on blocks that are children of the 
-	/// <see cref="AnimateBlock"/> provided at <see cref="Perform(AnimateBlock, int)"/>.
-	/// To specify the child, set <see cref="Path"/>.
+	/// Base class for operations that will be performed on <see cref="AnimateBlock"/>s that are 
+	/// children of the <see cref="AnimateBlock"/> provided at <see cref="Perform(AnimateBlock, int)"/>.
+	/// To specify the child, you need to set <see cref="Path"/>.
 	/// </summary>
 	[Serializable]
 	public abstract class PathBlockOperation : AnimateBlockOperation {
