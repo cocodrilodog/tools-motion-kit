@@ -22,8 +22,9 @@ namespace CocodriloDog.Animation {
 		/// </summary>
 		/// <param name="animateBlock">The <see cref="AnimateBlock"/>.</param>
 		/// <param name="index">The index of the <see cref="AnimateBlock"/> when it belongs to a list or array.</param>
-		protected override void PerformOnPathBlock(AnimateBlock pathBlock, int index) {
+		protected override AnimateBlock PerformOnPathBlock(AnimateBlock pathBlock, int index) {
 			pathBlock.DurationInput = BaseDuration + index * DurationIncrement;
+			return pathBlock;
 		}
 
 		#endregion

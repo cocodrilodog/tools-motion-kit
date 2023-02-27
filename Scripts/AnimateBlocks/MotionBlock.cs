@@ -33,6 +33,14 @@ namespace CocodriloDog.Animation {
 		#region Public Properties
 
 		/// <summary>
+		/// The object that will be target of the animatable property.
+		/// </summary>
+		public UnityEngine.Object Object {
+			get => m_Object;
+			set => m_Object = value;
+		}
+
+		/// <summary>
 		/// The motion that this block manages.
 		/// </summary>
 		public MotionT Motion {
@@ -188,11 +196,6 @@ namespace CocodriloDog.Animation {
 
 
 		#region Protected Properties
-
-		/// <summary>
-		/// The object that will be target of the animatable property.
-		/// </summary>
-		protected UnityEngine.Object Object => m_Object;
 
 		/// <summary>
 		/// A string that points to the setter of the animatable property.

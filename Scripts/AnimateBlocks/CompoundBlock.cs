@@ -10,6 +10,7 @@ namespace CocodriloDog.Animation {
 	/// <summary>
 	/// Base block for <see cref="SequenceBlock"/> and <see cref="ParallelBlock"/>.
 	/// </summary>
+	[Serializable]
 	public abstract class CompoundBlock : AnimateBlock {
 
 
@@ -34,7 +35,7 @@ namespace CocodriloDog.Animation {
 		public void PerformBatchOperations() { 
 			foreach(var operation in BatchOperations) {
 				for(int i = 0; i < Items.Count; i++) {
-					operation.Perform(Items[i], i);
+					Items[i] = operation.Perform(Items[i], i);
 				}
 			}
 		}

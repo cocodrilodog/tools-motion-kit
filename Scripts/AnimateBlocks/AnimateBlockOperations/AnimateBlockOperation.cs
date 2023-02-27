@@ -23,7 +23,7 @@ namespace CocodriloDog.Animation {
 		/// </summary>
 		/// <param name="animateBlock">The <see cref="AnimateBlock"/>.</param>
 		/// <param name="index">The index of the <see cref="AnimateBlock"/> when it belongs to a list or array.</param>
-		public abstract void Perform(AnimateBlock animateBlock, int index);
+		public abstract AnimateBlock Perform(AnimateBlock animateBlock, int index);
 
 		#endregion
 

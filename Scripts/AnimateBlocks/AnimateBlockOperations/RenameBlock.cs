@@ -11,7 +11,7 @@ namespace CocodriloDog.Animation {
 	/// and optionally appends the <c>index</c> + 1 to the <see cref="NewName"/>.
 	/// </summary>
 	[Serializable]
-	public class Rename : PathBlockOperation {
+	public class RenameBlock : PathBlockOperation {
 
 
 		#region Protected Methods
@@ -22,8 +22,9 @@ namespace CocodriloDog.Animation {
 		/// </summary>
 		/// <param name="animateBlock">The <see cref="AnimateBlock"/>.</param>
 		/// <param name="index">The index of the <see cref="AnimateBlock"/> when it belongs to a list or array.</param>
-		protected override void PerformOnPathBlock(AnimateBlock pathBlock, int index) {
+		protected override AnimateBlock PerformOnPathBlock(AnimateBlock pathBlock, int index) {
 			pathBlock.Name = NewName + (AppendSerialNumber ? $"{index + 1}" : "");
+			return pathBlock;
 		}
 
 		#endregion

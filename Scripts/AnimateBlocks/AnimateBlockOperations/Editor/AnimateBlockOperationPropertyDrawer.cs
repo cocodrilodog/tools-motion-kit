@@ -17,7 +17,8 @@ namespace CocodriloDog.Animation {
 			get {
 				if (m_CompositeTypes == null) {
 					m_CompositeTypes = new List<Type> {
-						typeof(Rename),
+						typeof(RenameBlock),
+						typeof(CopyBlock),
 						typeof(IncrementalDuration),
 					};
 				}

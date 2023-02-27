@@ -23,17 +23,18 @@ namespace CocodriloDog.Animation {
 		/// </summary>
 		/// <param name="animateBlock">The <see cref="AnimateBlock"/>.</param>
 		/// <param name="index">The index of the <see cref="AnimateBlock"/> when it belongs to a list or array.</param>
-		public sealed override void Perform(AnimateBlock animateBlock, int index) {
+		public sealed override AnimateBlock Perform(AnimateBlock animateBlock, int index) {
 			if (string.IsNullOrEmpty(Path)) {
 				if (animateBlock != null) {
-					PerformOnPathBlock(animateBlock, index);
+					return PerformOnPathBlock(animateBlock, index);
 				}
 			} else {
 				var childBlock = (animateBlock as IAnimateParent)?.GetChildBlockAtPath(Path);
 				if (childBlock != null) {
-					PerformOnPathBlock(childBlock, index);
+					return PerformOnPathBlock(childBlock, index);
 				}
 			}
+			return null;
 		}
 
 		#endregion
@@ -53,7 +54,7 @@ namespace CocodriloDog.Animation {
 		/// </param>
 		/// 
 		/// <param name="index">The index of the <see cref="AnimateBlock"/> when it belongs to a list or array.</param>
-		protected abstract void PerformOnPathBlock(AnimateBlock pathBlock, int index);
+		protected abstract AnimateBlock PerformOnPathBlock(AnimateBlock pathBlock, int index);
 
 		#endregion
 
