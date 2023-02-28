@@ -18,7 +18,7 @@ namespace CocodriloDog.Animation {
 
 
 		#region Public Properties
-		
+
 		public override CompositeFieldAction FieldAction {
 			get {
 				if (m_FieldAction == null) {
