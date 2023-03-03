@@ -133,10 +133,8 @@
 
 		#region Private Static Fields
 
-		[NonSerialized]
 		private static ReadOnlyCollection<string> m_EasingNames;
 
-		[NonSerialized]
 		private static Dictionary<string, EasingsSet> m_AllEasings;
 
 		#endregion
@@ -144,7 +142,7 @@
 
 		#region Private Constants
 
-		public const string MotionKitCurveName = "Motion Kit Curve";
+		public const string MotionKitCurveName = "Animation Curve";
 
 		public const string BlinkName = "Blink";
 
