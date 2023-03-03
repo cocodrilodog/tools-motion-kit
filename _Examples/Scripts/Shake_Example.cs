@@ -52,7 +52,7 @@
 		#region Event Handlers
 
 		private void Vector3Cube_PointerClick(BaseEventData eventData) {
-			Animate.GetMotion(this, "Vector3CubePosition", p => Vector3Cube.transform.position = p)
+			MotionKit.GetMotion(this, "Vector3CubePosition", p => Vector3Cube.transform.position = p)
 				.SetEasing(Shake.Vector3Easing)
 				.Play(Vector3Cube.transform.position, Vector3.up, 1);
 		}
@@ -60,7 +60,7 @@
 		private void FloatCube_PointerClick(BaseEventData eventData) {
 
 			// Shake X
-			Animate.GetMotion(this, "FloatCubeX", v => {
+			MotionKit.GetMotion(this, "FloatCubeX", v => {
 				Vector3 position = FloatCube.transform.position;
 				position.x = v;
 				FloatCube.transform.position = position;
@@ -68,7 +68,7 @@
 			.Play(FloatCube.transform.position.x, -3, 1);
 
 			// Shake Y
-			Animate.GetMotion(this, "FloatCubeY", v => {
+			MotionKit.GetMotion(this, "FloatCubeY", v => {
 				Vector3 position = FloatCube.transform.position;
 				position.y = v;
 				FloatCube.transform.position = position;
@@ -78,7 +78,7 @@
 		}
 
 		private void ColorCube_PointerClick(BaseEventData eventData) {
-			Animate.GetMotion(this, "ColorCubeColor", c => ColorCube.GetComponent<ColorModifier>().Color = c)
+			MotionKit.GetMotion(this, "ColorCubeColor", c => ColorCube.GetComponent<ColorModifier>().Color = c)
 				.SetEasing(Shake.ColorEasing)
 				.Play(ColorCube.GetComponent<ColorModifier>().Color, Color.red, 1);
 		}

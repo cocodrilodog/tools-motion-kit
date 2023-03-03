@@ -11,7 +11,7 @@
 
 		private void Start() {
 
-			Animate.GetMotion(this, "X", p => Cube.localPosition = p)
+			MotionKit.GetMotion(this, "X", p => Cube.localPosition = p)
 				.Play(Cube.localPosition, Cube.localPosition + Vector3.right * 5, 1)
 				.SetOnComplete(Scale);
 
@@ -20,7 +20,7 @@
 			// setter does so.
 			void Scale(Motion3D motion) {
 				motion.Clean(CleanFlag.OnComplete);
-				Animate.GetMotion(this, "X", s => Cube.localScale = s)
+				MotionKit.GetMotion(this, "X", s => Cube.localScale = s)
 					.Play(Cube.localScale, Vector3.one * 2, 1);
 			}
 
@@ -35,13 +35,13 @@
 
 		private void Update() {
 			if (Input.GetKeyDown(KeyCode.Space)) {
-				Animate.GetMotion(this, "X", s => Cube.localScale = s)
+				MotionKit.GetMotion(this, "X", s => Cube.localScale = s)
 					.Play(Cube.localScale, Vector3.one * 2, 1);
 			}
 		}
 
 		private void OnDestroy() {
-			Animate.ClearPlaybacks(this);
+			MotionKit.ClearPlaybacks(this);
 		}
 
 		#endregion

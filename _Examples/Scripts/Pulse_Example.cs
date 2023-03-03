@@ -22,7 +22,7 @@
 
 			float currentY = YCube.localPosition.y;
 
-			Animate.GetMotion(this, "YMotion", y => {
+			MotionKit.GetMotion(this, "YMotion", y => {
 				Vector3 position = YCube.localPosition;
 				position.y = y;
 				YCube.localPosition = position;
@@ -31,7 +31,7 @@
 		}
 
 		public void PulseScale() {
-			Animate.GetMotion(this, "ScaleMotion", s => ScaleCube.localScale = s)
+			MotionKit.GetMotion(this, "ScaleMotion", s => ScaleCube.localScale = s)
 				.SetEasing(Pulse.Vector3Easing).Play(Vector3.one, Vector3.one, 0.5f);
         }
 
@@ -39,7 +39,7 @@
 
 			Color currentColor = ColorCube.Color;
 
-			Animate.GetMotion(this, "ColorMotion", c => ColorCube.Color = c)
+			MotionKit.GetMotion(this, "ColorMotion", c => ColorCube.Color = c)
 				.SetEasing(new Pulse(-0.5f).ColorEasing).Play(currentColor, currentColor, 0.5f);
 
 		}
@@ -50,7 +50,7 @@
 		#region Unity Methods
 
 		private void OnDestroy() {
-			Animate.ClearPlaybacks(this);
+			MotionKit.ClearPlaybacks(this);
 		}
 
 		#endregion

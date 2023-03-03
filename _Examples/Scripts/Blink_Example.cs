@@ -39,7 +39,7 @@
 		#region Event Handlers
 
 		private void EventTrigger_PointerClick(BaseEventData arg0) {
-			Animate.GetMotion(this, "Color", c => ColorModifier.Color = c)
+			MotionKit.GetMotion(this, "Color", c => ColorModifier.Color = c)
 				.SetEasing(Blink.ColorEasing)
 				.Play(Color.black, m_DefaultColor, 1);
 		}

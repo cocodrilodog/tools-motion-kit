@@ -14,29 +14,29 @@
 
 		private void Start() {
 
-			m_Parallel = Animate.GetParallel(
+			m_Parallel = MotionKit.GetParallel(
 
 				this, "Parallel",
 
-				Animate.GetMotion(p => Cube1.transform.position = p)
+				MotionKit.GetMotion(p => Cube1.transform.position = p)
 					.SetValuesAndDuration(new Vector3(-2, -2, 0), new Vector3(-2, 2, 0), 2)
-					.SetEasing(AnimateEasing.ElasticOut)
+					.SetEasing(MotionKitEasing.ElasticOut)
 					.SetOnStart(() => Debug.LogFormat("Cube1 start"))
 					.SetOnUpdate(() => Debug.LogFormat("Cube1 update"))
 					.SetOnInterrupt(() => Debug.LogFormat("Cube1 interrupt"))
 					.SetOnComplete(() => Debug.LogFormat("Cube1 complete")),
 
-				Animate.GetSequence(
+				MotionKit.GetSequence(
 
-					Animate.GetTimer().SetDuration(0.5f)
+					MotionKit.GetTimer().SetDuration(0.5f)
 						.SetOnStart(() => Debug.LogFormat("Timer_Cube2 start"))
 						.SetOnUpdate(() => Debug.LogFormat("Timer_Cube2 update"))
 						.SetOnInterrupt(() => Debug.LogFormat("Timer_Cube2 interrupt"))
 						.SetOnComplete(() => Debug.LogFormat("Timer_Cube2 complete")),
 
-					Animate.GetMotion(p => Cube2.transform.position = p)
+					MotionKit.GetMotion(p => Cube2.transform.position = p)
 						.SetValuesAndDuration(new Vector3(0, -2, 0), new Vector3(0, 2, 0), 2)
-						.SetEasing(AnimateEasing.ElasticOut)
+						.SetEasing(MotionKitEasing.ElasticOut)
 						.SetOnStart(() => Debug.LogFormat("Cube2 start"))
 						.SetOnUpdate(() => Debug.LogFormat("Cube2 update"))
 						.SetOnInterrupt(() => Debug.LogFormat("Cube2 interrupt"))
@@ -47,17 +47,17 @@
 				.SetOnInterrupt(() => Debug.LogFormat("Sequence_Cube2 interrupt"))
 				.SetOnComplete(() => Debug.LogFormat("Sequence_Cube2 complete")),
 
-				Animate.GetSequence(
+				MotionKit.GetSequence(
 					
-					Animate.GetTimer().SetDuration(1)
+					MotionKit.GetTimer().SetDuration(1)
 						.SetOnStart(() => Debug.LogFormat("Timer_Cube3 start"))
 						.SetOnUpdate(() => Debug.LogFormat("Timer_Cube3 update"))
 						.SetOnInterrupt(() => Debug.LogFormat("Timer_Cube3 interrupt"))
 						.SetOnComplete(() => Debug.LogFormat("Timer_Cube3 complete")),
 
-					Animate.GetMotion(p => Cube3.transform.position = p)
+					MotionKit.GetMotion(p => Cube3.transform.position = p)
 						.SetValuesAndDuration(new Vector3(2, -2, 0), new Vector3(2, 2, 0), 2)
-						.SetEasing(AnimateEasing.ElasticOut)
+						.SetEasing(MotionKitEasing.ElasticOut)
 						.SetOnStart(() => Debug.LogFormat("Cube3 start"))
 						.SetOnUpdate(() => Debug.LogFormat("Cube3 update"))
 						.SetOnInterrupt(() => Debug.LogFormat("Cube3 interrupt"))
@@ -68,19 +68,19 @@
 				.SetOnInterrupt(() => Debug.LogFormat("Sequence_Cube3 interrupt"))
 				.SetOnComplete(() => Debug.LogFormat("Sequence_Cube3 complete")),
 
-				Animate.GetParallel(
+				MotionKit.GetParallel(
 
-					Animate.GetMotion(p => Sphere1.transform.position = p)
+					MotionKit.GetMotion(p => Sphere1.transform.position = p)
 						.SetValuesAndDuration(new Vector3(-2, -4, 0), new Vector3(2, -4, 0), 2)
-						.SetEasing(AnimateEasing.BounceOut)
+						.SetEasing(MotionKitEasing.BounceOut)
 						.SetOnStart(() => Debug.LogFormat("Sphere1 start"))
 						.SetOnUpdate(() => Debug.LogFormat("Sphere1 update"))
 						.SetOnInterrupt(() => Debug.LogFormat("Sphere1 interrupt"))
 						.SetOnComplete(() => Debug.LogFormat("Sphere1 complete")),
 
-					Animate.GetMotion(p => Sphere2.transform.position = p)
+					MotionKit.GetMotion(p => Sphere2.transform.position = p)
 						.SetValuesAndDuration(new Vector3(2, -4, 0), new Vector3(-2, -4, 0), 2)
-						.SetEasing(AnimateEasing.BounceOut)
+						.SetEasing(MotionKitEasing.BounceOut)
 						.SetOnStart(() => Debug.LogFormat("Sphere2 start"))
 						.SetOnUpdate(() => Debug.LogFormat("Sphere2 update"))
 						.SetOnInterrupt(() => Debug.LogFormat("Sphere2 interrupt"))
@@ -91,7 +91,7 @@
 				.SetOnInterrupt(() => Debug.LogFormat("Parallel_Spheres interrupt"))
 				.SetOnComplete(() => Debug.LogFormat("Parallel_Spheres complete"))
 
-			).SetEasing(AnimateEasing.QuadInOut)
+			).SetEasing(MotionKitEasing.QuadInOut)
 			.SetOnStart(() => Debug.Log("PARALLEL start"))
 			.SetOnUpdate(() => Debug.LogFormat("PARALLEL update"))
 			.SetOnInterrupt(() => Debug.LogFormat("PARALLEL interrupt"))

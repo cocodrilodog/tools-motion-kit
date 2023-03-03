@@ -13,26 +13,26 @@
 		#region Unity Methods
 
 		private void Start() {
-			m_Sequence = Animate.GetSequence(
+			m_Sequence = MotionKit.GetSequence(
 
 				this, "Sequence",
 
-				Animate.GetTimer()
+				MotionKit.GetTimer()
 					.SetDuration(0.5f)
 					.SetOnStart(() => Debug.LogFormat("Timer #1 Start"))
 					.SetOnUpdate(() => Debug.LogFormat("Timer #1 Update"))
 					.SetOnInterrupt(() => Debug.LogFormat("Timer #1 Interrupt"))
 					.SetOnComplete(() => Debug.LogFormat("Timer #1 Complete")),
 
-				Animate.GetMotion(p => PositionCube.transform.position = p)
+				MotionKit.GetMotion(p => PositionCube.transform.position = p)
 					.SetInitialValue(new Vector3(2, -2, 0)).SetFinalValue(new Vector3(-2, -2, 0))
-					.SetDuration(2).SetEasing(AnimateEasing.ElasticOut)
+					.SetDuration(2).SetEasing(MotionKitEasing.ElasticOut)
 					.SetOnStart(() => Debug.LogFormat("Animation #1 Start"))
 					.SetOnUpdate(() => Debug.LogFormat("Animation #1 Update"))
 					.SetOnInterrupt(() => Debug.LogFormat("Animation #1 Interrupt"))
 					.SetOnComplete(() => Debug.LogFormat("Animation #1 Complete: {0}", PositionCube.transform.position)),
 
-				Animate.GetMotion(c => ColorSphere.Color = c)
+				MotionKit.GetMotion(c => ColorSphere.Color = c)
 					.SetInitialValue(Color.red).SetFinalValue(Color.black)
 					.SetDuration(1).SetEasing(new Blink(2).ColorEasing)
 					.SetOnStart(() => Debug.LogFormat("Animation #2 Start"))
@@ -40,24 +40,24 @@
 					.SetOnInterrupt(() => Debug.LogFormat("Animation #2 Interrupt"))
 					.SetOnComplete(() => Debug.LogFormat("Animation #2 Complete: {0}", ColorSphere.Color)),
 
-				Animate.GetTimer()
+				MotionKit.GetTimer()
 					.SetDuration(2)
 					.SetOnStart(() => Debug.LogFormat("Timer #2 Start"))
 					.SetOnUpdate(() => Debug.LogFormat("Timer #2 Update"))
 					.SetOnInterrupt(() => Debug.LogFormat("Timer #2 Interrupt"))
 					.SetOnComplete(() => Debug.LogFormat("Timer #2 Complete")),
 
-				Animate.GetMotion(p => PositionCube.transform.position = p)
+				MotionKit.GetMotion(p => PositionCube.transform.position = p)
 					.SetInitialValue(new Vector3(-2, -2, 0)).SetFinalValue(new Vector3(-2, 2, 0))
-					.SetDuration(2).SetEasing(AnimateEasing.ElasticOut)
+					.SetDuration(2).SetEasing(MotionKitEasing.ElasticOut)
 					.SetOnStart(() => Debug.LogFormat("Animation #3 Start"))
 					.SetOnUpdate(() => Debug.LogFormat("Animation #3 Update"))
 					.SetOnInterrupt(() => Debug.LogFormat("Animation #3 Interrupt"))
 					.SetOnComplete(() => Debug.LogFormat("Animation #3 Complete: {0}", PositionCube.transform.position)),
 
-				Animate.GetSequence(
+				MotionKit.GetSequence(
 
-					Animate.GetMotion(c => ColorSphere.Color = c)
+					MotionKit.GetMotion(c => ColorSphere.Color = c)
 						.SetInitialValue(Color.green).SetFinalValue(Color.black)
 						.SetDuration(1).SetEasing(new Blink(2).ColorEasing)
 						.SetOnStart(() => Debug.LogFormat("Animation #4 Start"))
@@ -65,9 +65,9 @@
 						.SetOnInterrupt(() => Debug.LogFormat("Animation #4 Interrupt"))
 						.SetOnComplete(() => Debug.LogFormat("Animation #4 Complete: {0}", ColorSphere.Color)),
 
-					Animate.GetMotion(p => PositionCube.transform.position = p)
+					MotionKit.GetMotion(p => PositionCube.transform.position = p)
 						.SetInitialValue(new Vector3(-2, 2, 0)).SetFinalValue(new Vector3(2, 2, 0))
-						.SetDuration(2).SetEasing(AnimateEasing.ElasticOut)
+						.SetDuration(2).SetEasing(MotionKitEasing.ElasticOut)
 						.SetOnStart(() => Debug.LogFormat("Animation #5 Start"))
 						.SetOnUpdate(() => Debug.LogFormat("Animation #5 Update"))
 						.SetOnInterrupt(() => Debug.LogFormat("Animation #5 Interrupt"))
@@ -78,7 +78,7 @@
 				.SetOnInterrupt(() => Debug.LogFormat("Animation #4-5 Interrupt!!!"))
 				.SetOnComplete(() => Debug.LogFormat("Animation #4-5 Complete!!!")),
 
-				Animate.GetMotion(c => ColorSphere.Color = c)
+				MotionKit.GetMotion(c => ColorSphere.Color = c)
 					.SetInitialValue(Color.blue).SetFinalValue(Color.black)
 					.SetDuration(1).SetEasing(new Blink(2).ColorEasing)
 					.SetOnStart(() => Debug.LogFormat("Animation #6 Start"))
@@ -86,15 +86,15 @@
 					.SetOnInterrupt(() => Debug.LogFormat("Animation #6 Interrupt"))
 					.SetOnComplete(() => Debug.LogFormat("Animation #6 Complete: {0}", ColorSphere.Color)),
 
-				Animate.GetMotion(p => PositionCube.transform.position = p)
+				MotionKit.GetMotion(p => PositionCube.transform.position = p)
 					.SetInitialValue(new Vector3(2, 2, 0)).SetFinalValue(new Vector3(2, -2, 0))
-					.SetDuration(2).SetEasing(AnimateEasing.ElasticOut)
+					.SetDuration(2).SetEasing(MotionKitEasing.ElasticOut)
 					.SetOnStart(() => Debug.LogFormat("Animation #7 Start"))
 					.SetOnUpdate(() => Debug.LogFormat("Animation #7 Update"))
 					.SetOnInterrupt(() => Debug.LogFormat("Animation #7 Interrupt"))
 					.SetOnComplete(() => Debug.LogFormat("Animation #7 Complete: {0}", PositionCube.transform.position)),
 
-				Animate.GetMotion(c => ColorSphere.Color = c)
+				MotionKit.GetMotion(c => ColorSphere.Color = c)
 					.SetInitialValue(Color.white).SetFinalValue(Color.black)
 					.SetDuration(1).SetEasing(new Blink(2).ColorEasing)
 					.SetOnStart(() => Debug.LogFormat("Animation #8 Start"))
@@ -102,26 +102,26 @@
 					.SetOnInterrupt(() => Debug.LogFormat("Animation #8 Interrupt"))
 					.SetOnComplete(() => Debug.LogFormat("Animation #8 Complete: {0}", ColorSphere.Color)),
 
-				Animate.GetTimer()
+				MotionKit.GetTimer()
 					.SetDuration(0.5f)
 					.SetOnStart(() => Debug.LogFormat("Timer #3 Start"))
 					.SetOnUpdate(() => Debug.LogFormat("Timer #3 Update"))
 					.SetOnInterrupt(() => Debug.LogFormat("Timer #3 Interrupt"))
 					.SetOnComplete(() => Debug.LogFormat("Timer #3 Complete")),
 
-				Animate.GetParallel(
+				MotionKit.GetParallel(
 
-					Animate.GetMotion(p => Sphere1.transform.position = p)
+					MotionKit.GetMotion(p => Sphere1.transform.position = p)
 						.SetValuesAndDuration(new Vector3(-2, -4, 0), new Vector3(2, -4, 0), 2)
-						.SetEasing(AnimateEasing.BounceOut)
+						.SetEasing(MotionKitEasing.BounceOut)
 						.SetOnStart(() => Debug.LogFormat("Sphere1 start"))
 						.SetOnUpdate(() => Debug.LogFormat("Sphere1 update"))
 						.SetOnInterrupt(() => Debug.LogFormat("Sphere1 interrupt"))
 						.SetOnComplete(() => Debug.LogFormat("Sphere1 complete")),
 
-					Animate.GetMotion(p => Sphere2.transform.position = p)
+					MotionKit.GetMotion(p => Sphere2.transform.position = p)
 						.SetValuesAndDuration(new Vector3(2, -4, 0), new Vector3(-2, -4, 0), 2)
-						.SetEasing(AnimateEasing.BounceOut)
+						.SetEasing(MotionKitEasing.BounceOut)
 						.SetOnStart(() => Debug.LogFormat("Sphere2 start"))
 						.SetOnUpdate(() => Debug.LogFormat("Sphere2 update"))
 						.SetOnInterrupt(() => Debug.LogFormat("Sphere2 interrupt"))
@@ -132,7 +132,7 @@
 				.SetOnInterrupt(() => Debug.LogFormat("Parallel_Spheres interrupt"))
 				.SetOnComplete(() => Debug.LogFormat("Parallel_Spheres complete"))
 
-			).SetEasing(AnimateEasing.QuadInOut)
+			).SetEasing(MotionKitEasing.QuadInOut)
 			.SetOnStart(() => Debug.Log($"SEQUENCE START: {Time.time}"))
 			.SetOnUpdate(()=> Debug.LogFormat($"SEQUENCE UPDATE: {Time.time}"))
 			.SetOnInterrupt(() => Debug.LogFormat($"SEQUENCE INTERRUPT: {Time.time}"))

@@ -25,7 +25,7 @@
 		#region Unity Methods
 
 		private void Start() {
-			Animate.GetMotion(p => Setter.Invoke(p))
+			MotionKit.GetMotion(p => Setter.Invoke(p))
 				.SetEasing(Easing.Vector3Easing)
 				.Play(InitialValue, FinalValue, Duration);
 		}
@@ -45,7 +45,7 @@
 		private float m_Duration;
 
 		[SerializeField]
-		private AnimateEasingField m_Easing = new AnimateEasingField();
+		private MotionKitEasingField m_Easing = new MotionKitEasingField();
 
 		[SerializeField]
 		private Motion3DSetter m_Setter;
@@ -61,7 +61,7 @@
 
 		private float Duration => m_Duration;
 
-		private AnimateEasingField Easing => m_Easing;
+		private MotionKitEasingField Easing => m_Easing;
 
 		private Motion3DSetter Setter => m_Setter;
 

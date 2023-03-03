@@ -42,16 +42,16 @@
 		#region Private Methods
 
 		void Forward() {
-            Animate.GetSequence(this, "TheSequence",
-                Animate.GetMotion(p => Cube.transform.position = p).SetValuesAndDuration(Vector3.zero, Vector3.right * 2, 1),
-                Animate.GetMotion(p => Cube.transform.position = p).SetValuesAndDuration(Vector3.right * 2, new Vector3(2, 2, 0), 1)
+            MotionKit.GetSequence(this, "TheSequence",
+                MotionKit.GetMotion(p => Cube.transform.position = p).SetValuesAndDuration(Vector3.zero, Vector3.right * 2, 1),
+                MotionKit.GetMotion(p => Cube.transform.position = p).SetValuesAndDuration(Vector3.right * 2, new Vector3(2, 2, 0), 1)
             ).Play().SetOnComplete(Back);
         }
 
         void Back() {
-            Animate.GetSequence(this, "TheSequence",
-                Animate.GetMotion(p => Cube.transform.position = p).SetValuesAndDuration(new Vector3(2, 2, 0), Vector3.right * 2, 1),
-                Animate.GetMotion(p => Cube.transform.position = p).SetValuesAndDuration(Vector3.right * 2, Vector3.zero, 1)
+            MotionKit.GetSequence(this, "TheSequence",
+                MotionKit.GetMotion(p => Cube.transform.position = p).SetValuesAndDuration(new Vector3(2, 2, 0), Vector3.right * 2, 1),
+                MotionKit.GetMotion(p => Cube.transform.position = p).SetValuesAndDuration(Vector3.right * 2, Vector3.zero, 1)
             ).Play().SetOnComplete(Forward);
         }
 

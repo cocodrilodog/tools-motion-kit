@@ -246,8 +246,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0fb3639200fb4be4996952cebd241fe2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_SelectedCompositePath: 
-  m_AnimateBlocks: []
+  m_SelectedCompositePath: m_Blocks.Array.data[0]
   m_Blocks:
   - rid: 6990145245326082053
   m_PlayAllOnStart: 1
@@ -285,8 +284,8 @@ MonoBehaviour:
         m_CallbackSelection: 0
         m_EditOwnerAndReuseID: 0
         m_Object: {fileID: 276286996}
-        m_SetterString: AnimateMotionBlocks_Example/SetVector2
-        m_GetterString: AnimateMotionBlocks_Example/GetVector2
+        m_SetterString: MotionBlocks_Example/SetVector2
+        m_GetterString: MotionBlocks_Example/GetVector2
         m_InitialValue: {x: 0, y: 0, z: 0}
         m_InitialValueIsRelative: 1
         m_FinalValue: {x: 0, y: 3, z: 0}
@@ -325,8 +324,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0fb3639200fb4be4996952cebd241fe2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_SelectedCompositePath: 
-  m_AnimateBlocks: []
+  m_SelectedCompositePath: m_Blocks.Array.data[0]
   m_Blocks:
   - rid: 6990145245326082051
   m_PlayAllOnStart: 1
@@ -377,8 +375,8 @@ MonoBehaviour:
         m_CallbackSelection: 2
         m_EditOwnerAndReuseID: 0
         m_Object: {fileID: 773244398}
-        m_SetterString: AnimateMotionBlocks_Example/SetVector3
-        m_GetterString: AnimateMotionBlocks_Example/GetVector3
+        m_SetterString: MotionBlocks_Example/SetVector3
+        m_GetterString: MotionBlocks_Example/GetVector3
         m_InitialValue: {x: 0, y: 0, z: 0}
         m_InitialValueIsRelative: 1
         m_FinalValue: {x: 0, y: -3, z: 0}
@@ -507,8 +505,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0fb3639200fb4be4996952cebd241fe2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_SelectedCompositePath: 
-  m_AnimateBlocks: []
+  m_SelectedCompositePath: m_Blocks.Array.data[0]
   m_Blocks:
   - rid: 6990145245326082049
   m_PlayAllOnStart: 1
@@ -598,8 +595,8 @@ MonoBehaviour:
         m_CallbackSelection: 3
         m_EditOwnerAndReuseID: 0
         m_Object: {fileID: 807932833}
-        m_SetterString: AnimateMotionBlocks_Example/SetFloat
-        m_GetterString: AnimateMotionBlocks_Example/GetFloat
+        m_SetterString: MotionBlocks_Example/SetFloat
+        m_GetterString: MotionBlocks_Example/GetFloat
         m_InitialValue: 0
         m_InitialValueIsRelative: 1
         m_FinalValue: 3
@@ -728,8 +725,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0fb3639200fb4be4996952cebd241fe2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_SelectedCompositePath: 
-  m_AnimateBlocks: []
+  m_SelectedCompositePath: m_Blocks.Array.data[0]
   m_Blocks:
   - rid: 6990145245326082055
   m_PlayAllOnStart: 1
@@ -780,8 +776,8 @@ MonoBehaviour:
         m_CallbackSelection: 0
         m_EditOwnerAndReuseID: 0
         m_Object: {fileID: 1277502462}
-        m_SetterString: AnimateMotionBlocks_Example/SetColor
-        m_GetterString: AnimateMotionBlocks_Example/GetColor
+        m_SetterString: MotionBlocks_Example/SetColor
+        m_GetterString: MotionBlocks_Example/GetColor
         m_InitialValue: {r: 0, g: 0, b: 0, a: 0}
         m_InitialValueIsRelative: 1
         m_FinalValue: {r: 1, g: 0, b: 0.46681976, a: 1}
@@ -1028,9 +1024,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0fb3639200fb4be4996952cebd241fe2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_SelectedCompositePath: 
-  m_AnimateBlocks:
-  - rid: -2
+  m_SelectedCompositePath: m_Blocks.Array.data[0]
   m_Blocks:
   - rid: 6990145245326082057
   m_PlayAllOnStart: 0
@@ -1068,8 +1062,8 @@ MonoBehaviour:
         m_CallbackSelection: 0
         m_EditOwnerAndReuseID: 0
         m_Object: {fileID: 2103216001}
-        m_SetterString: AnimateMotionBlocks_Example/SetColor
-        m_GetterString: AnimateMotionBlocks_Example/GetColor
+        m_SetterString: MotionBlocks_Example/SetColor
+        m_GetterString: MotionBlocks_Example/GetColor
         m_InitialValue: {r: 0, g: 0, b: 0, a: 0}
         m_InitialValueIsRelative: 1
         m_FinalValue: {r: 0.7488569, g: 1, b: 0, a: 1}

@@ -17,7 +17,7 @@
 		private void Start() {
 
 			// Motion
-			Motion3D motion = Animate.GetMotion(p => transform.position = p)
+			Motion3D motion = MotionKit.GetMotion(p => transform.position = p)
 				.Play(transform.position, transform.position + Vector3.up, 2)
 				//.SetDuration(2)
 				.SetOnStart(() => Debug.Log(" *** Motion OnStart"))
@@ -56,7 +56,7 @@
 
 			// Timer
 			Sequence sequence = null;
-			Timer timer = Animate.GetTimer()
+			Timer timer = MotionKit.GetTimer()
 				.Play(1)
 				//.SetDuration(1)
 				.SetOnStart(() => Debug.Log(" *** Timer OnStart"))
@@ -99,7 +99,7 @@
 			}
 
 			// Sequence
-			sequence = Animate.GetSequence(motion, timer).Play()
+			sequence = MotionKit.GetSequence(motion, timer).Play()
 				.SetOnStart(() => Debug.Log(" *** Sequence OnStart"))
 				.SetOnUpdate(() => Debug.Log(" *** Sequence OnUpdate"))
 				.SetOnInterrupt(() => Debug.Log(" *** Sequence OnInterrupt"))
