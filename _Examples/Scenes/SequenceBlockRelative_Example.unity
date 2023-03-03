@@ -271,12 +271,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 1645218934}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d4b805bccb538e942876de804f580167, type: 3}
+  m_Script: {fileID: 11500000, guid: 0fb3639200fb4be4996952cebd241fe2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_SelectedCompositePath: m_AnimateBlocks.Array.data[0]
-  m_AnimateBlocks:
-  - rid: 7857419217149624321
+  m_SelectedCompositePath: 
+  m_AnimateBlocks: []
+  m_Blocks:
+  - rid: 6990145245326082093
   m_PlayAllOnStart: 1
   m_SetInitialValuesOnStart: 0
   references:
@@ -284,7 +285,7 @@ MonoBehaviour:
     RefIds:
     - rid: -2
       type: {class: , ns: , asm: }
-    - rid: 7857419217149624321
+    - rid: 6990145245326082093
       type: {class: SequenceBlock, ns: CocodriloDog.Animation, asm: Assembly-CSharp}
       data:
         m_Name: Sequence
@@ -312,11 +313,12 @@ MonoBehaviour:
         m_CallbackSelection: 0
         m_EditOwnerAndReuseID: 0
         m_SequenceItems:
-        - rid: 7857419217149624322
-        - rid: 7857419217149624324
-        - rid: 7857419217149624326
-        - rid: 7857419217149624329
-    - rid: 7857419217149624322
+        - rid: 6990145245326082094
+        - rid: 6990145245326082095
+        - rid: 6990145245326082096
+        - rid: 6990145245326082097
+        m_BatchOperations: []
+    - rid: 6990145245326082094
       type: {class: Motion3DBlock, ns: CocodriloDog.Animation, asm: Assembly-CSharp}
       data:
         m_Name: Motion1
@@ -351,7 +353,7 @@ MonoBehaviour:
         m_FinalValue: {x: 3, y: 0, z: 0}
         m_FinalValueIsRelative: 1
         m_SharedValues: {fileID: 0}
-    - rid: 7857419217149624324
+    - rid: 6990145245326082095
       type: {class: Motion3DBlock, ns: CocodriloDog.Animation, asm: Assembly-CSharp}
       data:
         m_Name: Motion2
@@ -386,7 +388,7 @@ MonoBehaviour:
         m_FinalValue: {x: 0, y: 3, z: 0}
         m_FinalValueIsRelative: 1
         m_SharedValues: {fileID: 0}
-    - rid: 7857419217149624326
+    - rid: 6990145245326082096
       type: {class: Motion3DBlock, ns: CocodriloDog.Animation, asm: Assembly-CSharp}
       data:
         m_Name: Motion3
@@ -421,7 +423,7 @@ MonoBehaviour:
         m_FinalValue: {x: -3, y: 0, z: 0}
         m_FinalValueIsRelative: 1
         m_SharedValues: {fileID: 0}
-    - rid: 7857419217149624329
+    - rid: 6990145245326082097
       type: {class: Motion3DBlock, ns: CocodriloDog.Animation, asm: Assembly-CSharp}
       data:
         m_Name: Motion4
@@ -546,4 +548,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aeedb23cbbd2a1b41ac7caf5f41a1d79, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  AnimateComponent: {fileID: 1645218935}
+  MotionKitComponent: {fileID: 1645218935}

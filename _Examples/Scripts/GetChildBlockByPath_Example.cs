@@ -10,7 +10,7 @@ namespace CocodriloDog.Animation.Examples {
 		#region Public Fields
 
 		[SerializeField]
-		public AnimateComponent AnimateComponent;
+		public MotionKitComponent MotionKitComponent;
 
 		#endregion
 
@@ -19,7 +19,7 @@ namespace CocodriloDog.Animation.Examples {
 
 		private IEnumerator Start() {
 			yield return new WaitForSeconds(1);
-			Debug.Log(AnimateComponent.GetChildBlockAtPath("Sequence/Motion2"));
+			Debug.Log(MotionKitComponent.GetChildBlockAtPath("Sequence/Motion2"));
 		}
 
 		#endregion

@@ -31,9 +31,15 @@ namespace CocodriloDog.Animation {
 		}
 
 		/// <summary>
-		/// Searches recursively for the first motion that can modify a property and sets its progress
+		/// Searches recursively for the first motions that can modify a property and sets their progress
 		/// to 0 so that the value of the property is set to the initial value.
 		/// </summary>
+		/// 
+		/// <remarks>
+		/// In <see cref="Parallel"/>s this searches on all parallel items. In <see cref="Sequence"/>s this
+		/// searches until it finds the first motion.
+		/// </remarks>
+		/// 
 		/// <param name="animateBlock">The animate asset</param>
 		/// <returns><c>true</c> if the provided asset is a motion asset and its progress is set to 0</returns>
 		public static bool SetInitialValue(AnimateBlock animateBlock) {

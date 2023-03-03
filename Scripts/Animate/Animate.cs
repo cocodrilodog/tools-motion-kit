@@ -78,6 +78,7 @@
 	/// while the other was playing because they are carried out by the same <c>Playback</c> object.
 	///
 	/// </remarks>
+	[AddComponentMenu("")]
 	public class Animate : MonoSingleton<Animate> {
 
 
