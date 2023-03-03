@@ -35,14 +35,14 @@ namespace CocodriloDog.Animation {
 	}
 
 	/// <summary>
-	/// Base class for all Animate blocks. It provides a generic interface that applies
-	/// for all Animate objects.
+	/// Base class for all MotionKit blocks. It provides a generic interface that applies
+	/// for all MotionKit objects.
 	/// </summary>
 	/// 
 	/// <remarks>
-	/// Animate blocks are <see cref="CompositeObject"/>s that contain information about 
-	/// Animate motion, timer, sequence or parallel and can create those objects at runtime. 
-	/// They are intended to be used as the inspector-friendly part of the Animate engine.
+	/// MotionKit blocks are <see cref="CompositeObject"/>s that contain information about 
+	/// MotionKit motion, timer, sequence or parallel and can create those objects at runtime. 
+	/// They are intended to be used as the inspector-friendly part of the MotionKit engine.
 	/// </remarks>
 	[Serializable]
 	public abstract class MotionKitBlock : CompositeObject, IMotionKitBlock {
@@ -51,37 +51,37 @@ namespace CocodriloDog.Animation {
 		#region Public Properties
 
 		/// <summary>
-		/// Gets the Animate object as a <see cref="ITimedProgressable"/> so that it can be used in <see cref="Sequence"/>s.
+		/// Gets the MotionKit object as a <see cref="ITimedProgressable"/> so that it can be used in <see cref="Sequence"/>s.
 		/// </summary>
 		public abstract ITimedProgressable TimedProgressable { get; }
 
 		/// <summary>
-		/// Gets the <c>Progress</c> of the Animate object managed by this <see cref="MotionKitBlock"/>.
+		/// Gets the <c>Progress</c> of the MotionKit object managed by this <see cref="MotionKitBlock"/>.
 		/// </summary>
 		public abstract float Progress { get; set; }
 
 		/// <summary>
-		/// Gets the <c>CurrentTime</c> of the Animate object managed by this <see cref="MotionKitBlock"/>.
+		/// Gets the <c>CurrentTime</c> of the MotionKit object managed by this <see cref="MotionKitBlock"/>.
 		/// </summary>
 		public abstract float CurrentTime { get; }
 
 		/// <summary>
-		/// Gets the <c>Duration</c> of the Animate object managed by this <see cref="MotionKitBlock"/>.
+		/// Gets the <c>Duration</c> of the MotionKit object managed by this <see cref="MotionKitBlock"/>.
 		/// </summary>
 		public abstract float Duration { get; }
 
 		/// <summary>
-		/// Gets the <c>IsPlaying</c> property of the Animate object managed by this <see cref="MotionKitBlock"/>.
+		/// Gets the <c>IsPlaying</c> property of the MotionKit object managed by this <see cref="MotionKitBlock"/>.
 		/// </summary>
 		public abstract bool IsPlaying { get; }
 
 		/// <summary>
-		/// Gets the <c>IsPaused</c> property of the Animate object managed by this <see cref="MotionKitBlock"/>.
+		/// Gets the <c>IsPaused</c> property of the MotionKit object managed by this <see cref="MotionKitBlock"/>.
 		/// </summary>
 		public abstract bool IsPaused { get; }
 
 		/// <summary>
-		/// The duration of the Animate object as specified in the inspector.
+		/// The duration of the MotionKit object as specified in the inspector.
 		/// </summary>
 		/// <remarks>
 		/// This was named differently in order to differentiate it from <see cref="Duration"/>.
@@ -92,7 +92,7 @@ namespace CocodriloDog.Animation {
 		}
 
 		/// <summary>
-		/// The duration that will be used for the animate object.
+		/// The duration that will be used for the MotionKit object.
 		/// </summary>
 		/// <remarks>
 		/// By default, it will be <see cref="DurationInput"/>, but <see cref="SequenceBlock"/> and
@@ -106,7 +106,7 @@ namespace CocodriloDog.Animation {
 		public override string DisplayName => $"{base.DisplayName} ({DurationToBeUsed}s)";
 
 		/// <summary>
-		/// The time mode to be used by the Animate object managed by this <see cref="MotionKitBlock"/>.
+		/// The time mode to be used by the MotionKit object managed by this <see cref="MotionKitBlock"/>.
 		/// </summary>
 		public TimeMode TimeMode {
 			get => SharedSettings != null ? SharedSettings.TimeMode : m_TimeMode;
@@ -114,7 +114,7 @@ namespace CocodriloDog.Animation {
 		}
 
 		/// <summary>
-		/// The easing to be used by the Animate object managed by this <see cref="MotionKitBlock"/>.
+		/// The easing to be used by the MotionKit object managed by this <see cref="MotionKitBlock"/>.
 		/// </summary>
 		public MotionKitEasingField Easing {
 			get => SharedSettings != null ? SharedSettings.Easing : m_Easing;
@@ -127,33 +127,33 @@ namespace CocodriloDog.Animation {
 		#region Public Methods
 
 		/// <summary>
-		/// The contained animate object such as <see cref="MotionBase{ValueT, MotionT}"/>, 
+		/// The contained MotionKit object such as <see cref="MotionBase{ValueT, MotionT}"/>, 
 		/// <see cref="Timer"/> or <see cref="Sequence"/> should be created here.
 		/// </summary>
 		public abstract void Initialize();
 
 		/// <summary>
-		/// Plays the Animate object managed by this <see cref="MotionKitBlock"/>.
+		/// Plays the MotionKit object managed by this <see cref="MotionKitBlock"/>.
 		/// </summary>
 		public abstract void Play();
 
 		/// <summary>
-		/// Plays the Animate object managed by this <see cref="MotionKitBlock"/>.
+		/// Plays the MotionKit object managed by this <see cref="MotionKitBlock"/>.
 		/// </summary>
 		public abstract void Stop();
 
 		/// <summary>
-		/// Pauses the Animate object managed by this <see cref="MotionKitBlock"/>.
+		/// Pauses the MotionKit object managed by this <see cref="MotionKitBlock"/>.
 		/// </summary>
 		public abstract void Pause();
 
 		/// <summary>
-		/// Resumes the Animate object managed by this <see cref="MotionKitBlock"/>.
+		/// Resumes the MotionKit object managed by this <see cref="MotionKitBlock"/>.
 		/// </summary>
 		public abstract void Resume();
 
 		/// <summary>
-		/// Disposes any Animate object that was created with this asset as owner.
+		/// Disposes any MotionKit object that was created with this asset as owner.
 		/// </summary>
 		public virtual void Dispose() {
 			MotionKit.ClearPlayback(MotionKit.Instance, ReuseID);
@@ -165,7 +165,7 @@ namespace CocodriloDog.Animation {
 		#region Protected Properties
 
 		/// <summary>
-		/// The owner to be used by the animate object.
+		/// The owner to be used by the MotionKit object.
 		/// </summary>
 		/// 
 		/// <remarks>
@@ -192,7 +192,7 @@ namespace CocodriloDog.Animation {
 		}
 
 		/// <summary>
-		/// The unique ID to be used by the Animate object.
+		/// The unique ID to be used by the MotionKit object.
 		/// </summary>
 		/// 
 		/// <remarks>
@@ -218,22 +218,22 @@ namespace CocodriloDog.Animation {
 		}
 
 		/// <summary>
-		/// The <c>OnStart</c> callbacks to be invoked by the Animate object managed by this <see cref="MotionKitBlock"/>.
+		/// The <c>OnStart</c> callbacks to be invoked by the MotionKit object managed by this <see cref="MotionKitBlock"/>.
 		/// </summary>
 		protected UnityEvent OnStart => m_OnStart;
 
 		/// <summary>
-		/// The <c>OnUpdate</c> callbacks to be invoked by the Animate object managed by this <see cref="MotionKitBlock"/>.
+		/// The <c>OnUpdate</c> callbacks to be invoked by the MotionKit object managed by this <see cref="MotionKitBlock"/>.
 		/// </summary>
 		protected UnityEvent OnUpdate => m_OnUpdate;
 
 		/// <summary>
-		/// The <c>OnInterrupt</c> callbacks to be invoked by the Animate object managed by this <see cref="MotionKitBlock"/>.
+		/// The <c>OnInterrupt</c> callbacks to be invoked by the MotionKit object managed by this <see cref="MotionKitBlock"/>.
 		/// </summary>
 		protected UnityEvent OnInterrupt => m_OnInterrupt;
 
 		/// <summary>
-		/// The <c>OnComplete</c> callbacks to be invoked by the Animate object managed by this <see cref="MotionKitBlock"/>.
+		/// The <c>OnComplete</c> callbacks to be invoked by the MotionKit object managed by this <see cref="MotionKitBlock"/>.
 		/// </summary>
 		protected UnityEvent OnComplete => m_OnComplete;
 

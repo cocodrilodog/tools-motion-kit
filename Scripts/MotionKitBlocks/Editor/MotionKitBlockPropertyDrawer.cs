@@ -80,7 +80,7 @@ namespace CocodriloDog.Animation {
 				TimeModeProperty	= SerializedSharedSettings.FindProperty("m_TimeMode");
 				EasingProperty		= SerializedSharedSettings.FindProperty("m_Easing");
 			} else {
-				// Use the propreties from the AnimateBlock
+				// Use the properties from the MotionKitBlock
 				DurationProperty	= Property.FindPropertyRelative("m_Duration");
 				TimeModeProperty	= Property.FindPropertyRelative("m_TimeMode");
 				EasingProperty		= Property.FindPropertyRelative("m_Easing");
@@ -194,8 +194,8 @@ namespace CocodriloDog.Animation {
 			//
 			// If the user double clicks the shared settings assset, the shared color would remain, causing
 			// other inspectors to use that color. For that reason, we need to handle the selectionChange
-			// event and reset the color there too. Since the MotionBlock classes inherit AnimateBlock,
-			// thi code will handle also the case in which the user double clicks the shared values assset.
+			// event and reset the color there too. Since the MotionBlock classes inherit MotionKitBlock,
+			// this code will handle also the case in which the user double clicks the shared values asset.
 			if (!m_IsSubscribedToSelectionChange) {
 				m_IsSubscribedToSelectionChange = true;
 				Selection.selectionChanged += Selection_selectionChanged;

@@ -27,7 +27,7 @@
 			// Error test: Try to use a color setter
 			//void Scale(Motion3D motion) {
 			//	motion.Clean(CleanFlag.OnComplete);
-			//	Animate.GetMotion(this, "X", c => Cube.GetComponent<Renderer>().material.color = c)
+			//	MotionKit.GetMotion(this, "X", c => Cube.GetComponent<Renderer>().material.color = c)
 			//		.Play(Color.black, Color.white, 1);
 			//}
 

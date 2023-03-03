@@ -2192,7 +2192,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c2b5a8745c8704f25b3a87dd0f3235ba, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  AnimateCurve:
+  MotionKitCurve:
     Curve:
       serializedVersion: 2
       m_Curve:
@@ -2208,7 +2208,7 @@ MonoBehaviour:
       - serializedVersion: 3
         time: 0.2499
         value: 1
-        inSlope: -0
+        inSlope: 0
         outSlope: Infinity
         tangentMode: 1
         weightedMode: 0

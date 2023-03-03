@@ -59,7 +59,7 @@
 	/// 
 	/// <example>
 	/// <code>
-	/// Animate.GetMotion(
+	/// MotionKit.GetMotion(
 	/// 	this, "PositionMotion", s => transform.localPosition = s
 	/// ).SetEasing(Quadratic.EaseOut).Play(Vector3.up, 0.3f);
 	/// </code>

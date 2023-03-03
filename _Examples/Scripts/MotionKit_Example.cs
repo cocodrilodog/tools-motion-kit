@@ -12,9 +12,9 @@
 
 		#region Public Fields
 
-		[Tooltip("A Animate curve.")]
+		[Tooltip("A MotionKit curve.")]
 		[SerializeField]
-		public MotionKitCurve AnimateCurve;
+		public MotionKitCurve MotionKitCurve;
 
 		#endregion
 
@@ -177,10 +177,10 @@
 				MotionKit.GetTimer(this, "Timer").Play(1).SetOnComplete(onComplete);
 
 				// A color blink in the sphere of the middle while the timer.
-				// The blink graph is crafted in the AnimateCurves asset.
+				// The blink graph is crafted in the MotionKitCurve
 				MotionKit.GetMotion(
 					this, "Color", c => ColorObject.Color = c
-				).SetEasing(AnimateCurve.ColorEasing)
+				).SetEasing(MotionKitCurve.ColorEasing)
 				.Play(ColorObject.Color, Random.ColorHSV(), 1);
 
 			});

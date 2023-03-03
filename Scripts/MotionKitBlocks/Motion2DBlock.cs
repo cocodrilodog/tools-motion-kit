@@ -13,7 +13,7 @@ namespace CocodriloDog.Animation {
 	/// <remarks>
 	/// This is a Motion3DBlock, but overrides the necessary members to adapt it for 2D motions.
 	/// There was no <see cref="MotionBase{ValueT, MotionT}"/> created for <see cref="Vector2"/>
-	/// because it made the <c>Animate</c> API very akward when it came to creating setters for 
+	/// because it made the <see cref="MotionKit"/> API very akward when it came to creating setters for 
 	/// <see cref="Vector3"/> vs <see cref="Vector2"/>. It showed an ambiguity error so I decided 
 	/// to only leave the <see cref="Motion3D"/>
 	/// </remarks>

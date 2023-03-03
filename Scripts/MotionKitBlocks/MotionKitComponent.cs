@@ -19,7 +19,7 @@ namespace CocodriloDog.Animation {
 		#region Public Properties
 
 		/// <summary>
-		/// The first <see cref="MotionKitBlock"/> of this <see cref="AnimateBehaviour"/> if any, or <c>null</c>.
+		/// The first <see cref="Blocks"/> item if any, or <c>null</c>.
 		/// </summary>
 		public MotionKitBlock DefaultBlock => Blocks.Count > 0 ? Blocks[0] : null;
 
@@ -107,12 +107,12 @@ namespace CocodriloDog.Animation {
 		public void ResetMotion(string blockPath) => (GetChildBlockAtPath(blockPath) as IMotionBlock)?.ResetMotion();
 
 		/// <summary>
-		/// Calls <see cref="IMotionBlock.ResetMotion()"/> in all the motions that it in this <see cref="AnimateComponent"/>.
+		/// Calls <see cref="IMotionBlock.ResetMotion()"/> in all the motions that are in this <see cref="MotionKitComponent"/>.
 		/// If <paramref name="recursive"/> is <c>true</c>, it looks for children blocks too.
 		/// </summary>
 		public void ResetAllMotions(bool recursive = false) {
 			if (recursive) {
-				Blocks.ForEach(B => ForAllAnimateBlocks(B, b => (b as IMotionBlock)?.ResetMotion()));
+				Blocks.ForEach(B => ForAllChildrenBlocks(B, b => (b as IMotionBlock)?.ResetMotion()));
 			} else {
 				Blocks.ForEach(B => (B as IMotionBlock)?.ResetMotion());
 			}
@@ -204,7 +204,7 @@ namespace CocodriloDog.Animation {
 		/// </summary>
 		/// <param name="animateBlock">The root <see cref="MotionKitBlock"/></param>
 		/// <param name="action">The action to perform in it.</param>
-		private void ForAllAnimateBlocks(MotionKitBlock animateBlock, Action<MotionKitBlock> action) {
+		private void ForAllChildrenBlocks(MotionKitBlock animateBlock, Action<MotionKitBlock> action) {
 
 			if (animateBlock == null) {
 				return;
@@ -217,7 +217,7 @@ namespace CocodriloDog.Animation {
 				var animateParent = animateBlock as IMotionKitParent;
 				foreach (var item in animateParent.GetChildrenBlocks()) {
 					// Recursion
-					ForAllAnimateBlocks(item, action);
+					ForAllChildrenBlocks(item, action);
 				}
 			}
 
