@@ -30,7 +30,7 @@
 			RepeatCycle();
 
 			// Example of chained motion objects:
-			//StartMotionsChain();
+			//StartMotionMultiChain();
 			StartMotionSelfChain();
 
 		}

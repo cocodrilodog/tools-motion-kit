@@ -215,7 +215,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_SelectedCompositePath: 
-  m_AnimateBlocks: []
   m_Blocks:
   - rid: 6990145245326082068
   m_PlayAllOnStart: 1
