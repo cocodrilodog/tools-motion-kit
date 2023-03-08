@@ -242,9 +242,17 @@ namespace CocodriloDog.Animation {
 
 		#region Private Fields - Serialized
 
+		[Tooltip(
+			"(Optional) Assign an object here if you want to overrride the default owner which is the MotionKit singleton. " +
+			"See the documentation for more info on Owner - ReuseID."
+		)]
 		[SerializeField]
 		private UnityEngine.Object m_Owner;
 
+		[Tooltip(
+			"(Optional) Assign a reuse ID here if you want to overrride the default ReuseID which is automatic and unique. " +
+			"See the documentation for more info on Owner - ReuseID."
+		)]
 		[SerializeField]
 		private string m_ReuseID;
 

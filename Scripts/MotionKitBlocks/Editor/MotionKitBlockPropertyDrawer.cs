@@ -284,10 +284,10 @@ namespace CocodriloDog.Animation {
 		private void DrawOwnerAndReuseID() {
 
 			var mainRect = GetNextPosition(OwnerProperty);
-			if (Property.managedReferenceValue != null && EditOwnerAndReuseIDProperty.boolValue) {
+			//if (Property.managedReferenceValue != null && EditOwnerAndReuseIDProperty.boolValue) {
 
 				var fieldsRect = mainRect;
-				fieldsRect.xMax -= 60;
+				//fieldsRect.xMax -= 60;
 
 				EditorGUIUtility.labelWidth = 70;
 
@@ -302,22 +302,23 @@ namespace CocodriloDog.Animation {
 				var closeButtonRect = mainRect;
 				closeButtonRect.xMin += fieldsRect.width + 10;
 
-				if (GUI.Button(closeButtonRect, "Close")) {
-					EditOwnerAndReuseIDProperty.boolValue = false;
-				}
+				//if (GUI.Button(closeButtonRect, "Close")) {
+				//	EditOwnerAndReuseIDProperty.boolValue = false;
+				//}
 
 				EditorGUIUtility.labelWidth = 0;
 
-			} else {
-				var buttonRect = mainRect;
-				var ownerString = OwnerProperty.objectReferenceValue != null ? $"[{OwnerProperty.objectReferenceValue.name}] " : "";
-				var reuseIDString = !string.IsNullOrEmpty(ReuseIDProperty.stringValue) ? $"[{ReuseIDProperty.stringValue}] " : "";
-				if (GUI.Button(buttonRect, $"Edit Owner {ownerString}and/or Reuse ID {reuseIDString}")) {
-					if (Property.managedReferenceValue != null) {
-						EditOwnerAndReuseIDProperty.boolValue = true;
-					}
-				}
-			}
+			//}
+			//else {
+			//	var buttonRect = mainRect;
+			//	var ownerString = OwnerProperty.objectReferenceValue != null ? $"[{OwnerProperty.objectReferenceValue.name}] " : "";
+			//	var reuseIDString = !string.IsNullOrEmpty(ReuseIDProperty.stringValue) ? $"[{ReuseIDProperty.stringValue}] " : "";
+			//	if (GUI.Button(buttonRect, $"Edit Owner {ownerString}and/or Reuse ID {reuseIDString}")) {
+			//		if (Property.managedReferenceValue != null) {
+			//			EditOwnerAndReuseIDProperty.boolValue = true;
+			//		}
+			//	}
+			//}
 
 		}
 
