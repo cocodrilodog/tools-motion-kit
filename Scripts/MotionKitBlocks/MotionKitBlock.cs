@@ -250,8 +250,8 @@ namespace CocodriloDog.Animation {
 		private UnityEngine.Object m_Owner;
 
 		[Tooltip(
-			"(Optional) Assign a reuse ID here if you want to overrride the default ReuseID which is automatic and unique. " +
-			"See the documentation for more info on Owner - ReuseID."
+			"(Optional) Assign a reuse ID here if you want to overrride the default ReuseID which is automatically generated " +
+			"at runtime and unique. See the documentation for more info on Owner - ReuseID."
 		)]
 		[SerializeField]
 		private string m_ReuseID;
