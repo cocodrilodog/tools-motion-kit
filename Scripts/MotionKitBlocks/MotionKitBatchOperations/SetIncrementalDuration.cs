@@ -17,13 +17,15 @@ namespace CocodriloDog.Animation {
 		#region Protected Methods
 
 		/// <summary>
-		/// Sets the duration of the provided <paramref name="animateBlock"/> in a incremental way
-		/// proportional to the <paramref name="index"/> of the block.
+		/// Sets the duration of the provided <paramref name="childBlock"/> in a incremental way
+		/// proportional to the <paramref name="index"/> of the parent block.
 		/// </summary>
 		/// <param name="childBlock">The child block located at the <c>Path</c>.</param>
 		/// <param name="index">The index of the parent <see cref="MotionKitBlock"/> in the list.</param>
-		protected override void PerformOnChildBlock(MotionKitBlock childBlock, int index) {
+		/// <returns><c>true</c> if the operation was successful, <c>false</c> otherwise</returns>
+		protected override bool PerformOnChildBlock(ref MotionKitBlock childBlock, int index) {
 			childBlock.DurationInput = BaseDuration + index * DurationIncrement;
+			return true;
 		}
 
 		#endregion

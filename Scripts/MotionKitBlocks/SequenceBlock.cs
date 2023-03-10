@@ -4,6 +4,7 @@ namespace CocodriloDog.Animation {
 	using System;
 	using System.Collections;
 	using System.Collections.Generic;
+	using System.Collections.ObjectModel;
 	using System.Linq;
 	using UnityEngine;
 
@@ -25,10 +26,13 @@ namespace CocodriloDog.Animation {
 			}
 		}
 
-		public override List<MotionKitBlock> Items {
+		public override ReadOnlyCollection<MotionKitBlock> Items {
 			get {
 				_ = Sequence; // <- Force init
-				return m_SequenceItems;
+				if(m_Items == null) {
+					m_Items = new ReadOnlyCollection<MotionKitBlock>(m_SequenceItems);
+				}
+				return m_Items;
 			}
 		}
 
@@ -46,6 +50,8 @@ namespace CocodriloDog.Animation {
 		public override bool IsPlaying => Sequence.IsPlaying;
 
 		public override bool IsPaused => Sequence.IsPaused;
+
+		public override string DefaultName => "Sequence";
 
 		/// <summary>
 		/// <see cref="DurationInput"/> if it is above 0, otherwise the sum of the duration of 
@@ -123,7 +129,7 @@ namespace CocodriloDog.Animation {
 
 		public MotionKitBlock[] GetChildrenBlocks() => Items.ToArray();
 
-		public override string DefaultName => "Sequence";
+		public override void SetItem(int index, MotionKitBlock block) => m_SequenceItems[index] = block;
 
 		#endregion
 
@@ -152,6 +158,9 @@ namespace CocodriloDog.Animation {
 
 
 		#region Private Fields - Non Serialized
+
+		[NonSerialized]
+		private ReadOnlyCollection<MotionKitBlock> m_Items;
 
 		[NonSerialized]
 		private Sequence m_Sequence;

@@ -22,6 +22,9 @@ namespace CocodriloDog.Animation {
 			height += EditorGUI.GetPropertyHeight(SequenceItemsProperty);
 			height += EditorGUI.GetPropertyHeight(BatchOperationsProperty);
 			height += FieldHeight; // <- Batch Operations button
+			if (ShowBatchOperationsResults) {
+				height += BatchOperationsResultsHeight;
+			}
 			return height;
 		}
 

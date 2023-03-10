@@ -4,6 +4,7 @@ namespace CocodriloDog.Animation {
 	using System;
 	using System.Collections;
 	using System.Collections.Generic;
+	using System.Collections.ObjectModel;
 	using System.Linq;
 	using UnityEngine;
 
@@ -25,10 +26,13 @@ namespace CocodriloDog.Animation {
 			}
 		}
 
-		public override List<MotionKitBlock> Items {
+		public override ReadOnlyCollection<MotionKitBlock> Items {
 			get {
 				_ = Parallel; // <- Force init
-				return m_ParallelItems;
+				if (m_Items == null) {
+					m_Items = new ReadOnlyCollection<MotionKitBlock>(m_ParallelItems);
+				}
+				return m_Items;
 			}
 		}
 
@@ -46,6 +50,8 @@ namespace CocodriloDog.Animation {
 		public override bool IsPlaying => Parallel.IsPlaying;
 
 		public override bool IsPaused => Parallel.IsPaused;
+
+		public override string DefaultName => "Parallel";
 
 		/// <summary>
 		/// <see cref="DurationInput"/> if it is above 0, otherwise the longest duration among
@@ -118,7 +124,7 @@ namespace CocodriloDog.Animation {
 
 		public MotionKitBlock[] GetChildrenBlocks() => Items.ToArray();
 
-		public override string DefaultName => "Parallel";
+		public override void SetItem(int index, MotionKitBlock block) => m_ParallelItems[index] = block;
 
 		#endregion
 
@@ -147,6 +153,9 @@ namespace CocodriloDog.Animation {
 
 
 		#region Private Fields - Non Serialized
+
+		[NonSerialized]
+		private ReadOnlyCollection<MotionKitBlock> m_Items;
 
 		[NonSerialized]
 		private Parallel m_Parallel;

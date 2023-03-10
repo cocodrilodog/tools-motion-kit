@@ -22,8 +22,10 @@ namespace CocodriloDog.Animation {
 		/// </summary>
 		/// <param name="childBlock">The child block located at the <c>Path</c>.</param>
 		/// <param name="index">The index of the parent <see cref="MotionKitBlock"/> in the list.</param>
-		protected override void PerformOnChildBlock(MotionKitBlock childBlock, int index) {
+		/// <returns><c>true</c> if the operation was successful, <c>false</c> otherwise</returns>
+		protected override bool PerformOnChildBlock(ref MotionKitBlock childBlock, int index) {
 			childBlock.Name = NewName + (AppendSerialNumber ? $"{index + 1}" : "");
+			return true;
 		}
 
 		#endregion

@@ -38,15 +38,15 @@ namespace CocodriloDog.Animation {
 		#region Public Methods
 
 		/// <summary>
-		/// Override this to perform an operation on the provided <paramref name="animateBlock"/> or create a new
+		/// Override this to perform an operation on the provided <paramref name="motionKitBlock"/> or create a new
 		/// <see cref="MotionKitBlock"/> that will be assigned to the list at <paramref name="index"/>.
 		/// </summary>
-		/// <param name="animateBlock">Each <see cref="MotionKitBlock"/> in the list.</param>
+		/// <param name="motionKitBlock">Each <see cref="MotionKitBlock"/> in the list.</param>
 		/// <param name="index">The index of the <see cref="MotionKitBlock"/> in the list.</param>
-		/// <returns>The modified <paramref name="animateBlock"/> or a new <see cref="MotionKitBlock"/></returns>
-		public virtual MotionKitBlock Perform(MotionKitBlock animateBlock, int index) {
+		/// <returns><c>true</c> if the operation was successful, <c>false</c> otherwise</returns>
+		public virtual bool Perform(ref MotionKitBlock motionKitBlock, int index) {
 			m_FieldActionIsPending = false;
-			return animateBlock;
+			return false;
 		}
 
 		#endregion

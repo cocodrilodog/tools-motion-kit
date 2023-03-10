@@ -205,7 +205,11 @@ namespace CocodriloDog.Animation {
 
 		private List<string> m_SetterOptions;
 
+		private int m_SetterOptionIndex;
+
 		private List<string> m_GetterOptions;
+
+		private int m_GetterOptionIndex;
 
 		private SerializedObject m_SerializedSharedValues;
 
@@ -222,13 +226,13 @@ namespace CocodriloDog.Animation {
 
 		private List<string> SetterOptions => m_SetterOptions;
 
-		private bool ShowSetterHelp => ObjectProperty.objectReferenceValue == null || SetterStringProperty.stringValue == NoFunctionString;
+		private bool ShowSetterHelp => ObjectProperty.objectReferenceValue == null || m_SetterOptionIndex == 0;
 
 		private List<string> GetterOptions => m_GetterOptions;
 
 		public bool ShowGetter => InitialValueIsRelativeProperty.boolValue || FinalValueIsRelativeProperty.boolValue;
 
-		private bool ShowGetterHelp => ObjectProperty.objectReferenceValue == null || GetterStringProperty.stringValue == NoFunctionString;
+		private bool ShowGetterHelp => ObjectProperty.objectReferenceValue == null || m_GetterOptionIndex == 0;
 
 		private float HorizontalLineHeight => 5;
 
@@ -263,14 +267,16 @@ namespace CocodriloDog.Animation {
 
 			// Setter string field
 			UpdateSetterOptions();
+			// Clamping converts -1 into 0 when there is an empty string or it is not found
 			var index = Mathf.Clamp(SetterOptions.IndexOf(SetterStringProperty.stringValue), 0, int.MaxValue);
 
 			EditorGUI.BeginChangeCheck();
-			var newIndex = EditorGUI.Popup(setterRect, index, SetterOptions.ToArray());
+			m_SetterOptionIndex = EditorGUI.Popup(setterRect, index, SetterOptions.ToArray());
 			// Changing the value only when the popup changes makes the current setter to resist
-			// as much as possible.
+			// as much as possible and never assign the "No Function" (m_SetterOptionIndex = 0)
+			// instead assign "" for consistency with the initial state of the property
 			if (EditorGUI.EndChangeCheck()) {
-				SetterStringProperty.stringValue = SetterOptions[newIndex];
+				SetterStringProperty.stringValue = m_SetterOptionIndex == 0 ? "" : SetterOptions[m_SetterOptionIndex];
 			}
 
 			// Help box
@@ -306,14 +312,16 @@ namespace CocodriloDog.Animation {
 
 			// Getter string field
 			UpdateGetterOptions();
+			// Clamping converts -1 into 0 when there is an empty string or it is not found
 			var index = Mathf.Clamp(GetterOptions.IndexOf(GetterStringProperty.stringValue), 0, int.MaxValue);
 
 			EditorGUI.BeginChangeCheck();
-			var newIndex = EditorGUI.Popup(getterRect, index, GetterOptions.ToArray());
+			m_GetterOptionIndex = EditorGUI.Popup(getterRect, index, GetterOptions.ToArray());
 			// Changing the value only when the popup changes makes the current getter to resist
-			// as much as possible.
+			// as much as possible and never assign the "No Function" (m_GetterOptionIndex = 0)
+			// instead assign "" for consistency with the initial state of the property
 			if (EditorGUI.EndChangeCheck()) {
-				GetterStringProperty.stringValue = GetterOptions[newIndex];
+				GetterStringProperty.stringValue = m_GetterOptionIndex == 0 ? "" : GetterOptions[m_GetterOptionIndex];
 			}
 
 			// Help box

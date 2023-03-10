@@ -16,15 +16,17 @@ namespace CocodriloDog.Animation {
 		#region Public Methods
 
 		/// <summary>
-		/// Creates a copy of <see cref="TemplateBlock"/> returns it.
+		/// Creates a copy of <see cref="TemplateBlock"/> assigns it to <paramref name="motionKitBlock"/>.
 		/// </summary>
-		/// <param name="animateBlock">Each <see cref="MotionKitBlock"/> in the list.</param>
+		/// <param name="motionKitBlock">Each <see cref="MotionKitBlock"/> in the list.</param>
 		/// <param name="index">The index of the <see cref="MotionKitBlock"/> in the list.</param>
-		/// <returns>The copy of <see cref="TemplateBlock"/></returns>
-		public override MotionKitBlock Perform(MotionKitBlock animateBlock, int index) {
-			base.Perform(animateBlock, index);
+		/// <returns><c>true</c> if the operation was successful, <c>false</c> otherwise</returns>
+		public override bool Perform(ref MotionKitBlock motionKitBlock, int index) {
+			base.Perform(ref motionKitBlock, index);
 			CompositeCopier.Copy(TemplateBlock);
-			return CompositeCopier.Paste() as MotionKitBlock;
+			// Assign it to the ref parameter so that it replaces the existing one in the list
+			motionKitBlock = CompositeCopier.Paste() as MotionKitBlock;
+			return true;
 		}
 
 		#endregion

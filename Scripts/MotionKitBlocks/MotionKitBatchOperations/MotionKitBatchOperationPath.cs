@@ -21,22 +21,22 @@ namespace CocodriloDog.Animation {
 		/// Finds the block at <see cref="Path"/> and invokes <see cref="PerformOnChildBlock(MotionKitBlock, int)"/>
 		/// on it.
 		/// </summary>
-		/// <param name="animateBlock">Each <see cref="MotionKitBlock"/> in the list.</param>
+		/// <param name="motionKitBlock">Each <see cref="MotionKitBlock"/> in the list.</param>
 		/// <param name="index">The index of the <see cref="MotionKitBlock"/> in the list.</param>
-		/// <returns>The modified <paramref name="animateBlock"/></returns>
-		public sealed override MotionKitBlock Perform(MotionKitBlock animateBlock, int index) {
-			base.Perform(animateBlock, index);
+		/// <returns><c>true</c> if the operation was successful, <c>false</c> otherwise</returns>
+		public sealed override bool Perform(ref MotionKitBlock motionKitBlock, int index) {
+			base.Perform(ref motionKitBlock, index);
 			if (string.IsNullOrEmpty(Path)) {
-				if (animateBlock != null) {
-					PerformOnChildBlock(animateBlock, index);
+				if (motionKitBlock != null) {
+					return PerformOnChildBlock(ref motionKitBlock, index);
 				}
 			} else {
-				var childBlock = (animateBlock as IMotionKitParent)?.GetChildBlockAtPath(Path);
+				var childBlock = (motionKitBlock as IMotionKitParent)?.GetChildBlockAtPath(Path);
 				if (childBlock != null) {
-					PerformOnChildBlock(childBlock, index);
+					return PerformOnChildBlock(ref childBlock, index);
 				}
 			}
-			return animateBlock;
+			return false;
 		}
 
 		#endregion
@@ -70,7 +70,9 @@ namespace CocodriloDog.Animation {
 		/// </param>
 		/// 
 		/// <param name="index">The index of the <see cref="MotionKitBlock"/> when it belongs to a list or array.</param>
-		protected abstract void PerformOnChildBlock(MotionKitBlock childBlock, int index);
+		/// 
+		/// <returns><c>true</c> if the operation was successful, <c>false</c> otherwise</returns>
+		protected abstract bool PerformOnChildBlock(ref MotionKitBlock childBlock, int index);
 
 		#endregion
 
