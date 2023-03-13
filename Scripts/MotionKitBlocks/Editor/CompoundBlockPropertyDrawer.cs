@@ -106,7 +106,9 @@ namespace CocodriloDog.Animation {
 
 				// OK button to hide the info
 				var okButtonRect = GetNextPosition();
-				if (GUI.Button(okButtonRect, "OK")) {
+				if (GUI.Button(okButtonRect, "OK") ||
+					// The condition below makes the info text to be closed when the user navigates to other CompositeObject
+					(Property.managedReferenceValue != null && !(Property.managedReferenceValue as CompositeObject).Edit)) {
 					BatchOperationsResults.Show = false;
 				}
 
