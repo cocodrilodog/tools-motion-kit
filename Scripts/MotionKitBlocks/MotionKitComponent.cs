@@ -150,6 +150,10 @@ namespace CocodriloDog.Animation {
 			}
 		}
 
+		//private void OnValidate() {
+		//	Debug.Log($"OnValidate:{gameObject}");
+		//}
+
 		private void OnDestroy() {
 			Dispose();
 		}
@@ -166,7 +170,7 @@ namespace CocodriloDog.Animation {
 		private bool m_PlayAllOnStart;
 
 		/// <summary>
-		/// Searches recursively for the first motions that can modify a property and sets their progress
+		/// Searches recursively for the first motions that modify properties and sets their progress
 		/// to 0 so that the value of the property is set to the initial value.
 		/// </summary>
 		/// 
@@ -175,6 +179,11 @@ namespace CocodriloDog.Animation {
 		/// searches until it finds the first motion.
 		/// In this component, the search will be performed only in the <see cref="DefaultBlock"/>
 		/// </remarks>
+		[Tooltip(
+			"Searches recursively for the first motions that modify properties and sets their progress to 0 " +
+			"so that the value of the property is set to the initial value. The search will be performed only " +
+			"in the first block."
+		)]
 		[SerializeField]
 		private bool m_SetInitialValuesOnStart;
 

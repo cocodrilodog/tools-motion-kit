@@ -31,7 +31,7 @@ namespace CocodriloDog.Animation {
 		}
 
 		/// <summary>
-		/// Searches recursively for the first motions that can modify a property and sets their progress
+		/// Searches recursively for the first motions that modify properties and sets their progress
 		/// to 0 so that the value of the property is set to the initial value.
 		/// </summary>
 		/// 
