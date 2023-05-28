@@ -2,6 +2,7 @@
 
 	using CocodriloDog.Rendering;
 	using CocodriloDog.Utility;
+	using System;
 	using System.Collections;
 	using System.Collections.Generic;
 	using UnityEngine;
@@ -22,28 +23,10 @@
 
 		#region Unity Methods
 
-		private void OnEnable() {
-			EventSystemUtility.AddTriggerListener(
-				Vector3Cube,
-				EventTriggerType.PointerClick,
-				Vector3Cube_PointerClick
-			);
-			EventSystemUtility.AddTriggerListener(
-				FloatCube,
-				EventTriggerType.PointerClick,
-				FloatCube_PointerClick
-			);
-			EventSystemUtility.AddTriggerListener(
-				ColorCube,
-				EventTriggerType.PointerClick,
-				ColorCube_PointerClick
-			);
-		}
-
-		private void OnDisable() {
-			EventSystemUtility.RemoveTriggerListener(Vector3Cube, Vector3Cube_PointerClick);
-			EventSystemUtility.RemoveTriggerListener(FloatCube, FloatCube_PointerClick);
-			EventSystemUtility.RemoveTriggerListener(ColorCube, ColorCube_PointerClick);
+		private void OnDestroy() {
+			foreach (var cube in m_Cubes) {
+				MotionKit.ClearPlaybacks(cube);	
+			}
 		}
 
 		#endregion
@@ -51,36 +34,66 @@
 
 		#region Event Handlers
 
-		private void Vector3Cube_PointerClick(BaseEventData eventData) {
-			MotionKit.GetMotion(this, "Vector3CubePosition", p => Vector3Cube.transform.position = p)
+		public void FloatCube_PointerClick(Transform cube) {
+
+			if (!m_Cubes.Contains(cube)) {
+				m_Cubes.Add(cube);
+			}
+
+			var rotY = cube.localEulerAngles.y;
+			MotionKit.GetMotion(cube, "Rotation", r => {
+				var rotation = Quaternion.AngleAxis(r, Vector3.up);
+				cube.localRotation = rotation;
+			}).SetEasing(Shake.FloatEasing).Play(rotY, rotY, 1);
+
+		}
+
+		public void Vector3Cube_PointerClick(Transform cube) {
+
+			if (!m_Cubes.Contains(cube)) {
+				m_Cubes.Add(cube);
+			}
+
+			var pos = cube.transform.position;
+			MotionKit.GetMotion(cube, "Position", p => cube.position = p)
 				.SetEasing(Shake.Vector3Easing)
-				.Play(Vector3Cube.transform.position, Vector3.up, 1);
-		}
-
-		private void FloatCube_PointerClick(BaseEventData eventData) {
-
-			// Shake X
-			MotionKit.GetMotion(this, "FloatCubeX", v => {
-				Vector3 position = FloatCube.transform.position;
-				position.x = v;
-				FloatCube.transform.position = position;
-			}).SetEasing(Shake.FloatEasing)
-			.Play(FloatCube.transform.position.x, -3, 1);
-
-			// Shake Y
-			MotionKit.GetMotion(this, "FloatCubeY", v => {
-				Vector3 position = FloatCube.transform.position;
-				position.y = v;
-				FloatCube.transform.position = position;
-			}).SetEasing(Shake.FloatEasing)
-			.Play(FloatCube.transform.position.y, 1, 1);
+				.Play(pos, pos, 1);
 
 		}
 
-		private void ColorCube_PointerClick(BaseEventData eventData) {
-			MotionKit.GetMotion(this, "ColorCubeColor", c => ColorCube.GetComponent<ColorModifier>().Color = c)
-				.SetEasing(Shake.ColorEasing)
-				.Play(ColorCube.GetComponent<ColorModifier>().Color, Color.red, 1);
+		public void VectorXCube_PointerClick(Transform cube) {
+
+			if (!m_Cubes.Contains(cube)) {
+				m_Cubes.Add(cube);
+			}
+
+			Shake shakeX = Shake.Copy() as Shake;
+			// zero out y and z so that only the magnitude in x is applied
+			shakeX.Magnitude.Vector3.y = 0;
+			shakeX.Magnitude.Vector3.z = 0;
+
+			var pos = cube.transform.position;
+
+			MotionKit.GetMotion(cube, "Position", p => cube.position = p)
+				.SetEasing(shakeX.Vector3Easing)
+				.Play(pos, pos, 1);
+
+		}
+
+		public void ColorCube_PointerClick(Transform cube) {
+
+			if (!m_Cubes.Contains(cube)) {
+				m_Cubes.Add(cube);
+			}
+
+			var colorModifier = cube.GetComponent<ColorModifier>();
+			var color = colorModifier.Color;
+
+			MotionKit.GetMotion(cube, "Color", c => {
+				Debug.Log(c);
+				colorModifier.Color = c;
+			}).SetEasing(Shake.ColorEasing).Play(color, color, 1);
+
 		}
 
 		#endregion
@@ -88,29 +101,11 @@
 
 		#region Private Fields
 
-		[Header("Subcomponents")]
-
-		[SerializeField]
-		private EventTrigger m_FloatCube;
-
-		[SerializeField]
-		private EventTrigger m_Vector3Cube;
-
-		[SerializeField]
-		private EventTrigger m_ColorCube;
+		[NonSerialized]
+		private List<Transform> m_Cubes = new List<Transform>();
 
 		#endregion
 
-
-		#region Private Properties
-
-		private EventTrigger FloatCube { get { return m_FloatCube; } }
-
-		private EventTrigger Vector3Cube { get { return m_Vector3Cube; } }
-
-		private EventTrigger ColorCube { get { return m_ColorCube; } }
-
-		#endregion
 
 	}
 

@@ -15,22 +15,24 @@
 		#region Public Fields
 
 		/// <summary>
-		/// How fast will the shake look?
-		/// </summary>
-		[SerializeField]
-		public float TMultiplier = 10;
-
-		/// <summary>
 		/// The magnitude of the shake.
 		/// </summary>
-		[SerializeField]
-		public float Magnitude = 2;
+		public AnimatableValue Magnitude => m_Magnitude;
+
+		/// <summary>
+		/// How fast will the shake look?
+		/// </summary>
+		public float TMultiplier => m_TMultiplier;
 
 		/// <summary>
 		/// Will this shake be dampered over time?
 		/// </summary>
-		[SerializeField]
-		public bool IsDampered = true;
+		public bool IsDampered => m_IsDampered;
+
+		/// <summary>
+		/// The Damper curve.
+		/// </summary>
+		public AnimationCurve Damper => m_Damper;
 
 		#endregion
 
@@ -51,7 +53,7 @@
 					// Get the base value so that the Perlin noise adds on top of it.
 					float lerp = Mathf.Lerp(a, b, t);
 
-					float magnitude = Magnitude;
+					float magnitude = Magnitude.Float;
 					if (IsDampered) {
 						magnitude *= Damper.Evaluate(t);
 					}
@@ -78,16 +80,16 @@
 					// Get the base value so that the Perlin noise adds on top of it.
 					Vector3 lerp = Vector3.Lerp(a, b, t);
 
-					float magnitude = Magnitude;
+					Vector3 magnitude = Magnitude.Vector3;
 					if (IsDampered) {
 						magnitude *= Damper.Evaluate(t);
 					}
 
 					// PerlinNoise returns values from 0 to 1. For that reason we subtract 0.5f
 					return lerp + new Vector3(
-						(Mathf.PerlinNoise((t + timeOffset.x) * TMultiplier, 0f) - 0.5f) * magnitude,
-						(Mathf.PerlinNoise((t + timeOffset.y) * TMultiplier, 0f) - 0.5f) * magnitude,
-						(Mathf.PerlinNoise((t + timeOffset.z) * TMultiplier, 0f) - 0.5f) * magnitude
+						(Mathf.PerlinNoise((t + timeOffset.x) * TMultiplier, 0f) - 0.5f) * magnitude.x,
+						(Mathf.PerlinNoise((t + timeOffset.y) * TMultiplier, 0f) - 0.5f) * magnitude.y,
+						(Mathf.PerlinNoise((t + timeOffset.z) * TMultiplier, 0f) - 0.5f) * magnitude.z
 					);
 
 				};
@@ -109,16 +111,17 @@
 					// Get the base value so that the Perlin noise adds on top of it.
 					Color lerp = Color.Lerp(a, b, t);
 
-					float magnitude = Magnitude;
+					Color magnitude = Magnitude.Color;
 					if (IsDampered) {
 						magnitude *= Damper.Evaluate(t);
 					}
 
 					// PerlinNoise returns values from 0 to 1. For that reason we subtract 0.5f
 					return lerp + new Color(
-						(Mathf.PerlinNoise((t + timeOffset.r) * TMultiplier, 0f) - 0.5f) * magnitude,
-						(Mathf.PerlinNoise((t + timeOffset.g) * TMultiplier, 0f) - 0.5f) * magnitude,
-						(Mathf.PerlinNoise((t + timeOffset.b) * TMultiplier, 0f) - 0.5f) * magnitude
+						(Mathf.PerlinNoise((t + timeOffset.r) * TMultiplier, 0f) - 0.5f) * magnitude.r,
+						(Mathf.PerlinNoise((t + timeOffset.g) * TMultiplier, 0f) - 0.5f) * magnitude.g,
+						(Mathf.PerlinNoise((t + timeOffset.b) * TMultiplier, 0f) - 0.5f) * magnitude.b,
+						(Mathf.PerlinNoise((t + timeOffset.b) * TMultiplier, 0f) - 0.5f) * magnitude.a
 					);
 
 				};
@@ -133,18 +136,40 @@
 
 		public Shake() { }
 
-		public Shake(float tMultiplier = 10, float magnitude = 2, bool isDampered = true) {
-			TMultiplier = tMultiplier;
-			Magnitude = magnitude;
-			IsDampered = isDampered;
+		public Shake(
+			float magnitudeFloat, Vector3 magnitudeVector3, Color magnitudeColor,
+			float tMultiplier = 10, bool isDampered = true
+		) {
+			m_Magnitude = new AnimatableValue(magnitudeFloat, magnitudeVector3, magnitudeColor);
+			m_TMultiplier = tMultiplier;
+			m_IsDampered = isDampered;
 		}
+
+		public Shake(
+			float magnitudeFloat, float tMultiplier = 7, bool isDampered = true
+		) : this(magnitudeFloat, default, default, tMultiplier, isDampered) { }
+
+		public Shake(
+			Vector3 magnitudeVector3, float tMultiplier = 7, bool isDampered = true
+		) : this(default, magnitudeVector3, default, tMultiplier, isDampered) { }
+
+		public Shake(
+			Color magnitudeColor, float tMultiplier = 7, bool isDampered = true
+		) : this(default, default, magnitudeColor, tMultiplier, isDampered) { }
 
 		#endregion
 
 
 		#region Public Methods
 
-		public override ParameterizedEasing Copy() => new Shake(TMultiplier, Magnitude, IsDampered);
+		public override ParameterizedEasing Copy() {
+			return new Shake {
+				m_Magnitude = Magnitude.Copy(),
+				m_TMultiplier = m_TMultiplier,
+				m_IsDampered = m_IsDampered,
+				m_Damper = new AnimationCurve(m_Damper.keys)
+			};
+		} 
 
 		#endregion
 
@@ -152,18 +177,18 @@
 		#region Private Fields - Serialized
 
 		[SerializeField]
+		private AnimatableValue m_Magnitude;
+
+		[SerializeField]
+		public float m_TMultiplier = 7;
+
+		[SerializeField]
+		public bool m_IsDampered = true;
+
+		[SerializeField]
 		private AnimationCurve m_Damper = new AnimationCurve(
 			new Keyframe(0f, 1f), new Keyframe(0.9f, .33f, -2f, -2f), new Keyframe(1f, 0f, -5.65f, -5.65f)
 		);
-
-		#endregion
-
-
-		#region Private Properties
-
-		private AnimationCurve Damper {
-			get { return m_Damper; }
-		}
 
 		#endregion
 

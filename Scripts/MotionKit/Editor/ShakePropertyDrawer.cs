@@ -6,6 +6,9 @@
 	using UnityEngine;
 	using UnityEditor;
 
+	/// <summary>
+	/// Property drawer that shows or hides the Damper property depending on IsDampered
+	/// </summary>
 	[CustomPropertyDrawer(typeof(Shake))]
 	public class ShakePropertyDrawer : PropertyDrawerBase {
 
@@ -15,11 +18,14 @@
 		public override float GetPropertyHeight(SerializedProperty property, GUIContent label) {
 			base.GetPropertyHeight(property, label);
 			if (Property.isExpanded) {
-				float fieldsCount = 4;
+				float height = FieldHeight; // The header
+				height += EditorGUI.GetPropertyHeight(MagnitudeProperty);
+				height += EditorGUI.GetPropertyHeight(TMultiplierProperty);
+				height += EditorGUI.GetPropertyHeight(IsDamperedProperty);
 				if (IsDamperedProperty.boolValue) {
-					fieldsCount++;
+					height += EditorGUI.GetPropertyHeight(DamperProperty);
 				}
-				return FieldHeight * fieldsCount;
+				return height;
 			} else {
 				return FieldHeight;
 			}
@@ -36,8 +42,8 @@
 			Property.isExpanded = EditorGUI.Foldout(GetNextPosition(), Property.isExpanded, Label);
 			if (Property.isExpanded) {
 				EditorGUI.indentLevel++;
+				EditorGUI.PropertyField(GetNextPosition(MagnitudeProperty), MagnitudeProperty, true);
 				EditorGUI.PropertyField(GetNextPosition(), TMultiplierProperty);
-				EditorGUI.PropertyField(GetNextPosition(), MagnitudeProperty);
 				EditorGUI.PropertyField(GetNextPosition(), IsDamperedProperty);
 				if (IsDamperedProperty.boolValue) {
 					EditorGUI.indentLevel++;
@@ -53,23 +59,26 @@
 
 		protected override void InitializePropertiesForGetHeight() {
 			base.InitializePropertiesForGetHeight();
-			IsDamperedProperty = Property.FindPropertyRelative("IsDampered");
+			MagnitudeProperty	= Property.FindPropertyRelative("m_Magnitude");
+			TMultiplierProperty = Property.FindPropertyRelative("m_TMultiplier");
+			IsDamperedProperty	= Property.FindPropertyRelative("m_IsDampered");
+			DamperProperty		= Property.FindPropertyRelative("m_Damper");
 		}
 
 		protected override void InitializePropertiesForOnGUI() {
 			base.InitializePropertiesForOnGUI();
-			TMultiplierProperty = Property.FindPropertyRelative("TMultiplier");
-			MagnitudeProperty = Property.FindPropertyRelative("Magnitude");
-			IsDamperedProperty = Property.FindPropertyRelative("IsDampered");
-			DamperProperty = Property.FindPropertyRelative("m_Damper");
+			//MagnitudeProperty	= Property.FindPropertyRelative("m_Magnitude");
+			//TMultiplierProperty = Property.FindPropertyRelative("m_TMultiplier");
+			//IsDamperedProperty	= Property.FindPropertyRelative("m_IsDampered");
+			//DamperProperty		= Property.FindPropertyRelative("m_Damper");
 		}
 
 
 		#region Private Properties
 
-		private SerializedProperty TMultiplierProperty;
-
 		private SerializedProperty MagnitudeProperty;
+
+		private SerializedProperty TMultiplierProperty;
 
 		private SerializedProperty IsDamperedProperty;
 

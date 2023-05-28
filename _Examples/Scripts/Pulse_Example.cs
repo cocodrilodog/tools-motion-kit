@@ -26,7 +26,7 @@
 				Vector3 position = YCube.localPosition;
 				position.y = y;
 				YCube.localPosition = position;
-			}).SetEasing(new Pulse(1).FloatEasing).Play(currentY, currentY, 0.5f);
+			}).SetEasing(Pulse.FloatEasing).Play(currentY, currentY, 0.5f);
 
 		}
 
@@ -40,7 +40,7 @@
 			Color currentColor = ColorCube.Color;
 
 			MotionKit.GetMotion(this, "ColorMotion", c => ColorCube.Color = c)
-				.SetEasing(new Pulse(-0.5f).ColorEasing).Play(currentColor, currentColor, 0.5f);
+				.SetEasing(Pulse.ColorEasing).Play(currentColor, currentColor, 0.5f);
 
 		}
 
