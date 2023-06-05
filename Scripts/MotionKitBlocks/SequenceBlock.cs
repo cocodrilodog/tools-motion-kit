@@ -26,11 +26,11 @@ namespace CocodriloDog.Animation {
 			}
 		}
 
-		public override ReadOnlyCollection<PlaybackBlock> Items {
+		public override ReadOnlyCollection<MotionKitBlock> Items {
 			get {
 				_ = Sequence; // <- Force init
 				if(m_Items == null) {
-					m_Items = new ReadOnlyCollection<PlaybackBlock>(m_SequenceItems);
+					m_Items = new ReadOnlyCollection<MotionKitBlock>(m_SequenceItems);
 				}
 				return m_Items;
 			}
@@ -130,13 +130,13 @@ namespace CocodriloDog.Animation {
 			}
 		}
 
-		public PlaybackBlock GetChildBlock(string name) => Items.FirstOrDefault(b => b != null && b.Name == name);
+		public MotionKitBlock GetChildBlock(string name) => Items.FirstOrDefault(b => b != null && b.Name == name);
 
-		public PlaybackBlock GetChildBlockAtPath(string blockPath) => MotionKitBlocksUtility.GetChildBlockAtPath(this, blockPath);
+		public MotionKitBlock GetChildBlockAtPath(string blockPath) => MotionKitBlocksUtility.GetChildBlockAtPath(this, blockPath);
 
-		public PlaybackBlock[] GetChildrenBlocks() => Items.ToArray();
+		public MotionKitBlock[] GetChildrenBlocks() => Items.ToArray();
 
-		public override void SetItem(int index, PlaybackBlock block) => m_SequenceItems[index] = block;
+		public override void SetItem(int index, MotionKitBlock block) => m_SequenceItems[index] = block;
 
 		#endregion
 
@@ -156,7 +156,7 @@ namespace CocodriloDog.Animation {
 		/// Additionally it reads more clear for the user in the inspector.
 		/// </summary>
 		[SerializeReference]
-		private List<PlaybackBlock> m_SequenceItems = new List<PlaybackBlock>();
+		private List<MotionKitBlock> m_SequenceItems = new List<MotionKitBlock>();
 
 		[SerializeReference]
 		private List<MotionKitBatchOperation> m_BatchOperations = new List<MotionKitBatchOperation>();
@@ -167,7 +167,7 @@ namespace CocodriloDog.Animation {
 		#region Private Fields - Non Serialized
 
 		[NonSerialized]
-		private ReadOnlyCollection<PlaybackBlock> m_Items;
+		private ReadOnlyCollection<MotionKitBlock> m_Items;
 
 		[NonSerialized]
 		private Sequence m_Sequence;

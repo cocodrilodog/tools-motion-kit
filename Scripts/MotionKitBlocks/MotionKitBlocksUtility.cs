@@ -15,10 +15,10 @@ namespace CocodriloDog.Animation {
 		/// </summary>
 		/// <param name="parent">The <see cref="IMotionKitParent"/> where the search starts</param>
 		/// <param name="blockPath">The path of the block. For example "Parallel/Sequence1/Motion2D"</param>
-		/// <returns>The <see cref="PlaybackBlock"/> if it was found</returns>
-		public static PlaybackBlock GetChildBlockAtPath(IMotionKitParent parent, string blockPath) {
+		/// <returns>The <see cref="MotionKitBlock"/> if it was found</returns>
+		public static MotionKitBlock GetChildBlockAtPath(IMotionKitParent parent, string blockPath) {
 			var pathParts = blockPath.Split('/');			
-			PlaybackBlock block = null;
+			MotionKitBlock block = null;
 			for (int i = 0; i < pathParts.Length; i++) {
 				block = parent.GetChildBlock(pathParts[i]);
 				if (block is IMotionKitParent) {
@@ -42,7 +42,7 @@ namespace CocodriloDog.Animation {
 		/// 
 		/// <param name="animateBlock">The animate asset</param>
 		/// <returns><c>true</c> if the provided asset is a motion asset and its progress is set to 0</returns>
-		public static bool SetInitialValue(PlaybackBlock animateBlock) {
+		public static bool SetInitialValue(MotionKitBlock animateBlock) {
 			if (animateBlock is IMotionBlock) {
 				var motionBlock = animateBlock as IMotionBlock;
 				// The motion is initialized first and its relative values are calculated before applying

@@ -8,7 +8,7 @@ namespace CocodriloDog.Animation {
 	using UnityEngine;
 
 	/// <summary>
-	/// This is the component that will be used to own and manage <see cref="PlaybackBlock"/>s.
+	/// This is the component that will be used to own and manage <see cref="MotionKitBlock"/>s.
 	/// </summary>
 	/// <remarks>
 	/// Its interface has been designed for ease of use by <c>UnityEvents</c>.
@@ -21,7 +21,7 @@ namespace CocodriloDog.Animation {
 		/// <summary>
 		/// The first <see cref="Blocks"/> item if any, or <c>null</c>.
 		/// </summary>
-		public PlaybackBlock DefaultBlock => Blocks.Count > 0 ? Blocks[0] : null;
+		public MotionKitBlock DefaultBlock => Blocks.Count > 0 ? Blocks[0] : null;
 
 		#endregion
 
@@ -34,13 +34,13 @@ namespace CocodriloDog.Animation {
 		public void Play() => DefaultBlock?.Play();
 
 		/// <summary>
-		/// Plays the <see cref="PlaybackBlock"/> with the specified <paramref name="blockPath"/>.
+		/// Plays the <see cref="MotionKitBlock"/> with the specified <paramref name="blockPath"/>.
 		/// </summary>
 		/// <param name="blockPath">The name of the block.</param>
 		public void Play(string blockPath) => GetChildBlockAtPath(blockPath)?.Play();
 
 		/// <summary>
-		/// Plays all the <see cref="PlaybackBlock"/>s managed by this behaviour.
+		/// Plays all the <see cref="MotionKitBlock"/>s managed by this behaviour.
 		/// </summary>
 		public void PlayAll() => Blocks.ForEach(b => b?.Play());
 
@@ -50,13 +50,13 @@ namespace CocodriloDog.Animation {
 		public void Stop() => DefaultBlock?.Stop();
 
 		/// <summary>
-		/// Stops the <see cref="PlaybackBlock"/> with the specified <paramref name="blockPath"/>.
+		/// Stops the <see cref="MotionKitBlock"/> with the specified <paramref name="blockPath"/>.
 		/// </summary>
 		/// <param name="blockPath">The name of the block.</param>
 		public void Stop(string blockPath) => GetChildBlockAtPath(blockPath)?.Stop();
 
 		/// <summary>
-		/// Stops all the <see cref="PlaybackBlock"/>s managed by this behaviour.
+		/// Stops all the <see cref="MotionKitBlock"/>s managed by this behaviour.
 		/// </summary>
 		public void StopAll() => Blocks.ForEach(b => b?.Stop());
 
@@ -66,14 +66,14 @@ namespace CocodriloDog.Animation {
 		public void Pause() => DefaultBlock?.Pause();
 
 		/// <summary>
-		/// Pauses the <see cref="PlaybackBlock"/> with the specified <paramref name="blockPath"/>.
+		/// Pauses the <see cref="MotionKitBlock"/> with the specified <paramref name="blockPath"/>.
 		/// </summary>
 		/// <param name="blockPath">The name of the block.</param>
 		public void Pause(string blockPath) => GetChildBlockAtPath(blockPath)?.Pause();
 
 
 		/// <summary>
-		/// Pauses all the <see cref="PlaybackBlock"/>s managed by this behaviour.
+		/// Pauses all the <see cref="MotionKitBlock"/>s managed by this behaviour.
 		/// </summary>
 		public void PauseAll() => Blocks.ForEach(b => b?.Pause());
 
@@ -83,13 +83,13 @@ namespace CocodriloDog.Animation {
 		public void Resume() => DefaultBlock?.Resume();
 
 		/// <summary>
-		/// Resumes the <see cref="PlaybackBlock"/> with the specified <paramref name="blockPath"/>.
+		/// Resumes the <see cref="MotionKitBlock"/> with the specified <paramref name="blockPath"/>.
 		/// </summary>
 		/// <param name="blockPath">The name of the block.</param>
 		public void Resume(string blockPath) => GetChildBlockAtPath(blockPath)?.Resume();
 
 		/// <summary>
-		/// Resumes all the <see cref="PlaybackBlock"/>s managed by this behaviour.
+		/// Resumes all the <see cref="MotionKitBlock"/>s managed by this behaviour.
 		/// </summary>
 		public void ResumeAll() => Blocks.ForEach(b => b?.Resume());
 
@@ -100,7 +100,7 @@ namespace CocodriloDog.Animation {
 		public void ResetMotion() => (DefaultBlock as IMotionBlock)?.ResetPlayback();
 
 		/// <summary>
-		/// Resets the <see cref="PlaybackBlock"/> with the specified <paramref name="blockPath"/>
+		/// Resets the <see cref="MotionKitBlock"/> with the specified <paramref name="blockPath"/>
 		/// if it is a motion.
 		/// </summary>
 		/// <param name="blockPath">The path of the block. For example "Parallel/Sequence1/Motion2D"</param>
@@ -119,19 +119,19 @@ namespace CocodriloDog.Animation {
 		}
 
 		/// <summary>
-		/// Disposes all the <see cref="PlaybackBlock"/>s of this compopnent.
+		/// Disposes all the <see cref="MotionKitBlock"/>s of this compopnent.
 		/// </summary>
 		public void Dispose() => Blocks.ForEach(b => b?.Dispose());
 
-		public PlaybackBlock GetChildBlock(string name) => Blocks.FirstOrDefault(b => b != null && b.Name == name);
+		public MotionKitBlock GetChildBlock(string name) => Blocks.FirstOrDefault(b => b != null && b.Name == name);
 
-		public PlaybackBlock GetChildBlockAtPath(string blockPath) => MotionKitBlocksUtility.GetChildBlockAtPath(this, blockPath);
+		public MotionKitBlock GetChildBlockAtPath(string blockPath) => MotionKitBlocksUtility.GetChildBlockAtPath(this, blockPath);
 
-		public T GetChildBlockAtPath<T>(string blockPath) where T : PlaybackBlock {
+		public T GetChildBlockAtPath<T>(string blockPath) where T : MotionKitBlock {
 			return GetChildBlockAtPath(blockPath) as T;
 		}
 
-		public PlaybackBlock[] GetChildrenBlocks() => Blocks.ToArray();
+		public MotionKitBlock[] GetChildrenBlocks() => Blocks.ToArray();
 
 		#endregion
 
@@ -164,7 +164,7 @@ namespace CocodriloDog.Animation {
 		#region Private Fields
 
 		[SerializeReference]
-		private List<PlaybackBlock> m_Blocks = new List<PlaybackBlock>();
+		private List<MotionKitBlock> m_Blocks = new List<MotionKitBlock>();
 
 		[SerializeField]
 		private bool m_PlayAllOnStart;
@@ -192,7 +192,7 @@ namespace CocodriloDog.Animation {
 
 		#region Private Properties		
 
-		private List<PlaybackBlock> Blocks => m_Blocks;
+		private List<MotionKitBlock> Blocks => m_Blocks;
 
 		private bool PlayAllOnStart => m_PlayAllOnStart;
 
@@ -204,16 +204,16 @@ namespace CocodriloDog.Animation {
 		#region Private Methods
 
 		/// <summary>
-		/// Initializes all the <see cref="PlaybackBlock"/>s of this compopnent.
+		/// Initializes all the <see cref="MotionKitBlock"/>s of this compopnent.
 		/// </summary>
 		private void Initialize() => Blocks.ForEach(bf => bf?.Initialize());
 
 		/// <summary>
-		/// Performs an action in all <see cref="PlaybackBlock"/>s under <paramref name="animateBlock"/>.
+		/// Performs an action in all <see cref="MotionKitBlock"/>s under <paramref name="animateBlock"/>.
 		/// </summary>
-		/// <param name="animateBlock">The root <see cref="PlaybackBlock"/></param>
+		/// <param name="animateBlock">The root <see cref="MotionKitBlock"/></param>
 		/// <param name="action">The action to perform in it.</param>
-		private void ForAllChildrenBlocks(PlaybackBlock animateBlock, Action<PlaybackBlock> action) {
+		private void ForAllChildrenBlocks(MotionKitBlock animateBlock, Action<MotionKitBlock> action) {
 
 			if (animateBlock == null) {
 				return;

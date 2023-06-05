@@ -9,7 +9,7 @@ namespace CocodriloDog.Animation {
 	/// Block for <see cref="Timer"/> objects.
 	/// </summary>
 	[Serializable]
-	public class TimerBlock : PlaybackBlock {
+	public class TimerBlock : MotionKitBlock {
 
 
 		#region Public Properties

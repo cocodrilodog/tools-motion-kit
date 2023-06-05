@@ -8,7 +8,7 @@ namespace CocodriloDog.Animation {
 	using UnityEngine.Events;
 
 	/// <summary>
-	/// Interface to be implemented by <see cref="PlaybackBlock"/>. It exposes the members 
+	/// Interface to be implemented by <see cref="MotionKitBlock"/>. It exposes the members 
 	/// that are used for playback and initialization of the compound <see cref="MotionKit"/> 
 	/// objects: <see cref="Sequence"/> and <see cref="Parallel"/>.
 	/// </summary>
@@ -45,7 +45,7 @@ namespace CocodriloDog.Animation {
 	/// They are intended to be used as the inspector-friendly part of the MotionKit engine.
 	/// </remarks>
 	[Serializable]
-	public abstract class PlaybackBlock : CompositeObject, IMotionKitBlock {
+	public abstract class MotionKitBlock : CompositeObject, IMotionKitBlock {
 
 
 		#region Public Properties
@@ -56,27 +56,27 @@ namespace CocodriloDog.Animation {
 		public abstract ITimedProgressable TimedProgressable { get; }
 
 		/// <summary>
-		/// Gets the <c>Progress</c> of the MotionKit object managed by this <see cref="PlaybackBlock"/>.
+		/// Gets the <c>Progress</c> of the MotionKit object managed by this <see cref="MotionKitBlock"/>.
 		/// </summary>
 		public abstract float Progress { get; set; }
 
 		/// <summary>
-		/// Gets the <c>CurrentTime</c> of the MotionKit object managed by this <see cref="PlaybackBlock"/>.
+		/// Gets the <c>CurrentTime</c> of the MotionKit object managed by this <see cref="MotionKitBlock"/>.
 		/// </summary>
 		public abstract float CurrentTime { get; }
 
 		/// <summary>
-		/// Gets the <c>Duration</c> of the MotionKit object managed by this <see cref="PlaybackBlock"/>.
+		/// Gets the <c>Duration</c> of the MotionKit object managed by this <see cref="MotionKitBlock"/>.
 		/// </summary>
 		public abstract float Duration { get; }
 
 		/// <summary>
-		/// Gets the <c>IsPlaying</c> property of the MotionKit object managed by this <see cref="PlaybackBlock"/>.
+		/// Gets the <c>IsPlaying</c> property of the MotionKit object managed by this <see cref="MotionKitBlock"/>.
 		/// </summary>
 		public abstract bool IsPlaying { get; }
 
 		/// <summary>
-		/// Gets the <c>IsPaused</c> property of the MotionKit object managed by this <see cref="PlaybackBlock"/>.
+		/// Gets the <c>IsPaused</c> property of the MotionKit object managed by this <see cref="MotionKitBlock"/>.
 		/// </summary>
 		public abstract bool IsPaused { get; }
 
@@ -106,7 +106,7 @@ namespace CocodriloDog.Animation {
 		public override string DisplayName => $"{base.DisplayName} ({DurationToBeUsed}s)";
 
 		/// <summary>
-		/// The time mode to be used by the MotionKit object managed by this <see cref="PlaybackBlock"/>.
+		/// The time mode to be used by the MotionKit object managed by this <see cref="MotionKitBlock"/>.
 		/// </summary>
 		public TimeMode TimeMode {
 			get => SharedSettings != null ? SharedSettings.TimeMode : m_TimeMode;
@@ -114,7 +114,7 @@ namespace CocodriloDog.Animation {
 		}
 
 		/// <summary>
-		/// The easing to be used by the MotionKit object managed by this <see cref="PlaybackBlock"/>.
+		/// The easing to be used by the MotionKit object managed by this <see cref="MotionKitBlock"/>.
 		/// </summary>
 		public MotionKitEasingField Easing {
 			get => SharedSettings != null ? SharedSettings.Easing : m_Easing;
@@ -137,13 +137,13 @@ namespace CocodriloDog.Animation {
 		/// <see cref="MotionKit"/>.
 		/// </summary>
 		/// <remarks>
-		/// This is called in the <see cref="Play"/> method when this <see cref="PlaybackBlock"/> has 
+		/// This is called in the <see cref="Play"/> method when this <see cref="MotionKitBlock"/> has 
 		/// an <see cref="Owner"/> and a <see cref="ReuseID"/>
 		/// </remarks>
 		public abstract void ResetPlayback();
 
 		/// <summary>
-		/// Plays the MotionKit object managed by this <see cref="PlaybackBlock"/>.
+		/// Plays the MotionKit object managed by this <see cref="MotionKitBlock"/>.
 		/// </summary>
 		public virtual void Play() {
 			if (m_Owner != null && !string.IsNullOrEmpty(m_ReuseID)) {
@@ -152,17 +152,17 @@ namespace CocodriloDog.Animation {
 		}
 
 		/// <summary>
-		/// Plays the MotionKit object managed by this <see cref="PlaybackBlock"/>.
+		/// Plays the MotionKit object managed by this <see cref="MotionKitBlock"/>.
 		/// </summary>
 		public abstract void Stop();
 
 		/// <summary>
-		/// Pauses the MotionKit object managed by this <see cref="PlaybackBlock"/>.
+		/// Pauses the MotionKit object managed by this <see cref="MotionKitBlock"/>.
 		/// </summary>
 		public abstract void Pause();
 
 		/// <summary>
-		/// Resumes the MotionKit object managed by this <see cref="PlaybackBlock"/>.
+		/// Resumes the MotionKit object managed by this <see cref="MotionKitBlock"/>.
 		/// </summary>
 		public abstract void Resume();
 
@@ -232,22 +232,22 @@ namespace CocodriloDog.Animation {
 		}
 
 		/// <summary>
-		/// The <c>OnStart</c> callbacks to be invoked by the MotionKit object managed by this <see cref="PlaybackBlock"/>.
+		/// The <c>OnStart</c> callbacks to be invoked by the MotionKit object managed by this <see cref="MotionKitBlock"/>.
 		/// </summary>
 		protected UnityEvent OnStart => m_OnStart;
 
 		/// <summary>
-		/// The <c>OnUpdate</c> callbacks to be invoked by the MotionKit object managed by this <see cref="PlaybackBlock"/>.
+		/// The <c>OnUpdate</c> callbacks to be invoked by the MotionKit object managed by this <see cref="MotionKitBlock"/>.
 		/// </summary>
 		protected UnityEvent OnUpdate => m_OnUpdate;
 
 		/// <summary>
-		/// The <c>OnInterrupt</c> callbacks to be invoked by the MotionKit object managed by this <see cref="PlaybackBlock"/>.
+		/// The <c>OnInterrupt</c> callbacks to be invoked by the MotionKit object managed by this <see cref="MotionKitBlock"/>.
 		/// </summary>
 		protected UnityEvent OnInterrupt => m_OnInterrupt;
 
 		/// <summary>
-		/// The <c>OnComplete</c> callbacks to be invoked by the MotionKit object managed by this <see cref="PlaybackBlock"/>.
+		/// The <c>OnComplete</c> callbacks to be invoked by the MotionKit object managed by this <see cref="MotionKitBlock"/>.
 		/// </summary>
 		protected UnityEvent OnComplete => m_OnComplete;
 
