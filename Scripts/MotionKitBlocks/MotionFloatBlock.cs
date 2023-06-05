@@ -9,7 +9,7 @@ namespace CocodriloDog.Animation {
 	/// Block for <see cref="float"/> motions.
 	/// </summary>
 	[Serializable]
-	public class MotionFloatBlock : MotionBlock<float, MotionFloat, MotionFloatValues> {
+	public class MotionFloatBlock : MotionBaseBlock<float, MotionFloat, MotionFloatValues> {
 
 
 		#region Public Methods

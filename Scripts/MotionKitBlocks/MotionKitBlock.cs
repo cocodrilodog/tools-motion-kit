@@ -15,7 +15,7 @@ namespace CocodriloDog.Animation {
 	/// 
 	/// <remarks>
 	/// It was created so that a <see cref="MotionBlock{ValueT, MotionT}"/> is easily
-	/// identifiable with <see cref="IMotionBlock"/> instead of using the concrete types
+	/// identifiable with <see cref="IMotionBaseBlock"/> instead of using the concrete types
 	/// derived from the template.
 	/// </remarks>
 	public interface IMotionKitBlock {
