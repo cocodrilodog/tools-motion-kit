@@ -5,7 +5,8 @@
     using System.Collections.Generic;
     using UnityEngine;
 
-    public class ChangeSequenceItems_Example : MonoBehaviour {
+	[AddComponentMenu("")]
+	public class ChangeSequenceItems_Example : MonoBehaviour {
 
 
 		#region Unity Methods

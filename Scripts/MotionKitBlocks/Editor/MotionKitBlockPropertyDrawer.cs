@@ -70,7 +70,6 @@ namespace CocodriloDog.Animation {
 
 			OwnerProperty				= Property.FindPropertyRelative("m_Owner");
 			ReuseIDProperty				= Property.FindPropertyRelative("m_ReuseID");
-			EditOwnerAndReuseIDProperty	= Property.FindPropertyRelative("m_EditOwnerAndReuseID");
 
 			SharedSettingsProperty		= Property.FindPropertyRelative("m_SharedSettings");
 			
@@ -230,8 +229,6 @@ namespace CocodriloDog.Animation {
 
 		private SerializedProperty ReuseIDProperty { get; set; }
 
-		private SerializedProperty EditOwnerAndReuseIDProperty { get; set; }
-
 		private SerializedProperty DurationProperty { get; set; }
 
 		private SerializedProperty TimeModeProperty { get; set; }
@@ -276,6 +273,8 @@ namespace CocodriloDog.Animation {
 
 		private string[] m_CallbackOptions = new string[] { "On Start", "On Update", "On Interrupt", "On Complete" };
 
+		private bool m_EditOwnerAndReuseID;
+
 		#endregion
 
 
@@ -284,7 +283,7 @@ namespace CocodriloDog.Animation {
 		private void DrawOwnerAndReuseID() {
 
 			var mainRect = GetNextPosition(OwnerProperty);
-			if (Property.managedReferenceValue != null && EditOwnerAndReuseIDProperty.boolValue) {
+			if (Property.managedReferenceValue != null && m_EditOwnerAndReuseID) {
 
 				var fieldsRect = mainRect;
 				fieldsRect.xMax -= 60;
@@ -302,8 +301,8 @@ namespace CocodriloDog.Animation {
 				var closeButtonRect = mainRect;
 				closeButtonRect.xMin += fieldsRect.width + 10;
 
-				if (GUI.Button(closeButtonRect, "Close")) {
-					EditOwnerAndReuseIDProperty.boolValue = false;
+				if (GUI.Button(closeButtonRect, "Done!")) {
+					m_EditOwnerAndReuseID = false;
 				}
 
 				EditorGUIUtility.labelWidth = 0;
@@ -314,7 +313,7 @@ namespace CocodriloDog.Animation {
 				var reuseIDString = !string.IsNullOrEmpty(ReuseIDProperty.stringValue) ? $"[{ReuseIDProperty.stringValue}] " : "";
 				if (GUI.Button(buttonRect, $"Edit Owner {ownerString}and/or Reuse ID {reuseIDString}")) {
 					if (Property.managedReferenceValue != null) {
-						EditOwnerAndReuseIDProperty.boolValue = true;
+						m_EditOwnerAndReuseID = true;
 					}
 				}
 			}

@@ -89,7 +89,7 @@ namespace CocodriloDog.Animation {
 				}
 
 				// Initialize the motion
-				ResetMotion();
+				ResetPlayback();
 
 			} else {
 				// TODO: Possibly work with ScriptableObjects (and fields)
@@ -107,7 +107,7 @@ namespace CocodriloDog.Animation {
 
 		}
 
-		public override void ResetMotion() {
+		public override void ResetPlayback() {
 			m_Motion = GetMotion(m_SetterDelegate, m_GetterDelegate);
 		}
 
@@ -149,7 +149,7 @@ namespace CocodriloDog.Animation {
 						m_DontResetRelativeValuesOnStart = false;
 					} else {
 						// By default, reset the motion when we have relative values
-						ResetMotion();
+						ResetPlayback();
 					}
 				}
 				if (OnStart.GetPersistentEventCount() > 0) OnStart.Invoke();

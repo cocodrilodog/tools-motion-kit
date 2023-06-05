@@ -8,6 +8,7 @@
 	using UnityEngine;
 	using UnityEngine.EventSystems;
 
+	[AddComponentMenu("")]
 	public class Shake_Example : MonoBehaviour {
 
 
@@ -56,8 +57,7 @@
 
 			var pos = cube.transform.position;
 			MotionKit.GetMotion(cube, "Position", p => cube.position = p)
-				.SetEasing(Shake.Vector3Easing)
-				.Play(pos, pos, 1);
+				.SetEasing(Shake.Vector3Easing).Play(pos, pos, 1);
 
 		}
 
@@ -75,8 +75,7 @@
 			var pos = cube.transform.position;
 
 			MotionKit.GetMotion(cube, "Position", p => cube.position = p)
-				.SetEasing(shakeX.Vector3Easing)
-				.Play(pos, pos, 1);
+				.SetEasing(shakeX.Vector3Easing).Play(pos, pos, 1);
 
 		}
 
@@ -89,10 +88,8 @@
 			var colorModifier = cube.GetComponent<ColorModifier>();
 			var color = colorModifier.Color;
 
-			MotionKit.GetMotion(cube, "Color", c => {
-				Debug.Log(c);
-				colorModifier.Color = c;
-			}).SetEasing(Shake.ColorEasing).Play(color, color, 1);
+			MotionKit.GetMotion(cube, "Color", c => colorModifier.Color = c)
+				.SetEasing(Shake.ColorEasing).Play(color, color, 1);
 
 		}
 

@@ -5,7 +5,8 @@
     using System.Collections.Generic;
     using UnityEngine;
 
-    public class Pulse_Example : MonoBehaviour {
+	[AddComponentMenu("")]
+	public class Pulse_Example : MonoBehaviour {
 
 
 		#region Public Fields

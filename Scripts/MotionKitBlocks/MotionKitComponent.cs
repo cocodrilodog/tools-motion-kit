@@ -97,24 +97,24 @@ namespace CocodriloDog.Animation {
 		/// <summary>
 		/// Resets the <see cref="DefaultBlock"/> if it is a <see cref="IMotionBlock"/>.
 		/// </summary>
-		public void ResetMotion() => (DefaultBlock as IMotionBlock)?.ResetMotion();
+		public void ResetMotion() => (DefaultBlock as IMotionBlock)?.ResetPlayback();
 
 		/// <summary>
 		/// Resets the <see cref="MotionKitBlock"/> with the specified <paramref name="blockPath"/>
 		/// if it is a motion.
 		/// </summary>
 		/// <param name="blockPath">The path of the block. For example "Parallel/Sequence1/Motion2D"</param>
-		public void ResetMotion(string blockPath) => (GetChildBlockAtPath(blockPath) as IMotionBlock)?.ResetMotion();
+		public void ResetMotion(string blockPath) => (GetChildBlockAtPath(blockPath) as IMotionBlock)?.ResetPlayback();
 
 		/// <summary>
-		/// Calls <see cref="IMotionBlock.ResetMotion()"/> in all the motions that are in this <see cref="MotionKitComponent"/>.
+		/// Calls <see cref="IMotionBlock.ResetPlayback()"/> in all the motions that are in this <see cref="MotionKitComponent"/>.
 		/// If <paramref name="recursive"/> is <c>true</c>, it looks for children blocks too.
 		/// </summary>
 		public void ResetAllMotions(bool recursive = false) {
 			if (recursive) {
-				Blocks.ForEach(B => ForAllChildrenBlocks(B, b => (b as IMotionBlock)?.ResetMotion()));
+				Blocks.ForEach(B => ForAllChildrenBlocks(B, b => (b as IMotionBlock)?.ResetPlayback()));
 			} else {
-				Blocks.ForEach(B => (B as IMotionBlock)?.ResetMotion());
+				Blocks.ForEach(B => (B as IMotionBlock)?.ResetPlayback());
 			}
 		}
 

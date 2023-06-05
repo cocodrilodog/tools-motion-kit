@@ -44,24 +44,31 @@ namespace CocodriloDog.Animation {
 		#region Public Methods
 
 		public override void Initialize() {
-
 			if (Application.isPlaying) {
-
-				m_Timer = MotionKit.GetTimer(Owner, ReuseID)
-					.SetDuration(DurationInput)
-					.SetTimeMode(TimeMode);
-
-				// This approach will only work if the listeners are added via editor
-				if (OnStart.GetPersistentEventCount() > 0) m_Timer.SetOnStart(OnStart.Invoke);
-				if (OnUpdate.GetPersistentEventCount() > 0) m_Timer.SetOnUpdate(OnUpdate.Invoke);
-				if (OnInterrupt.GetPersistentEventCount() > 0) m_Timer.SetOnInterrupt(OnInterrupt.Invoke);
-				if (OnComplete.GetPersistentEventCount() > 0) m_Timer.SetOnComplete(OnComplete.Invoke);
-
+				ResetPlayback();
 			}
+		}
+
+		public override void ResetPlayback() {
+
+			Debug.Log($"ResetPlayback: {Name}");
+
+			m_Timer = MotionKit.GetTimer(Owner, ReuseID)
+				.SetDuration(DurationInput)
+				.SetTimeMode(TimeMode);
+
+			// This approach will only work if the listeners are added via editor
+			if (OnStart.GetPersistentEventCount() > 0) m_Timer.SetOnStart(OnStart.Invoke);
+			if (OnUpdate.GetPersistentEventCount() > 0) m_Timer.SetOnUpdate(OnUpdate.Invoke);
+			if (OnInterrupt.GetPersistentEventCount() > 0) m_Timer.SetOnInterrupt(OnInterrupt.Invoke);
+			if (OnComplete.GetPersistentEventCount() > 0) m_Timer.SetOnComplete(OnComplete.Invoke);
 
 		}
 
-		public override void Play() => Timer.Play();
+		public override void Play() {
+			base.Play();
+			Timer.Play();
+		}
 
 		public override void Stop() => Timer.Stop();
 

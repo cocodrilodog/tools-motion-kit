@@ -7,6 +7,7 @@
 	using UnityEngine;
 	using UnityEngine.Events;
 
+
 	[Serializable]
 	public class Motion3DSetter : UnityEvent<Vector3> { }
 
@@ -19,6 +20,7 @@
 	/// There should be a way of providing a getter via reflection for when we
 	/// want the animation to start in the current value.
 	/// </remarks>
+	[AddComponentMenu("")]
 	public class MotionInspector_Example : MonoBehaviour {
 
 

@@ -8,6 +8,7 @@
 	using UnityEngine;
 	using UnityEngine.EventSystems;
 
+	[AddComponentMenu("")]
 	public class Blink_Example : MonoBehaviour {
 
 

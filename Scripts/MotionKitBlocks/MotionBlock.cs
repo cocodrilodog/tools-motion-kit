@@ -17,7 +17,7 @@ namespace CocodriloDog.Animation {
 	/// </remarks>
 	public interface IMotionBlock : IMotionKitBlock {
 		public UnityEngine.Object Object { get; set; }
-		void ResetMotion();
+		void ResetPlayback();
 		void DontResetRelativeValuesOnStart();
 	}
 
@@ -142,7 +142,7 @@ namespace CocodriloDog.Animation {
 					}
 
 					// Initialize the motion
-					ResetMotion();
+					ResetPlayback();
 
 				} else {
 					// TODO: Possibly work with ScriptableObjects (and fields)
@@ -163,18 +163,34 @@ namespace CocodriloDog.Animation {
 		}
 
 		/// <summary>
-		/// Reassigns the values of the motion.
+		/// Creates or updates the playback object by invoking the playback factory method at 
+		/// <see cref="MotionKit"/>.
 		/// </summary>
 		/// 
 		/// <remarks>
-		/// This can be used to update the initial and final values if they are set to be relative because they
-		/// need to be calculated before the animation begins.
+		/// This is called in the <see cref="Play"/> method when this <see cref="MotionKitBlock"/> has 
+		/// an <see cref="Owner"/> and a <see cref="ReuseID"/>.
+		/// In <see cref="MotionBlock{ValueT, MotionT, SharedValuesT}"/> objects, this updates the initial and 
+		/// final values if they are set to be relative because they need to be calculated before the animation 
+		/// begins.
 		/// </remarks>
-		public virtual void ResetMotion() {
+		public override void ResetPlayback() {
+			Debug.Log($"ResetPlayback: {Name}");
+			// base.Play() will call ResetPlayback() so if the setter and getter are not
+			// ready here, we need to make sure that they are before we pass them as 
+			// parameters in GetMotion()
+			if (m_SetterDelegate == null) {
+				// Initialize will create both setter and getter if getter is required
+				// For that reason we only check for the setter
+				Initialize(); 
+			}
 			m_Motion = GetMotion(m_SetterDelegate, m_GetterDelegate);
 		}
 
-		public override void Play() => Motion.Play();
+		public override void Play() {
+			base.Play();
+			Motion.Play();
+		}
 
 		public override void Stop() => Motion.Stop();
 

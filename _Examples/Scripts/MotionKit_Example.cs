@@ -7,6 +7,7 @@
 	using UnityEngine.UI;
 	using Random = UnityEngine.Random;
 
+	[AddComponentMenu("")]
 	public class MotionKit_Example : MonoBehaviour {
 
 

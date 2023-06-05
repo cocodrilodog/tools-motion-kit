@@ -9,7 +9,8 @@
 	/// This was created to debug the correct functionning of the clean methods.
 	/// It was debugged with logs that will no longer be there.
 	/// </summary>
-    public class Clean_Example : MonoBehaviour {
+	[AddComponentMenu("")]
+	public class Clean_Example : MonoBehaviour {
 
 
 		#region Unity Methods

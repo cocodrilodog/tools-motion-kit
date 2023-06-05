@@ -77,38 +77,45 @@ namespace CocodriloDog.Animation {
 		#region Public Methods
 
 		public override void Initialize() {
-
 			if (Application.isPlaying) {
-
-				List<ITimedProgressable> sequenceItemsList = new List<ITimedProgressable>();
-				foreach (var sequenceItems in m_SequenceItems) {
-					sequenceItemsList.Add(sequenceItems.TimedProgressable);
-				}
-
-				try {
-					m_Sequence = MotionKit.GetSequence(Owner, ReuseID, sequenceItemsList.ToArray())
-						.SetEasing(Easing.FloatEasing)
-						.SetTimeMode(TimeMode);
-				} catch (ArgumentException e) {
-					// This helps to identify which is the one with the error
-					throw new ArgumentException($"{Name}: {e}");
-				}
-
-				if (DurationInput > 0) {
-					m_Sequence.SetDuration(DurationInput);
-				}
-
-				// This approach will only work if the listeners are added via editor
-				if (OnStart.GetPersistentEventCount() > 0) m_Sequence.SetOnStart(OnStart.Invoke);
-				if (OnUpdate.GetPersistentEventCount() > 0) m_Sequence.SetOnUpdate(OnUpdate.Invoke);
-				if (OnInterrupt.GetPersistentEventCount() > 0) m_Sequence.SetOnInterrupt(OnInterrupt.Invoke);
-				if (OnComplete.GetPersistentEventCount() > 0) m_Sequence.SetOnComplete(OnComplete.Invoke);
-
+				ResetPlayback();
 			}
+		}
+
+		public override void ResetPlayback() {
+
+			Debug.Log($"ResetPlayback: {Name}");
+
+			List<ITimedProgressable> sequenceItemsList = new List<ITimedProgressable>();
+			foreach (var sequenceItems in m_SequenceItems) {
+				sequenceItemsList.Add(sequenceItems.TimedProgressable);
+			}
+
+			try {
+				m_Sequence = MotionKit.GetSequence(Owner, ReuseID, sequenceItemsList.ToArray())
+					.SetEasing(Easing.FloatEasing)
+					.SetTimeMode(TimeMode);
+			} catch (ArgumentException e) {
+				// This helps to identify which is the one with the error
+				throw new ArgumentException($"{Name}: {e}");
+			}
+
+			if (DurationInput > 0) {
+				m_Sequence.SetDuration(DurationInput);
+			}
+
+			// This approach will only work if the listeners are added via editor
+			if (OnStart.GetPersistentEventCount() > 0) m_Sequence.SetOnStart(OnStart.Invoke);
+			if (OnUpdate.GetPersistentEventCount() > 0) m_Sequence.SetOnUpdate(OnUpdate.Invoke);
+			if (OnInterrupt.GetPersistentEventCount() > 0) m_Sequence.SetOnInterrupt(OnInterrupt.Invoke);
+			if (OnComplete.GetPersistentEventCount() > 0) m_Sequence.SetOnComplete(OnComplete.Invoke);
 
 		}
 
-		public override void Play() => Sequence.Play();
+		public override void Play() {
+			base.Play();
+			Sequence.Play();
+		}
 
 		public override void Stop() => Sequence.Stop();
 

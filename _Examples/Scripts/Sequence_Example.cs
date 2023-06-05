@@ -7,6 +7,7 @@
 	using UnityEngine;
 	using UnityEngine.UI;
 
+	[AddComponentMenu("")]
 	public class Sequence_Example : MonoBehaviour {
 
 

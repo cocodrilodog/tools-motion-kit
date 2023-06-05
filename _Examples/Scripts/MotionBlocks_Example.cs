@@ -5,6 +5,7 @@ namespace CocodriloDog.Animation.Examples {
 	using System.Collections.Generic;
 	using UnityEngine;
 
+	[AddComponentMenu("")]
 	public class MotionBlocks_Example : MonoBehaviour {
 
 

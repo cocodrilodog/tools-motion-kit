@@ -41,7 +41,7 @@ namespace CocodriloDog.Animation {
 						m_DontResetRelativeValuesOnStart = false;
 					} else {
 						// By default, reset the motion when we have relative values
-						ResetMotion();
+						ResetPlayback();
 					}
 				}
 				if (OnStart.GetPersistentEventCount() > 0) OnStart.Invoke();

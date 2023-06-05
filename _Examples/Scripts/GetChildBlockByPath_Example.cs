@@ -4,6 +4,7 @@ namespace CocodriloDog.Animation.Examples {
 	using System.Collections.Generic;
 	using UnityEngine;
 
+	[AddComponentMenu("")]
 	public class GetChildBlockByPath_Example : MonoBehaviour {
 
 

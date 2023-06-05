@@ -77,33 +77,40 @@ namespace CocodriloDog.Animation {
 		#region Public Methods
 
 		public override void Initialize() {
-
 			if (Application.isPlaying) {
-
-				List<ITimedProgressable> parallelItemsList = new List<ITimedProgressable>();
-				foreach (var parallelItem in m_ParallelItems) {
-					parallelItemsList.Add(parallelItem.TimedProgressable);
-				}
-
-				m_Parallel = MotionKit.GetParallel(Owner, ReuseID, parallelItemsList.ToArray())
-					.SetEasing(Easing.FloatEasing)
-					.SetTimeMode(TimeMode);
-
-				if (DurationInput > 0) {
-					m_Parallel.SetDuration(DurationInput);
-				}
-
-				// This approach will only work if the listeners are added via editor
-				if (OnStart.GetPersistentEventCount() > 0) m_Parallel.SetOnStart(OnStart.Invoke);
-				if (OnUpdate.GetPersistentEventCount() > 0) m_Parallel.SetOnUpdate(OnUpdate.Invoke);
-				if (OnInterrupt.GetPersistentEventCount() > 0) m_Parallel.SetOnInterrupt(OnInterrupt.Invoke);
-				if (OnComplete.GetPersistentEventCount() > 0) m_Parallel.SetOnComplete(OnComplete.Invoke);
-
+				ResetPlayback();
 			}
+		}
+
+		public override void ResetPlayback() {
+
+			Debug.Log($"ResetPlayback: {Name}");
+
+			List<ITimedProgressable> parallelItemsList = new List<ITimedProgressable>();
+			foreach (var parallelItem in m_ParallelItems) {
+				parallelItemsList.Add(parallelItem.TimedProgressable);
+			}
+
+			m_Parallel = MotionKit.GetParallel(Owner, ReuseID, parallelItemsList.ToArray())
+				.SetEasing(Easing.FloatEasing)
+				.SetTimeMode(TimeMode);
+
+			if (DurationInput > 0) {
+				m_Parallel.SetDuration(DurationInput);
+			}
+
+			// This approach will only work if the listeners are added via editor
+			if (OnStart.GetPersistentEventCount() > 0) m_Parallel.SetOnStart(OnStart.Invoke);
+			if (OnUpdate.GetPersistentEventCount() > 0) m_Parallel.SetOnUpdate(OnUpdate.Invoke);
+			if (OnInterrupt.GetPersistentEventCount() > 0) m_Parallel.SetOnInterrupt(OnInterrupt.Invoke);
+			if (OnComplete.GetPersistentEventCount() > 0) m_Parallel.SetOnComplete(OnComplete.Invoke);
 
 		}
 
-		public override void Play() => Parallel.Play();
+		public override void Play() {
+			base.Play();
+			Parallel.Play();
+		}
 
 		public override void Stop() => Parallel.Stop();
 

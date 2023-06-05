@@ -133,9 +133,23 @@ namespace CocodriloDog.Animation {
 		public abstract void Initialize();
 
 		/// <summary>
+		/// Creates or updates the playback object by invoking the playback factory method at 
+		/// <see cref="MotionKit"/>.
+		/// </summary>
+		/// <remarks>
+		/// This is called in the <see cref="Play"/> method when this <see cref="MotionKitBlock"/> has 
+		/// an <see cref="Owner"/> and a <see cref="ReuseID"/>
+		/// </remarks>
+		public abstract void ResetPlayback();
+
+		/// <summary>
 		/// Plays the MotionKit object managed by this <see cref="MotionKitBlock"/>.
 		/// </summary>
-		public abstract void Play();
+		public virtual void Play() {
+			if (m_Owner != null && !string.IsNullOrEmpty(m_ReuseID)) {
+				ResetPlayback();
+			}
+		}
 
 		/// <summary>
 		/// Plays the MotionKit object managed by this <see cref="MotionKitBlock"/>.

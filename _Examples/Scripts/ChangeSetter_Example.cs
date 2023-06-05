@@ -4,7 +4,8 @@
     using System.Collections.Generic;
     using UnityEngine;
 
-    public class ChangeSetter_Example : MonoBehaviour {
+	[AddComponentMenu("")]
+	public class ChangeSetter_Example : MonoBehaviour {
 
 
 		#region Unity Methods
