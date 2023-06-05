@@ -18,14 +18,14 @@ namespace CocodriloDog.Animation {
 		/// <summary>
 		/// Creates a copy of <see cref="TemplateBlock"/> assigns it to <paramref name="motionKitBlock"/>.
 		/// </summary>
-		/// <param name="motionKitBlock">Each <see cref="MotionKitBlock"/> in the list.</param>
-		/// <param name="index">The index of the <see cref="MotionKitBlock"/> in the list.</param>
+		/// <param name="motionKitBlock">Each <see cref="PlaybackBlock"/> in the list.</param>
+		/// <param name="index">The index of the <see cref="PlaybackBlock"/> in the list.</param>
 		/// <returns><c>true</c> if the operation was successful, <c>false</c> otherwise</returns>
-		public override bool Perform(ref MotionKitBlock motionKitBlock, int index) {
+		public override bool Perform(ref PlaybackBlock motionKitBlock, int index) {
 			base.Perform(ref motionKitBlock, index);
 			CompositeCopier.Copy(TemplateBlock);
 			// Assign it to the ref parameter so that it replaces the existing one in the list
-			motionKitBlock = CompositeCopier.Paste() as MotionKitBlock;
+			motionKitBlock = CompositeCopier.Paste() as PlaybackBlock;
 			return true;
 		}
 
@@ -35,14 +35,14 @@ namespace CocodriloDog.Animation {
 		#region Private Fields
 
 		[SerializeReference]
-		private MotionKitBlock m_TemplateBlock;
+		private PlaybackBlock m_TemplateBlock;
 
 		#endregion
 
 
 		#region Private Properties
 
-		private MotionKitBlock TemplateBlock => m_TemplateBlock;
+		private PlaybackBlock TemplateBlock => m_TemplateBlock;
 
 		#endregion
 

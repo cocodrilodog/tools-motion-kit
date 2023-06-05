@@ -7,7 +7,7 @@ namespace CocodriloDog.Animation {
 	using UnityEngine;
 
 	/// <summary>
-	/// Sets the duration of the <see cref="MotionKitBlock"/> at <see cref="MotionKitBatchOperationPath.Path"/>
+	/// Sets the duration of the <see cref="PlaybackBlock"/> at <see cref="MotionKitBatchOperationPath.Path"/>
 	/// in a incremental way proportional to the <c>index</c> of the block.
 	/// </summary>
 	[Serializable]
@@ -21,9 +21,9 @@ namespace CocodriloDog.Animation {
 		/// proportional to the <paramref name="index"/> of the parent block.
 		/// </summary>
 		/// <param name="childBlock">The child block located at the <c>Path</c>.</param>
-		/// <param name="index">The index of the parent <see cref="MotionKitBlock"/> in the list.</param>
+		/// <param name="index">The index of the parent <see cref="PlaybackBlock"/> in the list.</param>
 		/// <returns><c>true</c> if the operation was successful, <c>false</c> otherwise</returns>
-		protected override bool PerformOnChildBlock(ref MotionKitBlock childBlock, int index) {
+		protected override bool PerformOnChildBlock(ref PlaybackBlock childBlock, int index) {
 			childBlock.DurationInput = BaseDuration + index * DurationIncrement;
 			return true;
 		}

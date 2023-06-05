@@ -26,7 +26,7 @@ namespace CocodriloDog.Animation {
 	/// </summary>
 	/// <typeparam name="ValueT">The animatable type of the motion objects.</typeparam>
 	/// <typeparam name="MotionT">The motion type.</typeparam>
-	public abstract class MotionBlock<ValueT, MotionT, SharedValuesT> : MotionKitBlock, IMotionBlock
+	public abstract class MotionBlock<ValueT, MotionT, SharedValuesT> : PlaybackBlock, IMotionBlock
 		where MotionT : MotionBase<ValueT, MotionT>
 		where SharedValuesT : MotionValues<ValueT> {
 
@@ -168,7 +168,7 @@ namespace CocodriloDog.Animation {
 		/// </summary>
 		/// 
 		/// <remarks>
-		/// This is called in the <see cref="Play"/> method when this <see cref="MotionKitBlock"/> has 
+		/// This is called in the <see cref="Play"/> method when this <see cref="PlaybackBlock"/> has 
 		/// an <see cref="Owner"/> and a <see cref="ReuseID"/>.
 		/// In <see cref="MotionBlock{ValueT, MotionT, SharedValuesT}"/> objects, this updates the initial and 
 		/// final values if they are set to be relative because they need to be calculated before the animation 

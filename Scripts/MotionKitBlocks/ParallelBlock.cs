@@ -26,11 +26,11 @@ namespace CocodriloDog.Animation {
 			}
 		}
 
-		public override ReadOnlyCollection<MotionKitBlock> Items {
+		public override ReadOnlyCollection<PlaybackBlock> Items {
 			get {
 				_ = Parallel; // <- Force init
 				if (m_Items == null) {
-					m_Items = new ReadOnlyCollection<MotionKitBlock>(m_ParallelItems);
+					m_Items = new ReadOnlyCollection<PlaybackBlock>(m_ParallelItems);
 				}
 				return m_Items;
 			}
@@ -125,13 +125,13 @@ namespace CocodriloDog.Animation {
 			}
 		}
 
-		public MotionKitBlock GetChildBlock(string name) => Items.FirstOrDefault(b => b != null && b.Name == name);
+		public PlaybackBlock GetChildBlock(string name) => Items.FirstOrDefault(b => b != null && b.Name == name);
 
-		public MotionKitBlock GetChildBlockAtPath(string blockPath) => MotionKitBlocksUtility.GetChildBlockAtPath(this, blockPath);
+		public PlaybackBlock GetChildBlockAtPath(string blockPath) => MotionKitBlocksUtility.GetChildBlockAtPath(this, blockPath);
 
-		public MotionKitBlock[] GetChildrenBlocks() => Items.ToArray();
+		public PlaybackBlock[] GetChildrenBlocks() => Items.ToArray();
 
-		public override void SetItem(int index, MotionKitBlock block) => m_ParallelItems[index] = block;
+		public override void SetItem(int index, PlaybackBlock block) => m_ParallelItems[index] = block;
 
 		#endregion
 
@@ -151,7 +151,7 @@ namespace CocodriloDog.Animation {
 		/// Additionally it reads more clear for the user in the inspector.
 		/// </summary>
 		[SerializeReference]
-		private List<MotionKitBlock> m_ParallelItems = new List<MotionKitBlock>();
+		private List<PlaybackBlock> m_ParallelItems = new List<PlaybackBlock>();
 
 		[SerializeReference]
 		private List<MotionKitBatchOperation> m_BatchOperations = new List<MotionKitBatchOperation>();
@@ -162,7 +162,7 @@ namespace CocodriloDog.Animation {
 		#region Private Fields - Non Serialized
 
 		[NonSerialized]
-		private ReadOnlyCollection<MotionKitBlock> m_Items;
+		private ReadOnlyCollection<PlaybackBlock> m_Items;
 
 		[NonSerialized]
 		private Parallel m_Parallel;

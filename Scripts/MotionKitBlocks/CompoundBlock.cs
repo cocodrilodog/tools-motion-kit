@@ -15,7 +15,7 @@ namespace CocodriloDog.Animation {
 	/// This class was created to handle the batch operations.
 	/// </remarks>
 	[Serializable]
-	public abstract class CompoundBlock : MotionKitBlock {
+	public abstract class CompoundBlock : PlaybackBlock {
 
 
 		#region Public Properties
@@ -23,7 +23,7 @@ namespace CocodriloDog.Animation {
 		/// <summary>
 		/// The items of this <see cref="CompoundBlock"/>.
 		/// </summary>
-		public abstract ReadOnlyCollection<MotionKitBlock> Items { get; }
+		public abstract ReadOnlyCollection<PlaybackBlock> Items { get; }
 
 		#endregion
 
@@ -34,8 +34,8 @@ namespace CocodriloDog.Animation {
 		/// Sets the item at he specified index.
 		/// </summary>
 		/// <param name="index">The index</param>
-		/// <param name="block">The <see cref="MotionKitBlock"/> to set</param>
-		public abstract void SetItem(int index, MotionKitBlock block);
+		/// <param name="block">The <see cref="PlaybackBlock"/> to set</param>
+		public abstract void SetItem(int index, PlaybackBlock block);
 
 		/// <summary>
 		/// Gets the batch operation at the specified <paramref name="index"/>

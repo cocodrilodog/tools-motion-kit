@@ -7,7 +7,7 @@ namespace CocodriloDog.Animation {
 	using UnityEngine;
 
 	/// <summary>
-	/// Renames the <see cref="MotionKitBlock"/> at <see cref="MotionKitBatchOperationPath.Path"/>
+	/// Renames the <see cref="PlaybackBlock"/> at <see cref="MotionKitBatchOperationPath.Path"/>
 	/// and optionally appends the <c>index</c> + 1 to the <see cref="NewName"/>.
 	/// </summary>
 	[Serializable]
@@ -21,9 +21,9 @@ namespace CocodriloDog.Animation {
 		/// <c>index</c> + 1 to the <see cref="NewName"/>.
 		/// </summary>
 		/// <param name="childBlock">The child block located at the <c>Path</c>.</param>
-		/// <param name="index">The index of the parent <see cref="MotionKitBlock"/> in the list.</param>
+		/// <param name="index">The index of the parent <see cref="PlaybackBlock"/> in the list.</param>
 		/// <returns><c>true</c> if the operation was successful, <c>false</c> otherwise</returns>
-		protected override bool PerformOnChildBlock(ref MotionKitBlock childBlock, int index) {
+		protected override bool PerformOnChildBlock(ref PlaybackBlock childBlock, int index) {
 			childBlock.Name = NewName + (AppendSerialNumber ? $"{index + 1}" : "");
 			return true;
 		}
@@ -45,7 +45,7 @@ namespace CocodriloDog.Animation {
 		#region Private Properties
 
 		/// <summary>
-		/// The new name for the <see cref="MotionKitBlock"/>.
+		/// The new name for the <see cref="PlaybackBlock"/>.
 		/// </summary>
 		private string NewName => m_NewName;
 

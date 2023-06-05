@@ -7,7 +7,7 @@ namespace CocodriloDog.Animation {
 	using UnityEngine;
 
 	/// <summary>
-	/// An operation to be performed on a list of <see cref="MotionKitBlock"/>s that belong to 
+	/// An operation to be performed on a list of <see cref="PlaybackBlock"/>s that belong to 
 	/// <see cref="SequenceBlock"/>s or <see cref="ParallelBlock"/>s
 	/// </summary>
 	/// <remarks>
@@ -39,12 +39,12 @@ namespace CocodriloDog.Animation {
 
 		/// <summary>
 		/// Override this to perform an operation on the provided <paramref name="motionKitBlock"/> or create a new
-		/// <see cref="MotionKitBlock"/> that will be assigned to the list at <paramref name="index"/>.
+		/// <see cref="PlaybackBlock"/> that will be assigned to the list at <paramref name="index"/>.
 		/// </summary>
-		/// <param name="motionKitBlock">Each <see cref="MotionKitBlock"/> in the list.</param>
-		/// <param name="index">The index of the <see cref="MotionKitBlock"/> in the list.</param>
+		/// <param name="motionKitBlock">Each <see cref="PlaybackBlock"/> in the list.</param>
+		/// <param name="index">The index of the <see cref="PlaybackBlock"/> in the list.</param>
 		/// <returns><c>true</c> if the operation was successful, <c>false</c> otherwise</returns>
-		public virtual bool Perform(ref MotionKitBlock motionKitBlock, int index) {
+		public virtual bool Perform(ref PlaybackBlock motionKitBlock, int index) {
 			m_FieldActionIsPending = false;
 			return false;
 		}
