@@ -15,10 +15,10 @@ namespace CocodriloDog.Animation {
 	/// 
 	/// <remarks>
 	/// It was created so that a <see cref="MotionBlock{ValueT, MotionT}"/> is easily
-	/// identifiable with <see cref="IMotionBaseBlock"/> instead of using the concrete types
+	/// identifiable with <see cref="IMotionBlock"/> instead of using the concrete types
 	/// derived from the template.
 	/// </remarks>
-	public interface IPlaybackBlock {
+	public interface IMotionKitBlock {
 		ITimedProgressable TimedProgressable { get; }
 		float Progress { get; set; }
 		//void SetProgress(float progress, bool invokeCallbacks);
@@ -45,7 +45,7 @@ namespace CocodriloDog.Animation {
 	/// They are intended to be used as the inspector-friendly part of the MotionKit engine.
 	/// </remarks>
 	[Serializable]
-	public abstract class PlaybackBlock : CompositeObject, IPlaybackBlock {
+	public abstract class PlaybackBlock : CompositeObject, IMotionKitBlock {
 
 
 		#region Public Properties

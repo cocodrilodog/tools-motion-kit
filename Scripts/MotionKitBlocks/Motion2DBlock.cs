@@ -18,7 +18,7 @@ namespace CocodriloDog.Animation {
 	/// to only leave the <see cref="Motion3D"/>
 	/// </remarks>
 	[Serializable]
-	public class Motion2DBlock : MotionBaseBlock<Vector3, Motion3D, Motion2DValues> {
+	public class Motion2DBlock : MotionBlock<Vector3, Motion3D, Motion2DValues> {
 
 
 		#region Public Methods
