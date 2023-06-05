@@ -43,8 +43,8 @@ namespace CocodriloDog.Animation {
 		/// <param name="animateBlock">The animate asset</param>
 		/// <returns><c>true</c> if the provided asset is a motion asset and its progress is set to 0</returns>
 		public static bool SetInitialValue(PlaybackBlock animateBlock) {
-			if (animateBlock is IMotionBlock) {
-				var motionBlock = animateBlock as IMotionBlock;
+			if (animateBlock is IMotionBaseBlock) {
+				var motionBlock = animateBlock as IMotionBaseBlock;
 				// The motion is initialized first and its relative values are calculated before applying
 				// progress
 				motionBlock.Progress = 0;

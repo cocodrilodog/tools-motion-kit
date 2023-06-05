@@ -9,7 +9,7 @@ namespace CocodriloDog.Animation {
 	/// Block for <see cref="Color"/> motions.
 	/// </summary>
 	[Serializable]
-	public class MotionColorBlock : MotionBlock<Color, MotionColor, MotionColorValues> {
+	public class MotionColorBlock : MotionBaseBlock<Color, MotionColor, MotionColorValues> {
 
 
 		#region Public Methods

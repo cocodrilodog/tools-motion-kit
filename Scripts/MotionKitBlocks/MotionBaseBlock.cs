@@ -15,7 +15,7 @@ namespace CocodriloDog.Animation {
 	/// It was created so that a <see cref="MotionBlock{ValueT, MotionT}"/> is easily
 	/// identifiable instead of using the concrete types derived from the template.
 	/// </remarks>
-	public interface IMotionBlock : IMotionKitBlock {
+	public interface IMotionBaseBlock : IPlaybackBlock {
 		public UnityEngine.Object Object { get; set; }
 		void ResetPlayback();
 		void DontResetRelativeValuesOnStart();
@@ -26,7 +26,7 @@ namespace CocodriloDog.Animation {
 	/// </summary>
 	/// <typeparam name="ValueT">The animatable type of the motion objects.</typeparam>
 	/// <typeparam name="MotionT">The motion type.</typeparam>
-	public abstract class MotionBlock<ValueT, MotionT, SharedValuesT> : PlaybackBlock, IMotionBlock
+	public abstract class MotionBaseBlock<ValueT, MotionT, SharedValuesT> : PlaybackBlock, IMotionBaseBlock
 		where MotionT : MotionBase<ValueT, MotionT>
 		where SharedValuesT : MotionValues<ValueT> {
 
@@ -170,7 +170,7 @@ namespace CocodriloDog.Animation {
 		/// <remarks>
 		/// This is called in the <see cref="Play"/> method when this <see cref="PlaybackBlock"/> has 
 		/// an <see cref="Owner"/> and a <see cref="ReuseID"/>.
-		/// In <see cref="MotionBlock{ValueT, MotionT, SharedValuesT}"/> objects, this updates the initial and 
+		/// In <see cref="MotionBaseBlock{ValueT, MotionT, SharedValuesT}"/> objects, this updates the initial and 
 		/// final values if they are set to be relative because they need to be calculated before the animation 
 		/// begins.
 		/// </remarks>
