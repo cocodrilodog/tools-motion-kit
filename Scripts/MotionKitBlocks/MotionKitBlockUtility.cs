@@ -1,34 +1,15 @@
 namespace CocodriloDog.Animation {
 
+	using CocodriloDog.Core;
 	using System.Collections;
 	using System.Collections.Generic;
 	using UnityEngine;
 
-	public static class MotionKitBlocksUtility {
+	public static class MotionKitBlockUtility {
 
 
 		#region Public Static Methods
 
-
-		/// <summary>
-		/// Finds a child block at the specified path.
-		/// </summary>
-		/// <param name="parent">The <see cref="IMotionKitParent"/> where the search starts</param>
-		/// <param name="blockPath">The path of the block. For example "Parallel/Sequence1/Motion2D"</param>
-		/// <returns>The <see cref="MotionKitBlock"/> if it was found</returns>
-		public static MotionKitBlock GetChildBlockAtPath(IMotionKitParent parent, string blockPath) {
-			var pathParts = blockPath.Split('/');			
-			MotionKitBlock block = null;
-			for (int i = 0; i < pathParts.Length; i++) {
-				block = parent.GetChildBlock(pathParts[i]);
-				if (block is IMotionKitParent) {
-					parent = (block as IMotionKitParent);
-				} else {
-					break;
-				}
-			}
-			return block;
-		}
 
 		/// <summary>
 		/// Searches recursively for the first motions that modify properties and sets their progress

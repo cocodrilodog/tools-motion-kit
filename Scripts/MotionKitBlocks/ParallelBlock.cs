@@ -12,7 +12,7 @@ namespace CocodriloDog.Animation {
 	/// Block for <see cref="Parallel"/> objects.
 	/// </summary>
 	[Serializable]
-	public class ParallelBlock : CompoundBlock, IMotionKitParent {
+	public class ParallelBlock : CompoundBlock, ICompositeParent<MotionKitBlock> {
 
 
 		#region #region Public Properties
@@ -125,11 +125,11 @@ namespace CocodriloDog.Animation {
 			}
 		}
 
-		public MotionKitBlock GetChildBlock(string name) => Items.FirstOrDefault(b => b != null && b.Name == name);
+		public MotionKitBlock GetChild(string name) => Items.FirstOrDefault(b => b != null && b.Name == name);
 
-		public MotionKitBlock GetChildBlockAtPath(string blockPath) => MotionKitBlocksUtility.GetChildBlockAtPath(this, blockPath);
+		public MotionKitBlock GetChildAtPath(string path) => CompositeObjectUtility.GetChildAtPath(this, path);
 
-		public MotionKitBlock[] GetChildrenBlocks() => Items.ToArray();
+		public MotionKitBlock[] GetChildren() => Items.ToArray();
 
 		public override void SetItem(int index, MotionKitBlock block) => m_ParallelItems[index] = block;
 

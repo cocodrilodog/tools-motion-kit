@@ -20,7 +20,7 @@ namespace CocodriloDog.Animation.Examples {
 
 		private IEnumerator Start() {
 			yield return new WaitForSeconds(1);
-			Debug.Log(MotionKitComponent.GetChildBlockAtPath("Sequence/Motion2"));
+			Debug.Log(MotionKitComponent.GetChildAtPath("Sequence/Motion2"));
 		}
 
 		#endregion

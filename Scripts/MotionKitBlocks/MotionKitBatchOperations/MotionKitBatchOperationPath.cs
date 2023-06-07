@@ -31,7 +31,7 @@ namespace CocodriloDog.Animation {
 					return PerformOnChildBlock(ref motionKitBlock, index);
 				}
 			} else {
-				var childBlock = (motionKitBlock as IMotionKitParent)?.GetChildBlockAtPath(Path);
+				var childBlock = (motionKitBlock as ICompositeParent<MotionKitBlock>)?.GetChildAtPath(Path);
 				if (childBlock != null) {
 					return PerformOnChildBlock(ref childBlock, index);
 				}

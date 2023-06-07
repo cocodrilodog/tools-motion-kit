@@ -13,7 +13,7 @@ namespace CocodriloDog.Animation {
 	/// <remarks>
 	/// Its interface has been designed for ease of use by <c>UnityEvents</c>.
 	/// </remarks>
-	public class MotionKitComponent : CompositeRoot, IMotionKitParent {
+	public class MotionKitComponent : CompositeRoot, ICompositeParent<MotionKitBlock> {
 
 
 		#region Public Properties
@@ -37,7 +37,7 @@ namespace CocodriloDog.Animation {
 		/// Plays the <see cref="MotionKitBlock"/> with the specified <paramref name="blockPath"/>.
 		/// </summary>
 		/// <param name="blockPath">The name of the block.</param>
-		public void Play(string blockPath) => GetChildBlockAtPath(blockPath)?.Play();
+		public void Play(string blockPath) => GetChildAtPath(blockPath)?.Play();
 
 		/// <summary>
 		/// Plays all the <see cref="MotionKitBlock"/>s managed by this behaviour.
@@ -53,7 +53,7 @@ namespace CocodriloDog.Animation {
 		/// Stops the <see cref="MotionKitBlock"/> with the specified <paramref name="blockPath"/>.
 		/// </summary>
 		/// <param name="blockPath">The name of the block.</param>
-		public void Stop(string blockPath) => GetChildBlockAtPath(blockPath)?.Stop();
+		public void Stop(string blockPath) => GetChildAtPath(blockPath)?.Stop();
 
 		/// <summary>
 		/// Stops all the <see cref="MotionKitBlock"/>s managed by this behaviour.
@@ -69,7 +69,7 @@ namespace CocodriloDog.Animation {
 		/// Pauses the <see cref="MotionKitBlock"/> with the specified <paramref name="blockPath"/>.
 		/// </summary>
 		/// <param name="blockPath">The name of the block.</param>
-		public void Pause(string blockPath) => GetChildBlockAtPath(blockPath)?.Pause();
+		public void Pause(string blockPath) => GetChildAtPath(blockPath)?.Pause();
 
 
 		/// <summary>
@@ -86,7 +86,7 @@ namespace CocodriloDog.Animation {
 		/// Resumes the <see cref="MotionKitBlock"/> with the specified <paramref name="blockPath"/>.
 		/// </summary>
 		/// <param name="blockPath">The name of the block.</param>
-		public void Resume(string blockPath) => GetChildBlockAtPath(blockPath)?.Resume();
+		public void Resume(string blockPath) => GetChildAtPath(blockPath)?.Resume();
 
 		/// <summary>
 		/// Resumes all the <see cref="MotionKitBlock"/>s managed by this behaviour.
@@ -104,7 +104,7 @@ namespace CocodriloDog.Animation {
 		/// if it is a motion.
 		/// </summary>
 		/// <param name="blockPath">The path of the block. For example "Parallel/Sequence1/Motion2D"</param>
-		public void ResetMotion(string blockPath) => (GetChildBlockAtPath(blockPath) as IMotionBaseBlock)?.ResetPlayback();
+		public void ResetMotion(string blockPath) => (GetChildAtPath(blockPath) as IMotionBaseBlock)?.ResetPlayback();
 
 		/// <summary>
 		/// Calls <see cref="IMotionBaseBlock.ResetPlayback()"/> in all the motions that are in this <see cref="MotionKitComponent"/>.
@@ -123,15 +123,13 @@ namespace CocodriloDog.Animation {
 		/// </summary>
 		public void Dispose() => Blocks.ForEach(b => b?.Dispose());
 
-		public MotionKitBlock GetChildBlock(string name) => Blocks.FirstOrDefault(b => b != null && b.Name == name);
+		public MotionKitBlock GetChild(string name) => Blocks.FirstOrDefault(b => b != null && b.Name == name);
 
-		public MotionKitBlock GetChildBlockAtPath(string blockPath) => MotionKitBlocksUtility.GetChildBlockAtPath(this, blockPath);
+		public MotionKitBlock GetChildAtPath(string path) => CompositeObjectUtility.GetChildAtPath(this, path);
 
-		public T GetChildBlockAtPath<T>(string blockPath) where T : MotionKitBlock {
-			return GetChildBlockAtPath(blockPath) as T;
-		}
+		public T GetChildAtPath<T>(string path) where T : MotionKitBlock => GetChildAtPath(path) as T;
 
-		public MotionKitBlock[] GetChildrenBlocks() => Blocks.ToArray();
+		public MotionKitBlock[] GetChildren() => Blocks.ToArray();
 
 		#endregion
 
@@ -146,7 +144,7 @@ namespace CocodriloDog.Animation {
 				Initialize();
 			}
 			if (SetInitialValuesOnStart) {
-				MotionKitBlocksUtility.SetInitialValue(DefaultBlock);
+				MotionKitBlockUtility.SetInitialValue(DefaultBlock);
 			}
 		}
 
@@ -222,9 +220,9 @@ namespace CocodriloDog.Animation {
 			// Do the action
 			action(animateBlock);
 
-			if (animateBlock is IMotionKitParent) {
-				var animateParent = animateBlock as IMotionKitParent;
-				foreach (var item in animateParent.GetChildrenBlocks()) {
+			if (animateBlock is ICompositeParent<MotionKitBlock>) {
+				var animateParent = animateBlock as ICompositeParent<MotionKitBlock>;
+				foreach (var item in animateParent.GetChildren()) {
 					// Recursion
 					ForAllChildrenBlocks(item, action);
 				}
