@@ -21,7 +21,6 @@ namespace CocodriloDog.Animation {
 	public interface IMotionKitBlock {
 		ITimedProgressable TimedProgressable { get; }
 		float Progress { get; set; }
-		//void SetProgress(float progress, bool invokeCallbacks);
 		float CurrentTime { get; }
 		float Duration { get; }
 		bool IsPlaying { get; }
@@ -170,7 +169,7 @@ namespace CocodriloDog.Animation {
 		/// Disposes any MotionKit object that was created with this asset as owner.
 		/// </summary>
 		public virtual void Dispose() {
-			MotionKit.ClearPlayback(MotionKit.Instance, ReuseID);
+			MotionKit.ClearPlayback(Owner, ReuseID);
 		}
 
 		#endregion
@@ -183,7 +182,7 @@ namespace CocodriloDog.Animation {
 		/// </summary>
 		/// 
 		/// <remarks>
-		/// If no <see cref="Owner"/>  is provided in the inspector, it will default to the <see cref="MotionKit"/> 
+		/// If no <see cref="Owner"/>  is provided in the inspector, it will default to the <see cref="MotionKit"/>
 		/// singleton.
 		/// 
 		/// Specifying the same <see cref="Owner"/> in more than one animation in the inspector may be helpful 

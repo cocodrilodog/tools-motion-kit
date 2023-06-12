@@ -175,7 +175,6 @@ namespace CocodriloDog.Animation {
 		/// begins.
 		/// </remarks>
 		public override void ResetPlayback() {
-			Debug.Log($"ResetPlayback: {Name}");
 			// base.Play() will call ResetPlayback() so if the setter and getter are not
 			// ready here, we need to make sure that they are before we pass them as 
 			// parameters in GetMotion()

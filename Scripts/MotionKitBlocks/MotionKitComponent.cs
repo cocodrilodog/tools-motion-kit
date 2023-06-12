@@ -118,11 +118,6 @@ namespace CocodriloDog.Animation {
 			}
 		}
 
-		/// <summary>
-		/// Disposes all the <see cref="MotionKitBlock"/>s of this compopnent.
-		/// </summary>
-		public void Dispose() => Blocks.ForEach(b => b?.Dispose());
-
 		public MotionKitBlock GetChild(string name) => Blocks.FirstOrDefault(b => b != null && b.Name == name);
 
 		public MotionKitBlock GetChildAtPath(string path) => CompositeObjectUtility.GetChildAtPath(this, path);
@@ -148,12 +143,8 @@ namespace CocodriloDog.Animation {
 			}
 		}
 
-		//private void OnValidate() {
-		//	Debug.Log($"OnValidate:{gameObject}");
-		//}
-
 		private void OnDestroy() {
-			Dispose();
+			Blocks.ForEach(b => b?.Dispose());
 		}
 
 		#endregion
