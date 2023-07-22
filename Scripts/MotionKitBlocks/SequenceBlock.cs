@@ -85,8 +85,10 @@ namespace CocodriloDog.Animation {
 		public override void ResetPlayback() {
 
 			List<ITimedProgressable> sequenceItemsList = new List<ITimedProgressable>();
-			foreach (var sequenceItems in m_SequenceItems) {
-				sequenceItemsList.Add(sequenceItems.TimedProgressable);
+			foreach (var sequenceItem in m_SequenceItems) {
+				// Reset recursive
+				sequenceItem.ResetPlayback();
+				sequenceItemsList.Add(sequenceItem.TimedProgressable);
 			}
 
 			try {

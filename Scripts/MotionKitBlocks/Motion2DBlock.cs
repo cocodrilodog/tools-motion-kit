@@ -108,6 +108,14 @@ namespace CocodriloDog.Animation {
 		}
 
 		public override void ResetPlayback() {
+			// base.Play() will call ResetPlayback() so if the setter and getter are not
+			// ready here, we need to make sure that they are before we pass them as 
+			// parameters in GetMotion()
+			if (m_SetterDelegate == null) {
+				// Initialize will create both setter and getter if getter is required
+				// For that reason we only check for the setter
+				Initialize();
+			}
 			m_Motion = GetMotion(m_SetterDelegate, m_GetterDelegate);
 		}
 

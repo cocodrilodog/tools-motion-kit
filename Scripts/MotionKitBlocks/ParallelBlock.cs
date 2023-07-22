@@ -86,6 +86,8 @@ namespace CocodriloDog.Animation {
 
 			List<ITimedProgressable> parallelItemsList = new List<ITimedProgressable>();
 			foreach (var parallelItem in m_ParallelItems) {
+				// Reset recursive
+				parallelItem.ResetPlayback();
 				parallelItemsList.Add(parallelItem.TimedProgressable);
 			}
 
