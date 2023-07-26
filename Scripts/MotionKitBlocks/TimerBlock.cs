@@ -14,6 +14,9 @@ namespace CocodriloDog.Animation {
 
 		#region Public Properties
 
+		public override bool IsInitialized => m_Timer != null;
+		public override bool ShouldResetPlayback => base.ShouldResetPlayback || m_Timer == null;
+
 		public Timer Timer {
 			get {
 				if (m_Timer == null) {
@@ -49,20 +52,6 @@ namespace CocodriloDog.Animation {
 			}
 		}
 
-		public override void ResetPlayback() {
-
-			m_Timer = MotionKit.GetTimer(Owner, ReuseID)
-				.SetDuration(DurationInput)
-				.SetTimeMode(TimeMode);
-
-			// This approach will only work if the listeners are added via editor
-			if (OnStart.GetPersistentEventCount() > 0) m_Timer.SetOnStart(OnStart.Invoke);
-			if (OnUpdate.GetPersistentEventCount() > 0) m_Timer.SetOnUpdate(OnUpdate.Invoke);
-			if (OnInterrupt.GetPersistentEventCount() > 0) m_Timer.SetOnInterrupt(OnInterrupt.Invoke);
-			if (OnComplete.GetPersistentEventCount() > 0) m_Timer.SetOnComplete(OnComplete.Invoke);
-
-		}
-
 		public override void Play() {
 			base.Play();
 			Timer.Play();
@@ -75,6 +64,30 @@ namespace CocodriloDog.Animation {
 		public override void Resume() => Timer.Resume();
 
 		public override string DefaultName => $"Timer";
+
+		#endregion
+
+
+		#region protected Methods
+
+		protected override void ResetPlayback() {
+
+			m_Timer = MotionKit.GetTimer(Owner, ReuseID)
+				.SetDuration(DurationInput)
+				.SetTimeMode(TimeMode);
+
+			// This approach will only work if the listeners are added via editor
+			m_Timer.SetOnStart(() => {
+				TryResetPlayback(false);    // After a recursive reset on play, reset only this object (not recursively) when the playback starts
+				UnlockResetPlayback(false); // After a possible recursive lock when setting initial values, this auto unlocks this object (not recursively)
+											// when the lock is not needed anymore
+				if (OnStart.GetPersistentEventCount() > 0) OnStart.Invoke();
+			});
+			if (OnUpdate.GetPersistentEventCount() > 0) m_Timer.SetOnUpdate(OnUpdate.Invoke);
+			if (OnInterrupt.GetPersistentEventCount() > 0) m_Timer.SetOnInterrupt(OnInterrupt.Invoke);
+			if (OnComplete.GetPersistentEventCount() > 0) m_Timer.SetOnComplete(OnComplete.Invoke);
+
+		}
 
 		#endregion
 

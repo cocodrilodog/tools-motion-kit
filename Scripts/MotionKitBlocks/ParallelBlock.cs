@@ -17,6 +17,10 @@ namespace CocodriloDog.Animation {
 
 		#region #region Public Properties
 
+		public override bool IsInitialized => m_Parallel != null;
+
+		public override bool ShouldResetPlayback => base.ShouldResetPlayback || m_Parallel == null;
+
 		public Parallel Parallel {
 			get {
 				if (m_Parallel == null) {
@@ -82,31 +86,6 @@ namespace CocodriloDog.Animation {
 			}
 		}
 
-		public override void ResetPlayback() {
-
-			List<ITimedProgressable> parallelItemsList = new List<ITimedProgressable>();
-			foreach (var parallelItem in m_ParallelItems) {
-				// Reset recursive
-				parallelItem.ResetPlayback();
-				parallelItemsList.Add(parallelItem.TimedProgressable);
-			}
-
-			m_Parallel = MotionKit.GetParallel(Owner, ReuseID, parallelItemsList.ToArray())
-				.SetEasing(Easing.FloatEasing)
-				.SetTimeMode(TimeMode);
-
-			if (DurationInput > 0) {
-				m_Parallel.SetDuration(DurationInput);
-			}
-
-			// This approach will only work if the listeners are added via editor
-			if (OnStart.GetPersistentEventCount() > 0) m_Parallel.SetOnStart(OnStart.Invoke);
-			if (OnUpdate.GetPersistentEventCount() > 0) m_Parallel.SetOnUpdate(OnUpdate.Invoke);
-			if (OnInterrupt.GetPersistentEventCount() > 0) m_Parallel.SetOnInterrupt(OnInterrupt.Invoke);
-			if (OnComplete.GetPersistentEventCount() > 0) m_Parallel.SetOnComplete(OnComplete.Invoke);
-
-		}
-
 		public override void Play() {
 			base.Play();
 			Parallel.Play();
@@ -139,6 +118,39 @@ namespace CocodriloDog.Animation {
 		#region Protected Properties
 
 		protected override List<MotionKitBatchOperation> BatchOperations => m_BatchOperations;
+
+		#endregion
+
+
+		#region Protected Methods
+
+		protected override void ResetPlayback() {
+
+			List<ITimedProgressable> parallelItemsList = new List<ITimedProgressable>();
+			foreach (var parallelItem in m_ParallelItems) {
+				parallelItemsList.Add(parallelItem.TimedProgressable);
+			}
+
+			m_Parallel = MotionKit.GetParallel(Owner, ReuseID, parallelItemsList.ToArray())
+				.SetEasing(Easing.FloatEasing)
+				.SetTimeMode(TimeMode);
+
+			if (DurationInput > 0) {
+				m_Parallel.SetDuration(DurationInput);
+			}
+
+			// This approach will only work if the listeners are added via editor
+			m_Parallel.SetOnStart(() => {
+				TryResetPlayback(false);    // After a recursive reset on play, reset only this object (not recursively) when the playback starts
+				UnlockResetPlayback(false); // After a possible recursive lock when setting initial values, this auto unlocks this object (not recursively)
+											// when the lock is not needed anymore
+				if (OnStart.GetPersistentEventCount() > 0) OnStart.Invoke();
+			});
+			if (OnUpdate.GetPersistentEventCount() > 0) m_Parallel.SetOnUpdate(OnUpdate.Invoke);
+			if (OnInterrupt.GetPersistentEventCount() > 0) m_Parallel.SetOnInterrupt(OnInterrupt.Invoke);
+			if (OnComplete.GetPersistentEventCount() > 0) m_Parallel.SetOnComplete(OnComplete.Invoke);
+
+		}
 
 		#endregion
 

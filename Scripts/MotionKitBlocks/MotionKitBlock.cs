@@ -9,8 +9,7 @@ namespace CocodriloDog.Animation {
 
 	/// <summary>
 	/// Interface to be implemented by <see cref="MotionKitBlock"/>. It exposes the members 
-	/// that are used for playback and initialization of the compound <see cref="MotionKit"/> 
-	/// objects: <see cref="Sequence"/> and <see cref="Parallel"/>.
+	/// that are used for playback and initialization of the <see cref="MotionKit"/> objects.
 	/// </summary>
 	/// 
 	/// <remarks>
@@ -19,6 +18,7 @@ namespace CocodriloDog.Animation {
 	/// derived from the template.
 	/// </remarks>
 	public interface IMotionKitBlock {
+		bool IsInitialized { get; }
 		ITimedProgressable TimedProgressable { get; }
 		float Progress { get; set; }
 		float CurrentTime { get; }
@@ -26,6 +26,10 @@ namespace CocodriloDog.Animation {
 		bool IsPlaying { get; }
 		bool IsPaused { get; }
 		void Initialize();
+		void TryResetPlayback(bool recursive);
+		void LockResetPlayback(bool recursive);
+		void UnlockResetPlayback(bool recursive);
+		void ForceResetPlayback();
 		void Play();
 		void Stop();
 		void Pause();
@@ -48,6 +52,38 @@ namespace CocodriloDog.Animation {
 
 
 		#region Public Properties
+
+		/// <summary>
+		/// Has this block been already initialized?
+		/// </summary>
+		public abstract bool IsInitialized { get; }
+
+		/// <summary>
+		/// Playback needs to be reset upon <see cref="Play"/> or <c>OnStart</c>.
+		/// </summary>
+		/// 
+		/// <remarks>
+		/// 
+		/// <see cref="MotionKitBlock"/>s that have the same <see cref="Owner"/> and <see cref="ReuseID"/> 
+		/// will share the same playback object. So when any of them is reset, it will pass their corresponding 
+		/// <c>OnStart</c> callback to the shared playback object. For that reason, they need to be reset on 
+		/// <see cref="Play"/>, otherwise, the <c>OnStart</c> of one <see cref="MotionKitBlock"/> may be 
+		/// triggered when another one is played.
+		/// 
+		/// <para>
+		/// For example, if a <see cref="MotionKitBlock"/> object A is reset, then another one B is reset upon 
+		/// initialization (both with the same <see cref="Owner"/> and <see cref="ReuseID"/>), their shared playback 
+		/// object will have the <c>OnStart</c> of B, so when the <see cref="MotionKitBlock"/> A is played, it will 
+		/// trigger B's <c>OnStart</c>, unless <see cref="ResetPlayback"/> is called on A upon <see cref="Play"/>
+		/// </para> 
+		/// 
+		/// </remarks>
+		public virtual bool ShouldResetPlayback => m_Owner != null && !string.IsNullOrEmpty(m_ReuseID);
+
+		/// <summary>
+		/// While <c>true</c>, the motion kit block won't be reset.
+		/// </summary>
+		public bool IsResetPlaybackLocked => m_IsResetPlaybackLocked;
 
 		/// <summary>
 		/// Gets the MotionKit object as a <see cref="ITimedProgressable"/> so that it can be used in <see cref="Sequence"/>s.
@@ -132,22 +168,45 @@ namespace CocodriloDog.Animation {
 		public abstract void Initialize();
 
 		/// <summary>
-		/// Creates or updates the playback object by invoking the playback factory method at 
-		/// <see cref="MotionKit"/>.
+		/// This is called in <see cref="Play"/> and on the playbackObject's <c>onStart</c>
 		/// </summary>
-		/// <remarks>
-		/// This is called in the <see cref="Play"/> method when this <see cref="MotionKitBlock"/> has 
-		/// an <see cref="Owner"/> and a <see cref="ReuseID"/>
-		/// </remarks>
-		public abstract void ResetPlayback();
+		public virtual void TryResetPlayback(bool recursive) {
+			if(ShouldResetPlayback && !IsResetPlaybackLocked) {
+				if (!IsInitialized) {
+					Initialize(); // This will reset anyway
+				} else {
+					ResetPlayback();
+				}
+			}
+		}
+
+		public void ForceResetPlayback() => ResetPlayback();
+
+		/// <summary>
+		/// Prevents the block from being reset until <see cref="UnlockResetPlayback"/> is called.
+		/// </summary>
+		public virtual void LockResetPlayback(bool recursive) {
+			if (!IsInitialized) {
+				Initialize();
+			}
+			m_IsResetPlaybackLocked = true;
+		}
+
+		/// <summary>
+		/// Allows the block to be reset from now on.
+		/// </summary>
+		public virtual void UnlockResetPlayback(bool recursive) => m_IsResetPlaybackLocked = false;
 
 		/// <summary>
 		/// Plays the MotionKit object managed by this <see cref="MotionKitBlock"/>.
 		/// </summary>
 		public virtual void Play() {
-			if (m_Owner != null && !string.IsNullOrEmpty(m_ReuseID)) {
-				ResetPlayback();
-			}
+			// Try reset recursive here so that all children blocks are guaranteed to have their 
+			// corresponding OnStart, in case they are sharing their motion with other blocks via Owner
+			// and ReuseID. Then when each children reach OnStart, they will trigger the proper method.
+			//
+			// Read the ShouldResetPlayback remarks for more info!
+			TryResetPlayback(true);
 		}
 
 		/// <summary>
@@ -253,6 +312,21 @@ namespace CocodriloDog.Animation {
 		#endregion
 
 
+		#region Protected Methods
+
+		/// <summary>
+		/// Creates or updates the playback object by invoking the playback factory method at 
+		/// <see cref="MotionKit"/>.
+		/// </summary>
+		/// <remarks>
+		/// This is called in the <see cref="Play"/> method when <see cref="ShouldResetPlayback"/> is <c>true</c>
+		/// and <see cref="IsResetPlaybackLocked"/> is false.
+		/// </remarks>
+		protected abstract void ResetPlayback();
+
+		#endregion
+
+
 		#region Private Fields - Serialized
 
 		[Tooltip(
@@ -306,6 +380,9 @@ namespace CocodriloDog.Animation {
 
 		[NonSerialized]
 		private string m_ReuseID_Auto;
+
+		[NonSerialized]
+		private bool m_IsResetPlaybackLocked;
 
 		#endregion
 

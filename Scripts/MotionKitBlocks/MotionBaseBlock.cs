@@ -16,9 +16,7 @@ namespace CocodriloDog.Animation {
 	/// identifiable instead of using the concrete types derived from the template.
 	/// </remarks>
 	public interface IMotionBaseBlock : IMotionKitBlock {
-		public UnityEngine.Object Object { get; set; }
-		void ResetPlayback();
-		void DontResetRelativeValuesOnStart();
+		UnityEngine.Object Object { get; set; }
 	}
 
 	/// <summary>
@@ -32,6 +30,10 @@ namespace CocodriloDog.Animation {
 
 
 		#region Public Properties
+
+		public override bool IsInitialized => m_Motion != null;
+
+		public override bool ShouldResetPlayback => base.ShouldResetPlayback || m_Motion == null || InitialValueIsRelative || FinalValueIsRelative;
 
 		/// <summary>
 		/// The object that will be target of the animatable property.
@@ -67,10 +69,6 @@ namespace CocodriloDog.Animation {
 		public override bool IsPlaying => Motion.IsPlaying;
 
 		public override bool IsPaused => Motion.IsPaused;
-
-		public void DontResetRelativeValuesOnStart() {
-			m_DontResetRelativeValuesOnStart = true;
-		}
 
 		#endregion
 
@@ -162,30 +160,6 @@ namespace CocodriloDog.Animation {
 
 		}
 
-		/// <summary>
-		/// Creates or updates the playback object by invoking the playback factory method at 
-		/// <see cref="MotionKit"/>.
-		/// </summary>
-		/// 
-		/// <remarks>
-		/// This is called in the <see cref="Play"/> method when this <see cref="MotionKitBlock"/> has 
-		/// an <see cref="Owner"/> and a <see cref="ReuseID"/>.
-		/// In <see cref="MotionBaseBlock{ValueT, MotionT, SharedValuesT}"/> objects, this updates the initial and 
-		/// final values if they are set to be relative because they need to be calculated before the animation 
-		/// begins.
-		/// </remarks>
-		public override void ResetPlayback() {
-			// base.Play() will call ResetPlayback() so if the setter and getter are not
-			// ready here, we need to make sure that they are before we pass them as 
-			// parameters in GetMotion()
-			if (m_SetterDelegate == null) {
-				// Initialize will create both setter and getter if getter is required
-				// For that reason we only check for the setter
-				Initialize(); 
-			}
-			m_Motion = GetMotion(m_SetterDelegate, m_GetterDelegate);
-		}
-
 		public override void Play() {
 			base.Play();
 			Motion.Play();
@@ -204,9 +178,6 @@ namespace CocodriloDog.Animation {
 
 		[NonSerialized]
 		protected MotionT m_Motion;
-
-		[NonSerialized]
-		protected bool m_DontResetRelativeValuesOnStart;
 
 		#endregion
 
@@ -278,6 +249,10 @@ namespace CocodriloDog.Animation {
 
 
 		#region Protected Methods
+
+		protected override void ResetPlayback() {
+			m_Motion = GetMotion(m_SetterDelegate, m_GetterDelegate);
+		}
 
 		/// <summary>
 		/// This is implemented in subclasses to create the concrete type of motion that each class is related to.

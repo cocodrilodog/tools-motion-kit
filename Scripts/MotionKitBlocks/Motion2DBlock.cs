@@ -107,19 +107,16 @@ namespace CocodriloDog.Animation {
 
 		}
 
-		public override void ResetPlayback() {
-			// base.Play() will call ResetPlayback() so if the setter and getter are not
-			// ready here, we need to make sure that they are before we pass them as 
-			// parameters in GetMotion()
-			if (m_SetterDelegate == null) {
-				// Initialize will create both setter and getter if getter is required
-				// For that reason we only check for the setter
-				Initialize();
-			}
+		public override string DefaultName => "Motion2D";
+
+		#endregion
+
+
+		#region Protected Methods
+
+		protected override void ResetPlayback() {
 			m_Motion = GetMotion(m_SetterDelegate, m_GetterDelegate);
 		}
-
-		public override string DefaultName => "Motion2D";
 
 		#endregion
 
@@ -151,15 +148,9 @@ namespace CocodriloDog.Animation {
 
 			// Callbacks: This approach will only work if the listeners are added via editor
 			motion.SetOnStart(() => {
-				if (InitialValueIsRelative || FinalValueIsRelative) {
-					if (m_DontResetRelativeValuesOnStart) {
-						// Reset the flag
-						m_DontResetRelativeValuesOnStart = false;
-					} else {
-						// By default, reset the motion when we have relative values
-						ResetPlayback();
-					}
-				}
+				TryResetPlayback(false);    // After a recursive reset on play, reset only this object (not recursively) when the playback starts
+				UnlockResetPlayback(false); // After a possible recursive lock when setting initial values, this auto unlocks this object (not recursively)
+											// when the lock is not needed anymore
 				if (OnStart.GetPersistentEventCount() > 0) OnStart.Invoke();
 			});
 			if (OnUpdate.GetPersistentEventCount() > 0) motion.SetOnUpdate(OnUpdate.Invoke);

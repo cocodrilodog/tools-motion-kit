@@ -17,6 +17,10 @@ namespace CocodriloDog.Animation {
 
 		#region #region Public Properties
 
+		public override bool IsInitialized => m_Sequence != null;
+
+		public override bool ShouldResetPlayback => base.ShouldResetPlayback || m_Sequence == null;
+
 		public Sequence Sequence {
 			get {
 				if (m_Sequence == null) {
@@ -29,7 +33,7 @@ namespace CocodriloDog.Animation {
 		public override ReadOnlyCollection<MotionKitBlock> Items {
 			get {
 				_ = Sequence; // <- Force init
-				if(m_Items == null) {
+				if (m_Items == null) {
 					m_Items = new ReadOnlyCollection<MotionKitBlock>(m_SequenceItems);
 				}
 				return m_Items;
@@ -82,36 +86,6 @@ namespace CocodriloDog.Animation {
 			}
 		}
 
-		public override void ResetPlayback() {
-
-			List<ITimedProgressable> sequenceItemsList = new List<ITimedProgressable>();
-			foreach (var sequenceItem in m_SequenceItems) {
-				// Reset recursive
-				sequenceItem.ResetPlayback();
-				sequenceItemsList.Add(sequenceItem.TimedProgressable);
-			}
-
-			try {
-				m_Sequence = MotionKit.GetSequence(Owner, ReuseID, sequenceItemsList.ToArray())
-					.SetEasing(Easing.FloatEasing)
-					.SetTimeMode(TimeMode);
-			} catch (ArgumentException e) {
-				// This helps to identify which is the one with the error
-				throw new ArgumentException($"{Name}: {e}");
-			}
-
-			if (DurationInput > 0) {
-				m_Sequence.SetDuration(DurationInput);
-			}
-
-			// This approach will only work if the listeners are added via editor
-			if (OnStart.GetPersistentEventCount() > 0) m_Sequence.SetOnStart(OnStart.Invoke);
-			if (OnUpdate.GetPersistentEventCount() > 0) m_Sequence.SetOnUpdate(OnUpdate.Invoke);
-			if (OnInterrupt.GetPersistentEventCount() > 0) m_Sequence.SetOnInterrupt(OnInterrupt.Invoke);
-			if (OnComplete.GetPersistentEventCount() > 0) m_Sequence.SetOnComplete(OnComplete.Invoke);
-
-		}
-
 		public override void Play() {
 			base.Play();
 			Sequence.Play();
@@ -144,6 +118,46 @@ namespace CocodriloDog.Animation {
 		#region Protected Properties
 
 		protected override List<MotionKitBatchOperation> BatchOperations => m_BatchOperations;
+
+		#endregion
+
+
+		#region protected Methods
+
+		protected override void ResetPlayback() {
+
+			List<ITimedProgressable> sequenceItemsList = new List<ITimedProgressable>();
+			foreach (var sequenceItem in m_SequenceItems) {
+				sequenceItemsList.Add(sequenceItem.TimedProgressable);
+			}
+
+			try {
+				m_Sequence = MotionKit.GetSequence(Owner, ReuseID, sequenceItemsList.ToArray())
+					.SetEasing(Easing.FloatEasing)
+					.SetTimeMode(TimeMode);
+			} catch (ArgumentException e) {
+				// This helps to identify which is the one with the error
+				throw new ArgumentException($"{Name}: {e}");
+			}
+
+			if (DurationInput > 0) {
+				m_Sequence.SetDuration(DurationInput);
+			}
+
+			// This approach will only work if the listeners are added via editor
+			m_Sequence.SetOnStart(() => {
+				TryResetPlayback(false);    // After a recursive reset on play, reset only this object (not recursively) when the playback starts
+				UnlockResetPlayback(false); // After a possible recursive lock when setting initial values, this auto unlocks this object (not recursively)
+											// when the lock is not needed anymore
+				if (OnStart.GetPersistentEventCount() > 0) OnStart.Invoke();
+			});
+
+			//if (OnStart.GetPersistentEventCount() > 0) m_Sequence.SetOnStart(OnStart.Invoke);
+			if (OnUpdate.GetPersistentEventCount() > 0) m_Sequence.SetOnUpdate(OnUpdate.Invoke);
+			if (OnInterrupt.GetPersistentEventCount() > 0) m_Sequence.SetOnInterrupt(OnInterrupt.Invoke);
+			if (OnComplete.GetPersistentEventCount() > 0) m_Sequence.SetOnComplete(OnComplete.Invoke);
+
+		}
 
 		#endregion
 

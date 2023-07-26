@@ -35,15 +35,9 @@ namespace CocodriloDog.Animation {
 
 			// Callbacks: This approach will only work if the listeners are added via editor
 			motion.SetOnStart(() => {
-				if (InitialValueIsRelative || FinalValueIsRelative) {
-					if (m_DontResetRelativeValuesOnStart) {
-						// Reset the flag
-						m_DontResetRelativeValuesOnStart = false;
-					} else {
-						// By default, reset the motion when we have relative values
-						ResetPlayback();
-					}
-				}
+				TryResetPlayback(false);    // After a recursive reset on play, reset only this object (not recursively) when the playback starts
+				UnlockResetPlayback(false); // After a possible recursive lock when setting initial values, this auto unlocks this object (not recursively)
+											// when the lock is not needed anymore
 				if (OnStart.GetPersistentEventCount() > 0) OnStart.Invoke();
 			});
 			if (OnUpdate.GetPersistentEventCount() > 0) motion.SetOnUpdate(OnUpdate.Invoke);

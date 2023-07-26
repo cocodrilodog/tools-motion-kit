@@ -268,11 +268,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0fb3639200fb4be4996952cebd241fe2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_SelectedCompositePath: m_Blocks.Array.data[0]
+  m_SelectedCompositePath: 
   m_Blocks:
   - rid: 3515060677956075523
   - rid: 3515060677956075525
-  m_PlayAllOnStart: 0
+  m_PlayOnStart: 0
   m_SetInitialValuesOnStart: 0
   references:
     version: 2
@@ -654,11 +654,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0fb3639200fb4be4996952cebd241fe2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_SelectedCompositePath: m_Blocks.Array.data[0]
+  m_SelectedCompositePath: 
   m_Blocks:
   - rid: 3515060677956075529
   - rid: 3515060677956075531
-  m_PlayAllOnStart: 0
+  m_PlayOnStart: 0
   m_SetInitialValuesOnStart: 0
   references:
     version: 2
@@ -905,11 +905,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0fb3639200fb4be4996952cebd241fe2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_SelectedCompositePath: m_Blocks.Array.data[1]
+  m_SelectedCompositePath: 
   m_Blocks:
   - rid: 3515060677956075526
   - rid: 3515060677956075528
-  m_PlayAllOnStart: 0
+  m_PlayOnStart: 0
   m_SetInitialValuesOnStart: 0
   references:
     version: 2
@@ -1237,11 +1237,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0fb3639200fb4be4996952cebd241fe2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_SelectedCompositePath: m_Blocks.Array.data[1]
+  m_SelectedCompositePath: 
   m_Blocks:
   - rid: 3515060677956075520
   - rid: 3515060677956075522
-  m_PlayAllOnStart: 0
+  m_PlayOnStart: 0
   m_SetInitialValuesOnStart: 0
   references:
     version: 2

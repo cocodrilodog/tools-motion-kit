@@ -97,24 +97,24 @@ namespace CocodriloDog.Animation {
 		/// <summary>
 		/// Resets the <see cref="DefaultBlock"/> if it is a <see cref="IMotionBaseBlock"/>.
 		/// </summary>
-		public void ResetMotion() => (DefaultBlock as IMotionBaseBlock)?.ResetPlayback();
+		public void ResetMotion() => (DefaultBlock as IMotionBaseBlock)?.ForceResetPlayback();
 
 		/// <summary>
 		/// Resets the <see cref="MotionKitBlock"/> with the specified <paramref name="blockPath"/>
 		/// if it is a motion.
 		/// </summary>
 		/// <param name="blockPath">The path of the block. For example "Parallel/Sequence1/Motion2D"</param>
-		public void ResetMotion(string blockPath) => (GetChildAtPath(blockPath) as IMotionBaseBlock)?.ResetPlayback();
+		public void ResetMotion(string blockPath) => (GetChildAtPath(blockPath) as IMotionBaseBlock)?.ForceResetPlayback();
 
 		/// <summary>
-		/// Calls <see cref="IMotionBaseBlock.ResetPlayback()"/> in all the motions that are in this <see cref="MotionKitComponent"/>.
+		/// Calls <see cref="IMotionBaseBlock.TryResetPlayback()"/> in all the motions that are in this <see cref="MotionKitComponent"/>.
 		/// If <paramref name="recursive"/> is <c>true</c>, it looks for children blocks too.
 		/// </summary>
 		public void ResetAllMotions(bool recursive = false) {
 			if (recursive) {
-				Blocks.ForEach(B => ForAllChildrenBlocks(B, b => (b as IMotionBaseBlock)?.ResetPlayback()));
+				Blocks.ForEach(B => ForAllChildrenBlocks(B, b => (b as IMotionBaseBlock)?.ForceResetPlayback()));
 			} else {
-				Blocks.ForEach(B => (B as IMotionBaseBlock)?.ResetPlayback());
+				Blocks.ForEach(B => (B as IMotionBaseBlock)?.ForceResetPlayback());
 			}
 		}
 
@@ -132,14 +132,19 @@ namespace CocodriloDog.Animation {
 		#region Unity Methods
 
 		private void Start() {
-			if (PlayAllOnStart) {
-				PlayAll();
+			if (PlayOnStart) {
+				Play();
 			} else {
 				// This avoids errors OnDestroy in case it was not played at all.
 				Initialize();
 			}
 			if (SetInitialValuesOnStart) {
-				MotionKitBlockUtility.SetInitialValue(DefaultBlock);
+				MotionKitBlockUtility.SetInitialValues(DefaultBlock);
+				// Lock recursive to make sure that no child motion will be reset OnStart
+				//
+				// DefaultBlock and its children will be unlocked OnStart or each playback object,
+				// after trying unsuccessfully to reset each one. The unlock will happen non recursively.
+				DefaultBlock?.LockResetPlayback(true);
 			}
 		}
 
@@ -155,8 +160,9 @@ namespace CocodriloDog.Animation {
 		[SerializeReference]
 		private List<MotionKitBlock> m_Blocks = new List<MotionKitBlock>();
 
+		[Tooltip("Plays the first block on start")]
 		[SerializeField]
-		private bool m_PlayAllOnStart;
+		private bool m_PlayOnStart;
 
 		/// <summary>
 		/// Searches recursively for the first motions that modify properties and sets their progress
@@ -169,9 +175,8 @@ namespace CocodriloDog.Animation {
 		/// In this component, the search will be performed only in the <see cref="DefaultBlock"/>
 		/// </remarks>
 		[Tooltip(
-			"Searches recursively for the first motions that modify properties and sets their progress to 0 " +
-			"so that the value of the property is set to the initial value. The search will be performed only " +
-			"in the first block."
+			"On the first block, searches for motions that modify properties and set their initial values on " +
+			"the corresponding objects, even if there are timers before the motions."
 		)]
 		[SerializeField]
 		private bool m_SetInitialValuesOnStart;
@@ -183,7 +188,7 @@ namespace CocodriloDog.Animation {
 
 		private List<MotionKitBlock> Blocks => m_Blocks;
 
-		private bool PlayAllOnStart => m_PlayAllOnStart;
+		private bool PlayOnStart => m_PlayOnStart;
 
 		private bool SetInitialValuesOnStart => m_SetInitialValuesOnStart;
 

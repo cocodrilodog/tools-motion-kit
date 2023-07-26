@@ -217,7 +217,7 @@ MonoBehaviour:
   m_SelectedCompositePath: 
   m_Blocks:
   - rid: 6990145245326082068
-  m_PlayAllOnStart: 1
+  m_PlayOnStart: 1
   m_SetInitialValuesOnStart: 0
   references:
     version: 2

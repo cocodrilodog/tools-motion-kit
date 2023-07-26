@@ -12,7 +12,8 @@ namespace CocodriloDog.Animation {
 	/// Base block for <see cref="SequenceBlock"/> and <see cref="ParallelBlock"/>.
 	/// </summary>
 	/// <remarks>
-	/// This class was created to handle the batch operations.
+	/// This class was created to handle the batch operations and other functions that
+	/// are common to both classes.
 	/// </remarks>
 	[Serializable]
 	public abstract class CompoundBlock : MotionKitBlock {
@@ -29,6 +30,34 @@ namespace CocodriloDog.Animation {
 
 
 		#region Public Methods
+
+		public override void TryResetPlayback(bool recursive) {
+			base.TryResetPlayback(recursive);
+			// TryReset recursively
+			if (recursive) {
+				foreach (var item in Items) {
+					item.TryResetPlayback(recursive);
+				}
+			}
+		}
+
+		public override void LockResetPlayback(bool recursive) {
+			base.LockResetPlayback(recursive);
+			if (recursive) { 
+				foreach (var item in Items) {
+					item.LockResetPlayback(recursive);
+				}
+			}
+		}
+
+		public override void UnlockResetPlayback(bool recursive) {
+			base.UnlockResetPlayback(recursive);
+			if (recursive) {
+				foreach (var item in Items) {
+					item.UnlockResetPlayback(recursive);
+				}
+			}
+		}
 
 		/// <summary>
 		/// Sets the item at he specified index.
