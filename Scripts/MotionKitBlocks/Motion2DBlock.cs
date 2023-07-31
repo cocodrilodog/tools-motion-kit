@@ -115,6 +115,9 @@ namespace CocodriloDog.Animation {
 		#region Protected Methods
 
 		protected override void ResetPlayback() {
+			//if (Name == "TitleMotion") {
+				Debug.Log($"{Name}: ResetPlayback");
+			//}
 			m_Motion = GetMotion(m_SetterDelegate, m_GetterDelegate);
 		}
 
