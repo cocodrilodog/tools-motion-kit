@@ -171,9 +171,7 @@ namespace CocodriloDog.Animation {
 		/// This is called in <see cref="Play"/> and on the playbackObject's <c>onStart</c>
 		/// </summary>
 		public virtual void TryResetPlayback(bool recursive) {
-			if (Name == "TitleMotion") {
-				Debug.Log($"{Name}: TryResetPlayback: IsResetPlaybackLocked: {IsResetPlaybackLocked}");
-			}
+			Debug.Log($"{Name}: TryResetPlayback: IsResetPlaybackLocked: {IsResetPlaybackLocked}");
 			if(ShouldResetPlayback && !IsResetPlaybackLocked) {
 				if (!IsInitialized) {
 					Initialize(); // This will reset anyway
@@ -192,9 +190,7 @@ namespace CocodriloDog.Animation {
 			if (!IsInitialized) {
 				Initialize();
 			}
-			if (Name == "TitleMotion") {
-				Debug.Log($"{Name}: LockResetPlayback");
-			}
+			Debug.Log($"{Name}: LockResetPlayback");
 			m_IsResetPlaybackLocked = true;
 		}
 
@@ -239,7 +235,9 @@ namespace CocodriloDog.Animation {
 		/// Disposes any MotionKit object that was created with this asset as owner.
 		/// </summary>
 		public virtual void Dispose() {
-			MotionKit.ClearPlayback(Owner, ReuseID);
+			if (IsInitialized) {
+				MotionKit.ClearPlayback(Owner, ReuseID);
+			}
 		}
 
 		#endregion
