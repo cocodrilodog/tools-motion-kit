@@ -171,7 +171,6 @@ namespace CocodriloDog.Animation {
 		/// This is called in <see cref="Play"/> and on the playbackObject's <c>onStart</c>
 		/// </summary>
 		public virtual void TryResetPlayback(bool recursive) {
-			Debug.Log($"{Name}: TryResetPlayback: IsResetPlaybackLocked: {IsResetPlaybackLocked}");
 			if(ShouldResetPlayback && !IsResetPlaybackLocked) {
 				if (!IsInitialized) {
 					Initialize(); // This will reset anyway
@@ -190,7 +189,6 @@ namespace CocodriloDog.Animation {
 			if (!IsInitialized) {
 				Initialize();
 			}
-			Debug.Log($"{Name}: LockResetPlayback");
 			m_IsResetPlaybackLocked = true;
 		}
 
@@ -198,9 +196,6 @@ namespace CocodriloDog.Animation {
 		/// Allows the block to be reset from now on.
 		/// </summary>
 		public virtual void UnlockResetPlayback(bool recursive) {
-			if (Name == "TitleMotion") {
-				Debug.Log($"{Name}: UnlockResetPlayback");
-			}
 			m_IsResetPlaybackLocked = false;
 		}
 
