@@ -147,15 +147,16 @@ namespace CocodriloDog.Animation {
 			motion.SetDuration(DurationInput);
 
 			// Callbacks: This approach will only work if the listeners are added via editor
+			// We are setting the callbacks to null when there are none to clean it in case this is a reused playback
 			motion.SetOnStart(() => {
 				TryResetPlayback(false);    // After a recursive reset on play, reset only this object (not recursively) when the playback starts
 				UnlockResetPlayback(false); // After a possible recursive lock when setting initial values, this auto unlocks this object (not recursively)
 											// when the lock is not needed anymore
 				if (OnStart.GetPersistentEventCount() > 0) OnStart.Invoke();
 			});
-			if (OnUpdate.GetPersistentEventCount() > 0) motion.SetOnUpdate(OnUpdate.Invoke);
-			if (OnInterrupt.GetPersistentEventCount() > 0) motion.SetOnInterrupt(OnInterrupt.Invoke);
-			if (OnComplete.GetPersistentEventCount() > 0) motion.SetOnComplete(OnComplete.Invoke);
+			motion.SetOnUpdate(OnUpdate.GetPersistentEventCount() > 0 ? OnUpdate.Invoke : null);
+			motion.SetOnInterrupt(OnInterrupt.GetPersistentEventCount() > 0 ? OnInterrupt.Invoke : null);
+			motion.SetOnComplete(OnComplete.GetPersistentEventCount() > 0 ? OnComplete.Invoke : null);
 
 			return motion;
 
