@@ -21,10 +21,8 @@ namespace CocodriloDog.Animation {
 		/// <summary>
 		/// The first <see cref="Blocks"/> item if any, or <c>null</c>.
 		/// </summary>
-		public MotionKitBlock DefaultBlock
-		{
-			get
-			{
+		public MotionKitBlock DefaultBlock {
+			get {
 				TryInitialize();
 				return Blocks.Count > 0 ? Blocks[0] : null;
 			}
@@ -38,8 +36,7 @@ namespace CocodriloDog.Animation {
 		/// <summary>
 		/// Plays the <see cref="DefaultBlock"/>.
 		/// </summary>
-		public void Play()
-		{
+		public void Play() {
 			TryInitialize();
 			DefaultBlock?.Play();
 		}
@@ -48,8 +45,7 @@ namespace CocodriloDog.Animation {
 		/// Plays the <see cref="MotionKitBlock"/> with the specified <paramref name="blockPath"/>.
 		/// </summary>
 		/// <param name="blockPath">The name of the block.</param>
-		public void Play(string blockPath)
-		{
+		public void Play(string blockPath) {
 			TryInitialize();
 			GetChildAtPath(blockPath)?.Play();
 		}
@@ -57,8 +53,7 @@ namespace CocodriloDog.Animation {
 		/// <summary>
 		/// Plays all the <see cref="MotionKitBlock"/>s managed by this behaviour.
 		/// </summary>
-		public void PlayAll()
-		{
+		public void PlayAll() {
 			TryInitialize();
 			Blocks.ForEach(b => b?.Play());
 		}
@@ -66,8 +61,7 @@ namespace CocodriloDog.Animation {
 		/// <summary>
 		/// Stops the <see cref="DefaultBlock"/>.
 		/// </summary>
-		public void Stop()
-		{
+		public void Stop() {
 			TryInitialize();
 			DefaultBlock?.Stop();
 		}
@@ -76,8 +70,7 @@ namespace CocodriloDog.Animation {
 		/// Stops the <see cref="MotionKitBlock"/> with the specified <paramref name="blockPath"/>.
 		/// </summary>
 		/// <param name="blockPath">The name of the block.</param>
-		public void Stop(string blockPath)
-		{
+		public void Stop(string blockPath) {
 			TryInitialize();
 			GetChildAtPath(blockPath)?.Stop();
 		}
@@ -85,8 +78,7 @@ namespace CocodriloDog.Animation {
 		/// <summary>
 		/// Stops all the <see cref="MotionKitBlock"/>s managed by this behaviour.
 		/// </summary>
-		public void StopAll()
-		{
+		public void StopAll() {
 			TryInitialize();
 			Blocks.ForEach(b => b?.Stop());
 		}
@@ -94,8 +86,7 @@ namespace CocodriloDog.Animation {
 		/// <summary>
 		/// Pauses the <see cref="DefaultBlock"/>.
 		/// </summary>
-		public void Pause()
-		{
+		public void Pause() {
 			TryInitialize();
 			DefaultBlock?.Pause();
 		}
@@ -104,8 +95,7 @@ namespace CocodriloDog.Animation {
 		/// Pauses the <see cref="MotionKitBlock"/> with the specified <paramref name="blockPath"/>.
 		/// </summary>
 		/// <param name="blockPath">The name of the block.</param>
-		public void Pause(string blockPath)
-		{
+		public void Pause(string blockPath) {
 			TryInitialize();
 			GetChildAtPath(blockPath)?.Pause();
 		}
@@ -114,8 +104,7 @@ namespace CocodriloDog.Animation {
 		/// <summary>
 		/// Pauses all the <see cref="MotionKitBlock"/>s managed by this behaviour.
 		/// </summary>
-		public void PauseAll()
-		{
+		public void PauseAll() {
 			TryInitialize();
 			Blocks.ForEach(b => b?.Pause());
 		}
@@ -123,8 +112,7 @@ namespace CocodriloDog.Animation {
 		/// <summary>
 		/// Resumes the <see cref="DefaultBlock"/>.
 		/// </summary>
-		public void Resume()
-		{
+		public void Resume() {
 			TryInitialize();
 			DefaultBlock?.Resume();
 		}
@@ -133,8 +121,7 @@ namespace CocodriloDog.Animation {
 		/// Resumes the <see cref="MotionKitBlock"/> with the specified <paramref name="blockPath"/>.
 		/// </summary>
 		/// <param name="blockPath">The name of the block.</param>
-		public void Resume(string blockPath)
-		{
+		public void Resume(string blockPath) {
 			TryInitialize();
 			GetChildAtPath(blockPath)?.Resume();
 		}
@@ -142,8 +129,7 @@ namespace CocodriloDog.Animation {
 		/// <summary>
 		/// Resumes all the <see cref="MotionKitBlock"/>s managed by this behaviour.
 		/// </summary>
-		public void ResumeAll()
-		{
+		public void ResumeAll() {
 			TryInitialize();
 			Blocks.ForEach(b => b?.Resume());
 		}
@@ -152,8 +138,7 @@ namespace CocodriloDog.Animation {
 		/// <summary>
 		/// Resets the <see cref="DefaultBlock"/> if it is a <see cref="IMotionBaseBlock"/>.
 		/// </summary>
-		public void ResetMotion()
-		{
+		public void ResetMotion() {
 			TryInitialize();
 			(DefaultBlock as IMotionBaseBlock)?.ForceResetPlayback();
 		}
@@ -163,8 +148,7 @@ namespace CocodriloDog.Animation {
 		/// if it is a motion.
 		/// </summary>
 		/// <param name="blockPath">The path of the block. For example "Parallel/Sequence1/Motion2D"</param>
-		public void ResetMotion(string blockPath)
-		{
+		public void ResetMotion(string blockPath) {
 			TryInitialize();
 			(GetChildAtPath(blockPath) as IMotionBaseBlock)?.ForceResetPlayback();
 		}
@@ -182,26 +166,22 @@ namespace CocodriloDog.Animation {
 			}
 		}
 
-		public MotionKitBlock GetChild(string name)
-		{
+		public MotionKitBlock GetChild(string name) {
 			TryInitialize();
 			return Blocks.FirstOrDefault(b => b != null && b.Name == name);
 		}
 
-		public MotionKitBlock GetChildAtPath(string path)
-		{
+		public MotionKitBlock GetChildAtPath(string path) {
 			TryInitialize();
 			return CompositeObjectUtility.GetChildAtPath(this, path);
 		}
 
-		public T GetChildAtPath<T>(string path) where T : MotionKitBlock
-		{
+		public T GetChildAtPath<T>(string path) where T : MotionKitBlock {
 			TryInitialize();
 			return GetChildAtPath(path) as T;
 		}
 
-		public MotionKitBlock[] GetChildren()
-		{
+		public MotionKitBlock[] GetChildren() {
 			TryInitialize();
 			return Blocks.ToArray();
 		}
@@ -213,8 +193,7 @@ namespace CocodriloDog.Animation {
 
 		private void Start() {
 			TryInitialize();
-			if (PlayOnStart)
-			{
+			if (PlayOnStart) {
 				Play();
 			}
 		}
@@ -276,10 +255,8 @@ namespace CocodriloDog.Animation {
 
 		#region Private Methods
 
-		private void TryInitialize()
-		{
-			if (!m_AreBlocksInitialized)
-			{
+		private void TryInitialize() {
+			if (!m_AreBlocksInitialized) {
 				Initialize();
 			}
 		}
@@ -287,8 +264,8 @@ namespace CocodriloDog.Animation {
 		/// <summary>
 		/// Initializes all the <see cref="MotionKitBlock"/>s of this compopnent.
 		/// </summary>
-		private void Initialize()
-		{
+		private void Initialize() {
+
 			m_AreBlocksInitialized = true;
 
 			// Initialize in reverse for the default block to be the last one. This handles an edge case where:
@@ -296,14 +273,12 @@ namespace CocodriloDog.Animation {
 			// - A later block use the same owner and reuse id
 			// - If initialized in order, the later block will rewrite the default one, causing it to behave like the later block
 			// - Because we are locking it below, the default block won't reset on play
-			for(int i = Blocks.Count - 1; i >= 0; i--)
-			{
+			for (int i = Blocks.Count - 1; i >= 0; i--) {
 				Blocks[i]?.Initialize();
 			}
 
 			// This must be done after initializing the blocks
-			if (SetInitialValuesOnStart)
-			{
+			if (SetInitialValuesOnStart) {
 				MotionKitBlockUtility.SetInitialValues(DefaultBlock);
 				// Lock recursive to make sure that no child motion will be reset OnStart
 				//
