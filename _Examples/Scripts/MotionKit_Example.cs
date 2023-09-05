@@ -1,6 +1,5 @@
 ﻿namespace CocodriloDog.Animation.Examples {
 
-	using CocodriloDog.Rendering;
 	using System;
 	using System.Collections.Generic;
 	using UnityEngine;
