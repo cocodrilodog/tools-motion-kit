@@ -544,9 +544,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 1645218934}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 306fd0360e6fb4f6083949d97649f520, type: 3}
+  m_Script: {fileID: 11500000, guid: 7b39d3a3fa4b7b64fa531dab50fc34d4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ColorPropertyName: _BaseColor
+  m_ColorPropertyName: _BaseColor
   m_Color: {r: 0.53542423, g: 0, b: 1, a: 1}
   m_Alpha: 1

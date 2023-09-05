@@ -85,7 +85,7 @@
 				m_Cubes.Add(cube);
 			}
 
-			var colorModifier = cube.GetComponent<ColorModifier>();
+			var colorModifier = cube.GetComponent<ColorAdapter>();
 			var color = colorModifier.Color;
 
 			MotionKit.GetMotion(cube, "Color", c => colorModifier.Color = c)

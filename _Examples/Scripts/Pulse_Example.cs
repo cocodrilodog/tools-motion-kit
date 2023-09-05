@@ -66,7 +66,7 @@
 		private Transform m_ScaleCube;
 
 		[SerializeField]
-		private ColorModifier m_ColorCube;
+		private ColorAdapter m_ColorCube;
 
 		#endregion
 
@@ -77,7 +77,7 @@
 
 		private Transform ScaleCube => m_ScaleCube;
 
-		private ColorModifier ColorCube => m_ColorCube;
+		private ColorAdapter ColorCube => m_ColorCube;
 
 		#endregion
 

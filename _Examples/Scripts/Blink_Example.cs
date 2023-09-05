@@ -27,7 +27,7 @@
 		}
 
 		private void Start() {
-			m_DefaultColor = ColorModifier.Color;
+			m_DefaultColor = ColorAdapter.Color;
 		}
 
 		private void OnDisable() {
@@ -40,7 +40,7 @@
 		#region Event Handlers
 
 		private void EventTrigger_PointerClick(BaseEventData arg0) {
-			MotionKit.GetMotion(this, "Color", c => ColorModifier.Color = c)
+			MotionKit.GetMotion(this, "Color", c => ColorAdapter.Color = c)
 				.SetEasing(Blink.ColorEasing)
 				.Play(Color.black, m_DefaultColor, 1);
 		}
@@ -52,7 +52,7 @@
 
 		private EventTrigger m_EventTrigger;
 
-		private ColorModifier m_ColorModifier;
+		private ColorAdapter m_ColorAdapter;
 
 		private Color m_DefaultColor;
 
@@ -70,12 +70,12 @@
 			}
 		}
 
-		private ColorModifier ColorModifier {
+		private ColorAdapter ColorAdapter {
 			get {
-				if(m_ColorModifier == null) {
-					m_ColorModifier = GetComponent<ColorModifier>();
+				if(m_ColorAdapter == null) {
+					m_ColorAdapter = GetComponent<ColorAdapter>();
 				}
-				return m_ColorModifier;
+				return m_ColorAdapter;
 			}
 		}
 

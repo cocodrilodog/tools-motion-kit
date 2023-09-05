@@ -358,10 +358,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 579518239}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 306fd0360e6fb4f6083949d97649f520, type: 3}
+  m_Script: {fileID: 11500000, guid: 7b39d3a3fa4b7b64fa531dab50fc34d4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ColorPropertyName: _Color
+  m_ColorPropertyName: _Color
   m_Color: {r: 1, g: 0.5131041, b: 0, a: 1}
   m_Alpha: 1
 --- !u!65 &579518244
@@ -654,7 +654,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0fb3639200fb4be4996952cebd241fe2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_SelectedCompositePath: 
+  m_SelectedCompositePath: m_Blocks.Array.data[1]
   m_Blocks:
   - rid: 3515060677956075529
   - rid: 3515060677956075531
@@ -693,8 +693,8 @@ MonoBehaviour:
         m_CallbackSelection: 0
         m_EditOwnerAndReuseID: 0
         m_Object: {fileID: 1902834735}
-        m_SetterString: ColorModifier/Color
-        m_GetterString: ColorModifier/Color
+        m_SetterString: ColorAdapter/Color
+        m_GetterString: ColorAdapter/Color
         m_InitialValue: {r: 0, g: 0, b: 0, a: 0}
         m_InitialValueIsRelative: 1
         m_FinalValue: {r: 0.533689, g: 1, b: 0, a: 1}
@@ -728,8 +728,8 @@ MonoBehaviour:
         m_CallbackSelection: 0
         m_EditOwnerAndReuseID: 0
         m_Object: {fileID: 1902834735}
-        m_SetterString: ColorModifier/Color
-        m_GetterString: ColorModifier/Color
+        m_SetterString: ColorAdapter/Color
+        m_GetterString: ColorAdapter/Color
         m_InitialValue: {r: 0, g: 0, b: 0, a: 0}
         m_InitialValueIsRelative: 1
         m_FinalValue: {r: 0.7686275, g: 0, b: 1, a: 1}
@@ -744,10 +744,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 1902834735}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 306fd0360e6fb4f6083949d97649f520, type: 3}
+  m_Script: {fileID: 11500000, guid: 7b39d3a3fa4b7b64fa531dab50fc34d4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ColorPropertyName: _Color
+  m_ColorPropertyName: _Color
   m_Color: {r: 0.76745605, g: 0, b: 1, a: 1}
   m_Alpha: 1
 --- !u!65 &1902834740
@@ -995,10 +995,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 1993175799}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 306fd0360e6fb4f6083949d97649f520, type: 3}
+  m_Script: {fileID: 11500000, guid: 7b39d3a3fa4b7b64fa531dab50fc34d4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ColorPropertyName: _Color
+  m_ColorPropertyName: _Color
   m_Color: {r: 1, g: 0.77884895, b: 0, a: 1}
   m_Alpha: 1
 --- !u!65 &1993175804
@@ -1141,10 +1141,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 2060911750}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 306fd0360e6fb4f6083949d97649f520, type: 3}
+  m_Script: {fileID: 11500000, guid: 7b39d3a3fa4b7b64fa531dab50fc34d4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ColorPropertyName: _Color
+  m_ColorPropertyName: _Color
   m_Color: {r: 1, g: 0, b: 0.5416179, a: 1}
   m_Alpha: 1
 --- !u!65 &2060911753
