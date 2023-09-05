@@ -8,8 +8,8 @@ namespace CocodriloDog.Animation {
 	using UnityEditor.SceneManagement;
 
 	/// <summary>
-	/// The custom editor for the <see cref="ColorModifier"/>. Used to handle the
-	/// get / set of the <see cref="ColorModifier.Color"/> property.
+	/// The custom editor for the <see cref="ColorAdapter"/>. Used to handle the
+	/// get / set of the <see cref="ColorAdapter.Color"/> property.
 	/// </summary>
 	[CustomEditor(typeof(ColorAdapter))]
 	[CanEditMultipleObjects]
@@ -54,7 +54,7 @@ namespace CocodriloDog.Animation {
 			GUIContent label = null;
 
 			if (showObjectInfo) {
-				label = new GUIContent(ColorModifiers[0].name);
+				label = new GUIContent(ColorAdapters[0].name);
 			}
 
 			// Evaluate Color and Alpha
@@ -65,7 +65,7 @@ namespace CocodriloDog.Animation {
 			EditorGUILayout.PropertyField(AlphaProperty);
 			serializedObject.ApplyModifiedProperties();
 			if (EditorGUI.EndChangeCheck()) {
-				ForEachTargetColorModifier(cm => cm.ApplyColor());
+				ForEachTargetColorAdapter(cm => cm.ApplyColor());
 			}
 
 			DrawMaterialHelpBox(showObjectInfo);
@@ -79,8 +79,8 @@ namespace CocodriloDog.Animation {
 
 		private void OnEnable() {
 			// This handles the case where an object is duplicated in the editor.
-			if (ColorModifiers[0] != null) {
-				ColorModifiers[0].ApplyColor();
+			if (ColorAdapters[0] != null) {
+				ColorAdapters[0].ApplyColor();
 			}
 			Undo.undoRedoPerformed += Undo_UndoRedoPerformed;
 		}
@@ -97,35 +97,35 @@ namespace CocodriloDog.Animation {
 		#endregion
 
 
-		#region Internal Static Methods
+		#region Private Static Methods
 
 		private static void EditorSceneManager_SceneOpened(Scene scene, OpenSceneMode mode) {
-			ForEachColorModifierInScene(cm => cm.ApplyColor());
+			ForEachColorAdapterInScene(cm => cm.ApplyColor());
 		}
 
 		private static void EditorApplication_HierarchyWindowChanged() {
 			if (!Application.isPlaying) {
-				ForEachColorModifierInScene(cm => cm.ApplyColor());
+				ForEachColorAdapterInScene(cm => cm.ApplyColor());
 			}
 		}
 
 		private static void EditorApplication_Update() {
-			ForEachColorModifierInScene(cm => cm.ApplyColor());
+			ForEachColorAdapterInScene(cm => cm.ApplyColor());
 			EditorApplication.update -= EditorApplication_Update;
 		}
 
 		private static void EditorApplication_PlayModeStateChanged(PlayModeStateChange obj) {
 			switch (obj) {
 				case PlayModeStateChange.EnteredEditMode: {
-						ForEachColorModifierInScene(cm => cm.ApplyColor());
+						ForEachColorAdapterInScene(cm => cm.ApplyColor());
 						break;
 					}
 			}
 		}
 
-		private static void ForEachColorModifierInScene(Action<ColorAdapter> action) {
-			foreach (ColorAdapter colorModifier in FindObjectsOfType<ColorAdapter>()) {
-				action(colorModifier);
+		private static void ForEachColorAdapterInScene(Action<ColorAdapter> action) {
+			foreach (ColorAdapter colorAdapter in FindObjectsOfType<ColorAdapter>()) {
+				action(colorAdapter);
 			}
 		}
 
@@ -144,7 +144,7 @@ namespace CocodriloDog.Animation {
 		private SerializedProperty m_AlphaProperty;
 
 		[NonSerialized]
-		private ColorAdapter[] m_ColorModifiers;
+		private ColorAdapter[] m_ColorAdapters;
 
 		#endregion
 
@@ -163,16 +163,16 @@ namespace CocodriloDog.Animation {
 			get { return m_AlphaProperty = m_AlphaProperty ?? serializedObject.FindProperty("m_Alpha"); }
 		}
 
-		private ColorAdapter[] ColorModifiers {
+		private ColorAdapter[] ColorAdapters {
 			get {
-				if (m_ColorModifiers == null) {
-					m_ColorModifiers = new ColorAdapter[targets.Length];
-					for (int i = 0; i < m_ColorModifiers.Length; i++) {
-						m_ColorModifiers[i] = (ColorAdapter)targets[i];
+				if (m_ColorAdapters == null) {
+					m_ColorAdapters = new ColorAdapter[targets.Length];
+					for (int i = 0; i < m_ColorAdapters.Length; i++) {
+						m_ColorAdapters[i] = (ColorAdapter)targets[i];
 					}
 				}
 
-				return m_ColorModifiers;
+				return m_ColorAdapters;
 			}
 		}
 
@@ -182,12 +182,12 @@ namespace CocodriloDog.Animation {
 		#region Internal Methods
 
 		private void Undo_UndoRedoPerformed() {
-			ForEachColorModifierInScene(cm => cm.ApplyColor());
+			ForEachColorAdapterInScene(cm => cm.ApplyColor());
 		}
 
-		private void ForEachTargetColorModifier(Action<ColorAdapter> action) {
-			foreach (ColorAdapter colorModifier in ColorModifiers) {
-				action(colorModifier);
+		private void ForEachTargetColorAdapter(Action<ColorAdapter> action) {
+			foreach (ColorAdapter colorAdapter in ColorAdapters) {
+				action(colorAdapter);
 			}
 		}
 

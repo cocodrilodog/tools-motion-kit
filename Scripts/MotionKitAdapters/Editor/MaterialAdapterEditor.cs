@@ -15,22 +15,22 @@ namespace CocodriloDog.Animation {
 		private SerializedProperty m_ScriptProperty;
 
 		[NonSerialized]
-		private MaterialAdapter[] m_MaterialModifiers;
+		private MaterialAdapter[] m_MaterialAdapters;
 
 		#endregion
 
 
 		#region Internal Properties
 
-		protected MaterialAdapter[] MaterialModifiers {
+		protected MaterialAdapter[] MaterialAdapters {
 			get {
-				if (m_MaterialModifiers == null) {
-					m_MaterialModifiers = new MaterialAdapter[targets.Length];
-					for (int i = 0; i < m_MaterialModifiers.Length; i++) {
-						m_MaterialModifiers[i] = (MaterialAdapter)targets[i];
+				if (m_MaterialAdapters == null) {
+					m_MaterialAdapters = new MaterialAdapter[targets.Length];
+					for (int i = 0; i < m_MaterialAdapters.Length; i++) {
+						m_MaterialAdapters[i] = (MaterialAdapter)targets[i];
 					}
 				}
-				return m_MaterialModifiers;
+				return m_MaterialAdapters;
 			}
 		}
 
@@ -106,12 +106,12 @@ namespace CocodriloDog.Animation {
 
 			List<Renderer> renderersWithoutMaterial = null;
 
-			for (int i = 0; i < MaterialModifiers.Length; i++) {
-				if (MaterialModifiers[i].Renderer.sharedMaterial == null) {
+			for (int i = 0; i < MaterialAdapters.Length; i++) {
+				if (MaterialAdapters[i].Renderer.sharedMaterial == null) {
 					if (renderersWithoutMaterial == null) {
 						renderersWithoutMaterial = new List<Renderer>();
 					}
-					renderersWithoutMaterial.Add(MaterialModifiers[i].Renderer);
+					renderersWithoutMaterial.Add(MaterialAdapters[i].Renderer);
 				}
 			}
 
