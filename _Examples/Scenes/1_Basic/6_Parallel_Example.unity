@@ -152,10 +152,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 34822897}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 306fd0360e6fb4f6083949d97649f520, type: 3}
+  m_Script: {fileID: 11500000, guid: 7b39d3a3fa4b7b64fa531dab50fc34d4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ColorPropertyName: _Color
+  m_ColorPropertyName: _Color
   m_Color: {r: 1, g: 0, b: 0, a: 1}
   m_Alpha: 1
 --- !u!23 &34822899
@@ -817,10 +817,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 889300852}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 306fd0360e6fb4f6083949d97649f520, type: 3}
+  m_Script: {fileID: 11500000, guid: 7b39d3a3fa4b7b64fa531dab50fc34d4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ColorPropertyName: _Color
+  m_ColorPropertyName: _Color
   m_Color: {r: 0, g: 0, b: 0, a: 1}
   m_Alpha: 1
 --- !u!23 &889300855
@@ -930,10 +930,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 918560307}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 306fd0360e6fb4f6083949d97649f520, type: 3}
+  m_Script: {fileID: 11500000, guid: 7b39d3a3fa4b7b64fa531dab50fc34d4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ColorPropertyName: _Color
+  m_ColorPropertyName: _Color
   m_Color: {r: 0.024532318, g: 1, b: 0, a: 1}
   m_Alpha: 1
 --- !u!23 &918560310
@@ -1519,10 +1519,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 1249825061}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 306fd0360e6fb4f6083949d97649f520, type: 3}
+  m_Script: {fileID: 11500000, guid: 7b39d3a3fa4b7b64fa531dab50fc34d4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ColorPropertyName: _Color
+  m_ColorPropertyName: _Color
   m_Color: {r: 0, g: 0, b: 0, a: 1}
   m_Alpha: 1
 --- !u!23 &1249825064
@@ -2009,10 +2009,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 1732051099}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 306fd0360e6fb4f6083949d97649f520, type: 3}
+  m_Script: {fileID: 11500000, guid: 7b39d3a3fa4b7b64fa531dab50fc34d4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ColorPropertyName: _Color
+  m_ColorPropertyName: _Color
   m_Color: {r: 0, g: 0, b: 1, a: 1}
   m_Alpha: 1
 --- !u!23 &1732051102

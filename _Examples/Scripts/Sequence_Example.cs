@@ -196,7 +196,7 @@
 		private Transform m_PositionCube;
 
 		[SerializeField]
-		private ColorModifier m_ColorSphere;
+		private ColorAdapter m_ColorSphere;
 
 		[SerializeField]
 		private Transform m_Sphere1;
@@ -225,7 +225,7 @@
 
 		private Transform PositionCube { get { return m_PositionCube; } }
 
-		private ColorModifier ColorSphere { get { return m_ColorSphere; } }
+		private ColorAdapter ColorSphere { get { return m_ColorSphere; } }
 
 		private Transform Sphere1 => m_Sphere1;
 

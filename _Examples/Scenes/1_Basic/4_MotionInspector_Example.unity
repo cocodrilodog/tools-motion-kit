@@ -136,6 +136,7 @@ GameObject:
   - component: {fileID: 432292130}
   - component: {fileID: 432292129}
   - component: {fileID: 432292133}
+  - component: {fileID: 432292134}
   m_Layer: 0
   m_Name: Cube
   m_TagString: Untagged
@@ -176,7 +177,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 31321ba15b8f8eb4c954353edc038b1d, type: 2}
+  - {fileID: 2100000, guid: ce583479b5c714956b9b45cb076fba76, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -261,9 +262,12 @@ MonoBehaviour:
     - rid: 7857419301570478087
       type: {class: Shake, ns: CocodriloDog.Animation, asm: Assembly-CSharp}
       data:
-        TMultiplier: 10
-        Magnitude: 2
-        IsDampered: 1
+        m_Magnitude:
+          Float: 0
+          Vector3: {x: 0, y: 1, z: 1}
+          Color: {r: 0, g: 0, b: 0, a: 0}
+        m_TMultiplier: 7
+        m_IsDampered: 1
         m_Damper:
           serializedVersion: 2
           m_Curve:
@@ -297,6 +301,21 @@ MonoBehaviour:
           m_PreInfinity: 2
           m_PostInfinity: 2
           m_RotationOrder: 4
+--- !u!114 &432292134
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 432292128}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7b39d3a3fa4b7b64fa531dab50fc34d4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_ColorPropertyName: _Color
+  m_Color: {r: 0.9519404, g: 1, b: 0, a: 1}
+  m_Alpha: 1
 --- !u!1 &458854317
 GameObject:
   m_ObjectHideFlags: 0
@@ -428,7 +447,7 @@ Camera:
   m_Enabled: 1
   serializedVersion: 2
   m_ClearFlags: 2
-  m_BackGroundColor: {r: 0.19215687, g: 0.3019608, b: 0.4745098, a: 0}
+  m_BackGroundColor: {r: 0.46666667, g: 0.8, b: 0.8901961, a: 0}
   m_projectionMatrixMode: 1
   m_GateFitMode: 2
   m_FOVAxisMode: 0

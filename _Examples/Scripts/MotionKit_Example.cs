@@ -95,7 +95,7 @@
 		private Transform m_PlaybackObject;
 
 		[SerializeField]
-		private ColorModifier m_ColorObject;
+		private ColorAdapter m_ColorObject;
 
 		[SerializeField]
 		private Transform m_PositionObject;
@@ -135,7 +135,7 @@
 
 		private Transform PlaybackObject { get { return m_PlaybackObject; } }
 
-		private ColorModifier ColorObject { get { return m_ColorObject; } }
+		private ColorAdapter ColorObject { get { return m_ColorObject; } }
 
 		private Transform PositionObject { get { return m_PositionObject; } }
 
