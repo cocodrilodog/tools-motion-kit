@@ -286,7 +286,7 @@ MonoBehaviour:
     - rid: -2
       type: {class: , ns: , asm: }
     - rid: 6990145245326082093
-      type: {class: SequenceBlock, ns: CocodriloDog.Animation, asm: Assembly-CSharp}
+      type: {class: SequenceBlock, ns: CocodriloDog.MotionKit, asm: Assembly-CSharp}
       data:
         m_Name: Sequence
         m_Owner: {fileID: 0}
@@ -319,7 +319,7 @@ MonoBehaviour:
         - rid: 6990145245326082097
         m_BatchOperations: []
     - rid: 6990145245326082094
-      type: {class: Motion3DBlock, ns: CocodriloDog.Animation, asm: Assembly-CSharp}
+      type: {class: Motion3DBlock, ns: CocodriloDog.MotionKit, asm: Assembly-CSharp}
       data:
         m_Name: Motion1
         m_Owner: {fileID: 0}
@@ -354,7 +354,7 @@ MonoBehaviour:
         m_FinalValueIsRelative: 1
         m_SharedValues: {fileID: 0}
     - rid: 6990145245326082095
-      type: {class: Motion3DBlock, ns: CocodriloDog.Animation, asm: Assembly-CSharp}
+      type: {class: Motion3DBlock, ns: CocodriloDog.MotionKit, asm: Assembly-CSharp}
       data:
         m_Name: Motion2
         m_Owner: {fileID: 0}
@@ -389,7 +389,7 @@ MonoBehaviour:
         m_FinalValueIsRelative: 1
         m_SharedValues: {fileID: 0}
     - rid: 6990145245326082096
-      type: {class: Motion3DBlock, ns: CocodriloDog.Animation, asm: Assembly-CSharp}
+      type: {class: Motion3DBlock, ns: CocodriloDog.MotionKit, asm: Assembly-CSharp}
       data:
         m_Name: Motion3
         m_Owner: {fileID: 0}
@@ -424,7 +424,7 @@ MonoBehaviour:
         m_FinalValueIsRelative: 1
         m_SharedValues: {fileID: 0}
     - rid: 6990145245326082097
-      type: {class: Motion3DBlock, ns: CocodriloDog.Animation, asm: Assembly-CSharp}
+      type: {class: Motion3DBlock, ns: CocodriloDog.MotionKit, asm: Assembly-CSharp}
       data:
         m_Name: Motion4
         m_Owner: {fileID: 0}

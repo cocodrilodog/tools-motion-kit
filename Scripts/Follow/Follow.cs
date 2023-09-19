@@ -1,4 +1,4 @@
-﻿namespace CocodriloDog.Animation {
+﻿namespace CocodriloDog.MotionKit {
 
 	using System;
 	using System.Collections;
@@ -17,7 +17,7 @@
 		#region Public Fields
 
 		/// <summary>
-		/// The <see cref="CocodriloDog.Animation.TimeMode"/> of this follow animation.
+		/// The <see cref="CocodriloDog.MotionKit.TimeMode"/> of this follow animation.
 		/// </summary>
 		public TimeMode TimeMode;
 

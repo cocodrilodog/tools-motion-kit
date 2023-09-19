@@ -1,4 +1,4 @@
-﻿namespace CocodriloDog.Animation {
+﻿namespace CocodriloDog.MotionKit {
 
 	using System.Collections;
 	using System.Collections.Generic;

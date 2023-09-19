@@ -1,4 +1,4 @@
-﻿namespace CocodriloDog.Animation {
+﻿namespace CocodriloDog.MotionKit {
 
 	// FbxAnimListPostprocessor.cs : Use an external text file to import a list of
 

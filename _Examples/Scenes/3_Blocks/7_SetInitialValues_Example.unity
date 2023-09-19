@@ -405,7 +405,7 @@ MonoBehaviour:
     - rid: -2
       type: {class: , ns: , asm: }
     - rid: 7188761519485091844
-      type: {class: SequenceBlock, ns: CocodriloDog.Animation, asm: Assembly-CSharp}
+      type: {class: SequenceBlock, ns: CocodriloDog.MotionKit, asm: Assembly-CSharp}
       data:
         m_Name: FadeInSequence
         m_Owner: {fileID: 0}
@@ -436,7 +436,7 @@ MonoBehaviour:
         - rid: 7188761519485091846
         m_BatchOperations: []
     - rid: 7188761519485091846
-      type: {class: MotionFloatBlock, ns: CocodriloDog.Animation, asm: Assembly-CSharp}
+      type: {class: MotionFloatBlock, ns: CocodriloDog.MotionKit, asm: Assembly-CSharp}
       data:
         m_Name: FadeIn
         m_Owner: {fileID: 0}
@@ -471,7 +471,7 @@ MonoBehaviour:
         m_FinalValueIsRelative: 0
         m_SharedValues: {fileID: 0}
     - rid: 7188761519485091847
-      type: {class: TimerBlock, ns: CocodriloDog.Animation, asm: Assembly-CSharp}
+      type: {class: TimerBlock, ns: CocodriloDog.MotionKit, asm: Assembly-CSharp}
       data:
         m_Name: Timer
         m_Owner: {fileID: 0}

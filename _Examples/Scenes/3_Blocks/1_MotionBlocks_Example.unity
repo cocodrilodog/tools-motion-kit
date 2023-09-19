@@ -257,7 +257,7 @@ MonoBehaviour:
     - rid: -2
       type: {class: , ns: , asm: }
     - rid: 6990145245326082053
-      type: {class: Motion2DBlock, ns: CocodriloDog.Animation, asm: Assembly-CSharp}
+      type: {class: Motion2DBlock, ns: CocodriloDog.MotionKit, asm: Assembly-CSharp}
       data:
         m_Name: Motion2DBlock
         m_Owner: {fileID: 0}
@@ -335,7 +335,7 @@ MonoBehaviour:
     - rid: -2
       type: {class: , ns: , asm: }
     - rid: 6990145245326082051
-      type: {class: Motion3DBlock, ns: CocodriloDog.Animation, asm: Assembly-CSharp}
+      type: {class: Motion3DBlock, ns: CocodriloDog.MotionKit, asm: Assembly-CSharp}
       data:
         m_Name: Motion3DBlock
         m_Owner: {fileID: 0}
@@ -357,7 +357,7 @@ MonoBehaviour:
           m_PersistentCalls:
             m_Calls:
             - m_Target: {fileID: 773244400}
-              m_TargetAssemblyTypeName: CocodriloDog.Animation.Examples.AnimateMotionComponents_Example,
+              m_TargetAssemblyTypeName: CocodriloDog.MotionKit.Examples.AnimateMotionComponents_Example,
                 Assembly-CSharp
               m_MethodName: OnInterrupt
               m_Mode: 1
@@ -516,7 +516,7 @@ MonoBehaviour:
     - rid: -2
       type: {class: , ns: , asm: }
     - rid: 6990145245326082049
-      type: {class: MotionFloatBlock, ns: CocodriloDog.Animation, asm: Assembly-CSharp}
+      type: {class: MotionFloatBlock, ns: CocodriloDog.MotionKit, asm: Assembly-CSharp}
       data:
         m_Name: MotionFloatBlock
         m_Owner: {fileID: 0}
@@ -532,7 +532,7 @@ MonoBehaviour:
           m_PersistentCalls:
             m_Calls:
             - m_Target: {fileID: 807932835}
-              m_TargetAssemblyTypeName: CocodriloDog.Animation.Examples.AnimateMotionComponents_Example,
+              m_TargetAssemblyTypeName: CocodriloDog.MotionKit.Examples.AnimateMotionComponents_Example,
                 Assembly-CSharp
               m_MethodName: OnStart
               m_Mode: 1
@@ -548,7 +548,7 @@ MonoBehaviour:
           m_PersistentCalls:
             m_Calls:
             - m_Target: {fileID: 807932835}
-              m_TargetAssemblyTypeName: CocodriloDog.Animation.Examples.AnimateMotionComponents_Example,
+              m_TargetAssemblyTypeName: CocodriloDog.MotionKit.Examples.AnimateMotionComponents_Example,
                 Assembly-CSharp
               m_MethodName: OnUpdate
               m_Mode: 1
@@ -567,7 +567,7 @@ MonoBehaviour:
           m_PersistentCalls:
             m_Calls:
             - m_Target: {fileID: 807932835}
-              m_TargetAssemblyTypeName: CocodriloDog.Animation.Examples.AnimateMotionComponents_Example,
+              m_TargetAssemblyTypeName: CocodriloDog.MotionKit.Examples.AnimateMotionComponents_Example,
                 Assembly-CSharp
               m_MethodName: OnComplete
               m_Mode: 1
@@ -580,7 +580,7 @@ MonoBehaviour:
                 m_BoolArgument: 0
               m_CallState: 2
             - m_Target: {fileID: 773244399}
-              m_TargetAssemblyTypeName: CocodriloDog.Animation.AnimateComponent,
+              m_TargetAssemblyTypeName: CocodriloDog.MotionKit.AnimateComponent,
                 Assembly-CSharp
               m_MethodName: Stop
               m_Mode: 1
@@ -736,7 +736,7 @@ MonoBehaviour:
     - rid: -2
       type: {class: , ns: , asm: }
     - rid: 6990145245326082055
-      type: {class: MotionColorBlock, ns: CocodriloDog.Animation, asm: Assembly-CSharp}
+      type: {class: MotionColorBlock, ns: CocodriloDog.MotionKit, asm: Assembly-CSharp}
       data:
         m_Name: MotionColorBlock
         m_Owner: {fileID: 0}
@@ -752,7 +752,7 @@ MonoBehaviour:
           m_PersistentCalls:
             m_Calls:
             - m_Target: {fileID: 2103216002}
-              m_TargetAssemblyTypeName: CocodriloDog.Animation.AnimateComponent,
+              m_TargetAssemblyTypeName: CocodriloDog.MotionKit.AnimateComponent,
                 Assembly-CSharp
               m_MethodName: Play
               m_Mode: 5
@@ -1035,7 +1035,7 @@ MonoBehaviour:
     - rid: -2
       type: {class: , ns: , asm: }
     - rid: 6990145245326082057
-      type: {class: MotionColorBlock, ns: CocodriloDog.Animation, asm: Assembly-CSharp}
+      type: {class: MotionColorBlock, ns: CocodriloDog.MotionKit, asm: Assembly-CSharp}
       data:
         m_Name: MotionColorBlock
         m_Owner: {fileID: 0}

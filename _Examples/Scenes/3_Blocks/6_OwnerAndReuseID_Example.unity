@@ -244,7 +244,7 @@ MonoBehaviour:
       m_PersistentCalls:
         m_Calls:
         - m_Target: {fileID: 579518240}
-          m_TargetAssemblyTypeName: CocodriloDog.Animation.OwnerAndReuseID_Example,
+          m_TargetAssemblyTypeName: CocodriloDog.MotionKit.OwnerAndReuseID_Example,
             Assembly-CSharp
           m_MethodName: OnClick
           m_Mode: 1
@@ -280,7 +280,7 @@ MonoBehaviour:
     - rid: -2
       type: {class: , ns: , asm: }
     - rid: 3515060677956075523
-      type: {class: Motion2DBlock, ns: CocodriloDog.Animation, asm: Assembly-CSharp}
+      type: {class: Motion2DBlock, ns: CocodriloDog.MotionKit, asm: Assembly-CSharp}
       data:
         m_Name: SelectedPlayback
         m_Owner: {fileID: 579518239}
@@ -315,7 +315,7 @@ MonoBehaviour:
         m_FinalValueIsRelative: 0
         m_SharedValues: {fileID: 0}
     - rid: 3515060677956075525
-      type: {class: Motion2DBlock, ns: CocodriloDog.Animation, asm: Assembly-CSharp}
+      type: {class: Motion2DBlock, ns: CocodriloDog.MotionKit, asm: Assembly-CSharp}
       data:
         m_Name: UnselectedPlayback
         m_Owner: {fileID: 579518239}
@@ -630,7 +630,7 @@ MonoBehaviour:
       m_PersistentCalls:
         m_Calls:
         - m_Target: {fileID: 1902834736}
-          m_TargetAssemblyTypeName: CocodriloDog.Animation.OwnerAndReuseID_Example,
+          m_TargetAssemblyTypeName: CocodriloDog.MotionKit.OwnerAndReuseID_Example,
             Assembly-CSharp
           m_MethodName: OnClick
           m_Mode: 1
@@ -666,7 +666,7 @@ MonoBehaviour:
     - rid: -2
       type: {class: , ns: , asm: }
     - rid: 3515060677956075529
-      type: {class: MotionColorBlock, ns: CocodriloDog.Animation, asm: Assembly-CSharp}
+      type: {class: MotionColorBlock, ns: CocodriloDog.MotionKit, asm: Assembly-CSharp}
       data:
         m_Name: SelectedPlayback
         m_Owner: {fileID: 1902834735}
@@ -701,7 +701,7 @@ MonoBehaviour:
         m_FinalValueIsRelative: 0
         m_SharedValues: {fileID: 0}
     - rid: 3515060677956075531
-      type: {class: MotionColorBlock, ns: CocodriloDog.Animation, asm: Assembly-CSharp}
+      type: {class: MotionColorBlock, ns: CocodriloDog.MotionKit, asm: Assembly-CSharp}
       data:
         m_Name: UnselectedPlayback
         m_Owner: {fileID: 1902834735}
@@ -881,7 +881,7 @@ MonoBehaviour:
       m_PersistentCalls:
         m_Calls:
         - m_Target: {fileID: 1993175800}
-          m_TargetAssemblyTypeName: CocodriloDog.Animation.OwnerAndReuseID_Example,
+          m_TargetAssemblyTypeName: CocodriloDog.MotionKit.OwnerAndReuseID_Example,
             Assembly-CSharp
           m_MethodName: OnClick
           m_Mode: 1
@@ -917,7 +917,7 @@ MonoBehaviour:
     - rid: -2
       type: {class: , ns: , asm: }
     - rid: 3515060677956075526
-      type: {class: MotionFloatBlock, ns: CocodriloDog.Animation, asm: Assembly-CSharp}
+      type: {class: MotionFloatBlock, ns: CocodriloDog.MotionKit, asm: Assembly-CSharp}
       data:
         m_Name: SelectedPlayback
         m_Owner: {fileID: 1993175799}
@@ -952,7 +952,7 @@ MonoBehaviour:
         m_FinalValueIsRelative: 0
         m_SharedValues: {fileID: 0}
     - rid: 3515060677956075528
-      type: {class: MotionFloatBlock, ns: CocodriloDog.Animation, asm: Assembly-CSharp}
+      type: {class: MotionFloatBlock, ns: CocodriloDog.MotionKit, asm: Assembly-CSharp}
       data:
         m_Name: UnselectedPlayback
         m_Owner: {fileID: 1993175799}
@@ -1120,7 +1120,7 @@ MonoBehaviour:
       m_PersistentCalls:
         m_Calls:
         - m_Target: {fileID: 2060911758}
-          m_TargetAssemblyTypeName: CocodriloDog.Animation.OwnerAndReuseID_Example,
+          m_TargetAssemblyTypeName: CocodriloDog.MotionKit.OwnerAndReuseID_Example,
             Assembly-CSharp
           m_MethodName: OnClick
           m_Mode: 1
@@ -1249,7 +1249,7 @@ MonoBehaviour:
     - rid: -2
       type: {class: , ns: , asm: }
     - rid: 3515060677956075520
-      type: {class: Motion3DBlock, ns: CocodriloDog.Animation, asm: Assembly-CSharp}
+      type: {class: Motion3DBlock, ns: CocodriloDog.MotionKit, asm: Assembly-CSharp}
       data:
         m_Name: SelectedPlayback
         m_Owner: {fileID: 2060911750}
@@ -1284,7 +1284,7 @@ MonoBehaviour:
         m_FinalValueIsRelative: 0
         m_SharedValues: {fileID: 0}
     - rid: 3515060677956075522
-      type: {class: Motion3DBlock, ns: CocodriloDog.Animation, asm: Assembly-CSharp}
+      type: {class: Motion3DBlock, ns: CocodriloDog.MotionKit, asm: Assembly-CSharp}
       data:
         m_Name: UnselectedPlayback
         m_Owner: {fileID: 2060911750}

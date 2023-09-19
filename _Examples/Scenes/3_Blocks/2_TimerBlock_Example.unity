@@ -245,7 +245,7 @@ MonoBehaviour:
     - rid: -2
       type: {class: , ns: , asm: }
     - rid: 6990145245326082099
-      type: {class: TimerBlock, ns: CocodriloDog.Animation, asm: Assembly-CSharp}
+      type: {class: TimerBlock, ns: CocodriloDog.MotionKit, asm: Assembly-CSharp}
       data:
         m_Name: TimerBlock
         m_Owner: {fileID: 0}

@@ -1,4 +1,4 @@
-﻿namespace CocodriloDog.Animation.Examples {
+﻿namespace CocodriloDog.MotionKit.Examples {
 
 	using CocodriloDog.Core;
 	using System;
