@@ -37,11 +37,11 @@ namespace CocodriloDog.MotionKit.Examples {
 				//var propertyBlock = new MaterialPropertyBlock();
 				//Renderer.GetPropertyBlock(propertyBlock);
 				//return propertyBlock.GetColor("_BaseColor");
-				return Renderer.material.GetColor("_BaseColor");
+				return Renderer.material.GetColor("_Color");
 			}
 			set {
 				var propertyBlock = new MaterialPropertyBlock();
-				propertyBlock.SetColor("_BaseColor", value);
+				propertyBlock.SetColor("_Color", value);
 				Renderer.SetPropertyBlock(propertyBlock);
 			}
 		}
