@@ -274,6 +274,7 @@ GameObject:
   - component: {fileID: 1645218936}
   - component: {fileID: 1645218935}
   - component: {fileID: 1645218940}
+  - component: {fileID: 1645218941}
   m_Layer: 0
   m_Name: Sphere
   m_TagString: Untagged
@@ -295,7 +296,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_SelectedCompositePath: 
   m_Blocks:
-  - rid: 6990145245326082083
+  - rid: 6990145245326082093
   m_PlayOnStart: 1
   m_SetInitialValuesOnStart: 0
   references:
@@ -303,10 +304,10 @@ MonoBehaviour:
     RefIds:
     - rid: -2
       type: {class: , ns: , asm: }
-    - rid: 6990145245326082083
-      type: {class: SequenceBlock, ns: CocodriloDog.MotionKit, asm: Assembly-CSharp}
+    - rid: 6990145245326082093
+      type: {class: SequenceBlock, ns: CocodriloDog.MotionKit, asm: CocodriloDog.MotionKit}
       data:
-        m_Name: SequenceBlock
+        m_Name: Sequence
         m_Owner: {fileID: 0}
         m_ReuseID: 
         m_Duration: 0
@@ -331,13 +332,13 @@ MonoBehaviour:
         m_CallbackSelection: 0
         m_EditOwnerAndReuseID: 0
         m_SequenceItems:
-        - rid: 6990145245326082084
-        - rid: 6990145245326082085
-        - rid: 6990145245326082086
-        - rid: 6990145245326082087
+        - rid: 6990145245326082094
+        - rid: 6990145245326082095
+        - rid: 6990145245326082096
+        - rid: 6990145245326082097
         m_BatchOperations: []
-    - rid: 6990145245326082084
-      type: {class: Motion3DBlock, ns: CocodriloDog.MotionKit, asm: Assembly-CSharp}
+    - rid: 6990145245326082094
+      type: {class: Motion3DBlock, ns: CocodriloDog.MotionKit, asm: CocodriloDog.MotionKit}
       data:
         m_Name: Motion1
         m_Owner: {fileID: 0}
@@ -361,18 +362,18 @@ MonoBehaviour:
         m_OnComplete:
           m_PersistentCalls:
             m_Calls: []
-        m_CallbackSelection: 0
+        m_CallbackSelection: 3
         m_EditOwnerAndReuseID: 0
         m_Object: {fileID: 1645218934}
         m_SetterString: Transform/localPosition
         m_GetterString: Transform/localPosition
         m_InitialValue: {x: 0, y: 0, z: 0}
-        m_InitialValueIsRelative: 0
+        m_InitialValueIsRelative: 1
         m_FinalValue: {x: 3, y: 0, z: 0}
-        m_FinalValueIsRelative: 0
+        m_FinalValueIsRelative: 1
         m_SharedValues: {fileID: 0}
-    - rid: 6990145245326082085
-      type: {class: Motion3DBlock, ns: CocodriloDog.MotionKit, asm: Assembly-CSharp}
+    - rid: 6990145245326082095
+      type: {class: Motion3DBlock, ns: CocodriloDog.MotionKit, asm: CocodriloDog.MotionKit}
       data:
         m_Name: Motion2
         m_Owner: {fileID: 0}
@@ -401,13 +402,13 @@ MonoBehaviour:
         m_Object: {fileID: 1645218934}
         m_SetterString: Transform/localPosition
         m_GetterString: Transform/localPosition
-        m_InitialValue: {x: 3, y: 0, z: 0}
-        m_InitialValueIsRelative: 0
-        m_FinalValue: {x: 3, y: 3, z: 0}
-        m_FinalValueIsRelative: 0
+        m_InitialValue: {x: 0, y: 0, z: 0}
+        m_InitialValueIsRelative: 1
+        m_FinalValue: {x: 0, y: 3, z: 0}
+        m_FinalValueIsRelative: 1
         m_SharedValues: {fileID: 0}
-    - rid: 6990145245326082086
-      type: {class: Motion3DBlock, ns: CocodriloDog.MotionKit, asm: Assembly-CSharp}
+    - rid: 6990145245326082096
+      type: {class: Motion3DBlock, ns: CocodriloDog.MotionKit, asm: CocodriloDog.MotionKit}
       data:
         m_Name: Motion3
         m_Owner: {fileID: 0}
@@ -436,13 +437,13 @@ MonoBehaviour:
         m_Object: {fileID: 1645218934}
         m_SetterString: Transform/localPosition
         m_GetterString: Transform/localPosition
-        m_InitialValue: {x: 3, y: 3, z: 0}
-        m_InitialValueIsRelative: 0
-        m_FinalValue: {x: 0, y: 3, z: 0}
-        m_FinalValueIsRelative: 0
+        m_InitialValue: {x: 0, y: 0, z: 0}
+        m_InitialValueIsRelative: 1
+        m_FinalValue: {x: -3, y: 0, z: 0}
+        m_FinalValueIsRelative: 1
         m_SharedValues: {fileID: 0}
-    - rid: 6990145245326082087
-      type: {class: Motion3DBlock, ns: CocodriloDog.MotionKit, asm: Assembly-CSharp}
+    - rid: 6990145245326082097
+      type: {class: Motion3DBlock, ns: CocodriloDog.MotionKit, asm: CocodriloDog.MotionKit}
       data:
         m_Name: Motion4
         m_Owner: {fileID: 0}
@@ -471,10 +472,10 @@ MonoBehaviour:
         m_Object: {fileID: 1645218934}
         m_SetterString: Transform/localPosition
         m_GetterString: Transform/localPosition
-        m_InitialValue: {x: 0, y: 3, z: 0}
-        m_InitialValueIsRelative: 0
-        m_FinalValue: {x: 0, y: 0, z: 0}
-        m_FinalValueIsRelative: 0
+        m_InitialValue: {x: 0, y: 0, z: 0}
+        m_InitialValueIsRelative: 1
+        m_FinalValue: {x: 0, y: -3, z: 0}
+        m_FinalValueIsRelative: 1
         m_SharedValues: {fileID: 0}
 --- !u!135 &1645218936
 SphereCollider:
@@ -571,11 +572,24 @@ MonoBehaviour:
   m_GameObject: {fileID: 1645218934}
   m_Enabled: 1
   m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aeedb23cbbd2a1b41ac7caf5f41a1d79, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  MotionKitComponent: {fileID: 1645218935}
+--- !u!114 &1645218941
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1645218934}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 7b39d3a3fa4b7b64fa531dab50fc34d4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   m_ColorPropertyName: _Color
-  m_Color: {r: 0.53542423, g: 0, b: 1, a: 1}
+  m_Color: {r: 0, g: 0.66157603, b: 1, a: 1}
   m_Alpha: 1
 --- !u!1660057539 &9223372036854775807
 SceneRoots:

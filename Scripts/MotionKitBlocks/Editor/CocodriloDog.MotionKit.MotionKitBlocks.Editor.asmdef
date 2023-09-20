@@ -1,0 +1,21 @@
+{
+    "name": "CocodriloDog.MotionKit.MotionKitBlocks.Editor",
+    "rootNamespace": "",
+    "references": [
+        "GUID:23d364dc36d02914fa56973a32e4d1ed",
+        "GUID:1968ec4f31de017459aaaed17aa6b6e0",
+        "GUID:74925789f0adcbb48aa09aaa4edcde33",
+        "GUID:144be5e4c93570d499a8dd0e28587c32"
+    ],
+    "includePlatforms": [
+        "Editor"
+    ],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

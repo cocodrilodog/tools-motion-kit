@@ -260,7 +260,7 @@ MonoBehaviour:
     version: 2
     RefIds:
     - rid: 7857419301570478087
-      type: {class: Shake, ns: CocodriloDog.MotionKit, asm: Assembly-CSharp}
+      type: {class: Shake, ns: CocodriloDog.MotionKit, asm: CocodriloDog.MotionKit}
       data:
         m_Magnitude:
           Float: 0

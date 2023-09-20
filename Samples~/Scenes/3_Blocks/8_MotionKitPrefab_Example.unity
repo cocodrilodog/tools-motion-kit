@@ -450,7 +450,7 @@ MonoBehaviour:
     - rid: -2
       type: {class: , ns: , asm: }
     - rid: 6990145516267634688
-      type: {class: Motion3DBlock, ns: CocodriloDog.MotionKit, asm: Assembly-CSharp}
+      type: {class: Motion3DBlock, ns: CocodriloDog.MotionKit, asm: CocodriloDog.MotionKit}
       data:
         m_Name: MoveRight
         m_Owner: {fileID: 0}
@@ -498,7 +498,7 @@ MonoBehaviour:
         m_FinalValueIsRelative: 1
         m_SharedValues: {fileID: 0}
     - rid: 6990145554712363031
-      type: {class: Motion3DBlock, ns: CocodriloDog.MotionKit, asm: Assembly-CSharp}
+      type: {class: Motion3DBlock, ns: CocodriloDog.MotionKit, asm: CocodriloDog.MotionKit}
       data:
         m_Name: Motion3D
         m_Owner: {fileID: 0}

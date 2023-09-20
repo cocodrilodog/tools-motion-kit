@@ -265,7 +265,7 @@ MonoBehaviour:
     - rid: -2
       type: {class: , ns: , asm: }
     - rid: 6990145245326082053
-      type: {class: Motion2DBlock, ns: CocodriloDog.MotionKit, asm: Assembly-CSharp}
+      type: {class: Motion2DBlock, ns: CocodriloDog.MotionKit, asm: CocodriloDog.MotionKit}
       data:
         m_Name: Motion2DBlock
         m_Owner: {fileID: 0}
@@ -343,7 +343,7 @@ MonoBehaviour:
     - rid: -2
       type: {class: , ns: , asm: }
     - rid: 6990145245326082051
-      type: {class: Motion3DBlock, ns: CocodriloDog.MotionKit, asm: Assembly-CSharp}
+      type: {class: Motion3DBlock, ns: CocodriloDog.MotionKit, asm: CocodriloDog.MotionKit}
       data:
         m_Name: Motion3DBlock
         m_Owner: {fileID: 0}
@@ -532,7 +532,7 @@ MonoBehaviour:
     - rid: -2
       type: {class: , ns: , asm: }
     - rid: 6990145245326082049
-      type: {class: MotionFloatBlock, ns: CocodriloDog.MotionKit, asm: Assembly-CSharp}
+      type: {class: MotionFloatBlock, ns: CocodriloDog.MotionKit, asm: CocodriloDog.MotionKit}
       data:
         m_Name: MotionFloatBlock
         m_Owner: {fileID: 0}
@@ -760,7 +760,7 @@ MonoBehaviour:
     - rid: -2
       type: {class: , ns: , asm: }
     - rid: 6990145245326082055
-      type: {class: MotionColorBlock, ns: CocodriloDog.MotionKit, asm: Assembly-CSharp}
+      type: {class: MotionColorBlock, ns: CocodriloDog.MotionKit, asm: CocodriloDog.MotionKit}
       data:
         m_Name: MotionColorBlock
         m_Owner: {fileID: 0}
@@ -1086,7 +1086,7 @@ MonoBehaviour:
     - rid: -2
       type: {class: , ns: , asm: }
     - rid: 6990145245326082057
-      type: {class: MotionColorBlock, ns: CocodriloDog.MotionKit, asm: Assembly-CSharp}
+      type: {class: MotionColorBlock, ns: CocodriloDog.MotionKit, asm: CocodriloDog.MotionKit}
       data:
         m_Name: MotionColorBlock
         m_Owner: {fileID: 0}

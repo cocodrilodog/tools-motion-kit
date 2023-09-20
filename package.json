@@ -1,0 +1,30 @@
+{
+  "name": "com.cocodrilodog.motionkit",
+  "version": "1.0.0",
+  "displayName": "Motion Kit",
+  "description": "MotionKit is a tool that animates anything. It is very similar to DOTween, but with inpector super powers and a few tweaks that makes it simpler to use and learn.",
+  "unity": "2019.3",
+  "documentationUrl": "https://github.com/cocodrilodog/tools-motion-kit",
+  "changelogUrl": "https://example.com/changelog.html",
+  "licensesUrl": "https://example.com/licensing.html",
+  "keywords": [
+    "keyword1",
+    "keyword2",
+    "keyword3"
+  ],
+  "author": {
+    "name": "Cocodrilo Dog",
+    "email": "contact@cocodrilodog.com",
+    "url": "https://www.cocodrilodog.com"
+  },
+  "samples": [
+    {
+      "displayName": "MotionKit Samples",
+      "description": "Contains example scenes for Cocodrilo Dog's MotionKit",
+      "path": "Samples~"
+    }
+  ],
+  "dependencies": {
+    "com.cocodrilodog.core": "1.0.0"
+  }
+}

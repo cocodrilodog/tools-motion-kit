@@ -1,0 +1,17 @@
+{
+    "name": "CocodriloDog.MotionKit.Examples",
+    "rootNamespace": "",
+    "references": [
+        "GUID:23d364dc36d02914fa56973a32e4d1ed",
+        "GUID:1968ec4f31de017459aaaed17aa6b6e0"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}
