@@ -1,11 +1,11 @@
 # Animate Guide
 
-Animate is a tool that animates anything. It is very similar to [DOTween](http://dotween.demigiant.com/getstarted.php), but with a few tweaks that makes it simpler to use and learn.
+MotionKit is a tool that animates anything. It is very similar to [DOTween](http://dotween.demigiant.com/getstarted.php), but with inspector super powers and a few tweaks that makes it simpler to use and learn.
 
 ## Table of Contents
 
 - [1 Introduction](#1-introduction)
-- [2 Animate Architecture](#2-animate-architecture)
+- [2 MotionKit Architecture](#2-motion-kit-architecture)
 	- [2.1 The `owner` and `reuseKey` Parameters](#21-the-owner-and-reusekey-parameters)
 	- [2.2 The `setter` Parameter](#22-the-setter-parameter)
 	- [2.3 Clearing Motions](#23-clearing-motions)
@@ -26,7 +26,7 @@ With `Animate`, all numeric values of any object can be animated. There are also
 
 There is a examples scene in the project called `DoodleStories-AnimateExample`.
 
-## 2 Animate Architecture
+## 2 Motion Kit Architecture
 
 Animating objects with `Animate` is very simple. In the example below, we are animating the `localPosition` of `TheObject` from its current value to 3 units right with a duration of 1 second:
 
