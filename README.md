@@ -19,6 +19,7 @@ MotionKit is a tool that animates anything. It is very similar to [DOTween](http
 - [8 Handle `Motion` Objects Out of MotionKit](#8-handle-motion-objects-out-of-motionkit)
 - [9 Extending `MotionKit`](#9-extending-motionkit)
 - [10 Common Error](#10-common-error)
+- [11 Inspector Superpowers: `MotionKitBlocks`](#11-inspector-superpowers-motionkitblocks)
 
 ## 1 Introduction
 
@@ -257,6 +258,7 @@ void ScaleUpButton_OnClick() {
 ```
 
 ## 11 Inspector Superpowers: `MotionKitBlocks`
-![image](https://github.com/cocodrilodog/tools-motion-kit/assets/8107813/0dc7c842-e038-448f-91a9-305a58906c27)
+
+<img src="https://github.com/cocodrilodog/tools-motion-kit/assets/8107813/0dc7c842-e038-448f-91a9-305a58906c27" width="500">
 
 (TODO)
