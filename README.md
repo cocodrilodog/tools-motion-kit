@@ -10,9 +10,9 @@ MotionKit is a tool that animates anything. It is very similar to [DOTween](http
 	- [2.2 The `setter` Parameter](#22-the-setter-parameter)
 	- [2.3 Clearing Motions](#23-clearing-motions)
 - [3 More `Motion` Settings](#3-more-motion-settings)
-- [4 Easing and `MotionKitCurves`](#4-easing-and-motionkit-curves)
+- [4 Easing and `MotionKitCurves`](#4-easing-and-motionkit-curve)
 	- [4.1 Easing](#41-easing)
-	- [4.2 `MotionKitCurves`](#42-motionkit-curves)
+	- [4.2 `MotionKitCurve`](#42-motionkit-curves)
 - [5 `Timer`](#5-timer)
 - [6 `Sequence`](#6-sequence)
 - [7 `Parallel`](#7-parallel)
@@ -28,7 +28,7 @@ With `Animate`, all numeric values of any object can be animated. There are also
 
 There is a examples scene in the project called `DoodleStories-AnimateExample`.
 
-## 2 Motion Kit Architecture
+## 2 MotionKit Architecture
 
 Animating objects with `Animate` is very simple. In the example below, we are animating the `localPosition` of `TheObject` from its current value to 3 units right with a duration of 1 second:
 
@@ -39,7 +39,7 @@ Animate.GetMotion(this, "Position", p => TheObject.localPosition = p)
 
 When we create an animation this way, the `Animate` tool creates and returns an instance of `Motion3D` type. Subsequential execution of this code will reuse the same `Motion3D` instance. This is handled internally and is explained below.
 
-### 2.1 The `owner` and `reuseKey` Parameters 
+### 2.1 The `owner` and `reuseID` Parameters 
 
 By passing `this` as the `owner` argument we are saying that the `Motion3D` instance belongs to the object referenced by the `this` keyword (normally a `MonoBehaviour`). It can be any object, though.
 
@@ -123,7 +123,7 @@ void StopButton_OnClick() {
 
 ```
 
-## 4 Easing and `AnimateCurves`
+## 4 Easing and `MotionKitCurve`
 
 ### 4.1 Easing
 
@@ -143,7 +143,7 @@ A good place to look for easing functions is [Robert Penner's website](http://ro
 
 <img width="800" alt="imagen" src="https://user-images.githubusercontent.com/8107813/64360751-b5b20200-cfd0-11e9-83a8-4df8a0199707.png">
 
-### 4.2 `AnimateCurves`
+### 4.2 `MotionKitCurve`
 
 Sometimes the existing easing functions won't fit specific needs. For this, there is an additional option called `AnimateCurves`. It is an asset where you can design custom animation curves that can be passed as parameters to `SetEasing(...)`:
 
