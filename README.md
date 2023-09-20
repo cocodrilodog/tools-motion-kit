@@ -150,7 +150,7 @@ Sometimes the existing easing functions won't fit specific needs. For this, ther
 
 <img width="317" alt="imagen" src="https://user-images.githubusercontent.com/8107813/64360868-fa3d9d80-cfd0-11e9-9ea0-4caa16aea6ed.png">
 
-Once you have a defined curve as a inspector variable, you can use it like this:
+Once you have a `MotionKitCurve` field in the inspector, you can use it like this:
 
 ```
 MotionKit.GetMotion(this, "Color", c => ColorObject.Color = c)
@@ -160,13 +160,13 @@ MotionKit.GetMotion(this, "Color", c => ColorObject.Color = c)
 
 ## 5 Timer
 
-The `Delay` object is used to invoke any method at the end of a time period. In the example below the `"Delay Completed"` log will be shown in the console 1 second after the call to `MotionKit.GetTimer(...)`.
+The `Timer` object is used to invoke any method at the end of a time period. In the example below the `"Timer Completed!"` log will be shown in the console 1 second after the call to `MotionKit.GetTimer(...)`.
 
 ```
-MotionKit.GetTimer(this, "Delay").Play(1).SetOnComplete(() => Debug.LogFormat("Delay completed"));
+MotionKit.GetTimer(this, "Delay").Play(1).SetOnComplete(() => Debug.LogFormat("Timer Completed!"));
 ```
 
-The `Delay` object follows the same rules as the `Motion` objects, except that it doesn't receive any `setter` nor easing function. It should be cleared the same way `Motion` objects are cleared.
+The `Timer` object follows the same rules as the `Motion` objects, except that it doesn't receive any `setter` nor easing function. It should be cleared the same way `Motion` objects are cleared.
 
 It can be used in combination with `Motion` objects to create animated sequences:
 
@@ -203,8 +203,14 @@ MotionFloat motionFloat = new MotionFloat(this, f => FloatObject.FloatProperty =
 MotionColor motionColor = new MotionColor(this, c => ColorObject.ColorProperty = c)
 	.Play(ColorObject.ColorProperty, new Color(0, 0, 0, 1), 1f);
 ```
-
 The first parameter passed to the constructor is the `MonoBehaviour` where the coroutines that generate the animations will be executed.
+
+And when you don't need the motions anymore:
+```
+motion3D.Dispose();
+motionFloat.Dispose();
+motionColor.Dispose();
+```
 
 ## 9 Extending `MotionKit`
 
