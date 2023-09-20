@@ -46,7 +46,7 @@ By passing `this` as the `owner` argument we are saying that the `Motion3D` inst
 
 The `reuseID` `"Position"` is an arbitrary name that we create in order to reuse the generated `Motion3D` instance for all position animations that the `this` object will play and that will be performed by the same `Motion3D` instance.
 
-There are other types of motions like `MotionFloat` and `MotionColor`, but the returned type will be handled automatically by `Animate`, depending on the passed parameters.
+There are other types of motions like `MotionFloat` and `MotionColor`, but the returned type will be handled automatically by `MotionKit`, depending on the passed parameters.
 
 Having the `owner` parameter helps to isolate which animations belong to which objects. For example in the table below, we can see a list of possible owner-key related motions:
 
@@ -100,7 +100,7 @@ Motion3D positionMotion;
 
 void Start() {
 	positionMotion = MotionKit.GetMotion(this, "Position", p => TheObject.localPosition = p)
-		.SetEasing(Back.EaseOut)
+		.SetEasing(MotionKitEasing.EaseOut)
 		.SetOnUpdate(() => Debug.LogFormat("Position animation updated"))
 		.SetOnComplete(() => Debug.LogFormat("Position animation Completed"))
 		.Play(TheObject.localPosition, TheObject.localPosition + Vector3.right * 3, 1f);
@@ -150,11 +150,11 @@ Sometimes the existing easing functions won't fit specific needs. For this, ther
 
 <img width="317" alt="imagen" src="https://user-images.githubusercontent.com/8107813/64360868-fa3d9d80-cfd0-11e9-9ea0-4caa16aea6ed.png">
 
-Once you have a defined curve with a name, you can use it like this:
+Once you have a defined curve as a inspector variable, you can use it like this:
 
 ```
 MotionKit.GetMotion(this, "Color", c => ColorObject.Color = c)
-	.SetEasing(MotionKitCurves.EasingColor("MotionKitExampleCurve"))
+	.SetEasing(motionKitCurve.ColorEasing)
 	.Play(ColorObject.Color, Random.ColorHSV(), 1);
 ```
 
