@@ -23,28 +23,28 @@ MotionKit is a tool that animates anything. It is very similar to [DOTween](http
 
 ## 1 Introduction
 
-With `Animate`, all numeric values of any object can be animated. There are also built-in extensions to animate `Color` and `Vector3` values. The tool is easily extensible to support more animatable types.
+With `MotionKit`, all numeric values of any object can be animated. There are also built-in extensions to animate `Color` and `Vector3` values. The tool is easily extensible to support more animatable types.
 
 <img width="400" alt="imagen" src="https://user-images.githubusercontent.com/8107813/64360668-813e4600-cfd0-11e9-9cd4-c1cb5f592a94.gif">
 
-There is a examples scene in the project called `DoodleStories-AnimateExample`.
+There is a bunch of examples scenes that can be imported from the Unity Package Manager window.
 
 ## 2 MotionKit Architecture
 
-Animating objects with `Animate` is very simple. In the example below, we are animating the `localPosition` of `TheObject` from its current value to 3 units right with a duration of 1 second:
+Animating objects with `MotionKit` is very simple. In the example below, we are animating the `localPosition` of `TheObject` from its current value to 3 units right with a duration of 1 second:
 
 ```
-Animate.GetMotion(this, "Position", p => TheObject.localPosition = p)
+MotionKit.GetMotion(this, "Position", p => TheObject.localPosition = p)
 	.Play(TheObject.localPosition, TheObject.localPosition + Vector3.right * 3, 1f);
 ```
 
-When we create an animation this way, the `Animate` tool creates and returns an instance of `Motion3D` type. Subsequential execution of this code will reuse the same `Motion3D` instance. This is handled internally and is explained below.
+When we create an animation this way, the `MotionKit` tool creates and returns an instance of `Motion3D` type. Subsequential execution of this code will reuse the same `Motion3D` instance. This is handled internally and is explained below.
 
 ### 2.1 The `owner` and `reuseID` Parameters 
 
 By passing `this` as the `owner` argument we are saying that the `Motion3D` instance belongs to the object referenced by the `this` keyword (normally a `MonoBehaviour`). It can be any object, though.
 
-The `reuseKey` `"Position"` is an arbitrary name that we create in order to reuse the generated `Motion3D` instance for all position animations that the `this` object will play and that will be performed by the same `Motion3D` instance.
+The `reuseID` `"Position"` is an arbitrary name that we create in order to reuse the generated `Motion3D` instance for all position animations that the `this` object will play and that will be performed by the same `Motion3D` instance.
 
 There are other types of motions like `MotionFloat` and `MotionColor`, but the returned type will be handled automatically by `Animate`, depending on the passed parameters.
 
@@ -59,21 +59,21 @@ Owner | Reuse Key | Motion instance type
 `AudioSource2` | `"Volume"` | MotionFloat
 `GraphicController` | `"BackgroundColor"` | MotionColor
 
-As it can be seen in the table, both `CharacterController1` and `CharacterController2` share the key `"Position"` but `Animate` will create two different instances of `Motion3D` because the `"Position"` is associated with two different owners.
+As it can be seen in the table, both `CharacterController1` and `CharacterController2` share the key `"Position"` but `MotionKit` will create two different instances of `Motion3D` because the `"Position"` is associated with two different owners.
 
-The motions will be reused in sequential `Animate.GetMotion(...)` calls only when the owner and the key are the same, otherwise new motion instances will be created.
+The motions will be reused in sequential `MotionKit.GetMotion(...)` calls only when the owner and the key are the same, otherwise new motion instances will be created.
 
 The reusability system is very useful, because it is very common that a developer will need to animate certain parameter of an object very often, for example: the position, associated with the "Position" key. In this case, this system will reuse the same "Position" motion instance for multiple sequential movements, which results in the animation changing its final position instead of having multiple motions trying to move the same object in different directions and conflicting with each other.
 
 ### 2.2 The `setter` Parameter
 
-This is where the property will be actually animated. `Animate` calculate values over time and you need to assign them to the target object. The most efficient way to write this parameter is by using a lambda expression as in the example above. The function must receive a parameter of the type that you want to animate (`Vector3`, `float` or `Color`).
+This is where the property will be actually animated. `MotionKit` calculate values over time and you need to assign them to the target object. The most efficient way to write this parameter is by using a lambda expression as in the example above. The function must receive a parameter of the type that you want to animate (`Vector3`, `float` or `Color`).
 
 Another alternative would be the normal method syntax:
 
 ```
 void DoAnimation() {
-	  Animate.GetMotion(this, "Position", PositionSetter)
+	  MotionKit.GetMotion(this, "Position", PositionSetter)
 		    .Play(TheObject.localPosition, TheObject.localPosition + Vector3.right * 3, 1f);
 }
 
@@ -86,20 +86,20 @@ Depending on this parameter, the returned motion will be either `Motion3D`, `Mot
 
 ### 2.3 Clearing Motions
 
-When you invoke `Animate.GetMotion(...)`, `Animate` stores the returned `Motion` object in dictionaries organized by `owner` and `reuseKey` in order to reuse them when needed. Once an owner is no longer going to play its animations, it is a good idea to remove its `Motion` instances from the dictionary. 
+When you invoke `MotionKit.GetMotion(...)`, `MotionKit` stores the returned `Motion` object in dictionaries organized by `owner` and `reuseKey` in order to reuse them when needed. Once an owner is no longer going to play its animations, it is a good idea to remove its `Motion` instances from the dictionary. 
 
-This is done by calling `Animate.ClearMotions(owner)`. For example, in the case of `MonoBehaviour` objects, a good place to call it is `OnDestroy()`
+This is done by calling `MotionKit.ClearMotions(owner)`. For example, in the case of `MonoBehaviour` objects, a good place to call it is `OnDestroy()`
 
 
 ## 3 More `Motion` Settings
 
-`Animate` motion objects have additional settings like easing parameters, callbacks and playback control:
+`MotionKit` motion objects have additional settings like easing parameters, callbacks and playback control:
 
 ```
 Motion3D positionMotion;
 
 void Start() {
-	positionMotion = Animate.GetMotion(this, "Position", p => TheObject.localPosition = p)
+	positionMotion = MotionKit.GetMotion(this, "Position", p => TheObject.localPosition = p)
 		.SetEasing(Back.EaseOut)
 		.SetOnUpdate(() => Debug.LogFormat("Position animation updated"))
 		.SetOnComplete(() => Debug.LogFormat("Position animation Completed"))
@@ -128,7 +128,7 @@ void StopButton_OnClick() {
 
 ### 4.1 Easing
 
-`Animate` can use any easing function to calculate the animated values. By default (if no easing curve is specified), it will animate the values with a linear function. The signature for the easing function follows this template:
+`MotionKit` can use any easing function to calculate the animated values. By default (if no easing curve is specified), it will animate the values with a linear function. The signature for the easing function follows this template:
 
 `delegate ValueT Easing(ValueT a, ValueT b, float t);`
 
@@ -146,24 +146,24 @@ A good place to look for easing functions is [Robert Penner's website](http://ro
 
 ### 4.2 `MotionKitCurve`
 
-Sometimes the existing easing functions won't fit specific needs. For this, there is an additional option called `AnimateCurves`. It is an asset where you can design custom animation curves that can be passed as parameters to `SetEasing(...)`:
+Sometimes the existing easing functions won't fit specific needs. For this, there is an additional option called `MotionKitCurves`. It is an asset where you can design custom animation curves that can be passed as parameters to `SetEasing(...)`:
 
 <img width="317" alt="imagen" src="https://user-images.githubusercontent.com/8107813/64360868-fa3d9d80-cfd0-11e9-9ea0-4caa16aea6ed.png">
 
 Once you have a defined curve with a name, you can use it like this:
 
 ```
-Animate.GetMotion(this, "Color", c => ColorObject.Color = c)
-	.SetEasing(AnimateCurves.EasingColor("AnimateExampleCurve"))
+MotionKit.GetMotion(this, "Color", c => ColorObject.Color = c)
+	.SetEasing(MotionKitCurves.EasingColor("MotionKitExampleCurve"))
 	.Play(ColorObject.Color, Random.ColorHSV(), 1);
 ```
 
 ## 5 Timer
 
-The `Delay` object is used to invoke any method at the end of a time period. In the example below the `"Delay Completed"` log will be shown in the console 1 second after the call to `Animate.GetDelay(...)`.
+The `Delay` object is used to invoke any method at the end of a time period. In the example below the `"Delay Completed"` log will be shown in the console 1 second after the call to `MotionKit.GetTimer(...)`.
 
 ```
-Animate.GetDelay(this, "Delay").Play(1).SetOnComplete(() => Debug.LogFormat("Delay completed"));
+MotionKit.GetTimer(this, "Delay").Play(1).SetOnComplete(() => Debug.LogFormat("Delay completed"));
 ```
 
 The `Delay` object follows the same rules as the `Motion` objects, except that it doesn't receive any `setter` nor easing function. It should be cleared the same way `Motion` objects are cleared.
@@ -171,13 +171,13 @@ The `Delay` object follows the same rules as the `Motion` objects, except that i
 It can be used in combination with `Motion` objects to create animated sequences:
 
 ```
-Animate.GetMotion(this, "Position", p => PositionObject.localPosition = p)
+MotionKit.GetMotion(this, "Position", p => PositionObject.localPosition = p)
 	.Play(PositionObject.localPosition, Random.onUnitSphere, 1f)
 	.SetOnComplete(() => {
 		// Wait for the position animation to complete and wait one more second
-		Animate.GetDelay(this, "Delay").Play(1).SetOnComplete(() => {
+		MotionKit.GetTimer(this, "Delay").Play(1).SetOnComplete(() => {
 			// After the second has passed, animate the color
-			Animate.GetMotion(this, "Color", c => ColorObject.Color = c).Play(ColorObject.Color, Random.ColorHSV(), 1);
+			MotionKit.GetMotion(this, "Color", c => ColorObject.Color = c).Play(ColorObject.Color, Random.ColorHSV(), 1);
 		});
 	});
 ```
@@ -189,7 +189,7 @@ Animate.GetMotion(this, "Position", p => PositionObject.localPosition = p)
 
 ## 8 Handle `Motion` Objects Out of MotionKit
 
-`Motion` objects can be instantiated independently of the `Animate` class. If you do so, you will need to handle their lifecycle by yourself. For example, you would need to properly handle multiple `Motion` objects that will try to animate the same property of an objects in overlaping times.
+`Motion` objects can be instantiated independently of the `MotionKit` class. If you do so, you will need to handle their lifecycle by yourself. For example, you would need to properly handle multiple `Motion` objects that will try to animate the same property of an objects in overlaping times.
 
 Examples:
 
@@ -208,7 +208,7 @@ The first parameter passed to the constructor is the `MonoBehaviour` where the c
 
 ## 9 Extending `MotionKit`
 
-`Animate` is simple to extend. You can add support to animate different types of values like in the example below, the `MotionColor` class.
+`MotionKit` is simple to extend. You can add support to animate different types of values like in the example below, the `MotionColor` class.
 
 ```
 /// <summary>
@@ -233,12 +233,12 @@ It is common to have an error where the `onComplete` callback is invoked by a `M
 ```
 void ScaleUpButton_OnClick() {
 	TheObject.gameObject.SetActive(true);
-	Animate.GetMotion(this, "Scale", s => TheObject.localScale = s)
+	MotionKit.GetMotion(this, "Scale", s => TheObject.localScale = s)
 		.Play(TheObject.localScale, Vector3.one, 1f);
 }
 
 void ScaleDownButton_OnClick() {
-	Animate.GetMotion(this, "Scale", s => TheObject.localScale = s)
+	MotionKit.GetMotion(this, "Scale", s => TheObject.localScale = s)
 		.Play(TheObject.localScale, Vector3.zero, 1f)
 		.SetOnComplete(() => TheObject.gameObject.SetActive(false));
 }
@@ -251,7 +251,7 @@ This is due to the fact that the `Motion3D` instance is the same in both cases, 
 ```
 void ScaleUpButton_OnClick() {
 	TheObject.gameObject.SetActive(true);
-	Animate.GetMotion(this, "Scale", s => TheObject.localScale = s)
+	MotionKit.GetMotion(this, "Scale", s => TheObject.localScale = s)
 		.Play(TheObject.localScale, Vector3.one, 1f)
 		.SetOnComplete(null);
 }
