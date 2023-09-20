@@ -180,8 +180,9 @@ Animate.GetMotion(this, "Position", p => PositionObject.localPosition = p)
 		});
 	});
 ```
-
-## 8 Handle `Motion` Objects Out of Animate
+## 5 Sequence
+## 6 Parallel
+## 8 Handle `Motion` Objects Out of MotionKit
 
 `Motion` objects can be instantiated independently of the `Animate` class. If you do so, you will need to handle their lifecycle by yourself. For example, you would need to properly handle multiple `Motion` objects that will try to animate the same property of an objects in overlaping times.
 
@@ -200,7 +201,7 @@ MotionColor motionColor = new MotionColor(this, c => ColorObject.ColorProperty =
 
 The first parameter passed to the constructor is the `MonoBehaviour` where the coroutines that generate the animations will be executed.
 
-## 9 Extending `Animate`
+## 9 Extending `MotionKit`
 
 `Animate` is simple to extend. You can add support to animate different types of values like in the example below, the `MotionColor` class.
 
