@@ -1,4 +1,4 @@
-# Animate Guide
+# MotionKit Guide
 
 MotionKit is a tool that animates anything. It is very similar to [DOTween](http://dotween.demigiant.com/getstarted.php), but with inspector super powers and a few tweaks that makes it simpler to use and learn.
 
@@ -255,3 +255,8 @@ void ScaleUpButton_OnClick() {
 		.SetOnComplete(null);
 }
 ```
+
+## 11 Inspector Superpowers: `MotionKitBlocks`
+![image](https://github.com/cocodrilodog/tools-motion-kit/assets/8107813/0dc7c842-e038-448f-91a9-305a58906c27)
+
+(TODO)
