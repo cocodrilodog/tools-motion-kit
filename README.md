@@ -5,17 +5,17 @@ MotionKit is a tool that animates anything. It is very similar to [DOTween](http
 ## Table of Contents
 
 - [1 Introduction](#1-introduction)
-- [2 MotionKit Architecture](#2-motion-kit-architecture)
-	- [2.1 The `owner` and `reuseKey` Parameters](#21-the-owner-and-reusekey-parameters)
+- [2 MotionKit Architecture](#2-motionkit-architecture)
+	- [2.1 The `owner` and `reuseID` Parameters](#21-the-owner-and-reuseid-parameters)
 	- [2.2 The `setter` Parameter](#22-the-setter-parameter)
 	- [2.3 Clearing Motions](#23-clearing-motions)
 - [3 More `Motion` Settings](#3-more-motion-settings)
-- [4 Easing and `AnimateCurves`](#4-easing-and-animatecurves)
+- [4 Easing and `MotionKitCurves`](#4-easing-and-motionkit-curves)
 	- [4.1 Easing](#41-easing)
-	- [4.2 `AnimateCurves`](#42-animatecurves)
-- [5 `Delay`](#5-delay)
-- [6 Handle `Motion` Objects Out of Animate](#6-handle-motion-objects-out-of-animate)
-- [7 Extending `Animate`](#7-extending-animate)
+	- [4.2 `MotionKitCurves`](#42-motionkit-curves)
+- [5 `Timer`](#5-timer)
+- [6 Handle `Motion` Objects Out of MotionKit](#6-handle-motion-objects-out-of-motionkit)
+- [7 Extending `MotionKit`](#7-extending-motionkit)
 - [8 Common Error](#8-common-error)
 
 ## 1 Introduction
