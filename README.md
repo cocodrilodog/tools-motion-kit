@@ -10,9 +10,9 @@ MotionKit is a tool that animates anything. It is very similar to [DOTween](http
 	- [2.2 The `setter` Parameter](#22-the-setter-parameter)
 	- [2.3 Clearing Motions](#23-clearing-motions)
 - [3 More `Motion` Settings](#3-more-motion-settings)
-- [4 Easing and `MotionKitCurves`](#4-easing-and-motionkit-curve)
+- [4 Easing and `MotionKitCurve`](#4-easing-and-motionkitcurve)
 	- [4.1 Easing](#41-easing)
-	- [4.2 `MotionKitCurve`](#42-motionkit-curves)
+	- [4.2 `MotionKitCurve`](#42-motionkitcurve)
 - [5 `Timer`](#5-timer)
 - [6 `Sequence`](#6-sequence)
 - [7 `Parallel`](#7-parallel)
@@ -180,8 +180,12 @@ Animate.GetMotion(this, "Position", p => PositionObject.localPosition = p)
 		});
 	});
 ```
-## 5 Sequence
-## 6 Parallel
+## 6 Sequence
+(TODO)
+
+## 7 Parallel
+(TODO)
+
 ## 8 Handle `Motion` Objects Out of MotionKit
 
 `Motion` objects can be instantiated independently of the `Animate` class. If you do so, you will need to handle their lifecycle by yourself. For example, you would need to properly handle multiple `Motion` objects that will try to animate the same property of an objects in overlaping times.
