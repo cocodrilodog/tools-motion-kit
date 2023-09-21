@@ -19,7 +19,7 @@
   },
   "samples": [
     {
-      "displayName": "MotionKit Samples",
+      "displayName": "Examples",
       "description": "Contains example scenes for Cocodrilo Dog's MotionKit",
       "path": "Samples~"
     }
