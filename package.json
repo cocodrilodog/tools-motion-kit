@@ -25,6 +25,6 @@
     }
   ],
   "dependencies": {
-    "com.cocodrilodog.core": "1.0.0"
+    "com.cocodrilodog.core": "1.0.1"
   }
 }
