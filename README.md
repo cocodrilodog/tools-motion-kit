@@ -38,11 +38,11 @@ MotionKit.GetMotion(this, "Position", p => TheObject.localPosition = p)
 	.Play(TheObject.localPosition, TheObject.localPosition + Vector3.right * 3, 1f);
 ```
 
-When we create an animation this way, the `MotionKit` tool creates and returns an instance of `Motion3D` type. Subsequential execution of this code will reuse the same `Motion3D` instance. This is handled internally and is explained below.
+When we create an animation this way, the `MotionKit` tool creates and returns an instance of `Motion3D` type. Subsequential execution of this code will reuse the same `Motion3D` instance while it uses the same combination of `owner` and `reuseID`. Explained below!
 
 ### 2.1 The `owner` and `reuseID` Parameters 
 
-By passing `this` as the `owner` argument we are saying that the `Motion3D` instance belongs to the object referenced by the `this` keyword (normally a `MonoBehaviour`). It can be any object, though.
+By passing `this` as the `owner` argument we are saying that the `Motion3D` instance conceptually belongs to the object referenced by the `this` keyword (normally a `MonoBehaviour`). It can be any object, though.
 
 The `reuseID` `"Position"` is an arbitrary name that we create in order to reuse the generated `Motion3D` instance for all position animations that the `this` object will play and that will be performed by the same `Motion3D` instance.
 
