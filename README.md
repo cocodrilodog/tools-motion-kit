@@ -10,9 +10,12 @@ MotionKit is a tool that animates anything. It is very similar to [DOTween](http
 	- [2.2 The `setter` Parameter](#22-the-setter-parameter)
 	- [2.3 Clearing Motions](#23-clearing-motions)
 - [3 More `Motion` Settings](#3-more-motion-settings)
-- [4 Easing and `MotionKitCurve`](#4-easing-and-motionkitcurve)
+- [4 Easing and `ParameterizedEasing`](#4-easing-and-parameterizedeasing)
 	- [4.1 Easing](#41-easing)
 	- [4.2 `MotionKitCurve`](#42-motionkitcurve)
+   	- [4.3 `Blink`](#43-blink)
+     	- [4.4 `Pulse`](#44-pulse)
+       	- [4.5 `Shake`](#45-shake)
 - [5 `Timer`](#5-timer)
 - [6 `Sequence`](#6-sequence)
 - [7 `Parallel`](#7-parallel)
@@ -127,7 +130,7 @@ void StopButton_OnClick() {
 
 ```
 
-## 4 Easing and `MotionKitCurve`
+## 4 Easing and `ParameterizedEasing`
 
 ### 4.1 Easing
 
@@ -147,6 +150,8 @@ A good place to look for easing functions is [Robert Penner's website](http://ro
 
 <img width="800" alt="imagen" src="https://user-images.githubusercontent.com/8107813/64360751-b5b20200-cfd0-11e9-83a8-4df8a0199707.png">
 
+On the other hand, there are some curves that require some special parameters. They are called `ParameterizedEasing` and are described below.
+
 ### 4.2 `MotionKitCurve`
 
 Sometimes the existing easing functions won't fit specific needs. For this, there is an additional option called `MotionKitCurves`. It is an asset where you can design custom animation curves that can be passed as parameters to `SetEasing(...)`:
@@ -160,6 +165,14 @@ MotionKit.GetMotion(this, "Color", c => ColorObject.Color = c)
 	.SetEasing(motionKitCurve.ColorEasing)
 	.Play(ColorObject.Color, Random.ColorHSV(), 1);
 ```
+### 4.3 `Blink`
+(TODO)
+
+### 4.4 `Pulse`
+(TODO)
+
+### 4.5 `Shake`
+(TODO)
 
 ## 5 Timer
 
