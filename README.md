@@ -154,6 +154,8 @@ On the other hand, there are some curves that require some special parameters. T
 
 ### 4.2 `MotionKitCurve`
 
+(This section needs to be updated)
+
 Sometimes the existing easing functions won't fit specific needs. For this, there is an additional option called `MotionKitCurves`. It is an asset where you can design custom animation curves that can be passed as parameters to `SetEasing(...)`:
 
 <img width="317" alt="imagen" src="https://user-images.githubusercontent.com/8107813/64360868-fa3d9d80-cfd0-11e9-9ea0-4caa16aea6ed.png">
