@@ -67,15 +67,18 @@ The reusability system is very useful, because it is very common that a develope
 
 ### 2.2 The `setter` Parameter
 
-This is where the property will be actually animated. `MotionKit` calculate values over time and you need to assign them to the target object. The most efficient way to write this parameter is by using a lambda expression as in the example above. The function must receive a parameter of the type that you want to animate (`Vector3`, `float` or `Color`).
+This is where the property will be actually animated. `MotionKit` calculate values over time and you need to assign them to the target object. The most efficient way to write this parameter is by using a lambda expression. The function must receive a parameter of the type that you want to animate (`Vector3`, `float` or `Color`).
 
-Another alternative would be the normal method syntax:
+Another alternative would be the normal method syntax.
 
 ```
-void DoAnimation() {
-	  MotionKit.GetMotion(this, "Position", PositionSetter)
-		    .Play(TheObject.localPosition, TheObject.localPosition + Vector3.right * 3, 1f);
-}
+// Lambda style:
+MotionKit.GetMotion(this, "Position", p => TheObject.localPosition = p)
+	.Play(TheObject.localPosition, TheObject.localPosition + Vector3.right * 3, 1f);
+
+// Normal method style:
+MotionKit.GetMotion(this, "Position", PositionSetter)
+	.Play(TheObject.localPosition, TheObject.localPosition + Vector3.right * 3, 1f);
 
 void PositionSetter(Vector3 pos) {
 	TheObject.localPosition = pos;
