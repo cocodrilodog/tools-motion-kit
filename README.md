@@ -168,13 +168,13 @@ MotionKit.GetMotion(this, "Color", c => ColorObject.Color = c)
 	.Play(ColorObject.Color, Random.ColorHSV(), 1);
 ```
 ### 4.3 `Blink`
-(TODO)
+(Coming soon...)
 
 ### 4.4 `Pulse`
-(TODO)
+(Coming soon...)
 
 ### 4.5 `Shake`
-(TODO)
+(Coming soon...)
 
 ## 5 Timer
 
@@ -200,12 +200,14 @@ MotionKit.GetMotion(this, "Position", p => PositionObject.localPosition = p)
 	});
 ```
 ## 6 Sequence
-(TODO)
+(Coming soon...)
 
 ## 7 Parallel
-(TODO)
+(Coming soon...)
 
 ## 8 Handle `Motion` Objects Out of MotionKit
+
+(This section needs update)
 
 `Motion` objects can be instantiated independently of the `MotionKit` class. If you do so, you will need to handle their lifecycle by yourself. For example, you would need to properly handle multiple `Motion` objects that will try to animate the same property of an objects in overlaping times.
 
@@ -285,4 +287,4 @@ void ScaleUpButton_OnClick() {
 
 <img src="https://github.com/cocodrilodog/tools-motion-kit/assets/8107813/0dc7c842-e038-448f-91a9-305a58906c27" width="500">
 
-(TODO)
+(Coming soon...)
