@@ -20,9 +20,8 @@ MotionKit is a tool that animates anything. It is very similar to [DOTween](http
 - [6 `Sequence`](#6-sequence)
 - [7 `Parallel`](#7-parallel)
 - [8 Handle `Motion` Objects Out of MotionKit](#8-handle-motion-objects-out-of-motionkit)
-- [9 Extending `MotionKit`](#9-extending-motionkit)
-- [10 Common Error](#10-common-error)
-- [11 Inspector Superpowers: `MotionKitBlocks`](#11-inspector-superpowers-motionkitblocks)
+- [9 Common Error](#9-common-error)
+- [10 Inspector Superpowers: `MotionKitBlocks`](#10-inspector-superpowers-motionkitblocks)
 
 ## 1 Introduction
 
@@ -232,27 +231,7 @@ motionFloat.Dispose();
 motionColor.Dispose();
 ```
 
-## 9 Extending `MotionKit`
-
-`MotionKit` is simple to extend. You can add support to animate different types of values like in the example below, the `MotionColor` class.
-
-```
-/// <summary>
-/// A motion object that supports <see cref="Color"/> animations.
-/// </summary>
-public class MotionColor : MotionBase<Color, MotionColor> {
-
-	public MotionColor(MonoBehaviour monoBehaviour, Setter setter) 
-		: base(monoBehaviour, setter) { }
-
-	protected override Easing GetDefaultEasing() {
-		return Color.Lerp;
-	}
-
-}
-```
-
-## 10 Common Error
+## 9 Common Error
 
 It is common to have an error where the `onComplete` callback is invoked by a `Motion` where it wasn't specified. The following example illustrates this case:
 
@@ -283,7 +262,7 @@ void ScaleUpButton_OnClick() {
 }
 ```
 
-## 11 Inspector Superpowers: `MotionKitBlocks`
+## 10 Inspector Superpowers: `MotionKitBlocks`
 
 <img src="https://github.com/cocodrilodog/tools-motion-kit/assets/8107813/0dc7c842-e038-448f-91a9-305a58906c27" width="500">
 
