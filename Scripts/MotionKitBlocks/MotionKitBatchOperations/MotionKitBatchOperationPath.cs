@@ -79,6 +79,7 @@ namespace CocodriloDog.MotionKit {
 
 		#region Private Fields
 
+		[Tooltip("A relative path to a child block in which the operation will be performed. If left blank, the block itself.")]
 		[SerializeField]
 		private string m_Path;
 

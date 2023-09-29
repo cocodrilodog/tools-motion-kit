@@ -21,6 +21,7 @@ namespace CocodriloDog.MotionKit {
 			var height = base.Edit_GetPropertyHeight(property, label);
 			height += EditorGUI.GetPropertyHeight(NewNameProperty);
 			height += EditorGUI.GetPropertyHeight(AppendSerialNumberProperty);
+			height += 4;
 			return height;
 		}
 

@@ -33,6 +33,7 @@ namespace CocodriloDog.MotionKit {
 
 		#region Private Fields
 
+		[Tooltip("The new name that the block at the specified path will have")]
 		[SerializeField]
 		private string m_NewName;
 

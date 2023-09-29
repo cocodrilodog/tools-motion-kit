@@ -21,6 +21,9 @@ namespace CocodriloDog.MotionKit {
 						typeof(RenameBlock),
 						typeof(SetSetterObject),
 						typeof(SetIncrementalDuration),
+						typeof(SetIncrementalValues3D),
+						typeof(SetIncrementalValuesFloat),
+						typeof(SetIncrementalValuesColor),
 					};
 				}
 				return m_CompositeTypes;

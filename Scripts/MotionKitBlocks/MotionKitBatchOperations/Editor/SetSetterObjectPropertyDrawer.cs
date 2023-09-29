@@ -19,6 +19,7 @@ namespace CocodriloDog.MotionKit {
 		protected override float Edit_GetPropertyHeight(SerializedProperty property, GUIContent label) {
 			var height = base.Edit_GetPropertyHeight(property, label);
 			height += EditorGUI.GetPropertyHeight(SetterObjectsProperty);
+			height += 2;
 			return height;
 		}
 
