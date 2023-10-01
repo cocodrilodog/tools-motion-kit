@@ -80,12 +80,14 @@ namespace CocodriloDog.MotionKit {
 		/// This is used only by <see cref="MotionKit"/> the editor tools.
 		/// </remarks>
 		/// <returns>An array of the number of successful operations per batch operation</returns>
-		public int[] PerformAllBatchOperations() {
-			var successful = new int[BatchOperations.Count];
+		public int[] PerformBatchOperations() {
+			var successful = new List<int>();
 			for(int i = 0; i < BatchOperations.Count; i++) {
-				successful[i] = PerformBatchOperation(i);
+				if ((bool)GetBatchOperation(i)?.Enabled) {
+					successful.Add(PerformBatchOperation(i));
+				}
 			}
-			return successful;
+			return successful.ToArray();
 		}
 
 		/// <summary>

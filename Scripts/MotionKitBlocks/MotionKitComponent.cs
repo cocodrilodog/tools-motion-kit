@@ -193,8 +193,11 @@ namespace CocodriloDog.MotionKit {
 
 		private void Start() {
 			TryInitialize();
-			if (PlayOnStart) {
-				Play();
+			for (int i = 0; i < Blocks.Count; i++) {
+				if (Blocks[i] != null && 
+					(Blocks[i].PlayOnStart || (i == 0 && PlayOnStart))) { // Supporting PlayOnStart for the first item for legacy reasons
+					Blocks[i].Play();
+				}
 			}
 		}
 
@@ -268,6 +271,8 @@ namespace CocodriloDog.MotionKit {
 
 			m_AreBlocksInitialized = true;
 
+			// TODO: Must review this logic since the change to support SetInitialValuesOnStart in each block
+
 			// Initialize in reverse for the default block to be the last one. This handles an edge case where:
 			// - The default block has an owner and reuse id
 			// - A later block use the same owner and reuse id
@@ -278,13 +283,16 @@ namespace CocodriloDog.MotionKit {
 			}
 
 			// This must be done after initializing the blocks
-			if (SetInitialValuesOnStart) {
-				MotionKitBlockUtility.SetInitialValues(DefaultBlock);
-				// Lock recursive to make sure that no child motion will be reset OnStart
-				//
-				// DefaultBlock and its children will be unlocked OnStart or each playback object,
-				// after trying unsuccessfully to reset each one. The unlock will happen non recursively.
-				DefaultBlock?.LockResetPlayback(true);
+			for (int i = 0; i < Blocks.Count; i++) {
+				if (Blocks[i] != null && 
+					(Blocks[i].SetInitialValuesOnStart || (i == 0 && SetInitialValuesOnStart))) { // Supporting SetInitialValuesOnStart for the first item for legacy reasons
+					MotionKitBlockUtility.SetInitialValues(Blocks[i]);
+					// Lock recursive to make sure that no child motion will be reset OnStart
+					//
+					// DefaultBlock and its children will be unlocked OnStart or each playback object,
+					// after trying unsuccessfully to reset each one. The unlock will happen non recursively.
+					Blocks[i].LockResetPlayback(true);
+				}
 			}
 
 		}

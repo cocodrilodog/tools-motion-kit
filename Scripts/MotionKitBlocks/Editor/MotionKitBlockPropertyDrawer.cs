@@ -1,4 +1,4 @@
-namespace CocodriloDog.MotionKit {
+﻿namespace CocodriloDog.MotionKit {
 
 	using CocodriloDog.Core;
 	using System;
@@ -68,6 +68,7 @@ namespace CocodriloDog.MotionKit {
 
 			base.Edit_InitializePropertiesForGetHeight();
 
+			//PlayOnStartProperty = Property.FindPropertyRelative("m_PlayOnStart");
 			OwnerProperty				= Property.FindPropertyRelative("m_Owner");
 			ReuseIDProperty				= Property.FindPropertyRelative("m_ReuseID");
 
@@ -97,6 +98,11 @@ namespace CocodriloDog.MotionKit {
 			OnCompleteCallsProperty		= OnCompleteProperty.FindPropertyRelative("m_PersistentCalls.m_Calls");
 
 		}
+
+		//protected override void Edit_InitializePropertiesForOnGUI() {
+		//	base.Edit_InitializePropertiesForOnGUI();
+		//	PlayOnStartProperty = Property.FindPropertyRelative("m_PlayOnStart");
+		//}
 
 		protected override float Edit_GetPropertyHeight(SerializedProperty property, GUIContent label) {
 
@@ -210,6 +216,46 @@ namespace CocodriloDog.MotionKit {
 		}
 
 		protected virtual void DrawAfterSettings() { }
+
+		protected override void DrawPropertyField(Rect propertyRect, string label, string name) {
+
+			base.DrawPropertyField(propertyRect, label, name);
+
+			if (Property.managedReferenceValue != null && (Property.managedReferenceValue as MotionKitBlock).DrawToggles) {
+
+				// Draw the PlayOnStart toggle
+				var playOnStartRect = propertyRect;
+				playOnStartRect.xMin += propertyRect.width - 40;
+				playOnStartRect.width = 10;
+				var playOnStartProperty = Property.FindPropertyRelative("m_PlayOnStart");
+				playOnStartProperty.boolValue = EditorGUI.Toggle(playOnStartRect, playOnStartProperty.boolValue);
+				DrawTooltip(playOnStartRect, "Play on start");
+
+				// Draw the SetInitialValuesOnStart toggle
+				var setInitialValuesOnStartRect = propertyRect;
+				setInitialValuesOnStartRect.xMin += propertyRect.width - 20;
+				setInitialValuesOnStartRect.width = 10;
+				var setInitialValuesOnStartProperty = Property.FindPropertyRelative("m_SetInitialValuesOnStart");
+				setInitialValuesOnStartProperty.boolValue = EditorGUI.Toggle(setInitialValuesOnStartRect, setInitialValuesOnStartProperty.boolValue);
+				DrawTooltip(setInitialValuesOnStartRect, "Set initial values on start");
+
+				void DrawTooltip(Rect toggleRect, string text) {
+					if (toggleRect.Contains(Event.current.mousePosition)) {
+
+						var content = new GUIContent(text);
+						var size = EditorStyles.helpBox.CalcSize(content);
+						var rect = new Rect(toggleRect.position + Vector2.left * size.x, size);
+
+						// Use the dark color of the editor
+						EditorGUI.DrawRect(rect, new Color(0.216f, 0.216f, 0.216f));
+						GUI.Box(rect, content, EditorStyles.helpBox);
+
+					}
+				}
+
+			}
+
+		}
 
 		#endregion
 

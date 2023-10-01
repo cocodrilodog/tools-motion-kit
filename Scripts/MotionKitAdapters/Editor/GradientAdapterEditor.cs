@@ -1,5 +1,6 @@
 namespace CocodriloDog.MotionKit {
-
+	
+	using CocodriloDog.Core;
 	using System.Collections;
 	using System.Collections.Generic;
 	using UnityEditor;
@@ -15,15 +16,13 @@ namespace CocodriloDog.MotionKit {
 			m_ValueProperty = serializedObject.FindProperty("m_Value");
 		}
 
-		public override void OnInspectorGUI() {
+		public override void OnInspectorGUI() {	
 			
 			serializedObject.Update();
 
-			EditorGUI.BeginDisabledGroup(true);
-			EditorGUILayout.PropertyField(m_ScriptProperty);
-			EditorGUI.EndDisabledGroup();
-
+			CDEditorUtility.DrawDisabledField(m_ScriptProperty);
 			EditorGUILayout.PropertyField(m_GradientProperty);
+			
 			EditorGUI.BeginChangeCheck();
 			EditorGUILayout.PropertyField(m_ValueProperty);
 			if (EditorGUI.EndChangeCheck()) {

@@ -697,11 +697,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0fb3639200fb4be4996952cebd241fe2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_SelectedCompositePath: m_Blocks.Array.data[0]
+  m_SelectedCompositePath: 
   m_Blocks:
   - rid: 4686939451379154949
   - rid: 4686939451379155021
-  m_PlayOnStart: 1
+  m_PlayOnStart: 0
   m_SetInitialValuesOnStart: 0
   references:
     version: 2
@@ -748,14 +748,16 @@ MonoBehaviour:
               m_CallState: 2
         m_CallbackSelection: 3
         m_EditOwnerAndReuseID: 0
+        m_PlayOnStart: 1
+        m_SetInitialValuesOnStart: 0
         m_ParallelItems:
-        - rid: 4686939451379155078
-        - rid: 4686939451379155079
-        - rid: 4686939451379155080
-        - rid: 4686939451379155081
-        - rid: 4686939451379155082
-        - rid: 4686939451379155083
-        - rid: 4686939451379155084
+        - rid: 4686939480757895240
+        - rid: 4686939480757895241
+        - rid: 4686939480757895242
+        - rid: 4686939480757895243
+        - rid: 4686939480757895244
+        - rid: 4686939480757895245
+        - rid: 4686939480757895246
         m_BatchOperations:
         - rid: 4686939451379154951
         - rid: 4686939451379154963
@@ -765,6 +767,7 @@ MonoBehaviour:
       type: {class: CopyTemplateBlock, ns: CocodriloDog.MotionKit, asm: CocodriloDog.MotionKit}
       data:
         m_Name: CopyTemplateBlock
+        m_Enabled: 1
         m_TemplateBlock:
           rid: 4686939451379154953
     - rid: 4686939451379154953
@@ -794,6 +797,8 @@ MonoBehaviour:
             m_Calls: []
         m_CallbackSelection: 0
         m_EditOwnerAndReuseID: 0
+        m_PlayOnStart: 0
+        m_SetInitialValuesOnStart: 0
         m_Object: {fileID: 1577395896}
         m_SetterString: Transform/localEulerAngles
         m_GetterString: 
@@ -806,6 +811,7 @@ MonoBehaviour:
       type: {class: SetSetterObject, ns: CocodriloDog.MotionKit, asm: CocodriloDog.MotionKit}
       data:
         m_Name: SetSetterObject
+        m_Enabled: 1
         m_Path: 
         m_SetterObjects:
         - {fileID: 1577395896}
@@ -819,6 +825,7 @@ MonoBehaviour:
       type: {class: RenameBlock, ns: CocodriloDog.MotionKit, asm: CocodriloDog.MotionKit}
       data:
         m_Name: RenameBlock
+        m_Enabled: 1
         m_Path: 
         m_NewName: Rotation
         m_AppendSerialNumber: 1
@@ -826,6 +833,7 @@ MonoBehaviour:
       type: {class: SetIncrementalValues3D, ns: CocodriloDog.MotionKit, asm: CocodriloDog.MotionKit}
       data:
         m_Name: SetIncrementalValues3D
+        m_Enabled: 1
         m_Path: 
         m_BaseInitialValue: {x: 0, y: 0, z: 0}
         m_InitialValueIncrement: {x: 15, y: 0, z: 0}
@@ -871,14 +879,16 @@ MonoBehaviour:
               m_CallState: 2
         m_CallbackSelection: 3
         m_EditOwnerAndReuseID: 0
+        m_PlayOnStart: 1
+        m_SetInitialValuesOnStart: 0
         m_ParallelItems:
-        - rid: 4686939451379155055
-        - rid: 4686939451379155056
-        - rid: 4686939451379155057
-        - rid: 4686939451379155058
-        - rid: 4686939451379155059
-        - rid: 4686939451379155060
-        - rid: 4686939451379155061
+        - rid: 4686939480757895210
+        - rid: 4686939480757895211
+        - rid: 4686939480757895212
+        - rid: 4686939480757895213
+        - rid: 4686939480757895214
+        - rid: 4686939480757895215
+        - rid: 4686939480757895216
         m_BatchOperations:
         - rid: 4686939451379155025
         - rid: 4686939451379155036
@@ -888,6 +898,7 @@ MonoBehaviour:
       type: {class: CopyTemplateBlock, ns: CocodriloDog.MotionKit, asm: CocodriloDog.MotionKit}
       data:
         m_Name: CopyTemplateBlock
+        m_Enabled: 1
         m_TemplateBlock:
           rid: 4686939451379155027
     - rid: 4686939451379155027
@@ -917,6 +928,8 @@ MonoBehaviour:
             m_Calls: []
         m_CallbackSelection: 0
         m_EditOwnerAndReuseID: 0
+        m_PlayOnStart: 0
+        m_SetInitialValuesOnStart: 0
         m_Object: {fileID: 1577395896}
         m_SetterString: GradientAdapter/Value
         m_GetterString: 
@@ -929,6 +942,7 @@ MonoBehaviour:
       type: {class: RenameBlock, ns: CocodriloDog.MotionKit, asm: CocodriloDog.MotionKit}
       data:
         m_Name: RenameBlock
+        m_Enabled: 1
         m_Path: 
         m_NewName: Gradient
         m_AppendSerialNumber: 1
@@ -936,6 +950,7 @@ MonoBehaviour:
       type: {class: SetSetterObject, ns: CocodriloDog.MotionKit, asm: CocodriloDog.MotionKit}
       data:
         m_Name: SetSetterObject
+        m_Enabled: 1
         m_Path: 
         m_SetterObjects:
         - {fileID: 1577395896}
@@ -949,12 +964,13 @@ MonoBehaviour:
       type: {class: SetIncrementalValuesFloat, ns: CocodriloDog.MotionKit, asm: CocodriloDog.MotionKit}
       data:
         m_Name: SetIncrementalValuesFloat
+        m_Enabled: 1
         m_Path: 
         m_BaseInitialValue: 0
         m_InitialValueIncrement: 0.14285715
         m_BaseFinalValue: 1
         m_FinalValueIncrement: 0.1428571
-    - rid: 4686939451379155055
+    - rid: 4686939480757895210
       type: {class: MotionFloatBlock, ns: CocodriloDog.MotionKit, asm: CocodriloDog.MotionKit}
       data:
         m_Name: Gradient1
@@ -981,6 +997,8 @@ MonoBehaviour:
             m_Calls: []
         m_CallbackSelection: 0
         m_EditOwnerAndReuseID: 0
+        m_PlayOnStart: 0
+        m_SetInitialValuesOnStart: 0
         m_Object: {fileID: 1577395896}
         m_SetterString: GradientAdapter/Value
         m_GetterString: 
@@ -989,7 +1007,7 @@ MonoBehaviour:
         m_FinalValue: 1
         m_FinalValueIsRelative: 0
         m_SharedValues: {fileID: 0}
-    - rid: 4686939451379155056
+    - rid: 4686939480757895211
       type: {class: MotionFloatBlock, ns: CocodriloDog.MotionKit, asm: CocodriloDog.MotionKit}
       data:
         m_Name: Gradient2
@@ -1016,6 +1034,8 @@ MonoBehaviour:
             m_Calls: []
         m_CallbackSelection: 0
         m_EditOwnerAndReuseID: 0
+        m_PlayOnStart: 0
+        m_SetInitialValuesOnStart: 0
         m_Object: {fileID: 548684727}
         m_SetterString: GradientAdapter/Value
         m_GetterString: 
@@ -1024,7 +1044,7 @@ MonoBehaviour:
         m_FinalValue: 1.1428571
         m_FinalValueIsRelative: 0
         m_SharedValues: {fileID: 0}
-    - rid: 4686939451379155057
+    - rid: 4686939480757895212
       type: {class: MotionFloatBlock, ns: CocodriloDog.MotionKit, asm: CocodriloDog.MotionKit}
       data:
         m_Name: Gradient3
@@ -1051,6 +1071,8 @@ MonoBehaviour:
             m_Calls: []
         m_CallbackSelection: 0
         m_EditOwnerAndReuseID: 0
+        m_PlayOnStart: 0
+        m_SetInitialValuesOnStart: 0
         m_Object: {fileID: 948107482}
         m_SetterString: GradientAdapter/Value
         m_GetterString: 
@@ -1059,7 +1081,7 @@ MonoBehaviour:
         m_FinalValue: 1.2857141
         m_FinalValueIsRelative: 0
         m_SharedValues: {fileID: 0}
-    - rid: 4686939451379155058
+    - rid: 4686939480757895213
       type: {class: MotionFloatBlock, ns: CocodriloDog.MotionKit, asm: CocodriloDog.MotionKit}
       data:
         m_Name: Gradient4
@@ -1086,6 +1108,8 @@ MonoBehaviour:
             m_Calls: []
         m_CallbackSelection: 0
         m_EditOwnerAndReuseID: 0
+        m_PlayOnStart: 0
+        m_SetInitialValuesOnStart: 0
         m_Object: {fileID: 512816811}
         m_SetterString: GradientAdapter/Value
         m_GetterString: 
@@ -1094,7 +1118,7 @@ MonoBehaviour:
         m_FinalValue: 1.4285713
         m_FinalValueIsRelative: 0
         m_SharedValues: {fileID: 0}
-    - rid: 4686939451379155059
+    - rid: 4686939480757895214
       type: {class: MotionFloatBlock, ns: CocodriloDog.MotionKit, asm: CocodriloDog.MotionKit}
       data:
         m_Name: Gradient5
@@ -1121,6 +1145,8 @@ MonoBehaviour:
             m_Calls: []
         m_CallbackSelection: 0
         m_EditOwnerAndReuseID: 0
+        m_PlayOnStart: 0
+        m_SetInitialValuesOnStart: 0
         m_Object: {fileID: 184456759}
         m_SetterString: GradientAdapter/Value
         m_GetterString: 
@@ -1129,7 +1155,7 @@ MonoBehaviour:
         m_FinalValue: 1.5714284
         m_FinalValueIsRelative: 0
         m_SharedValues: {fileID: 0}
-    - rid: 4686939451379155060
+    - rid: 4686939480757895215
       type: {class: MotionFloatBlock, ns: CocodriloDog.MotionKit, asm: CocodriloDog.MotionKit}
       data:
         m_Name: Gradient6
@@ -1156,6 +1182,8 @@ MonoBehaviour:
             m_Calls: []
         m_CallbackSelection: 0
         m_EditOwnerAndReuseID: 0
+        m_PlayOnStart: 0
+        m_SetInitialValuesOnStart: 0
         m_Object: {fileID: 1467607791}
         m_SetterString: GradientAdapter/Value
         m_GetterString: 
@@ -1164,7 +1192,7 @@ MonoBehaviour:
         m_FinalValue: 1.7142855
         m_FinalValueIsRelative: 0
         m_SharedValues: {fileID: 0}
-    - rid: 4686939451379155061
+    - rid: 4686939480757895216
       type: {class: MotionFloatBlock, ns: CocodriloDog.MotionKit, asm: CocodriloDog.MotionKit}
       data:
         m_Name: Gradient7
@@ -1191,6 +1219,8 @@ MonoBehaviour:
             m_Calls: []
         m_CallbackSelection: 0
         m_EditOwnerAndReuseID: 0
+        m_PlayOnStart: 0
+        m_SetInitialValuesOnStart: 0
         m_Object: {fileID: 1098709258}
         m_SetterString: GradientAdapter/Value
         m_GetterString: 
@@ -1199,7 +1229,7 @@ MonoBehaviour:
         m_FinalValue: 1.8571427
         m_FinalValueIsRelative: 0
         m_SharedValues: {fileID: 0}
-    - rid: 4686939451379155078
+    - rid: 4686939480757895240
       type: {class: Motion3DBlock, ns: CocodriloDog.MotionKit, asm: CocodriloDog.MotionKit}
       data:
         m_Name: Rotation1
@@ -1226,6 +1256,8 @@ MonoBehaviour:
             m_Calls: []
         m_CallbackSelection: 0
         m_EditOwnerAndReuseID: 0
+        m_PlayOnStart: 0
+        m_SetInitialValuesOnStart: 0
         m_Object: {fileID: 1577395896}
         m_SetterString: Transform/localEulerAngles
         m_GetterString: 
@@ -1234,7 +1266,7 @@ MonoBehaviour:
         m_FinalValue: {x: 360, y: 0, z: 0}
         m_FinalValueIsRelative: 0
         m_SharedValues: {fileID: 0}
-    - rid: 4686939451379155079
+    - rid: 4686939480757895241
       type: {class: Motion3DBlock, ns: CocodriloDog.MotionKit, asm: CocodriloDog.MotionKit}
       data:
         m_Name: Rotation2
@@ -1261,6 +1293,8 @@ MonoBehaviour:
             m_Calls: []
         m_CallbackSelection: 0
         m_EditOwnerAndReuseID: 0
+        m_PlayOnStart: 0
+        m_SetInitialValuesOnStart: 0
         m_Object: {fileID: 548684727}
         m_SetterString: Transform/localEulerAngles
         m_GetterString: 
@@ -1269,7 +1303,7 @@ MonoBehaviour:
         m_FinalValue: {x: 375, y: 0, z: 0}
         m_FinalValueIsRelative: 0
         m_SharedValues: {fileID: 0}
-    - rid: 4686939451379155080
+    - rid: 4686939480757895242
       type: {class: Motion3DBlock, ns: CocodriloDog.MotionKit, asm: CocodriloDog.MotionKit}
       data:
         m_Name: Rotation3
@@ -1296,6 +1330,8 @@ MonoBehaviour:
             m_Calls: []
         m_CallbackSelection: 0
         m_EditOwnerAndReuseID: 0
+        m_PlayOnStart: 0
+        m_SetInitialValuesOnStart: 0
         m_Object: {fileID: 948107482}
         m_SetterString: Transform/localEulerAngles
         m_GetterString: 
@@ -1304,7 +1340,7 @@ MonoBehaviour:
         m_FinalValue: {x: 390, y: 0, z: 0}
         m_FinalValueIsRelative: 0
         m_SharedValues: {fileID: 0}
-    - rid: 4686939451379155081
+    - rid: 4686939480757895243
       type: {class: Motion3DBlock, ns: CocodriloDog.MotionKit, asm: CocodriloDog.MotionKit}
       data:
         m_Name: Rotation4
@@ -1331,6 +1367,8 @@ MonoBehaviour:
             m_Calls: []
         m_CallbackSelection: 0
         m_EditOwnerAndReuseID: 0
+        m_PlayOnStart: 0
+        m_SetInitialValuesOnStart: 0
         m_Object: {fileID: 512816811}
         m_SetterString: Transform/localEulerAngles
         m_GetterString: 
@@ -1339,7 +1377,7 @@ MonoBehaviour:
         m_FinalValue: {x: 405, y: 0, z: 0}
         m_FinalValueIsRelative: 0
         m_SharedValues: {fileID: 0}
-    - rid: 4686939451379155082
+    - rid: 4686939480757895244
       type: {class: Motion3DBlock, ns: CocodriloDog.MotionKit, asm: CocodriloDog.MotionKit}
       data:
         m_Name: Rotation5
@@ -1366,6 +1404,8 @@ MonoBehaviour:
             m_Calls: []
         m_CallbackSelection: 0
         m_EditOwnerAndReuseID: 0
+        m_PlayOnStart: 0
+        m_SetInitialValuesOnStart: 0
         m_Object: {fileID: 184456759}
         m_SetterString: Transform/localEulerAngles
         m_GetterString: 
@@ -1374,7 +1414,7 @@ MonoBehaviour:
         m_FinalValue: {x: 420, y: 0, z: 0}
         m_FinalValueIsRelative: 0
         m_SharedValues: {fileID: 0}
-    - rid: 4686939451379155083
+    - rid: 4686939480757895245
       type: {class: Motion3DBlock, ns: CocodriloDog.MotionKit, asm: CocodriloDog.MotionKit}
       data:
         m_Name: Rotation6
@@ -1401,6 +1441,8 @@ MonoBehaviour:
             m_Calls: []
         m_CallbackSelection: 0
         m_EditOwnerAndReuseID: 0
+        m_PlayOnStart: 0
+        m_SetInitialValuesOnStart: 0
         m_Object: {fileID: 1467607791}
         m_SetterString: Transform/localEulerAngles
         m_GetterString: 
@@ -1409,7 +1451,7 @@ MonoBehaviour:
         m_FinalValue: {x: 435, y: 0, z: 0}
         m_FinalValueIsRelative: 0
         m_SharedValues: {fileID: 0}
-    - rid: 4686939451379155084
+    - rid: 4686939480757895246
       type: {class: Motion3DBlock, ns: CocodriloDog.MotionKit, asm: CocodriloDog.MotionKit}
       data:
         m_Name: Rotation7
@@ -1436,6 +1478,8 @@ MonoBehaviour:
             m_Calls: []
         m_CallbackSelection: 0
         m_EditOwnerAndReuseID: 0
+        m_PlayOnStart: 0
+        m_SetInitialValuesOnStart: 0
         m_Object: {fileID: 1098709258}
         m_SetterString: Transform/localEulerAngles
         m_GetterString: 
@@ -1807,6 +1851,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6747473141979448787, guid: a1005c6d3b6b70f4692de585d57a81a2,
+        type: 3}
+      propertyPath: m_SelectedCompositePath
+      value: 
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

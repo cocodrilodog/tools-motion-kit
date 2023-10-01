@@ -156,6 +156,31 @@ namespace CocodriloDog.MotionKit {
 			set => m_Easing = value;
 		}
 
+		/// <summary>
+		/// Should this block be played on start?
+		/// </summary>
+		public bool PlayOnStart {
+			get => m_PlayOnStart;
+			set => m_PlayOnStart = value;
+		}
+
+		/// <summary>
+		/// Should this block set initial values on start?
+		/// </summary>
+		public bool SetInitialValuesOnStart {
+			get => m_SetInitialValuesOnStart;
+			set => m_SetInitialValuesOnStart = value;
+		}
+
+		/// <summary>
+		/// Used by the editor to decide whether to draw the <see cref="PlayOnStart"/> and 
+		/// <see cref="SetInitialValuesOnStart"/> toggles or not.
+		/// </summary>
+		public bool DrawToggles {
+			get => m_DrawToggles;
+			set => m_DrawToggles = value;
+		}
+
 		#endregion
 
 
@@ -377,6 +402,12 @@ namespace CocodriloDog.MotionKit {
 		[SerializeField]
 		private bool m_EditOwnerAndReuseID;
 
+		[SerializeField]
+		private bool m_PlayOnStart;
+
+		[SerializeField]
+		private bool m_SetInitialValuesOnStart;
+
 		#endregion
 
 
@@ -387,6 +418,9 @@ namespace CocodriloDog.MotionKit {
 
 		[NonSerialized]
 		private bool m_IsResetPlaybackLocked;
+
+		[NonSerialized]
+		private bool m_DrawToggles;
 
 		#endregion
 

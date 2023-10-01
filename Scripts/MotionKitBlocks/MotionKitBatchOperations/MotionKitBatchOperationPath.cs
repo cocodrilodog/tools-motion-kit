@@ -25,7 +25,6 @@ namespace CocodriloDog.MotionKit {
 		/// <param name="index">The index of the <see cref="MotionKitBlock"/> in the list.</param>
 		/// <returns><c>true</c> if the operation was successful, <c>false</c> otherwise</returns>
 		public sealed override bool Perform(ref MotionKitBlock motionKitBlock, int index) {
-			base.Perform(ref motionKitBlock, index);
 			if (string.IsNullOrEmpty(Path)) {
 				if (motionKitBlock != null) {
 					return PerformOnChildBlock(ref motionKitBlock, index);

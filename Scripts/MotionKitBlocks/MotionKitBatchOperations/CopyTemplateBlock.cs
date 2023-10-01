@@ -22,7 +22,6 @@ namespace CocodriloDog.MotionKit {
 		/// <param name="index">The index of the <see cref="MotionKitBlock"/> in the list.</param>
 		/// <returns><c>true</c> if the operation was successful, <c>false</c> otherwise</returns>
 		public override bool Perform(ref MotionKitBlock motionKitBlock, int index) {
-			base.Perform(ref motionKitBlock, index);
 			CompositeCopier.Copy(TemplateBlock);
 			// Assign it to the ref parameter so that it replaces the existing one in the list
 			motionKitBlock = CompositeCopier.Paste() as MotionKitBlock;

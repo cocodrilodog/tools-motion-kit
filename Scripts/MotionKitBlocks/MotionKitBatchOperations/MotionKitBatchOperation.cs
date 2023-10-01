@@ -19,18 +19,10 @@ namespace CocodriloDog.MotionKit {
 
 		#region Public Properties
 
-		public override CompositeFieldAction FieldAction {
-			get {
-				if (m_FieldAction == null) {
-					m_FieldAction = new CompositeFieldAction();
-					m_FieldAction.Label = "Run";
-					m_FieldAction.Action = () => m_FieldActionIsPending = true;
-				}
-				return m_FieldAction;
-			}
-		}
-
-		public bool FieldActionIsPending => m_FieldActionIsPending;
+		/// <summary>
+		/// When <c>true</c> the operation will be perfomed, otherwise it won't.
+		/// </summary>
+		public bool Enabled => m_Enabled;
 
 		#endregion
 
@@ -44,21 +36,15 @@ namespace CocodriloDog.MotionKit {
 		/// <param name="motionKitBlock">Each <see cref="MotionKitBlock"/> in the list.</param>
 		/// <param name="index">The index of the <see cref="MotionKitBlock"/> in the list.</param>
 		/// <returns><c>true</c> if the operation was successful, <c>false</c> otherwise</returns>
-		public virtual bool Perform(ref MotionKitBlock motionKitBlock, int index) {
-			m_FieldActionIsPending = false;
-			return false;
-		}
+		public abstract bool Perform(ref MotionKitBlock motionKitBlock, int index);
 
 		#endregion
 
 
 		#region Private Fields
 
-		[NonSerialized]
-		private CompositeFieldAction m_FieldAction;
-
-		[NonSerialized]
-		private bool m_FieldActionIsPending;
+		[SerializeField]
+		private bool m_Enabled = true;
 
 		#endregion
 

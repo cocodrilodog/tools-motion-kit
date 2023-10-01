@@ -29,29 +29,13 @@ namespace CocodriloDog.MotionKit {
 		}
 
 		protected void DrawBatchOperations() {
-			
 			// Draw the list
 			EditorGUI.PropertyField(GetNextPosition(BatchOperationsProperty), BatchOperationsProperty);
-
-			// Check if any operation is pending
-			for(int i = 0; i < BatchOperationsProperty.arraySize; i++) {
-				var operationProperty = BatchOperationsProperty.GetArrayElementAtIndex(i);
-				if (operationProperty.managedReferenceValue != null && 
-					(operationProperty.managedReferenceValue as MotionKitBatchOperation).FieldActionIsPending) {
-
-					var operation = operationProperty.managedReferenceValue as MotionKitBatchOperation;
-					Undo.RecordObject(Property.serializedObject.targetObject, $"{ObjectNames.NicifyVariableName(operation.DisplayName)}");
-
-					(Property.managedReferenceValue as CompoundBlock).PerformBatchOperation(i);
-
-				}
-			}
-
 		}
 
 		protected void DrawRunBatchOperationsButton() {
 
-			if (GUI.Button(GetNextPosition(), "Run All Batch Operations")) {
+			if (GUI.Button(GetNextPosition(), "Run Batch Operations")) {
 
 				// Set results
 				BatchOperationsResults.Show = true;
@@ -60,7 +44,7 @@ namespace CocodriloDog.MotionKit {
 				// Perform the operations
 				Undo.RecordObject(Property.serializedObject.targetObject, "All batch operations");
 				var compoundBlock = (Property.managedReferenceValue as CompoundBlock);
-				var successful = compoundBlock.PerformAllBatchOperations();
+				var successful = compoundBlock.PerformBatchOperations();
 				
 				// Create the rich text results message
 				for(int i = 0; i < successful.Length; i++) {
