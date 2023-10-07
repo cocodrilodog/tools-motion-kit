@@ -13,12 +13,11 @@ GameObject:
   - component: {fileID: 5783817206590756415}
   - component: {fileID: 5372700019369380102}
   - component: {fileID: 6517359110861617483}
-  - component: {fileID: 6747473141979448787}
   - component: {fileID: 4382110527546809796}
   - component: {fileID: 3706737502284202432}
   - component: {fileID: 4419681248003507990}
   m_Layer: 0
-  m_Name: Cube_Blocks
+  m_Name: Cube_Script
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -139,114 +138,6 @@ MonoBehaviour:
             m_StringArgument: 
             m_BoolArgument: 0
           m_CallState: 2
---- !u!114 &6747473141979448787
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1945266579083033832}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0fb3639200fb4be4996952cebd241fe2, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_SelectedCompositePath: 
-  m_Blocks:
-  - rid: 4686939451379154944
-  - rid: 4686939451379154946
-  references:
-    version: 2
-    RefIds:
-    - rid: -2
-      type: {class: , ns: , asm: }
-    - rid: 4686939451379154944
-      type: {class: Motion3DBlock, ns: CocodriloDog.MotionKit, asm: CocodriloDog.MotionKit}
-      data:
-        m_Name: ScaleUp
-        m_Owner: {fileID: 1945266579083033832}
-        m_ReuseID: Scale
-        m_Duration: 1.2
-        m_TimeMode: 0
-        m_Easing:
-          m_EasingName: Elastic Out
-          m_ParameterizedEasing:
-            rid: -2
-        m_SharedSettings: {fileID: 0}
-        m_OnStart:
-          m_PersistentCalls:
-            m_Calls:
-            - m_Target: {fileID: 6747473141979448787}
-              m_TargetAssemblyTypeName: CocodriloDog.MotionKit.MotionKitComponent,
-                CocodriloDog.MotionKit
-              m_MethodName: Play
-              m_Mode: 5
-              m_Arguments:
-                m_ObjectArgument: {fileID: 0}
-                m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-                m_IntArgument: 0
-                m_FloatArgument: 0
-                m_StringArgument: Timer
-                m_BoolArgument: 0
-              m_CallState: 2
-        m_OnUpdate:
-          m_PersistentCalls:
-            m_Calls: []
-        m_OnInterrupt:
-          m_PersistentCalls:
-            m_Calls: []
-        m_OnComplete:
-          m_PersistentCalls:
-            m_Calls: []
-        m_CallbackSelection: 0
-        m_EditOwnerAndReuseID: 0
-        m_PlayOnStart: 0
-        m_SetInitialValuesOnStart: 0
-        m_Object: {fileID: 1945266579083033832}
-        m_SetterString: Transform/localScale
-        m_GetterString: Transform/localScale
-        m_InitialValue: {x: 0, y: 0, z: 0}
-        m_InitialValueIsRelative: 1
-        m_FinalValue: {x: 1, y: 2, z: 2}
-        m_FinalValueIsRelative: 0
-        m_SharedValues: {fileID: 0}
-    - rid: 4686939451379154946
-      type: {class: Motion3DBlock, ns: CocodriloDog.MotionKit, asm: CocodriloDog.MotionKit}
-      data:
-        m_Name: ScaleDown
-        m_Owner: {fileID: 1945266579083033832}
-        m_ReuseID: Scale
-        m_Duration: 1.2
-        m_TimeMode: 0
-        m_Easing:
-          m_EasingName: Elastic Out
-          m_ParameterizedEasing:
-            rid: -2
-        m_SharedSettings: {fileID: 0}
-        m_OnStart:
-          m_PersistentCalls:
-            m_Calls: []
-        m_OnUpdate:
-          m_PersistentCalls:
-            m_Calls: []
-        m_OnInterrupt:
-          m_PersistentCalls:
-            m_Calls: []
-        m_OnComplete:
-          m_PersistentCalls:
-            m_Calls: []
-        m_CallbackSelection: 0
-        m_EditOwnerAndReuseID: 0
-        m_PlayOnStart: 0
-        m_SetInitialValuesOnStart: 0
-        m_Object: {fileID: 1945266579083033832}
-        m_SetterString: Transform/localScale
-        m_GetterString: Transform/localScale
-        m_InitialValue: {x: 0, y: 0, z: 0}
-        m_InitialValueIsRelative: 1
-        m_FinalValue: {x: 1, y: 1, z: 1}
-        m_FinalValueIsRelative: 0
-        m_SharedValues: {fileID: 0}
 --- !u!114 &4382110527546809796
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -314,7 +205,6 @@ MonoBehaviour:
   m_GameObject: {fileID: 1945266579083033832}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a851176604c34d641a90eea99c0636a1, type: 3}
+  m_Script: {fileID: 11500000, guid: 1ecdf73435b55c647ba5f22821caa7ee, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_MotionKitComponent: {fileID: 6747473141979448787}

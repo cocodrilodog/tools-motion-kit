@@ -25,7 +25,9 @@ namespace CocodriloDog.MotionKit {
 			CDEditorUtility.DrawDisabledField(ScriptProperty);
 
 			foreach(var block in (target as MotionKitComponent).GetChildren()) {
-				block.DrawToggles = true;
+				if (block != null) {
+					block.DrawToggles = true;
+				}
 			}
 
 			EditorGUILayout.PropertyField(m_BlocksProperty);

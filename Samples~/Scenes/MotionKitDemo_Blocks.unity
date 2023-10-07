@@ -657,7 +657,7 @@ GameObject:
   - component: {fileID: 473910921}
   - component: {fileID: 473910922}
   m_Layer: 0
-  m_Name: Cubes
+  m_Name: CubesBlocks
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -697,17 +697,1018 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0fb3639200fb4be4996952cebd241fe2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_SelectedCompositePath: 
+  m_SelectedCompositePath: m_Blocks.Array.data[2].m_SequenceItems.Array.data[1]
   m_Blocks:
   - rid: 4686939451379154949
   - rid: 4686939451379155021
-  m_PlayOnStart: 0
-  m_SetInitialValuesOnStart: 0
+  - rid: 939165480845050093
   references:
     version: 2
     RefIds:
     - rid: -2
       type: {class: , ns: , asm: }
+    - rid: 939165480845050093
+      type: {class: SequenceBlock, ns: CocodriloDog.MotionKit, asm: CocodriloDog.MotionKit}
+      data:
+        m_Name: MoveSeq
+        m_Owner: {fileID: 0}
+        m_ReuseID: 
+        m_Duration: 0
+        m_TimeMode: 0
+        m_Easing:
+          m_EasingName: Linear
+          m_ParameterizedEasing:
+            rid: -2
+        m_SharedSettings: {fileID: 0}
+        m_OnStart:
+          m_PersistentCalls:
+            m_Calls: []
+        m_OnUpdate:
+          m_PersistentCalls:
+            m_Calls: []
+        m_OnInterrupt:
+          m_PersistentCalls:
+            m_Calls: []
+        m_OnComplete:
+          m_PersistentCalls:
+            m_Calls:
+            - m_Target: {fileID: 473910922}
+              m_TargetAssemblyTypeName: CocodriloDog.MotionKit.MotionKitComponent,
+                CocodriloDog.MotionKit
+              m_MethodName: Play
+              m_Mode: 5
+              m_Arguments:
+                m_ObjectArgument: {fileID: 0}
+                m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+                m_IntArgument: 0
+                m_FloatArgument: 0
+                m_StringArgument: MoveSeq
+                m_BoolArgument: 0
+              m_CallState: 2
+        m_CallbackSelection: 3
+        m_EditOwnerAndReuseID: 0
+        m_PlayOnStart: 1
+        m_SetInitialValuesOnStart: 0
+        m_SequenceItems:
+        - rid: 939165480845050094
+        - rid: 939165480845050132
+        m_BatchOperations: []
+    - rid: 939165480845050094
+      type: {class: TimerBlock, ns: CocodriloDog.MotionKit, asm: CocodriloDog.MotionKit}
+      data:
+        m_Name: Timer
+        m_Owner: {fileID: 0}
+        m_ReuseID: 
+        m_Duration: 2
+        m_TimeMode: 0
+        m_Easing:
+          m_EasingName: Linear
+          m_ParameterizedEasing:
+            rid: -2
+        m_SharedSettings: {fileID: 0}
+        m_OnStart:
+          m_PersistentCalls:
+            m_Calls: []
+        m_OnUpdate:
+          m_PersistentCalls:
+            m_Calls: []
+        m_OnInterrupt:
+          m_PersistentCalls:
+            m_Calls: []
+        m_OnComplete:
+          m_PersistentCalls:
+            m_Calls: []
+        m_CallbackSelection: 0
+        m_EditOwnerAndReuseID: 0
+        m_PlayOnStart: 0
+        m_SetInitialValuesOnStart: 0
+    - rid: 939165480845050132
+      type: {class: ParallelBlock, ns: CocodriloDog.MotionKit, asm: CocodriloDog.MotionKit}
+      data:
+        m_Name: MovePar
+        m_Owner: {fileID: 0}
+        m_ReuseID: 
+        m_Duration: 0
+        m_TimeMode: 0
+        m_Easing:
+          m_EasingName: Linear
+          m_ParameterizedEasing:
+            rid: -2
+        m_SharedSettings: {fileID: 0}
+        m_OnStart:
+          m_PersistentCalls:
+            m_Calls: []
+        m_OnUpdate:
+          m_PersistentCalls:
+            m_Calls: []
+        m_OnInterrupt:
+          m_PersistentCalls:
+            m_Calls: []
+        m_OnComplete:
+          m_PersistentCalls:
+            m_Calls: []
+        m_CallbackSelection: 0
+        m_EditOwnerAndReuseID: 0
+        m_PlayOnStart: 1
+        m_SetInitialValuesOnStart: 0
+        m_ParallelItems:
+        - rid: 939165480845050497
+        - rid: 939165480845050498
+        - rid: 939165480845050499
+        - rid: 939165480845050500
+        - rid: 939165480845050501
+        - rid: 939165480845050502
+        - rid: 939165480845050503
+        m_BatchOperations:
+        - rid: 939165480845050140
+        - rid: 939165480845050141
+        - rid: 939165480845050142
+        - rid: 939165480845050143
+    - rid: 939165480845050140
+      type: {class: CopyTemplateBlock, ns: CocodriloDog.MotionKit, asm: CocodriloDog.MotionKit}
+      data:
+        m_Name: CopyTemplateBlock
+        m_Enabled: 1
+        m_TemplateBlock:
+          rid: 939165480845050158
+    - rid: 939165480845050141
+      type: {class: RenameBlock, ns: CocodriloDog.MotionKit, asm: CocodriloDog.MotionKit}
+      data:
+        m_Name: RenameBlock
+        m_Enabled: 1
+        m_Path: 
+        m_NewName: MoveUpAndDownSeq
+        m_AppendSerialNumber: 1
+    - rid: 939165480845050142
+      type: {class: SetSetterObject, ns: CocodriloDog.MotionKit, asm: CocodriloDog.MotionKit}
+      data:
+        m_Name: SetSetterObject
+        m_Enabled: 1
+        m_Path: MoveUpAndDown
+        m_SetterObjects:
+        - {fileID: 1577395896}
+        - {fileID: 548684727}
+        - {fileID: 948107482}
+        - {fileID: 512816811}
+        - {fileID: 184456759}
+        - {fileID: 1467607791}
+        - {fileID: 1098709258}
+    - rid: 939165480845050143
+      type: {class: SetIncrementalDuration, ns: CocodriloDog.MotionKit, asm: CocodriloDog.MotionKit}
+      data:
+        m_Name: SetIncrementalDuration
+        m_Enabled: 1
+        m_Path: Timer
+        m_BaseDuration: 0.1
+        m_DurationIncrement: 0.1
+    - rid: 939165480845050158
+      type: {class: SequenceBlock, ns: CocodriloDog.MotionKit, asm: CocodriloDog.MotionKit}
+      data:
+        m_Name: MoveUpAndDownSeq
+        m_Owner: {fileID: 0}
+        m_ReuseID: 
+        m_Duration: 0
+        m_TimeMode: 0
+        m_Easing:
+          m_EasingName: Linear
+          m_ParameterizedEasing:
+            rid: -2
+        m_SharedSettings: {fileID: 0}
+        m_OnStart:
+          m_PersistentCalls:
+            m_Calls: []
+        m_OnUpdate:
+          m_PersistentCalls:
+            m_Calls: []
+        m_OnInterrupt:
+          m_PersistentCalls:
+            m_Calls: []
+        m_OnComplete:
+          m_PersistentCalls:
+            m_Calls: []
+        m_CallbackSelection: 0
+        m_EditOwnerAndReuseID: 0
+        m_PlayOnStart: 0
+        m_SetInitialValuesOnStart: 0
+        m_SequenceItems:
+        - rid: 939165480845050166
+        - rid: 939165480845050167
+        m_BatchOperations: []
+    - rid: 939165480845050166
+      type: {class: TimerBlock, ns: CocodriloDog.MotionKit, asm: CocodriloDog.MotionKit}
+      data:
+        m_Name: Timer
+        m_Owner: {fileID: 0}
+        m_ReuseID: 
+        m_Duration: 0
+        m_TimeMode: 0
+        m_Easing:
+          m_EasingName: Linear
+          m_ParameterizedEasing:
+            rid: -2
+        m_SharedSettings: {fileID: 0}
+        m_OnStart:
+          m_PersistentCalls:
+            m_Calls: []
+        m_OnUpdate:
+          m_PersistentCalls:
+            m_Calls: []
+        m_OnInterrupt:
+          m_PersistentCalls:
+            m_Calls: []
+        m_OnComplete:
+          m_PersistentCalls:
+            m_Calls: []
+        m_CallbackSelection: 0
+        m_EditOwnerAndReuseID: 0
+        m_PlayOnStart: 0
+        m_SetInitialValuesOnStart: 0
+    - rid: 939165480845050167
+      type: {class: Motion3DBlock, ns: CocodriloDog.MotionKit, asm: CocodriloDog.MotionKit}
+      data:
+        m_Name: MoveUpAndDown
+        m_Owner: {fileID: 0}
+        m_ReuseID: 
+        m_Duration: 0.5
+        m_TimeMode: 0
+        m_Easing:
+          m_EasingName: Pulse
+          m_ParameterizedEasing:
+            rid: 939165480845050428
+        m_SharedSettings: {fileID: 0}
+        m_OnStart:
+          m_PersistentCalls:
+            m_Calls: []
+        m_OnUpdate:
+          m_PersistentCalls:
+            m_Calls: []
+        m_OnInterrupt:
+          m_PersistentCalls:
+            m_Calls: []
+        m_OnComplete:
+          m_PersistentCalls:
+            m_Calls: []
+        m_CallbackSelection: 0
+        m_EditOwnerAndReuseID: 0
+        m_PlayOnStart: 0
+        m_SetInitialValuesOnStart: 0
+        m_Object: {fileID: 1577395896}
+        m_SetterString: Transform/localPosition
+        m_GetterString: Transform/localPosition
+        m_InitialValue: {x: 0, y: 0, z: 0}
+        m_InitialValueIsRelative: 1
+        m_FinalValue: {x: 0, y: 0, z: 0}
+        m_FinalValueIsRelative: 1
+        m_SharedValues: {fileID: 0}
+    - rid: 939165480845050428
+      type: {class: Pulse, ns: CocodriloDog.MotionKit, asm: CocodriloDog.MotionKit}
+      data:
+        m_Offset:
+          Float: 0
+          Vector3: {x: 0, y: 1, z: 0}
+          Color: {r: 0, g: 0, b: 0, a: 0}
+    - rid: 939165480845050497
+      type: {class: SequenceBlock, ns: CocodriloDog.MotionKit, asm: CocodriloDog.MotionKit}
+      data:
+        m_Name: MoveUpAndDownSeq1
+        m_Owner: {fileID: 0}
+        m_ReuseID: 
+        m_Duration: 0
+        m_TimeMode: 0
+        m_Easing:
+          m_EasingName: Linear
+          m_ParameterizedEasing:
+            rid: -2
+        m_SharedSettings: {fileID: 0}
+        m_OnStart:
+          m_PersistentCalls:
+            m_Calls: []
+        m_OnUpdate:
+          m_PersistentCalls:
+            m_Calls: []
+        m_OnInterrupt:
+          m_PersistentCalls:
+            m_Calls: []
+        m_OnComplete:
+          m_PersistentCalls:
+            m_Calls: []
+        m_CallbackSelection: 0
+        m_EditOwnerAndReuseID: 0
+        m_PlayOnStart: 0
+        m_SetInitialValuesOnStart: 0
+        m_SequenceItems:
+        - rid: 939165480845050504
+        - rid: 939165480845050505
+        m_BatchOperations: []
+    - rid: 939165480845050498
+      type: {class: SequenceBlock, ns: CocodriloDog.MotionKit, asm: CocodriloDog.MotionKit}
+      data:
+        m_Name: MoveUpAndDownSeq2
+        m_Owner: {fileID: 0}
+        m_ReuseID: 
+        m_Duration: 0
+        m_TimeMode: 0
+        m_Easing:
+          m_EasingName: Linear
+          m_ParameterizedEasing:
+            rid: -2
+        m_SharedSettings: {fileID: 0}
+        m_OnStart:
+          m_PersistentCalls:
+            m_Calls: []
+        m_OnUpdate:
+          m_PersistentCalls:
+            m_Calls: []
+        m_OnInterrupt:
+          m_PersistentCalls:
+            m_Calls: []
+        m_OnComplete:
+          m_PersistentCalls:
+            m_Calls: []
+        m_CallbackSelection: 0
+        m_EditOwnerAndReuseID: 0
+        m_PlayOnStart: 0
+        m_SetInitialValuesOnStart: 0
+        m_SequenceItems:
+        - rid: 939165480845050506
+        - rid: 939165480845050507
+        m_BatchOperations: []
+    - rid: 939165480845050499
+      type: {class: SequenceBlock, ns: CocodriloDog.MotionKit, asm: CocodriloDog.MotionKit}
+      data:
+        m_Name: MoveUpAndDownSeq3
+        m_Owner: {fileID: 0}
+        m_ReuseID: 
+        m_Duration: 0
+        m_TimeMode: 0
+        m_Easing:
+          m_EasingName: Linear
+          m_ParameterizedEasing:
+            rid: -2
+        m_SharedSettings: {fileID: 0}
+        m_OnStart:
+          m_PersistentCalls:
+            m_Calls: []
+        m_OnUpdate:
+          m_PersistentCalls:
+            m_Calls: []
+        m_OnInterrupt:
+          m_PersistentCalls:
+            m_Calls: []
+        m_OnComplete:
+          m_PersistentCalls:
+            m_Calls: []
+        m_CallbackSelection: 0
+        m_EditOwnerAndReuseID: 0
+        m_PlayOnStart: 0
+        m_SetInitialValuesOnStart: 0
+        m_SequenceItems:
+        - rid: 939165480845050508
+        - rid: 939165480845050509
+        m_BatchOperations: []
+    - rid: 939165480845050500
+      type: {class: SequenceBlock, ns: CocodriloDog.MotionKit, asm: CocodriloDog.MotionKit}
+      data:
+        m_Name: MoveUpAndDownSeq4
+        m_Owner: {fileID: 0}
+        m_ReuseID: 
+        m_Duration: 0
+        m_TimeMode: 0
+        m_Easing:
+          m_EasingName: Linear
+          m_ParameterizedEasing:
+            rid: -2
+        m_SharedSettings: {fileID: 0}
+        m_OnStart:
+          m_PersistentCalls:
+            m_Calls: []
+        m_OnUpdate:
+          m_PersistentCalls:
+            m_Calls: []
+        m_OnInterrupt:
+          m_PersistentCalls:
+            m_Calls: []
+        m_OnComplete:
+          m_PersistentCalls:
+            m_Calls: []
+        m_CallbackSelection: 0
+        m_EditOwnerAndReuseID: 0
+        m_PlayOnStart: 0
+        m_SetInitialValuesOnStart: 0
+        m_SequenceItems:
+        - rid: 939165480845050510
+        - rid: 939165480845050511
+        m_BatchOperations: []
+    - rid: 939165480845050501
+      type: {class: SequenceBlock, ns: CocodriloDog.MotionKit, asm: CocodriloDog.MotionKit}
+      data:
+        m_Name: MoveUpAndDownSeq5
+        m_Owner: {fileID: 0}
+        m_ReuseID: 
+        m_Duration: 0
+        m_TimeMode: 0
+        m_Easing:
+          m_EasingName: Linear
+          m_ParameterizedEasing:
+            rid: -2
+        m_SharedSettings: {fileID: 0}
+        m_OnStart:
+          m_PersistentCalls:
+            m_Calls: []
+        m_OnUpdate:
+          m_PersistentCalls:
+            m_Calls: []
+        m_OnInterrupt:
+          m_PersistentCalls:
+            m_Calls: []
+        m_OnComplete:
+          m_PersistentCalls:
+            m_Calls: []
+        m_CallbackSelection: 0
+        m_EditOwnerAndReuseID: 0
+        m_PlayOnStart: 0
+        m_SetInitialValuesOnStart: 0
+        m_SequenceItems:
+        - rid: 939165480845050512
+        - rid: 939165480845050513
+        m_BatchOperations: []
+    - rid: 939165480845050502
+      type: {class: SequenceBlock, ns: CocodriloDog.MotionKit, asm: CocodriloDog.MotionKit}
+      data:
+        m_Name: MoveUpAndDownSeq6
+        m_Owner: {fileID: 0}
+        m_ReuseID: 
+        m_Duration: 0
+        m_TimeMode: 0
+        m_Easing:
+          m_EasingName: Linear
+          m_ParameterizedEasing:
+            rid: -2
+        m_SharedSettings: {fileID: 0}
+        m_OnStart:
+          m_PersistentCalls:
+            m_Calls: []
+        m_OnUpdate:
+          m_PersistentCalls:
+            m_Calls: []
+        m_OnInterrupt:
+          m_PersistentCalls:
+            m_Calls: []
+        m_OnComplete:
+          m_PersistentCalls:
+            m_Calls: []
+        m_CallbackSelection: 0
+        m_EditOwnerAndReuseID: 0
+        m_PlayOnStart: 0
+        m_SetInitialValuesOnStart: 0
+        m_SequenceItems:
+        - rid: 939165480845050514
+        - rid: 939165480845050515
+        m_BatchOperations: []
+    - rid: 939165480845050503
+      type: {class: SequenceBlock, ns: CocodriloDog.MotionKit, asm: CocodriloDog.MotionKit}
+      data:
+        m_Name: MoveUpAndDownSeq7
+        m_Owner: {fileID: 0}
+        m_ReuseID: 
+        m_Duration: 0
+        m_TimeMode: 0
+        m_Easing:
+          m_EasingName: Linear
+          m_ParameterizedEasing:
+            rid: -2
+        m_SharedSettings: {fileID: 0}
+        m_OnStart:
+          m_PersistentCalls:
+            m_Calls: []
+        m_OnUpdate:
+          m_PersistentCalls:
+            m_Calls: []
+        m_OnInterrupt:
+          m_PersistentCalls:
+            m_Calls: []
+        m_OnComplete:
+          m_PersistentCalls:
+            m_Calls: []
+        m_CallbackSelection: 0
+        m_EditOwnerAndReuseID: 0
+        m_PlayOnStart: 0
+        m_SetInitialValuesOnStart: 0
+        m_SequenceItems:
+        - rid: 939165480845050516
+        - rid: 939165480845050517
+        m_BatchOperations: []
+    - rid: 939165480845050504
+      type: {class: TimerBlock, ns: CocodriloDog.MotionKit, asm: CocodriloDog.MotionKit}
+      data:
+        m_Name: Timer
+        m_Owner: {fileID: 0}
+        m_ReuseID: 
+        m_Duration: 0.1
+        m_TimeMode: 0
+        m_Easing:
+          m_EasingName: Linear
+          m_ParameterizedEasing:
+            rid: -2
+        m_SharedSettings: {fileID: 0}
+        m_OnStart:
+          m_PersistentCalls:
+            m_Calls: []
+        m_OnUpdate:
+          m_PersistentCalls:
+            m_Calls: []
+        m_OnInterrupt:
+          m_PersistentCalls:
+            m_Calls: []
+        m_OnComplete:
+          m_PersistentCalls:
+            m_Calls: []
+        m_CallbackSelection: 0
+        m_EditOwnerAndReuseID: 0
+        m_PlayOnStart: 0
+        m_SetInitialValuesOnStart: 0
+    - rid: 939165480845050505
+      type: {class: Motion3DBlock, ns: CocodriloDog.MotionKit, asm: CocodriloDog.MotionKit}
+      data:
+        m_Name: MoveUpAndDown
+        m_Owner: {fileID: 0}
+        m_ReuseID: 
+        m_Duration: 0.5
+        m_TimeMode: 0
+        m_Easing:
+          m_EasingName: Pulse
+          m_ParameterizedEasing:
+            rid: 939165480845050518
+        m_SharedSettings: {fileID: 0}
+        m_OnStart:
+          m_PersistentCalls:
+            m_Calls: []
+        m_OnUpdate:
+          m_PersistentCalls:
+            m_Calls: []
+        m_OnInterrupt:
+          m_PersistentCalls:
+            m_Calls: []
+        m_OnComplete:
+          m_PersistentCalls:
+            m_Calls: []
+        m_CallbackSelection: 0
+        m_EditOwnerAndReuseID: 0
+        m_PlayOnStart: 0
+        m_SetInitialValuesOnStart: 0
+        m_Object: {fileID: 1577395896}
+        m_SetterString: Transform/localPosition
+        m_GetterString: Transform/localPosition
+        m_InitialValue: {x: 0, y: 0, z: 0}
+        m_InitialValueIsRelative: 1
+        m_FinalValue: {x: 0, y: 0, z: 0}
+        m_FinalValueIsRelative: 1
+        m_SharedValues: {fileID: 0}
+    - rid: 939165480845050506
+      type: {class: TimerBlock, ns: CocodriloDog.MotionKit, asm: CocodriloDog.MotionKit}
+      data:
+        m_Name: Timer
+        m_Owner: {fileID: 0}
+        m_ReuseID: 
+        m_Duration: 0.2
+        m_TimeMode: 0
+        m_Easing:
+          m_EasingName: Linear
+          m_ParameterizedEasing:
+            rid: -2
+        m_SharedSettings: {fileID: 0}
+        m_OnStart:
+          m_PersistentCalls:
+            m_Calls: []
+        m_OnUpdate:
+          m_PersistentCalls:
+            m_Calls: []
+        m_OnInterrupt:
+          m_PersistentCalls:
+            m_Calls: []
+        m_OnComplete:
+          m_PersistentCalls:
+            m_Calls: []
+        m_CallbackSelection: 0
+        m_EditOwnerAndReuseID: 0
+        m_PlayOnStart: 0
+        m_SetInitialValuesOnStart: 0
+    - rid: 939165480845050507
+      type: {class: Motion3DBlock, ns: CocodriloDog.MotionKit, asm: CocodriloDog.MotionKit}
+      data:
+        m_Name: MoveUpAndDown
+        m_Owner: {fileID: 0}
+        m_ReuseID: 
+        m_Duration: 0.5
+        m_TimeMode: 0
+        m_Easing:
+          m_EasingName: Pulse
+          m_ParameterizedEasing:
+            rid: 939165480845050519
+        m_SharedSettings: {fileID: 0}
+        m_OnStart:
+          m_PersistentCalls:
+            m_Calls: []
+        m_OnUpdate:
+          m_PersistentCalls:
+            m_Calls: []
+        m_OnInterrupt:
+          m_PersistentCalls:
+            m_Calls: []
+        m_OnComplete:
+          m_PersistentCalls:
+            m_Calls: []
+        m_CallbackSelection: 0
+        m_EditOwnerAndReuseID: 0
+        m_PlayOnStart: 0
+        m_SetInitialValuesOnStart: 0
+        m_Object: {fileID: 548684727}
+        m_SetterString: Transform/localPosition
+        m_GetterString: Transform/localPosition
+        m_InitialValue: {x: 0, y: 0, z: 0}
+        m_InitialValueIsRelative: 1
+        m_FinalValue: {x: 0, y: 0, z: 0}
+        m_FinalValueIsRelative: 1
+        m_SharedValues: {fileID: 0}
+    - rid: 939165480845050508
+      type: {class: TimerBlock, ns: CocodriloDog.MotionKit, asm: CocodriloDog.MotionKit}
+      data:
+        m_Name: Timer
+        m_Owner: {fileID: 0}
+        m_ReuseID: 
+        m_Duration: 0.3
+        m_TimeMode: 0
+        m_Easing:
+          m_EasingName: Linear
+          m_ParameterizedEasing:
+            rid: -2
+        m_SharedSettings: {fileID: 0}
+        m_OnStart:
+          m_PersistentCalls:
+            m_Calls: []
+        m_OnUpdate:
+          m_PersistentCalls:
+            m_Calls: []
+        m_OnInterrupt:
+          m_PersistentCalls:
+            m_Calls: []
+        m_OnComplete:
+          m_PersistentCalls:
+            m_Calls: []
+        m_CallbackSelection: 0
+        m_EditOwnerAndReuseID: 0
+        m_PlayOnStart: 0
+        m_SetInitialValuesOnStart: 0
+    - rid: 939165480845050509
+      type: {class: Motion3DBlock, ns: CocodriloDog.MotionKit, asm: CocodriloDog.MotionKit}
+      data:
+        m_Name: MoveUpAndDown
+        m_Owner: {fileID: 0}
+        m_ReuseID: 
+        m_Duration: 0.5
+        m_TimeMode: 0
+        m_Easing:
+          m_EasingName: Pulse
+          m_ParameterizedEasing:
+            rid: 939165480845050520
+        m_SharedSettings: {fileID: 0}
+        m_OnStart:
+          m_PersistentCalls:
+            m_Calls: []
+        m_OnUpdate:
+          m_PersistentCalls:
+            m_Calls: []
+        m_OnInterrupt:
+          m_PersistentCalls:
+            m_Calls: []
+        m_OnComplete:
+          m_PersistentCalls:
+            m_Calls: []
+        m_CallbackSelection: 0
+        m_EditOwnerAndReuseID: 0
+        m_PlayOnStart: 0
+        m_SetInitialValuesOnStart: 0
+        m_Object: {fileID: 948107482}
+        m_SetterString: Transform/localPosition
+        m_GetterString: Transform/localPosition
+        m_InitialValue: {x: 0, y: 0, z: 0}
+        m_InitialValueIsRelative: 1
+        m_FinalValue: {x: 0, y: 0, z: 0}
+        m_FinalValueIsRelative: 1
+        m_SharedValues: {fileID: 0}
+    - rid: 939165480845050510
+      type: {class: TimerBlock, ns: CocodriloDog.MotionKit, asm: CocodriloDog.MotionKit}
+      data:
+        m_Name: Timer
+        m_Owner: {fileID: 0}
+        m_ReuseID: 
+        m_Duration: 0.4
+        m_TimeMode: 0
+        m_Easing:
+          m_EasingName: Linear
+          m_ParameterizedEasing:
+            rid: -2
+        m_SharedSettings: {fileID: 0}
+        m_OnStart:
+          m_PersistentCalls:
+            m_Calls: []
+        m_OnUpdate:
+          m_PersistentCalls:
+            m_Calls: []
+        m_OnInterrupt:
+          m_PersistentCalls:
+            m_Calls: []
+        m_OnComplete:
+          m_PersistentCalls:
+            m_Calls: []
+        m_CallbackSelection: 0
+        m_EditOwnerAndReuseID: 0
+        m_PlayOnStart: 0
+        m_SetInitialValuesOnStart: 0
+    - rid: 939165480845050511
+      type: {class: Motion3DBlock, ns: CocodriloDog.MotionKit, asm: CocodriloDog.MotionKit}
+      data:
+        m_Name: MoveUpAndDown
+        m_Owner: {fileID: 0}
+        m_ReuseID: 
+        m_Duration: 0.5
+        m_TimeMode: 0
+        m_Easing:
+          m_EasingName: Pulse
+          m_ParameterizedEasing:
+            rid: 939165480845050521
+        m_SharedSettings: {fileID: 0}
+        m_OnStart:
+          m_PersistentCalls:
+            m_Calls: []
+        m_OnUpdate:
+          m_PersistentCalls:
+            m_Calls: []
+        m_OnInterrupt:
+          m_PersistentCalls:
+            m_Calls: []
+        m_OnComplete:
+          m_PersistentCalls:
+            m_Calls: []
+        m_CallbackSelection: 0
+        m_EditOwnerAndReuseID: 0
+        m_PlayOnStart: 0
+        m_SetInitialValuesOnStart: 0
+        m_Object: {fileID: 512816811}
+        m_SetterString: Transform/localPosition
+        m_GetterString: Transform/localPosition
+        m_InitialValue: {x: 0, y: 0, z: 0}
+        m_InitialValueIsRelative: 1
+        m_FinalValue: {x: 0, y: 0, z: 0}
+        m_FinalValueIsRelative: 1
+        m_SharedValues: {fileID: 0}
+    - rid: 939165480845050512
+      type: {class: TimerBlock, ns: CocodriloDog.MotionKit, asm: CocodriloDog.MotionKit}
+      data:
+        m_Name: Timer
+        m_Owner: {fileID: 0}
+        m_ReuseID: 
+        m_Duration: 0.5
+        m_TimeMode: 0
+        m_Easing:
+          m_EasingName: Linear
+          m_ParameterizedEasing:
+            rid: -2
+        m_SharedSettings: {fileID: 0}
+        m_OnStart:
+          m_PersistentCalls:
+            m_Calls: []
+        m_OnUpdate:
+          m_PersistentCalls:
+            m_Calls: []
+        m_OnInterrupt:
+          m_PersistentCalls:
+            m_Calls: []
+        m_OnComplete:
+          m_PersistentCalls:
+            m_Calls: []
+        m_CallbackSelection: 0
+        m_EditOwnerAndReuseID: 0
+        m_PlayOnStart: 0
+        m_SetInitialValuesOnStart: 0
+    - rid: 939165480845050513
+      type: {class: Motion3DBlock, ns: CocodriloDog.MotionKit, asm: CocodriloDog.MotionKit}
+      data:
+        m_Name: MoveUpAndDown
+        m_Owner: {fileID: 0}
+        m_ReuseID: 
+        m_Duration: 0.5
+        m_TimeMode: 0
+        m_Easing:
+          m_EasingName: Pulse
+          m_ParameterizedEasing:
+            rid: 939165480845050522
+        m_SharedSettings: {fileID: 0}
+        m_OnStart:
+          m_PersistentCalls:
+            m_Calls: []
+        m_OnUpdate:
+          m_PersistentCalls:
+            m_Calls: []
+        m_OnInterrupt:
+          m_PersistentCalls:
+            m_Calls: []
+        m_OnComplete:
+          m_PersistentCalls:
+            m_Calls: []
+        m_CallbackSelection: 0
+        m_EditOwnerAndReuseID: 0
+        m_PlayOnStart: 0
+        m_SetInitialValuesOnStart: 0
+        m_Object: {fileID: 184456759}
+        m_SetterString: Transform/localPosition
+        m_GetterString: Transform/localPosition
+        m_InitialValue: {x: 0, y: 0, z: 0}
+        m_InitialValueIsRelative: 1
+        m_FinalValue: {x: 0, y: 0, z: 0}
+        m_FinalValueIsRelative: 1
+        m_SharedValues: {fileID: 0}
+    - rid: 939165480845050514
+      type: {class: TimerBlock, ns: CocodriloDog.MotionKit, asm: CocodriloDog.MotionKit}
+      data:
+        m_Name: Timer
+        m_Owner: {fileID: 0}
+        m_ReuseID: 
+        m_Duration: 0.6
+        m_TimeMode: 0
+        m_Easing:
+          m_EasingName: Linear
+          m_ParameterizedEasing:
+            rid: -2
+        m_SharedSettings: {fileID: 0}
+        m_OnStart:
+          m_PersistentCalls:
+            m_Calls: []
+        m_OnUpdate:
+          m_PersistentCalls:
+            m_Calls: []
+        m_OnInterrupt:
+          m_PersistentCalls:
+            m_Calls: []
+        m_OnComplete:
+          m_PersistentCalls:
+            m_Calls: []
+        m_CallbackSelection: 0
+        m_EditOwnerAndReuseID: 0
+        m_PlayOnStart: 0
+        m_SetInitialValuesOnStart: 0
+    - rid: 939165480845050515
+      type: {class: Motion3DBlock, ns: CocodriloDog.MotionKit, asm: CocodriloDog.MotionKit}
+      data:
+        m_Name: MoveUpAndDown
+        m_Owner: {fileID: 0}
+        m_ReuseID: 
+        m_Duration: 0.5
+        m_TimeMode: 0
+        m_Easing:
+          m_EasingName: Pulse
+          m_ParameterizedEasing:
+            rid: 939165480845050523
+        m_SharedSettings: {fileID: 0}
+        m_OnStart:
+          m_PersistentCalls:
+            m_Calls: []
+        m_OnUpdate:
+          m_PersistentCalls:
+            m_Calls: []
+        m_OnInterrupt:
+          m_PersistentCalls:
+            m_Calls: []
+        m_OnComplete:
+          m_PersistentCalls:
+            m_Calls: []
+        m_CallbackSelection: 0
+        m_EditOwnerAndReuseID: 0
+        m_PlayOnStart: 0
+        m_SetInitialValuesOnStart: 0
+        m_Object: {fileID: 1467607791}
+        m_SetterString: Transform/localPosition
+        m_GetterString: Transform/localPosition
+        m_InitialValue: {x: 0, y: 0, z: 0}
+        m_InitialValueIsRelative: 1
+        m_FinalValue: {x: 0, y: 0, z: 0}
+        m_FinalValueIsRelative: 1
+        m_SharedValues: {fileID: 0}
+    - rid: 939165480845050516
+      type: {class: TimerBlock, ns: CocodriloDog.MotionKit, asm: CocodriloDog.MotionKit}
+      data:
+        m_Name: Timer
+        m_Owner: {fileID: 0}
+        m_ReuseID: 
+        m_Duration: 0.7
+        m_TimeMode: 0
+        m_Easing:
+          m_EasingName: Linear
+          m_ParameterizedEasing:
+            rid: -2
+        m_SharedSettings: {fileID: 0}
+        m_OnStart:
+          m_PersistentCalls:
+            m_Calls: []
+        m_OnUpdate:
+          m_PersistentCalls:
+            m_Calls: []
+        m_OnInterrupt:
+          m_PersistentCalls:
+            m_Calls: []
+        m_OnComplete:
+          m_PersistentCalls:
+            m_Calls: []
+        m_CallbackSelection: 0
+        m_EditOwnerAndReuseID: 0
+        m_PlayOnStart: 0
+        m_SetInitialValuesOnStart: 0
+    - rid: 939165480845050517
+      type: {class: Motion3DBlock, ns: CocodriloDog.MotionKit, asm: CocodriloDog.MotionKit}
+      data:
+        m_Name: MoveUpAndDown
+        m_Owner: {fileID: 0}
+        m_ReuseID: 
+        m_Duration: 0.5
+        m_TimeMode: 0
+        m_Easing:
+          m_EasingName: Pulse
+          m_ParameterizedEasing:
+            rid: 939165480845050524
+        m_SharedSettings: {fileID: 0}
+        m_OnStart:
+          m_PersistentCalls:
+            m_Calls: []
+        m_OnUpdate:
+          m_PersistentCalls:
+            m_Calls: []
+        m_OnInterrupt:
+          m_PersistentCalls:
+            m_Calls: []
+        m_OnComplete:
+          m_PersistentCalls:
+            m_Calls: []
+        m_CallbackSelection: 0
+        m_EditOwnerAndReuseID: 0
+        m_PlayOnStart: 0
+        m_SetInitialValuesOnStart: 0
+        m_Object: {fileID: 1098709258}
+        m_SetterString: Transform/localPosition
+        m_GetterString: Transform/localPosition
+        m_InitialValue: {x: 0, y: 0, z: 0}
+        m_InitialValueIsRelative: 1
+        m_FinalValue: {x: 0, y: 0, z: 0}
+        m_FinalValueIsRelative: 1
+        m_SharedValues: {fileID: 0}
+    - rid: 939165480845050518
+      type: {class: Pulse, ns: CocodriloDog.MotionKit, asm: CocodriloDog.MotionKit}
+      data:
+        m_Offset:
+          Float: 0
+          Vector3: {x: 0, y: 1, z: 0}
+          Color: {r: 0, g: 0, b: 0, a: 0}
+    - rid: 939165480845050519
+      type: {class: Pulse, ns: CocodriloDog.MotionKit, asm: CocodriloDog.MotionKit}
+      data:
+        m_Offset:
+          Float: 0
+          Vector3: {x: 0, y: 1, z: 0}
+          Color: {r: 0, g: 0, b: 0, a: 0}
+    - rid: 939165480845050520
+      type: {class: Pulse, ns: CocodriloDog.MotionKit, asm: CocodriloDog.MotionKit}
+      data:
+        m_Offset:
+          Float: 0
+          Vector3: {x: 0, y: 1, z: 0}
+          Color: {r: 0, g: 0, b: 0, a: 0}
+    - rid: 939165480845050521
+      type: {class: Pulse, ns: CocodriloDog.MotionKit, asm: CocodriloDog.MotionKit}
+      data:
+        m_Offset:
+          Float: 0
+          Vector3: {x: 0, y: 1, z: 0}
+          Color: {r: 0, g: 0, b: 0, a: 0}
+    - rid: 939165480845050522
+      type: {class: Pulse, ns: CocodriloDog.MotionKit, asm: CocodriloDog.MotionKit}
+      data:
+        m_Offset:
+          Float: 0
+          Vector3: {x: 0, y: 1, z: 0}
+          Color: {r: 0, g: 0, b: 0, a: 0}
+    - rid: 939165480845050523
+      type: {class: Pulse, ns: CocodriloDog.MotionKit, asm: CocodriloDog.MotionKit}
+      data:
+        m_Offset:
+          Float: 0
+          Vector3: {x: 0, y: 1, z: 0}
+          Color: {r: 0, g: 0, b: 0, a: 0}
+    - rid: 939165480845050524
+      type: {class: Pulse, ns: CocodriloDog.MotionKit, asm: CocodriloDog.MotionKit}
+      data:
+        m_Offset:
+          Float: 0
+          Vector3: {x: 0, y: 1, z: 0}
+          Color: {r: 0, g: 0, b: 0, a: 0}
     - rid: 4686939451379154949
       type: {class: ParallelBlock, ns: CocodriloDog.MotionKit, asm: CocodriloDog.MotionKit}
       data:

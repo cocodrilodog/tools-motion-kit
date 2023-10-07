@@ -21,21 +21,18 @@ namespace CocodriloDog.MotionKit {
 		/// searches until it finds the first motion.
 		/// </remarks>
 		/// 
-		/// <param name="animateBlock">The animate asset</param>
+		/// <param name="motionKitBlock">The animate asset</param>
 		/// <returns><c>true</c> if the provided asset is a motion asset and its progress is set to 0</returns>
-		public static bool SetInitialValues(MotionKitBlock animateBlock) {
-			if (animateBlock is IMotionBaseBlock) {
-				var motionBlock = animateBlock as IMotionBaseBlock;
+		public static bool SetInitialValues(MotionKitBlock motionKitBlock) {
+			if (motionKitBlock is IMotionBaseBlock) {
+				var motionBlock = motionKitBlock as IMotionBaseBlock;
 				// The motion is initialized first and its relative values are calculated before applying
 				// progress
 				motionBlock.Progress = 0;
-				// The following line will prevent the OnStart callback to recalculate the relative values
-				// when the object has moved from its original position.
-				//animateBlock.LockResetPlayback();
 				return true;
 			}
-			if (animateBlock is SequenceBlock) {
-				var sequenceBlock = animateBlock as SequenceBlock;
+			if (motionKitBlock is SequenceBlock) {
+				var sequenceBlock = motionKitBlock as SequenceBlock;
 				foreach (var item in sequenceBlock.Items) {
 					// Recursion
 					if (SetInitialValues(item)) {
@@ -44,8 +41,8 @@ namespace CocodriloDog.MotionKit {
 					}
 				}
 			}
-			if (animateBlock is ParallelBlock) {
-				var parallelBlock = animateBlock as ParallelBlock;
+			if (motionKitBlock is ParallelBlock) {
+				var parallelBlock = motionKitBlock as ParallelBlock;
 				foreach (var item in parallelBlock.Items) {
 					// Recursion
 					SetInitialValues(item);

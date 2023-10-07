@@ -194,8 +194,7 @@ namespace CocodriloDog.MotionKit {
 		private void Start() {
 			TryInitialize();
 			for (int i = 0; i < Blocks.Count; i++) {
-				if (Blocks[i] != null && 
-					(Blocks[i].PlayOnStart || (i == 0 && PlayOnStart))) { // Supporting PlayOnStart for the first item for legacy reasons
+				if (Blocks[i] != null && Blocks[i].PlayOnStart) {
 					Blocks[i].Play();
 				}
 			}
@@ -213,27 +212,6 @@ namespace CocodriloDog.MotionKit {
 		[SerializeReference]
 		private List<MotionKitBlock> m_Blocks = new List<MotionKitBlock>();
 
-		[Tooltip("Plays the first block on start")]
-		[SerializeField]
-		private bool m_PlayOnStart;
-
-		/// <summary>
-		/// Searches recursively for the first motions that modify properties and sets their progress
-		/// to 0 so that the value of the property is set to the initial value.
-		/// </summary>
-		/// 
-		/// <remarks>
-		/// In <see cref="Parallel"/>s this searches on all parallel items. In <see cref="Sequence"/>s this
-		/// searches until it finds the first motion.
-		/// In this component, the search will be performed only in the <see cref="DefaultBlock"/>
-		/// </remarks>
-		[Tooltip(
-			"On the first block, searches for motions that modify properties and set their initial values on " +
-			"the corresponding objects, even if there are timers before the motions."
-		)]
-		[SerializeField]
-		private bool m_SetInitialValuesOnStart;
-
 		#endregion
 
 
@@ -249,17 +227,13 @@ namespace CocodriloDog.MotionKit {
 
 		private List<MotionKitBlock> Blocks => m_Blocks;
 
-		private bool PlayOnStart => m_PlayOnStart;
-
-		private bool SetInitialValuesOnStart => m_SetInitialValuesOnStart;
-
 		#endregion
 
 
 		#region Private Methods
 
 		private void TryInitialize() {
-			if (!m_AreBlocksInitialized) {
+			if (Application.isPlaying && !m_AreBlocksInitialized) {
 				Initialize();
 			}
 		}
@@ -271,7 +245,8 @@ namespace CocodriloDog.MotionKit {
 
 			m_AreBlocksInitialized = true;
 
-			// TODO: Must review this logic since the change to support SetInitialValuesOnStart in each block
+			// TODO: Must review this logic again due to the change that supports SetInitialValuesOnStart in each block
+			// instead of it being a property of the MotionKitComponent that only applies to the DefaultBlock.
 
 			// Initialize in reverse for the default block to be the last one. This handles an edge case where:
 			// - The default block has an owner and reuse id
@@ -284,8 +259,7 @@ namespace CocodriloDog.MotionKit {
 
 			// This must be done after initializing the blocks
 			for (int i = 0; i < Blocks.Count; i++) {
-				if (Blocks[i] != null && 
-					(Blocks[i].SetInitialValuesOnStart || (i == 0 && SetInitialValuesOnStart))) { // Supporting SetInitialValuesOnStart for the first item for legacy reasons
+				if (Blocks[i] != null && Blocks[i].SetInitialValuesOnStart) {
 					MotionKitBlockUtility.SetInitialValues(Blocks[i]);
 					// Lock recursive to make sure that no child motion will be reset OnStart
 					//

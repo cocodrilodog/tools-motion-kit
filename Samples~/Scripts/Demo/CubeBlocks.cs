@@ -1,10 +1,11 @@
 namespace CocodriloDog.MotionKit.Examples {
+
 	using System;
 	using System.Collections;
 	using System.Collections.Generic;
 	using UnityEngine;
 
-	public class Cube : MonoBehaviour {
+	public class CubeBlocks : MonoBehaviour {
 
 
 		#region Public Methods
@@ -16,12 +17,14 @@ namespace CocodriloDog.MotionKit.Examples {
 
 		#endregion
 
+
 		#region Private Fields - Serialized
 
 		[SerializeField]
 		private MotionKitComponent m_MotionKitComponent;
 
 		#endregion
+
 
 		#region Private Fields - Non Serialized
 

@@ -257,8 +257,6 @@ MonoBehaviour:
   m_SelectedCompositePath: 
   m_Blocks:
   - rid: 6990145245326082053
-  m_PlayOnStart: 1
-  m_SetInitialValuesOnStart: 0
   references:
     version: 2
     RefIds:
@@ -291,6 +289,8 @@ MonoBehaviour:
             m_Calls: []
         m_CallbackSelection: 0
         m_EditOwnerAndReuseID: 0
+        m_PlayOnStart: 1
+        m_SetInitialValuesOnStart: 0
         m_Object: {fileID: 276286996}
         m_SetterString: MotionBlocks_Example/SetVector2
         m_GetterString: MotionBlocks_Example/GetVector2
@@ -335,8 +335,6 @@ MonoBehaviour:
   m_SelectedCompositePath: 
   m_Blocks:
   - rid: 6990145245326082051
-  m_PlayOnStart: 1
-  m_SetInitialValuesOnStart: 0
   references:
     version: 2
     RefIds:
@@ -382,6 +380,8 @@ MonoBehaviour:
             m_Calls: []
         m_CallbackSelection: 2
         m_EditOwnerAndReuseID: 0
+        m_PlayOnStart: 1
+        m_SetInitialValuesOnStart: 0
         m_Object: {fileID: 773244398}
         m_SetterString: MotionBlocks_Example/SetVector3
         m_GetterString: MotionBlocks_Example/GetVector3
@@ -524,8 +524,6 @@ MonoBehaviour:
   m_SelectedCompositePath: 
   m_Blocks:
   - rid: 6990145245326082049
-  m_PlayOnStart: 1
-  m_SetInitialValuesOnStart: 0
   references:
     version: 2
     RefIds:
@@ -610,6 +608,8 @@ MonoBehaviour:
               m_CallState: 2
         m_CallbackSelection: 3
         m_EditOwnerAndReuseID: 0
+        m_PlayOnStart: 1
+        m_SetInitialValuesOnStart: 0
         m_Object: {fileID: 807932833}
         m_SetterString: MotionBlocks_Example/SetFloat
         m_GetterString: MotionBlocks_Example/GetFloat
@@ -749,11 +749,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0fb3639200fb4be4996952cebd241fe2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_SelectedCompositePath: 
+  m_SelectedCompositePath: m_Blocks.Array.data[0]
   m_Blocks:
   - rid: 6990145245326082055
-  m_PlayOnStart: 1
-  m_SetInitialValuesOnStart: 0
   references:
     version: 2
     RefIds:
@@ -799,6 +797,8 @@ MonoBehaviour:
             m_Calls: []
         m_CallbackSelection: 0
         m_EditOwnerAndReuseID: 0
+        m_PlayOnStart: 1
+        m_SetInitialValuesOnStart: 0
         m_Object: {fileID: 1277502462}
         m_SetterString: MotionBlocks_Example/SetColor
         m_GetterString: MotionBlocks_Example/GetColor
@@ -1078,8 +1078,6 @@ MonoBehaviour:
   m_SelectedCompositePath: 
   m_Blocks:
   - rid: 6990145245326082057
-  m_PlayOnStart: 0
-  m_SetInitialValuesOnStart: 0
   references:
     version: 2
     RefIds:
@@ -1112,6 +1110,8 @@ MonoBehaviour:
             m_Calls: []
         m_CallbackSelection: 0
         m_EditOwnerAndReuseID: 0
+        m_PlayOnStart: 0
+        m_SetInitialValuesOnStart: 0
         m_Object: {fileID: 2103216001}
         m_SetterString: MotionBlocks_Example/SetColor
         m_GetterString: MotionBlocks_Example/GetColor

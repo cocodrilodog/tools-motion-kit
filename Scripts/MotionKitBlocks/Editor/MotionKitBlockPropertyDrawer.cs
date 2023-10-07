@@ -231,13 +231,15 @@
 				playOnStartProperty.boolValue = EditorGUI.Toggle(playOnStartRect, playOnStartProperty.boolValue);
 				DrawTooltip(playOnStartRect, "Play on start");
 
-				// Draw the SetInitialValuesOnStart toggle
-				var setInitialValuesOnStartRect = propertyRect;
-				setInitialValuesOnStartRect.xMin += propertyRect.width - 20;
-				setInitialValuesOnStartRect.width = 10;
-				var setInitialValuesOnStartProperty = Property.FindPropertyRelative("m_SetInitialValuesOnStart");
-				setInitialValuesOnStartProperty.boolValue = EditorGUI.Toggle(setInitialValuesOnStartRect, setInitialValuesOnStartProperty.boolValue);
-				DrawTooltip(setInitialValuesOnStartRect, "Set initial values on start");
+				// Draw the SetInitialValuesOnStart toggle for non-timer blocks
+				if (!(Property.managedReferenceValue is TimerBlock)) {
+					var setInitialValuesOnStartRect = propertyRect;
+					setInitialValuesOnStartRect.xMin += propertyRect.width - 20;
+					setInitialValuesOnStartRect.width = 10;
+					var setInitialValuesOnStartProperty = Property.FindPropertyRelative("m_SetInitialValuesOnStart");
+					setInitialValuesOnStartProperty.boolValue = EditorGUI.Toggle(setInitialValuesOnStartRect, setInitialValuesOnStartProperty.boolValue);
+					DrawTooltip(setInitialValuesOnStartRect, "Set initial values on start");
+				}
 
 				void DrawTooltip(Rect toggleRect, string text) {
 					if (toggleRect.Contains(Event.current.mousePosition)) {

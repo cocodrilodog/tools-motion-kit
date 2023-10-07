@@ -17,7 +17,7 @@
 		/// <summary>
 		/// The magnitude of the shake.
 		/// </summary>
-		public AnimatableValue Magnitude => m_Magnitude;
+		public AnimatableValue Magnitude => m_Magnitude = m_Magnitude ?? new AnimatableValue();
 
 		/// <summary>
 		/// How fast will the shake look?

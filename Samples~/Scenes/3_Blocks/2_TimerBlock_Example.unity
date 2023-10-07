@@ -245,8 +245,6 @@ MonoBehaviour:
   m_SelectedCompositePath: 
   m_Blocks:
   - rid: 6990145245326082099
-  m_PlayOnStart: 1
-  m_SetInitialValuesOnStart: 0
   references:
     version: 2
     RefIds:
@@ -291,6 +289,8 @@ MonoBehaviour:
               m_CallState: 2
         m_CallbackSelection: 3
         m_EditOwnerAndReuseID: 0
+        m_PlayOnStart: 1
+        m_SetInitialValuesOnStart: 0
 --- !u!114 &712994216
 MonoBehaviour:
   m_ObjectHideFlags: 0

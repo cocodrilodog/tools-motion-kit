@@ -173,8 +173,6 @@ MonoBehaviour:
   m_SelectedCompositePath: 
   m_Blocks:
   - rid: 6990145245326082068
-  m_PlayOnStart: 1
-  m_SetInitialValuesOnStart: 0
   references:
     version: 2
     RefIds:
@@ -207,6 +205,8 @@ MonoBehaviour:
             m_Calls: []
         m_CallbackSelection: 0
         m_EditOwnerAndReuseID: 0
+        m_PlayOnStart: 1
+        m_SetInitialValuesOnStart: 0
         m_ParallelItems:
         - rid: 6990145245326082069
         - rid: 6990145245326082070
@@ -239,6 +239,8 @@ MonoBehaviour:
             m_Calls: []
         m_CallbackSelection: 0
         m_EditOwnerAndReuseID: 0
+        m_PlayOnStart: 0
+        m_SetInitialValuesOnStart: 0
         m_SequenceItems:
         - rid: 6990145245326082072
         - rid: 6990145245326082073
@@ -270,6 +272,8 @@ MonoBehaviour:
             m_Calls: []
         m_CallbackSelection: 0
         m_EditOwnerAndReuseID: 0
+        m_PlayOnStart: 0
+        m_SetInitialValuesOnStart: 0
         m_SequenceItems:
         - rid: 6990145245326082074
         - rid: 6990145245326082075
@@ -301,6 +305,8 @@ MonoBehaviour:
             m_Calls: []
         m_CallbackSelection: 0
         m_EditOwnerAndReuseID: 0
+        m_PlayOnStart: 0
+        m_SetInitialValuesOnStart: 0
         m_SequenceItems:
         - rid: 6990145245326082076
         - rid: 6990145245326082077
@@ -332,6 +338,8 @@ MonoBehaviour:
             m_Calls: []
         m_CallbackSelection: 0
         m_EditOwnerAndReuseID: 0
+        m_PlayOnStart: 0
+        m_SetInitialValuesOnStart: 0
     - rid: 6990145245326082073
       type: {class: Motion3DBlock, ns: CocodriloDog.MotionKit, asm: CocodriloDog.MotionKit}
       data:
@@ -359,6 +367,8 @@ MonoBehaviour:
             m_Calls: []
         m_CallbackSelection: 0
         m_EditOwnerAndReuseID: 0
+        m_PlayOnStart: 0
+        m_SetInitialValuesOnStart: 0
         m_Object: {fileID: 919830315}
         m_SetterString: Transform/localPosition
         m_GetterString: Transform/localPosition
@@ -394,6 +404,8 @@ MonoBehaviour:
             m_Calls: []
         m_CallbackSelection: 0
         m_EditOwnerAndReuseID: 0
+        m_PlayOnStart: 0
+        m_SetInitialValuesOnStart: 0
     - rid: 6990145245326082075
       type: {class: Motion3DBlock, ns: CocodriloDog.MotionKit, asm: CocodriloDog.MotionKit}
       data:
@@ -421,6 +433,8 @@ MonoBehaviour:
             m_Calls: []
         m_CallbackSelection: 0
         m_EditOwnerAndReuseID: 0
+        m_PlayOnStart: 0
+        m_SetInitialValuesOnStart: 0
         m_Object: {fileID: 1567344981}
         m_SetterString: Transform/localPosition
         m_GetterString: Transform/localPosition
@@ -456,6 +470,8 @@ MonoBehaviour:
             m_Calls: []
         m_CallbackSelection: 0
         m_EditOwnerAndReuseID: 0
+        m_PlayOnStart: 0
+        m_SetInitialValuesOnStart: 0
     - rid: 6990145245326082077
       type: {class: Motion3DBlock, ns: CocodriloDog.MotionKit, asm: CocodriloDog.MotionKit}
       data:
@@ -483,6 +499,8 @@ MonoBehaviour:
             m_Calls: []
         m_CallbackSelection: 0
         m_EditOwnerAndReuseID: 0
+        m_PlayOnStart: 0
+        m_SetInitialValuesOnStart: 0
         m_Object: {fileID: 1113488306}
         m_SetterString: Transform/localPosition
         m_GetterString: Transform/localPosition

@@ -25,7 +25,7 @@
 		/// The maximum value that will be added on top of the current value of the property
 		/// when the pulsation reachs its peak.
 		/// </summary>
-		public AnimatableValue Offset => m_Offset;
+		public AnimatableValue Offset => m_Offset = m_Offset ?? new AnimatableValue();
 
 		#endregion
 
