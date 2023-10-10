@@ -2,7 +2,11 @@
 
 MotionKit is a tool that animates anything. It is very similar to [DOTween](http://dotween.demigiant.com/getstarted.php), but with inspector super powers and a few tweaks that makes it simpler to use and learn.
 
-To install it in your Unity project, open the Package Manager and click the plus button, "Add package from URL..." and the use this url: https://github.com/cocodrilodog/tools-motion-kit
+MotionKit depends on the Cocodrilo Dog Core tool. You need to install this dependency first, via the Unity Package Manager.
+
+To install it in your Unity project, open the Package Manager and click the plus button, "Add package from URL..." and the use these URLs:
+- Cocodrilo Dog Core: https://github.com/cocodrilodog/tools-core
+- MotionKit: https://github.com/cocodrilodog/tools-motion-kit
 
 <img src="https://github.com/cocodrilodog/tools-motion-kit/assets/8107813/6408c284-330b-4abb-a075-5f5452841775" height="150">
 
