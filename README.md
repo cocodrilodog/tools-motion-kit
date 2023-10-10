@@ -2,6 +2,8 @@
 
 MotionKit is a tool that animates anything. It is very similar to [DOTween](http://dotween.demigiant.com/getstarted.php), but with inspector super powers and a few tweaks that makes it simpler to use and learn.
 
+Discord: https://discord.gg/sZHQPsq
+
 ## Table of Contents
 
 - [1 Introduction](#1-introduction)
