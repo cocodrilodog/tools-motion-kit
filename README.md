@@ -2,7 +2,13 @@
 
 MotionKit is a tool that animates anything. It is very similar to [DOTween](http://dotween.demigiant.com/getstarted.php), but with inspector super powers and a few tweaks that makes it simpler to use and learn.
 
-Discord: https://discord.gg/sZHQPsq
+To install it in your Unity project, open the Package Manager and click the plus button, "Add package from URL..." and the use this url: https://github.com/cocodrilodog/tools-motion-kit
+
+<img src="https://github.com/cocodrilodog/tools-motion-kit/assets/8107813/6408c284-330b-4abb-a075-5f5452841775" height="150">
+
+<img src="https://github.com/cocodrilodog/tools-motion-kit/assets/8107813/57a94a49-0474-4744-88d7-f0835c7a6455" height="150">
+
+Let's chat in Discord: https://discord.gg/sZHQPsq
 
 ## Table of Contents
 
