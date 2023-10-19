@@ -14,6 +14,9 @@ To install both in your Unity project, open the Package Manager and click the pl
 
 Let's chat in Discord: https://discord.gg/sZHQPsq
 
+**MotionKit overview**
+[![IMAGE ALT TEXT HERE](https://img.youtube.com/vi/1knaaxQQs3I/0.jpg)](https://www.youtube.com/watch?v=1knaaxQQs3I)
+
 ## Table of Contents
 
 - [1 Introduction](#1-introduction)
