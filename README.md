@@ -162,9 +162,9 @@ By using different functions, the animations will look more interesting and will
 
 The class `MotionKitEasing` has many built-in functions that you can visualize in the [Robert Penner's website](http://robertpenner.com/easing/), but there are also some other options:
 - `MotionKitCurve` (`AnimationCurve`): Uses a Unity `AnimationCurve` that you can customize in the inspector.
-- `Blink`: Changes between the initial and final value repeatedly like blinking. For example, black, whit, black, white, etc.
-- `Pulse`: Increments a value like a tick in an electrocardiogram.
-- `Shake`: Make things shake as you would expect on video games. This is good for a camera shake, for example.
+- `Blink`: Changes between the initial and final value repeatedly like blinking. For example, black, white, black, white, etc.
+- `Pulse`: Increments a value like in a Bell Curve. Why didn't I named it "Bell Curve"? Only God knows why...
+- `Shake`: Makes things shake as you would expect on video games. This is good for a camera shake, for example.
 
 This special functions are called `ParameterizedEasing` and more documentation on this will come later.
 
@@ -180,7 +180,53 @@ And if you choose from some of the `ParameterizedEasing` functions (`AnimationCu
 
 
 ## Callbacks
+### C#
+`Motion` objects have the following callbacks:
 
+Callback | Triggered
+----------- | ---------------- |
+`OnStart` | Just before the `Motion` starts.
+`OnUpdate` | On every update, while the `Motion` is playing.
+`OnInterrupt` | When the `Motion` is stopped or played before it has completed.
+`OnComplete` | When the `Motion` completes tha animation.
+
+An example of how to set an `OnComplete` callback, lambda style:
+```
+MotionKit.GetMotion(m_Ball, "Position", p => m_Ball.localPosition = p)
+	.Play(new Vector3(0, 0, 0), new Vector3(3, 0, 0), 2)
+	.SetOnComplete(() => Debug.Log("Motion Completed!!!"));
+```
+Or this one with a function:
+```
+MotionKit.GetMotion(m_Ball, "Position", p => m_Ball.localPosition = p)
+	.Play(new Vector3(0, 0, 0), new Vector3(3, 0, 0), 2)
+	.SetOnComplete(OnComplete);
+
+void OnComplete() {
+	Debug.Log("Motion Completed!!!");
+}
+```
+To set the other callbacks you can use these methods: `SetOnStart()`, `SetOnUpdate()`, and `SetOnInterrupt()`.
+
+The callbacks can also receive the `Motion` object as a parameter, for example:
+```
+MotionKit.GetMotion(m_Ball, "Position", p => m_Ball.localPosition = p)
+	.Play(new Vector3(0, 0, 0), new Vector3(3, 0, 0), 2)
+	.SetOnUpdate(m => Debug.Log($"Motion progress: {m.Progress}"));
+```
+Or this one with a function:
+```
+MotionKit.GetMotion(m_Ball, "Position", p => m_Ball.localPosition = p)
+	.Play(new Vector3(0, 0, 0), new Vector3(3, 0, 0), 2)
+	.SetOnUpdate(OnUpdate);
+
+void OnUpdate(Motion3D motion3D) {
+	Debug.Log($"Motion progress: {motion3D.Progress}");
+}
+```
+This parameter comes handy in case you want to read or change any of the `Motion`'s properties while its playing. 
+
+### Inspector
 ## Control the Playback: The `Progress` Property
 
 ## All the Playback Objects: `Motion`, `Timer`, `Sequence`, `Parallel`
