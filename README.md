@@ -14,11 +14,12 @@ To install both in your Unity project, open the Package Manager and click the pl
 
 Let's chat in Discord: https://discord.gg/sZHQPsq
 
-**MotionKit overview (YouTube)**
+**MotionKit overview ([YouTube](http://www.youtube.com/watch?v=1knaaxQQs3I))**
 
 <a href="http://www.youtube.com/watch?feature=player_embedded&v=1knaaxQQs3I
-" target="_blank"><img src="http://img.youtube.com/vi/1knaaxQQs3I/0.jpg" 
+" target="_blank"><img src="https://github.com/cocodrilodog/tools-motion-kit/assets/8107813/baeb690d-5465-443e-b246-d1ea51f39611" 
 alt="IMAGE ALT TEXT HERE" width="300" border="10" /></a>
+
 
 ## Table of Contents
 
