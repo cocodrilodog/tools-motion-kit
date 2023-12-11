@@ -227,6 +227,11 @@ void OnUpdate(Motion3D motion3D) {
 This parameter comes handy in case you want to read or change any of the `Motion`'s properties while its playing. 
 
 ### Inspector
+In the `MotionKitComponent`, the callbacks can be assigned as Unity events in the bottom part of the inspector:
+<img src="https://github.com/cocodrilodog/tools-motion-kit/assets/8107813/d96861bd-d91d-4a64-83a3-7c6d9dddf229" width="450">
+
+Note that the callbacks that receive the `Motion` object as a aprameter are not available from the inspector.
+
 ## Control the Playback: The `Progress` Property
 
 ## All the Playback Objects: `Motion`, `Timer`, `Sequence`, `Parallel`
