@@ -2,6 +2,13 @@
 
 MotionKit is a tool that animates anything. It is very similar to [DOTween](http://dotween.demigiant.com/getstarted.php), but with inspector super powers and a few tweaks that makes it simpler to use and learn.
 
+([Watch on YouTube](http://www.youtube.com/watch?v=1knaaxQQs3I))
+
+<a href="http://www.youtube.com/watch?feature=player_embedded&v=1knaaxQQs3I
+" target="_blank"><img src="https://github.com/cocodrilodog/tools-motion-kit/assets/8107813/baeb690d-5465-443e-b246-d1ea51f39611" 
+alt="IMAGE ALT TEXT HERE" width="300" border="10" /></a>
+
+## How to Install
 MotionKit depends on the Cocodrilo Dog Core tool. You need to install this dependency first, via the Unity Package Manager.
 
 To install both in your Unity project, open the Package Manager and click the plus button, "Add package from URL..." and the use these URLs:
@@ -14,12 +21,35 @@ To install both in your Unity project, open the Package Manager and click the pl
 
 Let's chat in Discord: https://discord.gg/sZHQPsq
 
-**MotionKit overview ([YouTube](http://www.youtube.com/watch?v=1knaaxQQs3I))**
+## Quick Start
+Move a `m_Ball` (`Transform`) from -6, 0, 0 to -6, 3, 0 during 2 seconds. Register the motion with owner `m_Ball` and id `"Position"`
+```
+MotionKit.GetMotion(m_Ball, "Position", p => m_Ball.transform.localPosition = p)
+	.Play(new Vector3(-6, 0, 0), new Vector3(-6, 3, 0), 2);
+```
+Fade in a `m_CanvasRenderer`: Animate `alpha` from 0 to 1 during 2 seconds. Register the motion with owner `m_CanvasRenderer` and id `"Alpha"`
+```
+MotionKit.GetMotion(m_CanvasRenderer, "Alpha", a => m_CanvasRenderer.SetAlpha(a))
+	.Play(0, 1, 2);
+```
+Animate the color of the `m_Image` from black to red during 2 seconds. Register the motion with owner `m_Image` and id `"Color"`
+```
+MotionKit.GetMotion(m_Image, "Color", c => m_Image.color = c)
+	.Play(Color.black, Color.red, 2);
+```
+## Lifecycle: `owner` and `reuseID`
 
-<a href="http://www.youtube.com/watch?feature=player_embedded&v=1knaaxQQs3I
-" target="_blank"><img src="https://github.com/cocodrilodog/tools-motion-kit/assets/8107813/baeb690d-5465-443e-b246-d1ea51f39611" 
-alt="IMAGE ALT TEXT HERE" width="300" border="10" /></a>
+## Setter: `Float`, `Vector3`, `Color`
 
+## Easing
+
+## Callbacks
+
+## Control the Playback: The `Progress` Property
+
+## All Playback Objects: `Motion`, `Timer`, `Sequence`, `Parallel`
+
+## Known Issues
 
 ## Table of Contents
 
