@@ -2,7 +2,7 @@
 
 MotionKit is a tool that animates anything. It is very similar to [DOTween](http://dotween.demigiant.com/getstarted.php), but with inspector super powers and a few tweaks that makes it simpler to use and learn.
 
-([Watch on YouTube](http://www.youtube.com/watch?v=1knaaxQQs3I))
+([Watch overview on YouTube](http://www.youtube.com/watch?v=1knaaxQQs3I))
 
 <a href="http://www.youtube.com/watch?feature=player_embedded&v=1knaaxQQs3I
 " target="_blank"><img src="https://github.com/cocodrilodog/tools-motion-kit/assets/8107813/baeb690d-5465-443e-b246-d1ea51f39611" 
@@ -81,8 +81,14 @@ MotionKit.GetMotion(m_Ball, "Position", p => m_Ball.localPosition = p)
 
 // Second motion (0.5 before the previous one completes)
 MotionKit.GetMotion(m_Ball, "Position", p => m_Ball.localPosition = p)
-	.Play(m_Ball.localPosition, new Vector3(0, 5, 0), 2); // Move from current position to another one
+	.Play(m_Ball.localPosition, new Vector3(0, 5, 0), 3); // New initial position, final position, and duration are set
 ```
+### Inspector
+To set the `owner` and `reuseID` in a `MotionKitBlock` (the inspector version), click `Edit Owner and/or Reuse ID` and then assign the desired values:
+
+<img src="https://github.com/cocodrilodog/tools-motion-kit/assets/8107813/8f9b960e-0fe3-49db-a15b-c76eb3fc6c9b" height="115">
+<img src="https://github.com/cocodrilodog/tools-motion-kit/assets/8107813/ee8846b6-df1a-4f93-8476-fb07d10484fb" height="115">
+
 ## Setter: `Float`, `Vector3`, `Color`
 
 ## Easing
