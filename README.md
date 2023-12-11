@@ -59,13 +59,14 @@ Click `Edit` and assign the relevant properties:
 
 To replicate the examples of the `m_CanvasRenderer` and `m_Image` code above via inspector, it is the same process, but you create `MotionFloatBlock` to animate the `m_CanvasRenderer.alpha` property, and `MotionColorBlock` to animate the `m_Image.color`.
 
-## Lifecycle: `owner` and `reuseID`
+## Lifecycle: `owner`, `reuseID`, and Clearance
 
 Example of owners and reuse IDs:
 
 <img src="https://github.com/cocodrilodog/tools-motion-kit/assets/8107813/07042712-9513-4530-ad7a-dba0d3309ac2" width="600">
 
 ### C#
+#### `owner` and `reuseID`
 In the code below, the `owner` is the `m_Ball` and the `reuseID` is `"Position"`. The idea of these two parameters is to store the `Motion` objects internally in an ordered way so that they are reusable. For example, in order to move the ball many times you may not want to create a new `Motion3D` object each time, so if you write the code below in different places of your script with different positions, you can rest asured that the same `Motion` object will be used for all animations as long as you use the same `owner` and `reuseID`.
 ```
 MotionKit.GetMotion(m_Ball, "Position", p => m_Ball.localPosition = p)
@@ -83,11 +84,26 @@ MotionKit.GetMotion(m_Ball, "Position", p => m_Ball.localPosition = p)
 MotionKit.GetMotion(m_Ball, "Position", p => m_Ball.localPosition = p)
 	.Play(m_Ball.localPosition, new Vector3(0, 5, 0), 3); // New initial position, final position, and duration are set
 ```
+#### Clearance
+Once you are done with the motions, you can get rid of them like this:
+```
+private void OnDestroy() {
+	// Dispose the motions that were registered
+	MotionKit.ClearPlaybacks(m_Ball);
+	MotionKit.ClearPlaybacks(m_CanvasRenderer);
+	MotionKit.ClearPlaybacks(m_BallColor);
+}
+```
+The code above will dispose all the motions registered with owners: `m_Ball`, `m_CanvasRenderer`, and `m_BallColor`.
 ### Inspector
+#### `owner` and `reuseID`
 To set the `owner` and `reuseID` in a `MotionKitBlock` (the inspector version), click `Edit Owner and/or Reuse ID` and then assign the desired values:
 
 <img src="https://github.com/cocodrilodog/tools-motion-kit/assets/8107813/8f9b960e-0fe3-49db-a15b-c76eb3fc6c9b" height="115">
 <img src="https://github.com/cocodrilodog/tools-motion-kit/assets/8107813/ee8846b6-df1a-4f93-8476-fb07d10484fb" height="115">
+
+#### Clearance
+In the `MotionKitComponent` the clearance is carried out automatically when the component is destroyed.
 
 ## Setter: `Float`, `Vector3`, `Color`
 
