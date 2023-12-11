@@ -22,10 +22,11 @@ To install both in your Unity project, open the Package Manager and click the pl
 Let's chat in Discord: https://discord.gg/sZHQPsq
 
 ## Quick Start
-Move a `m_Ball` (`Transform`) from -6, 0, 0 to -6, 3, 0 during 2 seconds. Register the motion with owner `m_Ball` and id `"Position"`
+### C#
+Move a `m_Ball` (`Transform`) from 0, 0, 0 to 0, 3, 0 during 2 seconds. Register the motion with owner `m_Ball` and id `"Position"`
 ```
 MotionKit.GetMotion(m_Ball, "Position", p => m_Ball.transform.localPosition = p)
-	.Play(new Vector3(-6, 0, 0), new Vector3(-6, 3, 0), 2);
+	.Play(new Vector3(0, 0, 0), new Vector3(0, 3, 0), 2);
 ```
 Fade in a `m_CanvasRenderer`: Animate `alpha` from 0 to 1 during 2 seconds. Register the motion with owner `m_CanvasRenderer` and id `"Alpha"`
 ```
@@ -37,6 +38,25 @@ Animate the color of the `m_Image` from black to red during 2 seconds. Register 
 MotionKit.GetMotion(m_Image, "Color", c => m_Image.color = c)
 	.Play(Color.black, Color.red, 2);
 ```
+### Inspector
+To create the same example as the `m_Ball` code above via inspector, Add a `MotionKitComponent`:
+
+<img src="https://github.com/cocodrilodog/tools-motion-kit/assets/8107813/ec29de39-63d8-431c-8641-e7d8d4627065" height="150">
+
+Create a `Motion3DBlock`:
+
+<img src="https://github.com/cocodrilodog/tools-motion-kit/assets/8107813/80321da6-9347-4a89-84e7-1db3bb5e2ce2" height="150">
+
+Tick `Play on start` or play later with `m_MotionKitComponent.Play("Motion3D")`. `"Motion3D"` is a name and can be changed later:
+
+<img src="https://github.com/cocodrilodog/tools-motion-kit/assets/8107813/79888941-bbc2-48b8-a5b2-ab77f89e2914" height="150">
+
+Click `Edit` and assign the relevant properties:
+
+<img src="https://github.com/cocodrilodog/tools-motion-kit/assets/8107813/c080c21a-644b-495d-a7de-2ce0eba601ca" width="400">
+
+To replicate the examples of the `m_CanvasRenderer` and `m_Image` code above, it is the same process, but you create `MotionFloatBlock` and `MotionColorBlock`, instead.
+
 ## Lifecycle: `owner` and `reuseID`
 
 ## Setter: `Float`, `Vector3`, `Color`
