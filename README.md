@@ -9,7 +9,7 @@ MotionKit is a tool that animates anything. It is very similar to [DOTween](http
 alt="IMAGE ALT TEXT HERE" width="300" border="10" /></a>
 
 ## How to Install
-MotionKit depends on the Cocodrilo Dog Core tool. You need to install this dependency first, via the Unity Package Manager.
+`MotionKit` depends on the Cocodrilo Dog `Core` tool. You need to install this dependency first, via the Unity Package Manager.
 
 To install both in your Unity project, open the Package Manager and click the plus button, "Add package from URL..." and the use these URLs:
 - Cocodrilo Dog Core: https://github.com/cocodrilodog/tools-core
@@ -25,7 +25,7 @@ Let's chat in Discord: https://discord.gg/sZHQPsq
 ### C#
 Move a `m_Ball` (`Transform`) from 0, 0, 0 to 3, 0, 0 during 2 seconds. Register the motion with owner `m_Ball` and id `"Position"`
 ```
-MotionKit.GetMotion(m_Ball, "Position", p => m_Ball.transform.localPosition = p)
+MotionKit.GetMotion(m_Ball, "Position", p => m_Ball.localPosition = p)
 	.Play(new Vector3(0, 0, 0), new Vector3(3, 0, 0), 2);
 ```
 Fade in a `m_CanvasRenderer`: Animate `alpha` from 0 to 1 during 2 seconds. Register the motion with owner `m_CanvasRenderer` and id `"Alpha"`
@@ -43,15 +43,15 @@ The group of classes that handles `MotionKit` objects via inspector are collecti
 
 To create the same example as the `m_Ball` code above via inspector, add a `MotionKitComponent`:
 
-<img src="https://github.com/cocodrilodog/tools-motion-kit/assets/8107813/ec29de39-63d8-431c-8641-e7d8d4627065" height="150">
+<img src="https://github.com/cocodrilodog/tools-motion-kit/assets/8107813/ec29de39-63d8-431c-8641-e7d8d4627065" height="120">
 
 Create a `Motion3DBlock`:
 
-<img src="https://github.com/cocodrilodog/tools-motion-kit/assets/8107813/3da577ab-569a-432e-9268-681f3cdb9861" height="150">
+<img src="https://github.com/cocodrilodog/tools-motion-kit/assets/8107813/3da577ab-569a-432e-9268-681f3cdb9861" width="400">
 
-Tick `Play on start` or play later with `m_MotionKitComponent.Play("Motion3D")`. `"Motion3D"` is a name and can be changed later:
+Tick `Play on start` or play later with `MotionKitComponent.Play()`:
 
-<img src="https://github.com/cocodrilodog/tools-motion-kit/assets/8107813/79888941-bbc2-48b8-a5b2-ab77f89e2914" height="150">
+<img src="https://github.com/cocodrilodog/tools-motion-kit/assets/8107813/79888941-bbc2-48b8-a5b2-ab77f89e2914" width="400">
 
 Click `Edit` and assign the relevant properties:
 
@@ -61,6 +61,28 @@ To replicate the examples of the `m_CanvasRenderer` and `m_Image` code above via
 
 ## Lifecycle: `owner` and `reuseID`
 
+Example of owners and reuse IDs:
+
+<img src="https://github.com/cocodrilodog/tools-motion-kit/assets/8107813/07042712-9513-4530-ad7a-dba0d3309ac2" width="600">
+
+### C#
+In the code below, the `owner` is the `m_Ball` and the `reuseID` is `"Position"`. The idea of these two parameters is to store the `Motion` objects internally in an ordered way so that they are reusable. For example, in order to move the ball many times you may not want to create a new `Motion3D` object each time, so if you write the code below in different places of your script with different positions, you can rest asured that the same `Motion` object will be used for all animations as long as you use the same `owner` and `reuseID`.
+```
+MotionKit.GetMotion(m_Ball, "Position", p => m_Ball.localPosition = p)
+	.Play(new Vector3(0, 0, 0), new Vector3(3, 0, 0), 2);
+```
+This has the very convenient side effect that a reused motion will "interrupt" itself if needed. For example, in the code below, the second motion will interrupt the first one because it is starting before the first one completes. This happens because the animation is being carried out by the same `Motion` object, so it just stops and plays with the new settings. 
+```
+// First motion
+MotionKit.GetMotion(m_Ball, "Position", p => m_Ball.localPosition = p)
+	.Play(new Vector3(0, 0, 0), new Vector3(3, 0, 0), 2);
+
+// wait for 1.5 seconds
+
+// Second motion (0.5 before the previous one completes)
+MotionKit.GetMotion(m_Ball, "Position", p => m_Ball.localPosition = p)
+	.Play(m_Ball.localPosition, new Vector3(0, 5, 0), 2); // Move from current position to another one
+```
 ## Setter: `Float`, `Vector3`, `Color`
 
 ## Easing
