@@ -236,7 +236,7 @@ Note that the callbacks that receive the `Motion` object as a aprameter are not 
 
 ## Control the Playback: The `Progress` Property
 ### Only for C#
-`Motion` objects can be controlled via their `Progress` property. It is a number that goes from 0 to 1 and applies the property change by interpolating between the `initialValue` and the `finalValue`. One example of this being is if you want to create a slider that changes a property of an object, from one value to the other:
+`Motion` objects can be controlled via their `Progress` property. It is a number that goes from 0 to 1 and changes the property by interpolating between the `initialValue` and the `finalValue`. One example is if you want to create a slider that changes a property of an object and use a `Motion`:
 
 ```
 Motion3D m_Motion3D;
@@ -244,6 +244,7 @@ Motion3D m_Motion3D;
 void Start() {
 	// Create the motion but don't play it. Note that SetValuesAndDuration is used instead of Play()
 	m_Motion3D = MotionKit.GetMotion(m_Ball, "Position", p => m_Ball.localPosition = p)
+		.SetEasing(MotionKitEasing.BackOut)
 		.SetValuesAndDuration(new Vector3(0, 0, 0), new Vector3(3, 0, 0), 2);
 }
 
