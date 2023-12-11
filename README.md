@@ -61,9 +61,11 @@ To replicate the examples of the `m_CanvasRenderer` and `m_Image` code above via
 
 The idea of the `owner` and `reuseID` is to store the `Motion` objects internally in an ordered way so that they are reusable when it makes sense, and then disposed when not needed anymore. 
 
+Instead of using global IDs, I decided to associate the `Motion`s with "owners", because it makes more sense from a development standpoint. For example, you may want to define the `reuseID` of multiple `Motion`s that affect the position of objects as `"Position"`, but each one should be associated with the specific `owner` that it intends to move, so that it is no confused with any other. This is a scalable solution to manage the reusability and disposal of the `Motion` objects.
+
 Example of owners and reuse IDs:
 
-<img src="https://github.com/cocodrilodog/tools-motion-kit/assets/8107813/07042712-9513-4530-ad7a-dba0d3309ac2" width="600">
+<img src="https://github.com/cocodrilodog/tools-motion-kit/assets/8107813/d3c5c867-31e2-489d-92fd-b98febc89007" width="600">
 
 ### C#
 #### `owner` and `reuseID`
