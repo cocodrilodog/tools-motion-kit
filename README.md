@@ -23,17 +23,17 @@ Let's chat in Discord: https://discord.gg/sZHQPsq
 
 ## Quick Start
 ### C#
-Move a `m_Ball` (`Transform`) from 0, 0, 0 to 3, 0, 0 during 2 seconds. Register the motion with owner `m_Ball` and id `"Position"`
+Move a `m_Ball` (`Transform`) from 0, 0, 0 to 3, 0, 0 during 2 seconds. Register the motion with owner `m_Ball` and reuse id `"Position"`
 ```
 MotionKit.GetMotion(m_Ball, "Position", p => m_Ball.localPosition = p)
 	.Play(new Vector3(0, 0, 0), new Vector3(3, 0, 0), 2);
 ```
-Fade in a `m_CanvasRenderer`: Animate `alpha` from 0 to 1 during 2 seconds. Register the motion with owner `m_CanvasRenderer` and id `"Alpha"`
+Fade in a `m_CanvasRenderer`: Animate `alpha` from 0 to 1 during 2 seconds. Register the motion with owner `m_CanvasRenderer` and reuse id `"Alpha"`
 ```
 MotionKit.GetMotion(m_CanvasRenderer, "Alpha", a => m_CanvasRenderer.SetAlpha(a))
 	.Play(0, 1, 2);
 ```
-Animate the color of the `m_Image` from black to red during 2 seconds. Register the motion with owner `m_Image` and id `"Color"`
+Animate the color of the `m_Image` from black to red during 2 seconds. Register the motion with owner `m_Image` and reuse id `"Color"`
 ```
 MotionKit.GetMotion(m_Image, "Color", c => m_Image.color = c)
 	.Play(Color.black, Color.red, 2);
@@ -61,13 +61,15 @@ To replicate the examples of the `m_CanvasRenderer` and `m_Image` code above via
 
 ## Lifecycle: `owner`, `reuseID`, and Clearance
 
+The idea of the `owner` and `reuseID` is to store the `Motion` objects internally in an ordered way so that they are reusable and then disposed when not needed anymore. 
+
 Example of owners and reuse IDs:
 
 <img src="https://github.com/cocodrilodog/tools-motion-kit/assets/8107813/07042712-9513-4530-ad7a-dba0d3309ac2" width="600">
 
 ### C#
 #### `owner` and `reuseID`
-In the code below, the `owner` is the `m_Ball` and the `reuseID` is `"Position"`. The idea of these two parameters is to store the `Motion` objects internally in an ordered way so that they are reusable. For example, in order to move the ball many times you may not want to create a new `Motion3D` object each time, so if you write the code below in different places of your script with different positions, you can rest asured that the same `Motion` object will be used for all animations as long as you use the same `owner` and `reuseID`.
+In the code below, the `owner` is the `m_Ball` and the `reuseID` is `"Position"`. In order to move the ball many times you may not want to create a new `Motion3D` object each time, so if you write the code below in different places of your script with different positions and durations, you can rest asured that the same `Motion` object will be used for all animations as long as you use the same `owner` and `reuseID`.
 ```
 MotionKit.GetMotion(m_Ball, "Position", p => m_Ball.localPosition = p)
 	.Play(new Vector3(0, 0, 0), new Vector3(3, 0, 0), 2);
