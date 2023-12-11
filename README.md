@@ -132,16 +132,18 @@ MotionKit.GetMotion(m_Image, "Color", c => m_Image.color = c).Play(Color.black, 
 ```
 ### Inspector
 When using the `MotionKitComponent` you **do** have to choose which motion to use, according to the property that you want to animate:
+
 <img src="https://github.com/cocodrilodog/tools-motion-kit/assets/8107813/3da577ab-569a-432e-9268-681f3cdb9861" width="400">
 
 Note that there is a `Motion2D` block that is only avaliable in the inspector version.
 
 Once the `MotionKitBlock` is created, the inspector will allow you to choose among all properties and methods that suits the type of `MotionKitBlock`. In this example, all the listed methods and properties receive a `Vector3` parameter:
+
 <img src="https://github.com/cocodrilodog/tools-motion-kit/assets/8107813/40b256b1-4204-428c-a77d-e15d9179adf6" width="400">
 
 ## Easing
 
-The `Motion` objects animate properties between an `initialValue` and a `finalValue` for the specified `duration`. By default the animation will happed with constant speed, which in other words uses a linear function to interpolate between the two values:
+The `Motion` objects animate properties between an `initialValue` and a `finalValue` for the specified `duration`. By default the animation will happen with constant speed, which in other words uses a linear function to interpolate between the two values:
 
 <img src="https://github.com/cocodrilodog/tools-motion-kit/assets/8107813/e9adbf54-f34a-4e5e-b220-0c9b8cc44db7" width="300">
 
@@ -164,7 +166,7 @@ The class `MotionKitEasing` has many built-in functions that you can visualize i
 - `MotionKitCurve` (`AnimationCurve`): Uses a Unity `AnimationCurve` that you can customize in the inspector.
 - `Blink`: Changes between the initial and final value repeatedly like blinking. For example, black, white, black, white, etc.
 - `Pulse`: Increments a value like in a Bell Curve. Why didn't I named it "Bell Curve"? Only God knows why...
-- `Shake`: Makes things shake as you would expect on video games. This is good for a camera shake, for example.
+- `Shake`: Makes things shake as you would expect in video games. This is good for a camera shake, for example.
 
 This special functions are called `ParameterizedEasing` and more documentation on this will come later.
 
@@ -188,7 +190,7 @@ Callback | Triggered
 `OnStart` | Just before the `Motion` starts.
 `OnUpdate` | On every update, while the `Motion` is playing.
 `OnInterrupt` | When the `Motion` is stopped or played before it has completed.
-`OnComplete` | When the `Motion` completes tha animation.
+`OnComplete` | When the `Motion` completes the animation.
 
 An example of how to set an `OnComplete` callback, lambda style:
 ```
@@ -196,7 +198,7 @@ MotionKit.GetMotion(m_Ball, "Position", p => m_Ball.localPosition = p)
 	.Play(new Vector3(0, 0, 0), new Vector3(3, 0, 0), 2)
 	.SetOnComplete(() => Debug.Log("Motion Completed!!!"));
 ```
-Or this one with a function:
+Or this one, with a function:
 ```
 MotionKit.GetMotion(m_Ball, "Position", p => m_Ball.localPosition = p)
 	.Play(new Vector3(0, 0, 0), new Vector3(3, 0, 0), 2)
@@ -214,7 +216,7 @@ MotionKit.GetMotion(m_Ball, "Position", p => m_Ball.localPosition = p)
 	.Play(new Vector3(0, 0, 0), new Vector3(3, 0, 0), 2)
 	.SetOnUpdate(m => Debug.Log($"Motion progress: {m.Progress}"));
 ```
-Or this one with a function:
+Or this one, with a function:
 ```
 MotionKit.GetMotion(m_Ball, "Position", p => m_Ball.localPosition = p)
 	.Play(new Vector3(0, 0, 0), new Vector3(3, 0, 0), 2)
@@ -233,6 +235,23 @@ In the `MotionKitComponent`, the callbacks can be assigned as Unity events in th
 Note that the callbacks that receive the `Motion` object as a aprameter are not available from the inspector.
 
 ## Control the Playback: The `Progress` Property
+### Only for C#
+`Motion` objects can be controlled via their `Progress` property. It is a number that goes from 0 to 1 and applies the property change by interpolating between the `initialValue` and the `finalValue`. One example of this being is if you want to create a slider that changes a property of an object, from one value to the other:
+
+```
+Motion3D m_Motion3D;
+
+void Start() {
+	// Create the motion but don't play it. Note that SetValuesAndDuration is used instead of Play()
+	m_Motion3D = MotionKit.GetMotion(m_Ball, "Position", p => m_Ball.localPosition = p)
+		.SetValuesAndDuration(new Vector3(0, 0, 0), new Vector3(3, 0, 0), 2);
+}
+
+public void OnValueChanged(float value) {
+	// Set the progress when the slider changes
+	m_Motion3D.Progress = value;
+}
+```
 
 ## All the Playback Objects: `Motion`, `Timer`, `Sequence`, `Parallel`
 
