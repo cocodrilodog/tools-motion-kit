@@ -61,7 +61,7 @@ To replicate the examples of the `m_CanvasRenderer` and `m_Image` code above via
 
 ## Lifecycle: `owner`, `reuseID`, and Clearance
 
-The idea of the `owner` and `reuseID` is to store the `Motion` objects internally in an ordered way so that they are reusable and then disposed when not needed anymore. 
+The idea of the `owner` and `reuseID` is to store the `Motion` objects internally in an ordered way so that they are reusable when it makes sense, and then disposed when not needed anymore. 
 
 Example of owners and reuse IDs:
 
@@ -69,7 +69,7 @@ Example of owners and reuse IDs:
 
 ### C#
 #### `owner` and `reuseID`
-In the code below, the `owner` is the `m_Ball` and the `reuseID` is `"Position"`. In order to move the ball many times you may not want to create a new `Motion3D` object each time, so if you write the code below in different places of your script with different positions and durations, you can rest asured that the same `Motion` object will be used for all animations as long as you use the same `owner` and `reuseID`.
+In the code below, the `owner` is the `m_Ball` and the `reuseID` is `"Position"`. In order to move the ball many times you may not want to create a new `Motion3D` object each time, so if you write the code below in different places of your script with different positions and durations, you can rest asured that the same `Motion` object will be used for all the position animations as long as you use the same `owner` and `reuseID`.
 ```
 MotionKit.GetMotion(m_Ball, "Position", p => m_Ball.localPosition = p)
 	.Play(new Vector3(0, 0, 0), new Vector3(3, 0, 0), 2);
