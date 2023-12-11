@@ -30,13 +30,11 @@ MotionKit.GetMotion(m_Ball, "Position", p => m_Ball.localPosition = p)
 ```
 Fade in a `m_CanvasRenderer`: Animate `alpha` from 0 to 1 during 2 seconds. Register the motion with owner `m_CanvasRenderer` and reuse id `"Alpha"`
 ```
-MotionKit.GetMotion(m_CanvasRenderer, "Alpha", a => m_CanvasRenderer.SetAlpha(a))
-	.Play(0, 1, 2);
+MotionKit.GetMotion(m_CanvasRenderer, "Alpha", a => m_CanvasRenderer.SetAlpha(a)).Play(0, 1, 2);
 ```
 Animate the color of the `m_Image` from black to red during 2 seconds. Register the motion with owner `m_Image` and reuse id `"Color"`
 ```
-MotionKit.GetMotion(m_Image, "Color", c => m_Image.color = c)
-	.Play(Color.black, Color.red, 2);
+MotionKit.GetMotion(m_Image, "Color", c => m_Image.color = c).Play(Color.black, Color.red, 2);
 ```
 ### Inspector
 The group of classes that handles `MotionKit` objects via inspector are collectibly named `MotionKitBlock`s.
@@ -108,6 +106,28 @@ To set the `owner` and `reuseID` in a `MotionKitBlock` (the inspector version), 
 In the `MotionKitComponent` the clearance is carried out automatically when the component is destroyed.
 
 ## Setter: `Float`, `Vector3`, `Color`
+### C#
+Every motion needs a `setter` to apply changes to the property that we want to animate. In our example, the setter is `p => m_Ball.localPosition = p`, which will animate the position of the ball:
+```
+MotionKit.GetMotion(m_Ball, "Position", p => m_Ball.localPosition = p)
+	.Play(new Vector3(0, 0, 0), new Vector3(3, 0, 0), 2);
+```
+It is a lamba expression that receives a `Vector3` parameter and then applies it as needed. It could also be a function, but would need more lines of code:
+```
+MotionKit.GetMotion(m_Ball, "Position", SetPosition).Play(new Vector3(0, 0, 0), new Vector3(3, 0, 0), 2);
+
+void SetPosition(Vector3 pos) {
+	 m_Ball.localPosition = pos;
+}
+```
+The `MotionKit` API is designed so that depending on the provided setter it will internally choose among `Motion3D`, `MotionFloat` and `MotionColor`. You don't have to worry about that. For example, the following code will create a `MotionFloat` object:
+```
+MotionKit.GetMotion(m_CanvasRenderer, "Alpha", a => m_CanvasRenderer.SetAlpha(a)).Play(0, 1, 2);
+```
+An this one will create a `MotionColor`:
+```
+MotionKit.GetMotion(m_Image, "Color", c => m_Image.color = c).Play(Color.black, Color.red, 2);
+```
 
 ## Easing
 
