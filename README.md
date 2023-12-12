@@ -405,4 +405,4 @@ In the bottom part of the image, you can see a section called `Batch Operations`
 
 ## Known Issues
 
-* The `MotionKitBlock`s use Unity's `SerializeReference` attribute which has some problems with the Unity's prefab workflow. They work as expected with prefabs, but in some cases the data of the prefabs will break. The current workaround is to never add or remove a `MotionKitBlock` from a prefab instance, but rather go to the prefab asset and do the modification there. I will enforce this by disabling that functionality in the prefab instances inspector. I'll fix it as soon as possible!
+* The `MotionKitBlock`s use Unity's `SerializeReference` attribute which has some problems with the Unity's prefab workflow. They work as expected with prefabs, but in some cases the data of the prefabs will break. The current workaround is to never add or remove a `MotionKitBlock` from a prefab instance, but rather go to the prefab asset and do the modification there. I will enforce this by disabling that functionality in the prefab instances inspector, but for now, just bear with me!
