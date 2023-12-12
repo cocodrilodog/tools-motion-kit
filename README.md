@@ -337,9 +337,43 @@ Here is a table of the 4 of them:
 
 Object | Description | Features
 -------- | -------- | --------
-`Motion` | animates any property | `owner` and `reuseID`, `setter`, `easing`, `callbacks`, playback methods
+`Motion` | Animates any property | `owner` and `reuseID`, `setter`, `easing`, `callbacks`, playback methods
 `Timer` | Waits for a duration and then ends. | `owner` and `reuseID`, `callbacks`, playback methods 
 `Sequence` | Plays the contained `Playbacks` in sequence | `owner` and `reuseID`, `easing`, `callbacks`, playback methods
 `Parallel` | Plays the contained `Playbacks` in parallel | `owner` and `reuseID`, `easing`, `callbacks`, playback methods
+
+Example of a sequence:
+
+<img src="https://github.com/cocodrilodog/tools-motion-kit/assets/8107813/94200d8e-f57a-4a05-a5af-2fd153036b2c" width="300">
+
+Example of a Parallel:
+
+<img src="https://github.com/cocodrilodog/tools-motion-kit/assets/8107813/33966d53-3297-4c29-8a06-08490adc3a89" width="300">
+
+Example of a more complex composite:
+
+<img src="https://github.com/cocodrilodog/tools-motion-kit/assets/8107813/e463b08e-872f-418a-ae5a-b43a46f17cca" width="300">
+
+### C#
+
+Timer Example:
+
+```
+MotionKit.GetTimer(this, "SomeTimer").Play(5)
+	.SetOnComplete(() => Debug.Log("Timer completed after 5 seconds"));
+```
+
+Sequence Example:
+
+```
+// The nested Motion objects don't need owner and reuseID because they are contained in the sequence
+MotionKit.GetSequence(this, "SomeSequence",
+	MotionKit.GetMotion(p => m_Ball.localPosition = p).SetValuesAndDuration(new Vector3(0, 0, 0), new Vector3(3, 0, 0), 2),
+	MotionKit.GetMotion(a => m_CanvasRenderer.SetAlpha(a)).SetValuesAndDuration(0, 1, 2),
+	MotionKit.GetTimer().SetDuration(5), // Make a 5 seconds pause here
+	MotionKit.GetMotion(c => m_Image.color = c).SetValuesAndDuration(Color.black, Color.red, 2)
+).SetEasing(MotionKitEasing.QuadInOut) // Easing will be applied to the sequence as a whole
+.Play(); 
+```
 
 ## Known Issues
