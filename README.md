@@ -395,6 +395,7 @@ MotionKit.GetParallel(this, "SomeParallel",
 ### Inspector
 
 When creating nested `MotionKit` animations in the Unity inspector, there is no limit. You can create any composite structure that suits your animation needs. This is an example of an `MotionKitComponent` that has many nested `MotionKitBlocks`:
+
 <img src="https://github.com/cocodrilodog/tools-motion-kit/assets/8107813/129fcbf1-1a2c-44c5-bd8e-954a3b25586b" width="600">
 
 In the top area you will find a very powerful breadcrumb navigation system where you can go to any parent in the hierarchy and also choose any sibling of the currently selected `MotionKitBlock`.
