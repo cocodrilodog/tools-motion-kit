@@ -77,7 +77,7 @@ Example of owners and reuse IDs:
 
 ### C#
 #### `owner` and `reuseID`
-In the code below, the `owner` is the `m_Ball` and the `reuseID` is `"Position"`. In order to move the ball many times you may want to create only one `Motion3D` and reuse it as much as possible instead of creating a new one each time, so if you write the code below in different places of your script with different positions and durations, you can rest asured that the same `Motion3D` object will be used for all the position animations as long as you use the same `owner` and `reuseID`.
+In the code below, the `owner` is the `m_Ball` and the `reuseID` is `"Position"`. In order to move the ball many times you may want to create only one `Motion3D` and reuse it as much as possible instead of creating a new one each time. So if you write the code below in different places of your script with different `Vector3` values and durations, you can rest asured that the same `Motion3D` object will be used for all the position animations as long as you use the same `owner` and `reuseID`.
 ```
 MotionKit.GetMotion(m_Ball, "Position", p => m_Ball.localPosition = p)
 	.Play(new Vector3(0, 0, 0), new Vector3(3, 0, 0), 2);
@@ -125,7 +125,7 @@ Every motion needs a `setter` to apply changes to the property that we want to a
 MotionKit.GetMotion(m_Ball, "Position", p => m_Ball.localPosition = p)
 	.Play(new Vector3(0, 0, 0), new Vector3(3, 0, 0), 2);
 ```
-It is a lamba expression that receives a `Vector3` parameter and then applies it as needed. It could also be a function, but would need more lines of code:
+It is a lamba expression that receives a `Vector3` parameter and then applies it as needed. It could also be a function, but it would need more lines of code:
 ```
 MotionKit.GetMotion(m_Ball, "Position", SetPosition).Play(new Vector3(0, 0, 0), new Vector3(3, 0, 0), 2);
 
@@ -154,11 +154,11 @@ Once the `MotionKitBlock` is created, the inspector will allow you to choose amo
 
 ## Easing
 
-The `Motion` objects animate properties between an `initialValue` and a `finalValue` for the specified `duration`. By default the animation will happen with constant speed, which in other words uses a linear function to interpolate between the two values:
+The `Motion` objects animate properties between an `initialValue` and a `finalValue` for the specified `duration`. By default the animation will happen with constant speed, which in other words, uses a linear function to interpolate between the two values:
 
 <img src="https://github.com/cocodrilodog/tools-motion-kit/assets/8107813/e9adbf54-f34a-4e5e-b220-0c9b8cc44db7" width="300">
 
-But the `Motion` objects receive an `easing` paramater that is a function that will accelerate/decelerate the animations in different ways.
+But the `Motion` objects receive an `easing` paramater that is a function which will accelerate/decelerate the animations in different ways.
 
 A good place to visualize easing functions is [Robert Penner's website](http://robertpenner.com/easing/)
 
@@ -243,7 +243,7 @@ This parameter comes handy in case you want to read or change any of the `Motion
 In the `MotionKitComponent`, the callbacks can be assigned as Unity events in the bottom part of the inspector:
 <img src="https://github.com/cocodrilodog/tools-motion-kit/assets/8107813/d96861bd-d91d-4a64-83a3-7c6d9dddf229" width="450">
 
-Note that the callbacks that receive the `Motion` object as a aprameter are not available from the inspector.
+Note that the callbacks that receive the `Motion` object as a parameter are not available from the inspector.
 
 ## Playback
 ### C#
@@ -254,7 +254,8 @@ The `Motion` objects can be stored in variables and be controlled for playback w
 Motion3D m_Motion3D;
 
 void Start() {
-	// Create the motion but don't play it, yet. Note that SetValuesAndDuration is used instead of Play()
+	// Create the motion but don't play it, yet. Note that SetValuesAndDuration is
+	// used instead of Play()
 	m_Motion3D = MotionKit.GetMotion(m_Ball, "Position", p => m_Ball.localPosition = p)
 		.SetValuesAndDuration(new Vector3(0, 0, 0), new Vector3(3, 0, 0), 2);
 }
@@ -279,13 +280,14 @@ public void OnStopButtonClick() {
 ```
 #### The `Progress` Property
 
-`Motion` objects can be controlled via their `Progress` property. `Progress` is a number that goes from 0 to 1 and changes the property by interpolating between the `initialValue` and the `finalValue`. One example where the `Progress` property is useful is if you want to create a slider that changes a property of an object and use a `Motion`, but you don't want to actually play the `Motion`:
+`Motion` objects can be controlled via their `Progress` property. `Progress` is a number that goes from 0 to 1 and changes the property by interpolating between the `initialValue` and the `finalValue`. One example where the `Progress` property is useful is if you want to create a slider that changes a property of an object by using a `Motion`, but you don't want to actually play the `Motion`:
 
 ```
 Motion3D m_Motion3D;
 
 void Start() {
-	// Create the motion but don't play it at all. Note that SetValuesAndDuration is used instead of Play()
+	// Create the motion but don't play it at all. Note that SetValuesAndDuration is
+	// used instead of Play()
 	m_Motion3D = MotionKit.GetMotion(m_Ball, "Position", p => m_Ball.localPosition = p)
 		.SetEasing(MotionKitEasing.BackOut) // Use easing for a nicer transition, even when using a slider
 		.SetValuesAndDuration(new Vector3(0, 0, 0), new Vector3(3, 0, 0), 2);
@@ -406,4 +408,4 @@ In the bottom part of the image, you can see a section called `Batch Operations`
 
 ## Known Issues
 
-* The `MotionKitBlock`s use Unity's `SerializeReference` attribute which has some problems with the Unity's prefab workflow. They work as expected with prefabs, but in some cases the data of the prefabs will break. The current workaround is to never add or remove a `MotionKitBlock` from a prefab instance, but rather go to the prefab asset and do the modification there. I will enforce this by disabling that functionality in the prefab instances inspector, but for now, just bear with me!
+* The `MotionKitBlock`s use Unity's `SerializeReference` attribute which has some problems with the Unity's prefab workflow. They work as expected with prefabs, but in some cases the data of the prefabs will break. The current workaround is to never add or remove a `MotionKitBlock` from a prefab instance, but rather go to the prefab asset and do the modification there. I will enforce this by disabling that functionality in the prefab instances' inspector, but for now, just bear with me!
