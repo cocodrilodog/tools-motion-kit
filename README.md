@@ -399,8 +399,10 @@ When creating nested `MotionKit` animations in the Unity inspector, there is no 
 
 In the top area you will find a very powerful breadcrumb navigation system where you can go to any parent in the hierarchy and also choose any sibling of the currently selected `MotionKitBlock`.
 
-In this example, we are seeing the editor of a `ParallelBlock`, which contain 7 children sequences. Whenever you click edit on any of those, you'll navigate deeper in the hierarchy.
+In this example, we are seeing the editor of a `ParallelBlock`, which contain 7 child sequences. Whenever you click `Edit` on any of those, you'll navigate deeper in the hierarchy.
 
 In the bottom part of the image, you can see a section called `Batch Operations` which are some editing actions that can be performed in all children `MotionKitBlock`s with one click. For example, setting an incremental duration. More documentation on this will come later!
 
 ## Known Issues
+
+* The `MotionKitBlock`s use Unity's `SerializeReference` attribute which has some problems with the Unity's prefab workflow. They work as expected with prefabs, but in some cases the data of the prefabs will break. The current workaround is to never add or remove a `MotionKitBlock` from a prefab instance, but rather go to the prefab asset and do the modification there. I will enforce this by disabling that functionality in the prefab instances inspector. I'll fix it as soon as possible!
