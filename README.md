@@ -337,10 +337,10 @@ Here is a table of the 4 of them:
 
 Object | Description | Features
 -------- | -------- | --------
-`Motion` | Animates any property | `owner` and `reuseID`, `setter`, `easing`, `callbacks`, playback methods
+`Motion` | Animates any property. | `owner` and `reuseID`, `setter`, `easing`, `callbacks`, playback methods
 `Timer` | Waits for a duration and then ends. | `owner` and `reuseID`, `callbacks`, playback methods 
-`Sequence` | Plays the contained `Playbacks` in sequence | `owner` and `reuseID`, `easing`, `callbacks`, playback methods
-`Parallel` | Plays the contained `Playbacks` in parallel | `owner` and `reuseID`, `easing`, `callbacks`, playback methods
+`Sequence` | Plays the contained `Playbacks` in sequence. | `owner` and `reuseID`, `easing`, `callbacks`, playback methods
+`Parallel` | Plays the contained `Playbacks` in parallel. | `owner` and `reuseID`, `easing`, `callbacks`, playback methods
 
 Example of a sequence:
 
@@ -366,7 +366,9 @@ MotionKit.GetTimer(this, "SomeTimer").Play(5)
 Sequence Example:
 
 ```
-// The nested Motion objects don't need owner and reuseID because they are contained in the sequence
+// The nested Motion objects will play one after the other.
+// Note that the nested Motion objects don't need owner and reuseID because they are contained in the sequence
+// which already has an owner and reuseID
 MotionKit.GetSequence(this, "SomeSequence",
 	MotionKit.GetMotion(p => m_Ball.localPosition = p).SetValuesAndDuration(new Vector3(0, 0, 0), new Vector3(3, 0, 0), 2),
 	MotionKit.GetMotion(a => m_CanvasRenderer.SetAlpha(a)).SetValuesAndDuration(0, 1, 2),
@@ -376,4 +378,17 @@ MotionKit.GetSequence(this, "SomeSequence",
 .Play(); 
 ```
 
+Parallel Example:
+
+```
+// The nested Motion objects will play starting at the same time.
+// Here the nested Motion objects don't need owner and reuseID because they are contained in the parallel
+// which already has an owner and reuseID
+MotionKit.GetParallel(this, "SomeParallel",
+	MotionKit.GetMotion(p => m_Ball.localPosition = p).SetValuesAndDuration(Vector3.zero, Vector3.right * 3, 2),
+	MotionKit.GetMotion(a => m_CanvasRenderer.SetAlpha(a)).SetValuesAndDuration(0, 1, 2),
+	MotionKit.GetMotion(c => m_Image.color = c).SetValuesAndDuration(Color.black, Color.red, 2)
+).SetEasing(MotionKitEasing.QuadInOut)
+.Play();
+```
 ## Known Issues
