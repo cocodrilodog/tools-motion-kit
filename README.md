@@ -391,4 +391,16 @@ MotionKit.GetParallel(this, "SomeParallel",
 ).SetEasing(MotionKitEasing.QuadInOut)
 .Play();
 ```
+
+### Inspector
+
+When creating nested `MotionKit` animations in the Unity inspector, there is no limit. You can create any composite structure that suits your animation needs. This is an example of an `MotionKitComponent` that has many nested `MotionKitBlocks`:
+<img src="https://github.com/cocodrilodog/tools-motion-kit/assets/8107813/129fcbf1-1a2c-44c5-bd8e-954a3b25586b" width="600">
+
+In the top area you will find a very powerful breadcrumb navigation system where you can go to any parent in the hierarchy and also choose any sibling of the currently selected `MotionKitBlock`.
+
+In this example, we are seeing the editor of a `ParallelBlock`, which contain 7 children sequences. Whenever you click edit on any of those, you'll navigate deeper in the hierarchy.
+
+In the bottom part of the image, you can see a section called `Batch Operations` which are some editing actions that can be performed in all children `MotionKitBlock`s with one click. For example, setting an incremental duration. More documentation on this will come later!
+
 ## Known Issues
