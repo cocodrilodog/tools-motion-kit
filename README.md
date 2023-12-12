@@ -36,8 +36,11 @@ Animate the color of the `m_Image` from black to red during 2 seconds. Register 
 ```
 MotionKit.GetMotion(m_Image, "Color", c => m_Image.color = c).Play(Color.black, Color.red, 2);
 ```
+The previous methods create `Motion` objects that handle the animation of the properties. They can be either `Motion3D`, `MotionFloat` or `MotionColor`, depending on the property that will be animated.
+
 ### Inspector
-The group of classes that handles `MotionKit` objects via inspector are collectibly named `MotionKitBlock`s.
+
+On the other hand, the classes that handle `Motion` objects via inspector are collectibly named `MotionKitBlock`s. They are somehow wrappers of `Motion` objects. The `MotionKitBlocks` are created and arranged on the `MotionKitComponent` which is a `MonoBehaviour` designed to use the `MotionKit` from the Unity inspector.
 
 To create the same example as the `m_Ball` code above via inspector, add a `MotionKitComponent`:
 
@@ -61,7 +64,7 @@ To replicate the examples of the `m_CanvasRenderer` and `m_Image` code above via
 
 The idea of the `owner` and `reuseID` is to store the `Motion` objects internally in an ordered way so that they are reusable when it makes sense, and then disposed when not needed anymore. 
 
-Instead of using global IDs, I decided to associate the `Motion`s with "owners", because it makes more sense from a development standpoint. For example, you may want to define the `reuseID` of multiple `Motion`s that affect the position of objects as `"Position"`, but each one should be associated with the specific `owner` that it intends to move, so that it is no confused with any other. This is a scalable solution to manage the reusability and disposal of the `Motion` objects.
+Instead of using global IDs, I decided to associate the `Motion`s with "owners", because it makes more sense from a development standpoint. For example, you may want to define the `reuseID` of multiple `Motion`s that affect the position of objects as `"Position"`, but each one should be associated with the specific `owner` that it intends to move, so that it is no confused with the others. This is a scalable solution to manage the reusability and disposal of the `Motion` objects.
 
 Example of owners and reuse IDs:
 
@@ -69,12 +72,12 @@ Example of owners and reuse IDs:
 
 ### C#
 #### `owner` and `reuseID`
-In the code below, the `owner` is the `m_Ball` and the `reuseID` is `"Position"`. In order to move the ball many times you may not want to create a new `Motion3D` object each time, so if you write the code below in different places of your script with different positions and durations, you can rest asured that the same `Motion` object will be used for all the position animations as long as you use the same `owner` and `reuseID`.
+In the code below, the `owner` is the `m_Ball` and the `reuseID` is `"Position"`. In order to move the ball many times you may want to create only one `Motion3D` and reuse it as much as possible instead of creating a new one each time, so if you write the code below in different places of your script with different positions and durations, you can rest asured that the same `Motion3D` object will be used for all the position animations as long as you use the same `owner` and `reuseID`.
 ```
 MotionKit.GetMotion(m_Ball, "Position", p => m_Ball.localPosition = p)
 	.Play(new Vector3(0, 0, 0), new Vector3(3, 0, 0), 2);
 ```
-This has the very convenient side effect that a reused motion will "interrupt" itself if needed. For example, in the code below, the second motion will interrupt the first one because it is starting before the first one completes. This happens because the animation is being carried out by the same `Motion` object, so it just stops and plays with the new settings. 
+This has the very convenient side effect that a reused motion will "interrupt" itself if needed. For example, in the code below, the second animation will interrupt the first one because it is starting before the first one completes. This happens because the animation is being carried out by the same `Motion` object, so it just stops and plays with the new settings. 
 ```
 // First motion
 MotionKit.GetMotion(m_Ball, "Position", p => m_Ball.localPosition = p)
@@ -89,6 +92,7 @@ MotionKit.GetMotion(m_Ball, "Position", p => m_Ball.localPosition = p)
 #### Clearance
 Once you are done with the motions, you can get rid of them like this:
 ```
+// MonoBehaviour's OnDestroy
 private void OnDestroy() {
 	// Dispose the motions that were registered
 	MotionKit.ClearPlaybacks(m_Ball);
@@ -97,7 +101,9 @@ private void OnDestroy() {
 }
 ```
 The code above will dispose all the motions registered with owners: `m_Ball`, `m_CanvasRenderer`, and `m_BallColor`.
+
 ### Inspector
+
 #### `owner` and `reuseID`
 To set the `owner` and `reuseID` in a `MotionKitBlock` (the inspector version), click `Edit Owner and/or Reuse ID` and then assign the desired values:
 
@@ -234,17 +240,49 @@ In the `MotionKitComponent`, the callbacks can be assigned as Unity events in th
 
 Note that the callbacks that receive the `Motion` object as a aprameter are not available from the inspector.
 
-## Control the Playback: The `Progress` Property
-### Only for C#
-`Motion` objects can be controlled via their `Progress` property. It is a number that goes from 0 to 1 and changes the property by interpolating between the `initialValue` and the `finalValue`. One example is if you want to create a slider that changes a property of an object and use a `Motion`:
+## Playback
+### C#
+#### Playback Methods
+The `Motion` objects can be stored in variables and be controlled for playback with the methods `Play()`, `Pause()`, `Resume()` and `Stop()`:
 
 ```
 Motion3D m_Motion3D;
 
 void Start() {
-	// Create the motion but don't play it. Note that SetValuesAndDuration is used instead of Play()
+	// Create the motion but don't play it, yet. Note that SetValuesAndDuration is used instead of Play()
 	m_Motion3D = MotionKit.GetMotion(m_Ball, "Position", p => m_Ball.localPosition = p)
-		.SetEasing(MotionKitEasing.BackOut)
+		.SetValuesAndDuration(new Vector3(0, 0, 0), new Vector3(3, 0, 0), 2);
+}
+
+// Invoke the methods below from UI button clicks, for example
+
+public void OnPlayButtonClick() {
+	m_Motion3D.Play();
+}
+
+public void OnPauseButtonClick() {
+	m_Motion3D.Pause();
+}
+
+public void OnResumeButtonClick() {
+	m_Motion3D.Resume();
+}
+
+public void OnStopButtonClick() {
+	m_Motion3D.Stop();
+}
+```
+#### The `Progress` Property
+
+`Motion` objects can be controlled via their `Progress` property. `Progress` is a number that goes from 0 to 1 and changes the property by interpolating between the `initialValue` and the `finalValue`. One example is if you want to create a slider that changes a property of an object and use a `Motion`, but you don't want to actually play the `Motion`:
+
+```
+Motion3D m_Motion3D;
+
+void Start() {
+	// Create the motion but don't play it at all. Note that SetValuesAndDuration is used instead of Play()
+	m_Motion3D = MotionKit.GetMotion(m_Ball, "Position", p => m_Ball.localPosition = p)
+		.SetEasing(MotionKitEasing.BackOut) // Use easing for a nicer transition, even when using a slider
 		.SetValuesAndDuration(new Vector3(0, 0, 0), new Vector3(3, 0, 0), 2);
 }
 
