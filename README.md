@@ -40,7 +40,7 @@ The previous methods create `Motion` objects that handle the animation of the pr
 
 ### Inspector
 
-On the other hand, the classes that handle `Motion` objects via inspector are collectibly named `MotionKitBlock`s. They are somehow wrappers of `Motion` objects. The `MotionKitBlocks` are created and arranged on the `MotionKitComponent` which is a `MonoBehaviour` designed to use the `MotionKit` from the Unity inspector.
+On the other hand, the classes that handle `Motion` objects via inspector are collectibly named `MotionKitBlock`s. They are wrappers of `Motion` objects. The `MotionKitBlocks` are created and arranged on the `MotionKitComponent` which is a `MonoBehaviour` designed to use the `MotionKit` from the Unity inspector.
 
 To create the same example as the `m_Ball` code above via inspector, add a `MotionKitComponent`:
 
@@ -292,18 +292,54 @@ void Start() {
 }
 
 public void OnValueChanged(float value) {
-	// Set the progress when the slider changes
+	// Set the progress when the slider changes.
 	// The slider will make the animation to go to any part of the animation at any time,
-	// from beginning to end.
+	// between the initial and final values.
 	m_Motion3D.Progress = value;
 }
 ```
 ### Inspector
 
+The playback of the `MotionKitBlock`s created in a `MotionKitComponent` can be controlled independently by their names:
 
+<img src="https://github.com/cocodrilodog/tools-motion-kit/assets/8107813/70b29d23-1530-4989-af2e-3122e944ab86" width="450">
 
-## All the Playback Objects: `Motion`, `Timer`, `Sequence`, `Parallel`
+This is an example of how to play each one:
 
-The `MotionKit`
+```
+m_MotionKitComponent.Play("Motion3D");
+m_MotionKitComponent.Play("MotionFloat");
+m_MotionKitComponent.Play("MotionColor");
+```
+
+The same will apply to `Pause()`, `Resume()`, `Stop()`.
+
+The names can be customized when you edit each `MotionKitBlock`.
+
+If you want more control over the actual `Motion` object that belongs to the wrapper `MotionKitBlock` you can obtain direct access to it by first getting the `MotionKitBlock` and then the `Motion` object:
+
+```
+// Get the MotionKitBlock that contains the `Motion3D`
+Motion3DBlock motion3DBlock = m_MotionKitComponent.GetChild("Motion3D") as Motion3DBlock;
+
+// Get the `Motion3D
+var motion3D = motion3DBlock.Motion;
+
+// Do anything that you need to do
+motion3D.Progress = 0.5f;
+```
+
+## The Other Objects: `Timer`, `Sequence`, `Parallel`
+
+The `MotionKit` has other objects that allow to build complex animation composites: `Timer`, `Sequence` and `Parallel`. These 3 objects and the `Motion` objects are referred to as `Playback` objects. 
+
+Here is a table of the 4 of them:
+
+Object | Description | Features
+-------- | -------- | --------
+`Motion` | animates any property | `owner` and `reuseID`, `setter`, `easing`, `callbacks`, playback methods
+`Timer` | Waits for a duration and then ends. | `owner` and `reuseID`, `callbacks`, playback methods 
+`Sequence` | Plays the contained `Playbacks` in sequence | `owner` and `reuseID`, `easing`, `callbacks`, playback methods
+`Parallel` | Plays the contained `Playbacks` in parallel | `owner` and `reuseID`, `easing`, `callbacks`, playback methods
 
 ## Known Issues
