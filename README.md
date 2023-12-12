@@ -352,7 +352,7 @@ Example of a Parallel:
 
 Example of a more complex composite:
 
-<img src="https://github.com/cocodrilodog/tools-motion-kit/assets/8107813/e463b08e-872f-418a-ae5a-b43a46f17cca" width="300">
+<img src="https://github.com/cocodrilodog/tools-motion-kit/assets/8107813/c437bcd2-5c38-4ed0-a744-da22c94f148d" width="300">
 
 ### C#
 
