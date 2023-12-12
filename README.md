@@ -60,6 +60,11 @@ Click `Edit` and assign the relevant properties:
 
 To replicate the examples of the `m_CanvasRenderer` and `m_Image` code above via inspector, it is the same process, but you create `MotionFloatBlock` to animate the `m_CanvasRenderer.alpha` property, and `MotionColorBlock` to animate the `m_Image.color`.
 
+In the `MotionKitComponent`, many `MotionKitBlock`s can be created and handled independently:
+
+<img src="https://github.com/cocodrilodog/tools-motion-kit/assets/8107813/74da028c-fba9-42bd-bd71-e65cdf666210" width="400">
+
+
 ## Lifecycle: `owner`, `reuseID`, and Clearance
 
 The idea of the `owner` and `reuseID` is to store the `Motion` objects internally in an ordered way so that they are reusable when it makes sense, and then disposed when not needed anymore. 
@@ -274,7 +279,7 @@ public void OnStopButtonClick() {
 ```
 #### The `Progress` Property
 
-`Motion` objects can be controlled via their `Progress` property. `Progress` is a number that goes from 0 to 1 and changes the property by interpolating between the `initialValue` and the `finalValue`. One example is if you want to create a slider that changes a property of an object and use a `Motion`, but you don't want to actually play the `Motion`:
+`Motion` objects can be controlled via their `Progress` property. `Progress` is a number that goes from 0 to 1 and changes the property by interpolating between the `initialValue` and the `finalValue`. One example where the `Progress` property is useful is if you want to create a slider that changes a property of an object and use a `Motion`, but you don't want to actually play the `Motion`:
 
 ```
 Motion3D m_Motion3D;
@@ -288,10 +293,17 @@ void Start() {
 
 public void OnValueChanged(float value) {
 	// Set the progress when the slider changes
+	// The slider will make the animation to go to any part of the animation at any time,
+	// from beginning to end.
 	m_Motion3D.Progress = value;
 }
 ```
+### Inspector
+
+
 
 ## All the Playback Objects: `Motion`, `Timer`, `Sequence`, `Parallel`
+
+The `MotionKit`
 
 ## Known Issues
