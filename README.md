@@ -1,6 +1,6 @@
 # MotionKit Guide
 
-MotionKit is a tool that animates anything. It is very similar to [DOTween](http://dotween.demigiant.com/getstarted.php), but with inspector super powers and a few tweaks that makes it simpler to use and learn.
+MotionKit is a Unity engine tool that animates anything. It is very similar to [DOTween](http://dotween.demigiant.com/getstarted.php), but with inspector super powers and a few tweaks that makes it simpler to use and learn.
 
 ([Watch overview on YouTube](http://www.youtube.com/watch?v=1knaaxQQs3I))
 
