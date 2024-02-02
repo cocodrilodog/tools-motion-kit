@@ -297,8 +297,6 @@ MonoBehaviour:
   m_SelectedCompositePath: 
   m_Blocks:
   - rid: 6990145245326082093
-  m_PlayOnStart: 1
-  m_SetInitialValuesOnStart: 0
   references:
     version: 2
     RefIds:
@@ -331,6 +329,8 @@ MonoBehaviour:
             m_Calls: []
         m_CallbackSelection: 0
         m_EditOwnerAndReuseID: 0
+        m_PlayOnStart: 1
+        m_SetInitialValuesOnStart: 0
         m_SequenceItems:
         - rid: 6990145245326082094
         - rid: 6990145245326082095
@@ -364,6 +364,8 @@ MonoBehaviour:
             m_Calls: []
         m_CallbackSelection: 3
         m_EditOwnerAndReuseID: 0
+        m_PlayOnStart: 0
+        m_SetInitialValuesOnStart: 0
         m_Object: {fileID: 1645218934}
         m_SetterString: Transform/localPosition
         m_GetterString: Transform/localPosition
@@ -399,6 +401,8 @@ MonoBehaviour:
             m_Calls: []
         m_CallbackSelection: 0
         m_EditOwnerAndReuseID: 0
+        m_PlayOnStart: 0
+        m_SetInitialValuesOnStart: 0
         m_Object: {fileID: 1645218934}
         m_SetterString: Transform/localPosition
         m_GetterString: Transform/localPosition
@@ -434,6 +438,8 @@ MonoBehaviour:
             m_Calls: []
         m_CallbackSelection: 0
         m_EditOwnerAndReuseID: 0
+        m_PlayOnStart: 0
+        m_SetInitialValuesOnStart: 0
         m_Object: {fileID: 1645218934}
         m_SetterString: Transform/localPosition
         m_GetterString: Transform/localPosition
@@ -469,6 +475,8 @@ MonoBehaviour:
             m_Calls: []
         m_CallbackSelection: 0
         m_EditOwnerAndReuseID: 0
+        m_PlayOnStart: 0
+        m_SetInitialValuesOnStart: 0
         m_Object: {fileID: 1645218934}
         m_SetterString: Transform/localPosition
         m_GetterString: Transform/localPosition
