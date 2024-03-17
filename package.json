@@ -1,6 +1,6 @@
 {
   "name": "com.cocodrilodog.motionkit",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "displayName": "Motion Kit",
   "description": "MotionKit is a tool that animates anything. It is very similar to DOTween, but with inspector super powers and a few tweaks that makes it simpler to use and learn.",
   "unity": "2019.3",
@@ -25,6 +25,6 @@
     }
   ],
   "dependencies": {
-    "com.cocodrilodog.core": "1.0.3"
+    "com.cocodrilodog.core": "1.0.4"
   }
 }

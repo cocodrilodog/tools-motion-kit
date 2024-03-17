@@ -13,22 +13,7 @@ namespace CocodriloDog.MotionKit {
 
 		#region Protected Properties
 
-		protected override List<Type> CompositeTypes {
-			get {
-				if (m_CompositeTypes == null) {
-					m_CompositeTypes = new List<Type> {
-						typeof(CopyTemplateBlock),
-						typeof(RenameBlock),
-						typeof(SetSetterObject),
-						typeof(SetIncrementalDuration),
-						typeof(SetIncrementalValues3D),
-						typeof(SetIncrementalValuesFloat),
-						typeof(SetIncrementalValuesColor),
-					};
-				}
-				return m_CompositeTypes;
-			}
-		}
+		protected override bool UseDefaultDrawer => false;
 
 		#endregion
 

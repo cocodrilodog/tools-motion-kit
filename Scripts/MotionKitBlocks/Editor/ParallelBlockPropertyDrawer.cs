@@ -1,5 +1,6 @@
 namespace CocodriloDog.MotionKit {
 
+	using CocodriloDog.Core;
 	using System.Collections;
 	using System.Collections.Generic;
 	using UnityEditor;
@@ -30,7 +31,7 @@ namespace CocodriloDog.MotionKit {
 
 		protected override void DrawAfterSettings() {
 			GetNextPosition(SpaceHeight);
-			EditorGUI.PropertyField(GetNextPosition(ParallelItemsProperty), ParallelItemsProperty, true);
+			ParallelItemsPropertyDrawer.DoList(GetNextPosition(ParallelItemsProperty), ParallelItemsProperty);
 			DrawBatchOperations();
 			DrawRunBatchOperationsButton();
 		}
@@ -38,9 +39,21 @@ namespace CocodriloDog.MotionKit {
 		#endregion
 
 
+		#region Private Fields
+
+		private CompositeListPropertyDrawerForPrefab m_ParallelItemsPropertyDrawer;
+
+		#endregion
+
+
 		#region Private Properties
 
 		private SerializedProperty ParallelItemsProperty { get; set; }
+
+		private CompositeListPropertyDrawerForPrefab ParallelItemsPropertyDrawer =>
+			m_ParallelItemsPropertyDrawer = m_ParallelItemsPropertyDrawer ?? new CompositeListPropertyDrawerForPrefab(
+				ParallelItemsProperty
+			);
 
 		#endregion
 

@@ -150,66 +150,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0fb3639200fb4be4996952cebd241fe2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_SelectedCompositePath: 
   m_Blocks:
-  - rid: 6990145516267634688
-  - rid: 6990145575182139395
-  m_PlayOnStart: 1
-  m_SetInitialValuesOnStart: 0
+  - rid: 7685901126815711233
+  - rid: 7685901126815711232
   references:
     version: 2
     RefIds:
     - rid: -2
       type: {class: , ns: , asm: }
-    - rid: 6990145516267634688
-      type: {class: Motion3DBlock, ns: CocodriloDog.MotionKit, asm: CocodriloDog.MotionKit}
-      data:
-        m_Name: MoveRight
-        m_Owner: {fileID: 0}
-        m_ReuseID: 
-        m_Duration: 3
-        m_TimeMode: 0
-        m_Easing:
-          m_EasingName: Quad In Out
-          m_ParameterizedEasing:
-            rid: -2
-        m_SharedSettings: {fileID: 0}
-        m_OnStart:
-          m_PersistentCalls:
-            m_Calls: []
-        m_OnUpdate:
-          m_PersistentCalls:
-            m_Calls: []
-        m_OnInterrupt:
-          m_PersistentCalls:
-            m_Calls: []
-        m_OnComplete:
-          m_PersistentCalls:
-            m_Calls:
-            - m_Target: {fileID: 8502286627173713792}
-              m_TargetAssemblyTypeName: CocodriloDog.MotionKit.MotionKitComponent,
-                Assembly-CSharp
-              m_MethodName: Play
-              m_Mode: 5
-              m_Arguments:
-                m_ObjectArgument: {fileID: 0}
-                m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-                m_IntArgument: 0
-                m_FloatArgument: 0
-                m_StringArgument: ScaleUp
-                m_BoolArgument: 0
-              m_CallState: 2
-        m_CallbackSelection: 3
-        m_EditOwnerAndReuseID: 0
-        m_Object: {fileID: 324653493452345335}
-        m_SetterString: Transform/localPosition
-        m_GetterString: Transform/localPosition
-        m_InitialValue: {x: 0, y: 0, z: 0}
-        m_InitialValueIsRelative: 1
-        m_FinalValue: {x: 5, y: 0, z: 0}
-        m_FinalValueIsRelative: 1
-        m_SharedValues: {fileID: 0}
-    - rid: 6990145575182139395
+    - rid: 7685901126815711232
       type: {class: Motion3DBlock, ns: CocodriloDog.MotionKit, asm: CocodriloDog.MotionKit}
       data:
         m_Name: ScaleUp
@@ -236,11 +185,63 @@ MonoBehaviour:
             m_Calls: []
         m_CallbackSelection: 0
         m_EditOwnerAndReuseID: 0
-        m_Object: {fileID: 324653493452345335}
+        m_PlayOnStart: 1
+        m_SetInitialValuesOnStart: 0
+        m_Object: {fileID: 8502286627173713793}
         m_SetterString: Transform/localScale
         m_GetterString: Transform/localScale
         m_InitialValue: {x: 0, y: 0, z: 0}
         m_InitialValueIsRelative: 1
         m_FinalValue: {x: 3, y: 3, z: 3}
         m_FinalValueIsRelative: 0
+        m_SharedValues: {fileID: 0}
+    - rid: 7685901126815711233
+      type: {class: Motion3DBlock, ns: CocodriloDog.MotionKit, asm: CocodriloDog.MotionKit}
+      data:
+        m_Name: MoveRight
+        m_Owner: {fileID: 0}
+        m_ReuseID: 
+        m_Duration: 3
+        m_TimeMode: 0
+        m_Easing:
+          m_EasingName: Quad In Out
+          m_ParameterizedEasing:
+            rid: -2
+        m_SharedSettings: {fileID: 0}
+        m_OnStart:
+          m_PersistentCalls:
+            m_Calls: []
+        m_OnUpdate:
+          m_PersistentCalls:
+            m_Calls: []
+        m_OnInterrupt:
+          m_PersistentCalls:
+            m_Calls: []
+        m_OnComplete:
+          m_PersistentCalls:
+            m_Calls:
+            - m_Target: {fileID: 0}
+              m_TargetAssemblyTypeName: CocodriloDog.MotionKit.MotionKitComponent,
+                Assembly-CSharp
+              m_MethodName: Play
+              m_Mode: 5
+              m_Arguments:
+                m_ObjectArgument: {fileID: 0}
+                m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+                m_IntArgument: 0
+                m_FloatArgument: 0
+                m_StringArgument: ScaleUp
+                m_BoolArgument: 0
+              m_CallState: 2
+        m_CallbackSelection: 3
+        m_EditOwnerAndReuseID: 0
+        m_PlayOnStart: 1
+        m_SetInitialValuesOnStart: 0
+        m_Object: {fileID: 8502286627173713793}
+        m_SetterString: Transform/localPosition
+        m_GetterString: Transform/localPosition
+        m_InitialValue: {x: 0, y: 0, z: 0}
+        m_InitialValueIsRelative: 1
+        m_FinalValue: {x: 5, y: 0, z: 0}
+        m_FinalValueIsRelative: 1
         m_SharedValues: {fileID: 0}

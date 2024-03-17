@@ -9,12 +9,16 @@ namespace CocodriloDog.MotionKit {
 	[CustomEditor(typeof(MotionKitComponent))]
 	public class MotionKitComponentEditor : CompositeRootEditor {
 
+
+		#region Unity Methods
+
 		protected override void OnEnable() {
 			base.OnEnable();
 			m_BlocksProperty = serializedObject.FindProperty("m_Blocks");
-			m_PlayOnStartProperty = serializedObject.FindProperty("m_PlayOnStart");
-			m_SetInitialValuesOnStartProperty = serializedObject.FindProperty("m_SetInitialValuesOnStart");
 		}
+
+		#endregion
+
 
 		#region Protected Methods
 
@@ -30,15 +34,14 @@ namespace CocodriloDog.MotionKit {
 				}
 			}
 
-			EditorGUILayout.PropertyField(m_BlocksProperty);
-			//EditorGUILayout.PropertyField(m_PlayOnStartProperty);
-			//EditorGUILayout.PropertyField(m_SetInitialValuesOnStartProperty);
+			BlocksPropertyDrawer.DoLayoutList(m_BlocksProperty);
 
 			EditorGUILayout.HelpBox(
 				"Enable or disable PlayOnStart and SetInitialValuesOnStart on each block by ticking the corresponding toggles.", 
 				MessageType.Info);
 
 			serializedObject.ApplyModifiedProperties();
+
 		}
 
 		#endregion
@@ -48,9 +51,15 @@ namespace CocodriloDog.MotionKit {
 
 		private SerializedProperty m_BlocksProperty;
 
-		private SerializedProperty m_PlayOnStartProperty;
+		private CompositeListPropertyDrawerForPrefab m_BlocksPropertyDrawer;
 
-		private SerializedProperty m_SetInitialValuesOnStartProperty;
+		#endregion
+
+
+		#region Private Properties
+
+		private CompositeListPropertyDrawerForPrefab BlocksPropertyDrawer => 
+			m_BlocksPropertyDrawer = m_BlocksPropertyDrawer ?? new CompositeListPropertyDrawerForPrefab(m_BlocksProperty);
 
 		#endregion
 

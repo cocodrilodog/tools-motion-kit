@@ -23,22 +23,7 @@
 
 		#region Protected Properties
 
-		protected override List<Type> CompositeTypes {
-			get {
-				if (m_CompositeTypes == null) {
-					m_CompositeTypes = new List<Type> {
-						typeof(Motion3DBlock),
-						typeof(Motion2DBlock),
-						typeof(MotionFloatBlock),
-						typeof(MotionColorBlock),
-						typeof(TimerBlock),
-						typeof(SequenceBlock),
-						typeof(ParallelBlock),
-					};
-				}
-				return m_CompositeTypes;
-			}
-		}
+		protected override bool UseDefaultDrawer => false;
 
 		protected virtual bool DoesDrawEasing => true;
 

@@ -749,7 +749,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0fb3639200fb4be4996952cebd241fe2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_SelectedCompositePath: m_Blocks.Array.data[0]
+  m_SelectedCompositePath: 
   m_Blocks:
   - rid: 6990145245326082055
   references:

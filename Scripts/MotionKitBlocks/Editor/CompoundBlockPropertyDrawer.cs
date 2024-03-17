@@ -30,7 +30,7 @@ namespace CocodriloDog.MotionKit {
 
 		protected void DrawBatchOperations() {
 			// Draw the list
-			EditorGUI.PropertyField(GetNextPosition(BatchOperationsProperty), BatchOperationsProperty);
+			BatchOperationsPropertyDrawer.DoList(GetNextPosition(BatchOperationsProperty), BatchOperationsProperty);
 		}
 
 		protected void DrawRunBatchOperationsButton() {
@@ -108,8 +108,13 @@ namespace CocodriloDog.MotionKit {
 
 		#region Private Properties
 
-		BatchOperationsResults BatchOperationsResults => 
+		private BatchOperationsResults BatchOperationsResults => 
 			m_BatchOperationsResults = m_BatchOperationsResults ?? new BatchOperationsResults();
+
+		private CompositeListPropertyDrawerForPrefab BatchOperationsPropertyDrawer =>
+			m_BatchOperationsPropertyDrawer = m_BatchOperationsPropertyDrawer ?? new CompositeListPropertyDrawerForPrefab(
+				BatchOperationsProperty
+			);
 
 		#endregion
 
@@ -117,6 +122,8 @@ namespace CocodriloDog.MotionKit {
 		#region Private Fields
 
 		private BatchOperationsResults m_BatchOperationsResults;
+
+		private CompositeListPropertyDrawerForPrefab m_BatchOperationsPropertyDrawer;
 
 		#endregion
 

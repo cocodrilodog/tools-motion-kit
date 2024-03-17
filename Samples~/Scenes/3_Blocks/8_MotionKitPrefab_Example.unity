@@ -136,11 +136,6 @@ PrefabInstance:
       propertyPath: m_SelectedCompositePath
       value: 
       objectReference: {fileID: 0}
-    - target: {fileID: 8502286627173713792, guid: c1e5f2985820ffb4b90bf720b35ab048,
-        type: 3}
-      propertyPath: managedReferences[6990145575182139395].m_Duration
-      value: 3.1
-      objectReference: {fileID: 0}
     - target: {fileID: 8502286627173713793, guid: c1e5f2985820ffb4b90bf720b35ab048,
         type: 3}
       propertyPath: m_Name
@@ -465,7 +460,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0fb3639200fb4be4996952cebd241fe2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_SelectedCompositePath: 
   m_Blocks:
   - rid: 6990145516267634688
   - rid: 6990145554712363031
@@ -514,7 +508,7 @@ MonoBehaviour:
               m_CallState: 2
         m_CallbackSelection: 3
         m_EditOwnerAndReuseID: 0
-        m_PlayOnStart: 0
+        m_PlayOnStart: 1
         m_SetInitialValuesOnStart: 0
         m_Object: {fileID: 8013025426013395158}
         m_SetterString: Transform/localPosition
@@ -527,7 +521,7 @@ MonoBehaviour:
     - rid: 6990145554712363031
       type: {class: Motion3DBlock, ns: CocodriloDog.MotionKit, asm: CocodriloDog.MotionKit}
       data:
-        m_Name: Motion3D
+        m_Name: ScaleUp
         m_Owner: {fileID: 0}
         m_ReuseID: 
         m_Duration: 3
@@ -551,7 +545,7 @@ MonoBehaviour:
             m_Calls: []
         m_CallbackSelection: 0
         m_EditOwnerAndReuseID: 0
-        m_PlayOnStart: 0
+        m_PlayOnStart: 1
         m_SetInitialValuesOnStart: 0
         m_Object: {fileID: 8013025426013395158}
         m_SetterString: Transform/localScale
