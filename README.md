@@ -12,8 +12,8 @@ alt="IMAGE ALT TEXT HERE" width="300" border="10" /></a>
 `MotionKit` depends on the Cocodrilo Dog `Core` tool. You need to install this dependency first, via the Unity Package Manager.
 
 To install both in your Unity project, open the Package Manager and click the plus button, "Add package from URL..." and the use these URLs:
-- Cocodrilo Dog Core: https://github.com/cocodrilodog/tools-core
-- MotionKit: https://github.com/cocodrilodog/tools-motion-kit
+- Cocodrilo Dog Core: https://github.com/cocodrilodog/tools-core.git
+- MotionKit: https://github.com/cocodrilodog/tools-motion-kit.git
 
 <img src="https://github.com/cocodrilodog/tools-motion-kit/assets/8107813/6408c284-330b-4abb-a075-5f5452841775" height="150">
 
