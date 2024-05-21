@@ -371,13 +371,11 @@ Sequence Example:
 
 ```
 // The nested Motion objects will play one after the other.
-// Note that the nested Motion objects don't need owner and reuseID because they are contained in the sequence
-// which already has an owner and reuseID
 MotionKit.GetSequence(this, "SomeSequence",
-	MotionKit.GetMotion(p => m_Ball.localPosition = p).SetValuesAndDuration(new Vector3(0, 0, 0), new Vector3(3, 0, 0), 2),
-	MotionKit.GetMotion(a => m_CanvasRenderer.SetAlpha(a)).SetValuesAndDuration(0, 1, 2),
-	MotionKit.GetTimer().SetDuration(5), // Make a 5 seconds pause here
-	MotionKit.GetMotion(c => m_Image.color = c).SetValuesAndDuration(Color.black, Color.red, 2)
+	MotionKit.GetMotion(this, "MoveBall", p => m_Ball.localPosition = p).SetValuesAndDuration(new Vector3(0, 0, 0), new Vector3(3, 0, 0), 2),
+	MotionKit.GetMotion(this, "FadeInCanvas", a => m_CanvasRenderer.SetAlpha(a)).SetValuesAndDuration(0, 1, 2),
+	MotionKit.GetTimer(this, "Pause").SetDuration(5), // Make a 5 seconds pause here
+	MotionKit.GetMotion(this, "MakeRed", c => m_Image.color = c).SetValuesAndDuration(Color.black, Color.red, 2)
 ).SetEasing(MotionKitEasing.QuadInOut) // Easing will be applied to the sequence as a whole
 .Play(); 
 ```
@@ -386,12 +384,10 @@ Parallel Example:
 
 ```
 // The nested Motion objects will play starting at the same time.
-// Here the nested Motion objects don't need owner and reuseID because they are contained in the parallel
-// which already has an owner and reuseID
 MotionKit.GetParallel(this, "SomeParallel",
-	MotionKit.GetMotion(p => m_Ball.localPosition = p).SetValuesAndDuration(Vector3.zero, Vector3.right * 3, 2),
-	MotionKit.GetMotion(a => m_CanvasRenderer.SetAlpha(a)).SetValuesAndDuration(0, 1, 2),
-	MotionKit.GetMotion(c => m_Image.color = c).SetValuesAndDuration(Color.black, Color.red, 2)
+	MotionKit.GetMotion(this, "MoveBall", p => m_Ball.localPosition = p).SetValuesAndDuration(Vector3.zero, Vector3.right * 3, 2),
+	MotionKit.GetMotion(this, "FadeInCanvas", a => m_CanvasRenderer.SetAlpha(a)).SetValuesAndDuration(0, 1, 2),
+	MotionKit.GetMotion(this, "MakeRed", c => m_Image.color = c).SetValuesAndDuration(Color.black, Color.red, 2)
 ).SetEasing(MotionKitEasing.QuadInOut)
 .Play();
 ```
@@ -408,6 +404,9 @@ In this example, we are seeing the editor of a `ParallelBlock`, which contain 7 
 
 In the bottom part of the image, you can see a section called `Batch Operations` which are some editing actions that can be performed in all children `MotionKitBlock`s with one click. For example, setting an incremental duration. More documentation on this will come later!
 
+## Handling Anonymous `Playback` Objects
+(Coming soon)
+
 ## Shared Assets
 (Coming soon)
 
@@ -416,4 +415,6 @@ In the bottom part of the image, you can see a section called `Batch Operations`
 
 ## Known Issues
 
-* The `MotionKitBlock`s use Unity's `SerializeReference` attribute which has some problems with the Unity's prefab workflow. They work as expected with prefabs, but in some cases the data of the prefabs will break. The current workaround is to never add or remove a `MotionKitBlock` from a prefab instance, but rather go to the prefab asset and do the modification there. I will enforce this by disabling that functionality in the prefab instances' inspector, but for now, just bear with me!
+The issue below is solved!
+
+~~* The `MotionKitBlock`s use Unity's `SerializeReference` attribute which has some problems with the Unity's prefab workflow. They work as expected with prefabs, but in some cases the data of the prefabs will break. The current workaround is to never add or remove a `MotionKitBlock` from a prefab instance, but rather go to the prefab asset and do the modification there. I will enforce this by disabling that functionality in the prefab instances' inspector, but for now, just bear with me!~~
