@@ -7,7 +7,7 @@
   <span style="float: left; display: block; color: white; padding: 14px 16px;">|</span>
   <a href="Easing.md" style="float: left; display: block; color: white; text-align: center; padding: 14px 16px; text-decoration: none;">Easing</a>
   <span style="float: left; display: block; color: white; padding: 14px 16px;">|</span>
-  <a href="Callbacks.md" style="float: left; display: block; color: white; text-align: center; padding: 14px 16px; text-decoration: none;">Callbacks</a>
+  <span style="float: left; display: block; color: white; padding: 14px 16px;"><b>▸Callbacks◂</b></span>
   <span style="float: left; display: block; color: white; padding: 14px 16px;">|</span>
   <a href="Playback.md" style="float: left; display: block; color: white; text-align: center; padding: 14px 16px; text-decoration: none;">Playback</a>
   <span style="float: left; display: block; color: white; padding: 14px 16px;">|</span>
@@ -86,7 +86,7 @@ Note that the callbacks that receive the `Motion` object as a parameter are not 
     <li><a href="LifeCycle.md">Life Cycle</a></li>
     <li><a href="Setter.md">Setter</a></li>
     <li><a href="Easing.md">Easing</a></li>
-    <li><a href="Callbacks.md">Callbacks</a></li>
+    <li><b>▸Callbacks◂</b></li>
     <li><a href="Playback.md">Playback</a></li>
     <li><a href="RelativeValues.md">Relative Values</a></li>
     <li><a href="TimerSequenceParallel.md">Timer, Sequence, and Parallel</a></li>
