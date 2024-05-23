@@ -1,0 +1,25 @@
+/* CSS for horizontal menu */
+.horizontal-menu ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    background-color: #333; /* Background color of the menu */
+  }
+  
+  .horizontal-menu li {
+    float: left; /* Make menu items float horizontally */
+  }
+  
+  .horizontal-menu li a {
+    display: block;
+    color: white;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+  }
+  
+  /* Change color of menu item on hover */
+  .horizontal-menu li a:hover {
+    background-color: #555;
+  }
