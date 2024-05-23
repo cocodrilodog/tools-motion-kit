@@ -63,6 +63,7 @@ In the `MotionKitComponent` you just choose from a list of easing functions:
 And if you choose from some of the `ParameterizedEasing` functions (`AnimationCurve`, `Blink`, `Pulse` or `Shake`), additional parameters will appear on the inspector:
 
 <img src="https://github.com/cocodrilodog/tools-motion-kit/assets/8107813/ee1c4990-a3d8-438e-9a4b-649d1ee436b0" width="400">
+
 ---
 
 <nav>

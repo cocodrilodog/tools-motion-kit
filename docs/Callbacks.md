@@ -77,6 +77,7 @@ In the `MotionKitComponent`, the callbacks can be assigned as Unity events in th
 <img src="https://github.com/cocodrilodog/tools-motion-kit/assets/8107813/d96861bd-d91d-4a64-83a3-7c6d9dddf229" width="450">
 
 Note that the callbacks that receive the `Motion` object as a parameter are not available from the inspector.
+
 ---
 
 <nav>
