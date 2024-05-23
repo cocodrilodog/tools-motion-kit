@@ -95,7 +95,7 @@ In the `MotionKitComponent`, many `MotionKitBlock`s can be created and handled i
 
 ## Documentation
 
-You can read and experiment in your own project the following documentation in the order laid out below to gain deep insights about this animation engine:
+You can read and experiment in your own project by following the documentation laid out below to gain deep insights about this animation engine. The documents are designed so that you can study one by one in the order of the list. Have fun!
 
 <nav>
   <ul>
