@@ -1,3 +1,11 @@
+<nav>
+  <ul>
+    <li><a href="docs/AnonymousPlaybackObjects.md">Anonymous Playback Objects</a></li>
+  </ul>
+</nav>
+
+---
+
 # MotionKit Guide
 
 MotionKit is a Unity engine tool that animates anything. It is very similar to [DOTween](http://dotween.demigiant.com/getstarted.php), but with inspector super powers and a few tweaks that makes it simpler to use and learn.
