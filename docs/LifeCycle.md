@@ -1,7 +1,7 @@
 <div style="background-color: #333; overflow: hidden;">
   <a href="../README.md" style="float: left; display: block; color: white; text-align: center; padding: 14px 16px; text-decoration: none;">Home</a>
   <span style="float: left; display: block; color: white; padding: 14px 16px;">|</span>
-  <a href="LifeCycle.md" style="float: left; display: block; color: white; text-align: center; padding: 14px 16px; text-decoration: none;">Life Cycle</a>
+  <span style="float: left; display: block; color: white; padding: 14px 16px;"><b>▸Life Cycle◂</b></span>
   <span style="float: left; display: block; color: white; padding: 14px 16px;">|</span>
   <a href="Setter.md" style="float: left; display: block; color: white; text-align: center; padding: 14px 16px; text-decoration: none;">Setter</a>
   <span style="float: left; display: block; color: white; padding: 14px 16px;">|</span>
@@ -83,7 +83,7 @@ In the `MotionKitComponent` the clearance is carried out automatically when the 
 <nav>
   <ul>
     <li><a href="../README.md">Home</a></li>
-    <li><a href="LifeCycle.md">Life Cycle</a></li>
+    <li><b>▸Life Cycle◂</b></li>
     <li><a href="Setter.md">Setter</a></li>
     <li><a href="Easing.md">Easing</a></li>
     <li><a href="Callbacks.md">Callbacks</a></li>
