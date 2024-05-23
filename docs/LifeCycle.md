@@ -1,3 +1,30 @@
+<div style="background-color: #333; overflow: hidden;">
+  <a href="README.md" style="float: left; display: block; color: white; text-align: center; padding: 14px 16px; text-decoration: none;">Home</a>
+  <span style="float: left; display: block; color: white; padding: 14px 16px;">|</span>
+  <a href="docs/LifeCycle.md" style="float: left; display: block; color: white; text-align: center; padding: 14px 16px; text-decoration: none;">Life Cycle</a>
+  <span style="float: left; display: block; color: white; padding: 14px 16px;">|</span>
+  <a href="docs/Setter.md" style="float: left; display: block; color: white; text-align: center; padding: 14px 16px; text-decoration: none;">Setter</a>
+  <span style="float: left; display: block; color: white; padding: 14px 16px;">|</span>
+  <a href="docs/Easing.md" style="float: left; display: block; color: white; text-align: center; padding: 14px 16px; text-decoration: none;">Easing</a>
+  <span style="float: left; display: block; color: white; padding: 14px 16px;">|</span>
+  <a href="docs/Callbacks.md" style="float: left; display: block; color: white; text-align: center; padding: 14px 16px; text-decoration: none;">Callbacks</a>
+  <span style="float: left; display: block; color: white; padding: 14px 16px;">|</span>
+  <a href="docs/Playback.md" style="float: left; display: block; color: white; text-align: center; padding: 14px 16px; text-decoration: none;">Playback</a>
+  <span style="float: left; display: block; color: white; padding: 14px 16px;">|</span>
+  <a href="docs/RelativeValues.md" style="float: left; display: block; color: white; text-align: center; padding: 14px 16px; text-decoration: none;">Relative Values</a>
+  <span style="float: left; display: block; color: white; padding: 14px 16px;">|</span>
+  <a href="docs/TimerSequenceParallel.md" style="float: left; display: block; color: white; text-align: center; padding: 14px 16px; text-decoration: none;">Timer, Sequence, and Parallel</a>
+  <span style="float: left; display: block; color: white; padding: 14px 16px;">|</span>
+  <a href="docs/AnonymousPlaybackObjects.md" style="float: left; display: block; color: white; text-align: center; padding: 14px 16px; text-decoration: none;">Anonymous Playback</a>
+  <span style="float: left; display: block; color: white; padding: 14px 16px;">|</span>
+  <a href="docs/SharedAssets.md" style="float: left; display: block; color: white; text-align: center; padding: 14px 16px; text-decoration: none;">Shared Assets</a>
+  <span style="float: left; display: block; color: white; padding: 14px 16px;">|</span>
+  <a href="docs/BatchOperations.md" style="float: left; display: block; color: white; text-align: center; padding: 14px 16px; text-decoration: none;">Batch Operations</a>
+  <span style="float: left; display: block; color: white; padding: 14px 16px;">|</span>
+</div>
+
+---
+
 ## Lifecycle: `owner`, `reuseID`, and Clearance
 
 The idea of the `owner` and `reuseID` is to store the `Motion` objects internally in an ordered way so that they are reusable when it makes sense, and then disposed when not needed anymore. 
