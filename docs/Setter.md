@@ -55,6 +55,6 @@ When using the `MotionKitComponent` you **do** have to choose which motion to us
 
 Note that there is a `Motion2D` block that is only avaliable in the inspector version.
 
-Once the `MotionKitBlock` is created, you need to assign an object in the setter field, and then the inspector will allow you to choose among all properties and methods that suits the type of `MotionKitBlock`. In this example, all the listed methods and properties receive a `Vector3` parameter:
+Once the `MotionKitBlock` is created, you need to assign an object in the setter field, and then the inspector will allow you to choose among all properties and methods of that object that suits the type of `MotionKitBlock`. In this example, all the listed methods and properties receive a `Vector3` parameter:
 
 <img src="https://github.com/cocodrilodog/tools-motion-kit/assets/8107813/40b256b1-4204-428c-a77d-e15d9179adf6" width="400">
