@@ -15,7 +15,7 @@
   <span style="float: left; display: block; color: white; padding: 14px 16px;">|</span>
   <a href="TimerSequenceParallel.md" style="float: left; display: block; color: white; text-align: center; padding: 14px 16px; text-decoration: none;">Timer, Sequence, and Parallel</a>
   <span style="float: left; display: block; color: white; padding: 14px 16px;">|</span>
-  <a href="AnonymousPlaybackObjects.md" style="float: left; display: block; color: white; text-align: center; padding: 14px 16px; text-decoration: none;">Anonymous Playback</a>
+  <a href="AnonymousPlaybackObjects.md" style="float: left; display: block; color: white; text-align: center; padding: 14px 16px; text-decoration: none; background-color: #555;">Anonymous Playback</a>
   <span style="float: left; display: block; color: white; padding: 14px 16px;">|</span>
   <a href="SharedAssets.md" style="float: left; display: block; color: white; text-align: center; padding: 14px 16px; text-decoration: none;">Shared Assets</a>
   <span style="float: left; display: block; color: white; padding: 14px 16px;">|</span>
