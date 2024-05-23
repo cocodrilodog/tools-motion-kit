@@ -1,12 +1,27 @@
-<nav  class="horizontal-menu">
-  <ul>
-    <li><a href="docs/AnonymousPlaybackObjects.md">Handling Anonymous `Playback` Objects</a></li>
-    <li><a href="docs/SharedAssets.md">Shared Assets</a></li>
-  </ul>
-</nav>
-
-<!-- Link to the CSS file -->
-<link rel="stylesheet" type="text/css" href="css/style.css">
+<div style="background-color: #333; overflow: hidden;">
+  <a href="README.md" style="float: left; display: block; color: white; text-align: center; padding: 14px 16px; text-decoration: none;">Home</a>
+  <span style="float: left; display: block; color: white; padding: 14px 16px;">|</span>
+  <a href="docs/LifeCycle.md" style="float: left; display: block; color: white; text-align: center; padding: 14px 16px; text-decoration: none;">Life Cycle</a>
+  <span style="float: left; display: block; color: white; padding: 14px 16px;">|</span>
+  <a href="docs/Setter.md" style="float: left; display: block; color: white; text-align: center; padding: 14px 16px; text-decoration: none;">Setter</a>
+  <span style="float: left; display: block; color: white; padding: 14px 16px;">|</span>
+  <a href="docs/Easing.md" style="float: left; display: block; color: white; text-align: center; padding: 14px 16px; text-decoration: none;">Easing</a>
+  <span style="float: left; display: block; color: white; padding: 14px 16px;">|</span>
+  <a href="docs/Callbacks.md" style="float: left; display: block; color: white; text-align: center; padding: 14px 16px; text-decoration: none;">Callbacks</a>
+  <span style="float: left; display: block; color: white; padding: 14px 16px;">|</span>
+  <a href="docs/Playback.md" style="float: left; display: block; color: white; text-align: center; padding: 14px 16px; text-decoration: none;">Playback</a>
+  <span style="float: left; display: block; color: white; padding: 14px 16px;">|</span>
+  <a href="docs/RelativeValues.md" style="float: left; display: block; color: white; text-align: center; padding: 14px 16px; text-decoration: none;">Relative Values</a>
+  <span style="float: left; display: block; color: white; padding: 14px 16px;">|</span>
+  <a href="docs/TimerSequenceParallel.md" style="float: left; display: block; color: white; text-align: center; padding: 14px 16px; text-decoration: none;">Timer, Sequence, and Parallel</a>
+  <span style="float: left; display: block; color: white; padding: 14px 16px;">|</span>
+  <a href="docs/AnonymousPlaybackObjects.md" style="float: left; display: block; color: white; text-align: center; padding: 14px 16px; text-decoration: none;">Anonymous Playback</a>
+  <span style="float: left; display: block; color: white; padding: 14px 16px;">|</span>
+  <a href="docs/SharedAssets.md" style="float: left; display: block; color: white; text-align: center; padding: 14px 16px; text-decoration: none;">Shared Assets</a>
+  <span style="float: left; display: block; color: white; padding: 14px 16px;">|</span>
+  <a href="docs/BatchOperations.md" style="float: left; display: block; color: white; text-align: center; padding: 14px 16px; text-decoration: none;">Batch Operations</a>
+  <span style="float: left; display: block; color: white; padding: 14px 16px;">|</span>
+</div>
 
 ---
 
@@ -430,3 +445,21 @@ In the bottom part of the image, you can see a section called `Batch Operations`
 The issue below is solved!
 
 ~~* The `MotionKitBlock`s use Unity's `SerializeReference` attribute which has some problems with the Unity's prefab workflow. They work as expected with prefabs, but in some cases the data of the prefabs will break. The current workaround is to never add or remove a `MotionKitBlock` from a prefab instance, but rather go to the prefab asset and do the modification there. I will enforce this by disabling that functionality in the prefab instances' inspector, but for now, just bear with me!~~
+
+---
+
+<nav>
+  <ul>
+    <li><a href="README.md">Home</a></li>
+    <li><a href="docs/LifeCycle.md">Life Cycle</a></li>
+    <li><a href="docs/Setter.md">Setter</a></li>
+    <li><a href="docs/Easing.md">Easing</a></li>
+    <li><a href="docs/Callbacks.md">Callbacks</a></li>
+    <li><a href="docs/Playback.md">Playback</a></li>
+    <li><a href="docs/RelativeValues.md">Relative Values</a></li>
+    <li><a href="docs/TimerSequenceParallel.md">Timer, Sequence, and Parallel</a></li>
+    <li><a href="docs/AnonymousPlaybackObjects.md">Anonymous Playback</a></li>
+    <li><a href="docs/SharedAssets.md">Shared Assets</a></li>
+    <li><a href="docs/BatchOperations.md">Batch Operations</a></li>
+  </ul>
+</nav>
