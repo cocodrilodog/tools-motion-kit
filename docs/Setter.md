@@ -3,7 +3,7 @@
   <span style="float: left; display: block; color: white; padding: 14px 16px;">|</span>
   <a href="LifeCycle.md" style="float: left; display: block; color: white; text-align: center; padding: 14px 16px; text-decoration: none;">Life Cycle</a>
   <span style="float: left; display: block; color: white; padding: 14px 16px;">|</span>
-  <a href="Setter.md" style="float: left; display: block; color: white; text-align: center; padding: 14px 16px; text-decoration: none;">Setter</a>
+  <span style="float: left; display: block; color: white; padding: 14px 16px;"><b>▸Setter◂</b></span>
   <span style="float: left; display: block; color: white; padding: 14px 16px;">|</span>
   <a href="Easing.md" style="float: left; display: block; color: white; text-align: center; padding: 14px 16px; text-decoration: none;">Easing</a>
   <span style="float: left; display: block; color: white; padding: 14px 16px;">|</span>
@@ -65,7 +65,7 @@ Once the `MotionKitBlock` is created, you need to assign an object in the setter
   <ul>
     <li><a href="../README.md">Home</a></li>
     <li><a href="LifeCycle.md">Life Cycle</a></li>
-    <li><a href="Setter.md">Setter</a></li>
+    <li><b>▸Setter◂</b></li>
     <li><a href="Easing.md">Easing</a></li>
     <li><a href="Callbacks.md">Callbacks</a></li>
     <li><a href="Playback.md">Playback</a></li>
