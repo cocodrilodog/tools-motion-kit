@@ -1,6 +1,7 @@
 <nav>
   <ul>
-    <li><a href="docs/AnonymousPlaybackObjects.md">Anonymous Playback Objects</a></li>
+    <li><a href="docs/AnonymousPlaybackObjects.md">Handling Anonymous `Playback` Objects</a></li>
+    <li><a href="docs/SharedAssets.md">Shared Assets</a></li>
   </ul>
 </nav>
 
