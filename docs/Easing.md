@@ -5,7 +5,7 @@
   <span style="float: left; display: block; color: white; padding: 14px 16px;">|</span>
   <a href="Setter.md" style="float: left; display: block; color: white; text-align: center; padding: 14px 16px; text-decoration: none;">Setter</a>
   <span style="float: left; display: block; color: white; padding: 14px 16px;">|</span>
-  <a href="Easing.md" style="float: left; display: block; color: white; text-align: center; padding: 14px 16px; text-decoration: none;">Easing</a>
+  <span style="float: left; display: block; color: white; padding: 14px 16px;"><b>▸Easing◂</b></span>
   <span style="float: left; display: block; color: white; padding: 14px 16px;">|</span>
   <a href="Callbacks.md" style="float: left; display: block; color: white; text-align: center; padding: 14px 16px; text-decoration: none;">Callbacks</a>
   <span style="float: left; display: block; color: white; padding: 14px 16px;">|</span>
@@ -71,7 +71,7 @@ And if you choose from some of the `ParameterizedEasing` functions (`AnimationCu
     <li><a href="../README.md">Home</a></li>
     <li><a href="LifeCycle.md">Life Cycle</a></li>
     <li><a href="Setter.md">Setter</a></li>
-    <li><a href="Easing.md">Easing</a></li>
+    <li><b>▸Easing◂</b></li>
     <li><a href="Callbacks.md">Callbacks</a></li>
     <li><a href="Playback.md">Playback</a></li>
     <li><a href="RelativeValues.md">Relative Values</a></li>
