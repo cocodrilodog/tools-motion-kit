@@ -13,7 +13,7 @@
   <span style="float: left; display: block; color: white; padding: 14px 16px;">|</span>
   <a href="RelativeValues.md" style="float: left; display: block; color: white; text-align: center; padding: 14px 16px; text-decoration: none;">Relative Values</a>
   <span style="float: left; display: block; color: white; padding: 14px 16px;">|</span>
-  <a href="TimerSequenceParallel.md" style="float: left; display: block; color: white; text-align: center; padding: 14px 16px; text-decoration: none;">Timer, Sequence, and Parallel</a>
+  <span style="float: left; display: block; color: white; padding: 14px 16px;"><b>▸Timer, Sequence, and Parallel◂</b></span>
   <span style="float: left; display: block; color: white; padding: 14px 16px;">|</span>
   <a href="AnonymousPlaybackObjects.md" style="float: left; display: block; color: white; text-align: center; padding: 14px 16px; text-decoration: none;">Anonymous Playback</a>
   <span style="float: left; display: block; color: white; padding: 14px 16px;">|</span>
@@ -107,7 +107,7 @@ In the bottom part of the image, you can see a section called `Batch Operations`
     <li><a href="Callbacks.md">Callbacks</a></li>
     <li><a href="Playback.md">Playback</a></li>
     <li><a href="RelativeValues.md">Relative Values</a></li>
-    <li><a href="TimerSequenceParallel.md">Timer, Sequence, and Parallel</a></li>
+    <li><b>▸Timer, Sequence, and Parallel◂</b></li>
     <li><a href="AnonymousPlaybackObjects.md">Anonymous Playback</a></li>
     <li><a href="SharedAssets.md">Shared Assets</a></li>
     <li><a href="BatchOperations.md">Batch Operations</a></li>
