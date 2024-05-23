@@ -77,3 +77,20 @@ To set the `owner` and `reuseID` in a `MotionKitBlock` (the inspector version), 
 
 #### Clearance
 In the `MotionKitComponent` the clearance is carried out automatically when the component is destroyed.
+---
+
+<nav>
+  <ul>
+    <li><a href="../README.md">Home</a></li>
+    <li><a href="LifeCycle.md">Life Cycle</a></li>
+    <li><a href="Setter.md">Setter</a></li>
+    <li><a href="Easing.md">Easing</a></li>
+    <li><a href="Callbacks.md">Callbacks</a></li>
+    <li><a href="Playback.md">Playback</a></li>
+    <li><a href="RelativeValues.md">Relative Values</a></li>
+    <li><a href="TimerSequenceParallel.md">Timer, Sequence, and Parallel</a></li>
+    <li><a href="AnonymousPlaybackObjects.md">Anonymous Playback</a></li>
+    <li><a href="SharedAssets.md">Shared Assets</a></li>
+    <li><a href="BatchOperations.md">Batch Operations</a></li>
+  </ul>
+</nav>

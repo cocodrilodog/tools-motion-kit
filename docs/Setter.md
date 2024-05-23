@@ -58,3 +58,20 @@ Note that there is a `Motion2D` block that is only avaliable in the inspector ve
 Once the `MotionKitBlock` is created, you need to assign an object in the setter field, and then the inspector will allow you to choose among all properties and methods of that object that suits the type of `MotionKitBlock`. In this example, all the listed methods and properties receive a `Vector3` parameter:
 
 <img src="https://github.com/cocodrilodog/tools-motion-kit/assets/8107813/40b256b1-4204-428c-a77d-e15d9179adf6" width="400">
+---
+
+<nav>
+  <ul>
+    <li><a href="../README.md">Home</a></li>
+    <li><a href="LifeCycle.md">Life Cycle</a></li>
+    <li><a href="Setter.md">Setter</a></li>
+    <li><a href="Easing.md">Easing</a></li>
+    <li><a href="Callbacks.md">Callbacks</a></li>
+    <li><a href="Playback.md">Playback</a></li>
+    <li><a href="RelativeValues.md">Relative Values</a></li>
+    <li><a href="TimerSequenceParallel.md">Timer, Sequence, and Parallel</a></li>
+    <li><a href="AnonymousPlaybackObjects.md">Anonymous Playback</a></li>
+    <li><a href="SharedAssets.md">Shared Assets</a></li>
+    <li><a href="BatchOperations.md">Batch Operations</a></li>
+  </ul>
+</nav>
