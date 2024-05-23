@@ -17,7 +17,7 @@
   <span style="float: left; display: block; color: white; padding: 14px 16px;">|</span>
   <a href="AnonymousPlaybackObjects.md" style="float: left; display: block; color: white; text-align: center; padding: 14px 16px; text-decoration: none;">Anonymous Playback</a>
   <span style="float: left; display: block; color: white; padding: 14px 16px;">|</span>
-  <a href="SharedAssets.md" style="float: left; display: block; color: white; text-align: center; padding: 14px 16px; text-decoration: none;">Shared Assets</a>
+  <span style="float: left; display: block; color: white; padding: 14px 16px;"><b>▸Shared Assets◂</b></span>
   <span style="float: left; display: block; color: white; padding: 14px 16px;">|</span>
   <a href="BatchOperations.md" style="float: left; display: block; color: white; text-align: center; padding: 14px 16px; text-decoration: none;">Batch Operations</a>
   <span style="float: left; display: block; color: white; padding: 14px 16px;">|</span>
@@ -41,7 +41,7 @@
     <li><a href="RelativeValues.md">Relative Values</a></li>
     <li><a href="TimerSequenceParallel.md">Timer, Sequence, and Parallel</a></li>
     <li><a href="AnonymousPlaybackObjects.md">Anonymous Playback</a></li>
-    <li><a href="SharedAssets.md">Shared Assets</a></li>
+    <li><b>▸Shared Assets◂</b></li>
     <li><a href="BatchOperations.md">Batch Operations</a></li>
   </ul>
 </nav>
