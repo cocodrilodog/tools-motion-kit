@@ -1,5 +1,5 @@
 <div style="background-color: #333; overflow: hidden;">
-  <a href="README.md" style="float: left; display: block; color: white; text-align: center; padding: 14px 16px; text-decoration: none;">Home</a>
+  <a href="../README.md" style="float: left; display: block; color: white; text-align: center; padding: 14px 16px; text-decoration: none;">Home</a>
   <span style="float: left; display: block; color: white; padding: 14px 16px;">|</span>
   <a href="docs/LifeCycle.md" style="float: left; display: block; color: white; text-align: center; padding: 14px 16px; text-decoration: none;">Life Cycle</a>
   <span style="float: left; display: block; color: white; padding: 14px 16px;">|</span>
