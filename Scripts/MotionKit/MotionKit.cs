@@ -29,60 +29,57 @@
 
 	#endregion
 
-	/// 
 	/// <summary>
-	/// Singleton to create reusable motions, timers and sequences which altogether
-	/// are used to create animations and called playback objects.
+	/// Singleton to create reusable motions, timers, sequences and parallels which altogether
+	/// are used to create animations and are called playback objects.
 	/// </summary>
 	/// 
 	/// <remarks>
-	/// <c>Motion</c>, <c>Timer</c> and <c>Sequence</c> are objects used to animate any
+	/// <c>Motion</c>, <c>Timer</c>, <c>Sequence</c>, and <c>Parallel</c> are objects used to animate any
 	/// property of any object.
 	///
-	/// Playback objects are created and returned by Methods like these: 
-	/// <see cref="GetMotion(MotionBase{float, MotionFloat}.Setter)"/>,
-	/// <see cref="GetTimer()"/> and
-	/// <see cref="GetSequence(ITimedProgressable[])"/>
-	/// 
-	/// There are also overloads to create registered motions, timers and sequences:
+	/// Registered playback objects that can be reused are created and returned by the methods that implement 
+	/// the <c>owner</c> and <c>reuseID</c>, like this one: 
 	/// <see cref="GetMotion(object, string, MotionBase{float, MotionFloat}.Setter)"/>,
-	/// <see cref="GetTimer(object, string)"/> and
-	/// <see cref="GetSequence(object, string, ITimedProgressable[])"/>
 	/// 
-	/// Those methods receive the following parameters: <c>owner</c>, <c>reuseID</c>
-	/// and other parameters.
-	/// 
-	/// If a <c>Playback</c> object with the same owner and reuseID was already created before, 
-	/// that will be the returned object. Otherwise a new <c>Playback</c> object  instance is 
-	/// created and returned which will be stored internally for later reuse with the assigned
-	/// combination of owner and reuseID.
-	/// 
-	/// <example>
-	/// <code>
-	/// MotionKit.GetMotion(
-	/// 	this, "PositionMotion", s => transform.localPosition = s
-	/// ).SetEasing(Quadratic.EaseOut).Play(Vector3.up, 0.3f);
-	/// </code>
-	/// </example>
-	/// 
-	/// The <c>owner</c>:
-	/// Any object with which you want to relate the <c>Playback</c> object in order to 
-	/// reuse it in multiple animations/callbacks. After you are done with the animations/callbacks
-	/// of this owner, you can call <see cref="ClearPlaybacks(object)"/> to remove all of its related
-	/// <c>Playback</c> objects forever.
-	/// 
-	/// The <c>reuseID</c>:
-	/// A string that identifies all the animations/callbacks that will be performed by the same 
-	/// <c>Playback</c> object that is related to the same owner. Motions, timers and sequences
-	/// that are started with the same reuseID and owner will stop to one another if one is started 
-	/// while the other was playing because they are carried out by the same <c>Playback</c> object.
-	///
+	/// There are also overloads to create non-registered motions, timers, sequences, and parallels, like this one:
+	/// <see cref="GetMotion(MotionBase{float, MotionFloat}.Setter)"/>,
 	/// </remarks>
 	[AddComponentMenu("")]
 	public class MotionKit : MonoSingleton<MotionKit> {
 
 
 		#region Public Static Methods
+
+		/// <summary>
+		/// Gets a <see cref="Motion3D"/> object ready to use for any animation and registers it with
+		/// its <paramref name="owner"/> and <paramref name="reuseID"/> for later reuse.
+		/// </summary>
+		/// 
+		/// <remarks>
+		/// If this method is invoked subsequently with the same <paramref name="owner"/> and <paramref name="reuseID"/>
+		/// as before, it will use and return the same motion object that was created previously.
+		/// </remarks>
+		/// 
+		/// <returns>The <see cref="Motion3D"/>.</returns>
+		/// 
+		/// <param name="owner">
+		/// The owner of this motion.
+		/// </param>
+		/// 
+		/// <param name="reuseID">
+		/// The reuseID of this motion.
+		/// </param>
+		/// 
+		/// <param name="setter">
+		/// A function that sets the animated <see cref="Vector3"/> value. Can be a lambda expression.
+		/// </param>
+		public static Motion3D GetMotion(object owner, string reuseID, Motion3D.Setter setter) {
+			if (Instance != null) {
+				return Instance._GetMotion(owner, reuseID, setter);
+			}
+			return null;
+		}
 
 		/// <summary>
 		/// Gets a <see cref="Motion3D"/> object ready to use for any animation.
@@ -101,14 +98,19 @@
 		}
 
 		/// <summary>
-		/// Gets a <see cref="Motion3D"/> object ready to use for any animation and registers it with
+		/// Gets a <see cref="MotionFloat"/> object ready to use for any animation and registers it with
 		/// its <paramref name="owner"/> and <paramref name="reuseID"/> for later reuse.
 		/// </summary>
 		/// 
-		/// <returns>The <see cref="Motion3D"/>.</returns>
+		/// <remarks>
+		/// If this method is invoked subsequently with the same <paramref name="owner"/> and <paramref name="reuseID"/>
+		/// as before, it will use and return the same motion object that was created previously.
+		/// </remarks>
+		/// 
+		/// <returns>The <see cref="MotionFloat"/>.</returns>
 		/// 
 		/// <param name="owner">
-		/// The owner of this motion.
+		/// The ownwer of this motion.
 		/// </param>
 		/// 
 		/// <param name="reuseID">
@@ -116,9 +118,9 @@
 		/// </param>
 		/// 
 		/// <param name="setter">
-		/// A function that sets the animated <see cref="Vector3"/> value. Can be a lambda expression.
+		/// A function that sets the animated <see cref="float"/> value. Can be a lambda expression.
 		/// </param>
-		public static Motion3D GetMotion(object owner, string reuseID, Motion3D.Setter setter) {
+		public static MotionFloat GetMotion(object owner, string reuseID, MotionFloat.Setter setter) {
 			if (Instance != null) {
 				return Instance._GetMotion(owner, reuseID, setter);
 			}
@@ -142,11 +144,16 @@
 		}
 
 		/// <summary>
-		/// Gets a <see cref="MotionFloat"/> object ready to use for any animation and registers it with
+		/// Gets a <see cref="MotionColor"/> object ready to use for any animation and registers it with
 		/// its <paramref name="owner"/> and <paramref name="reuseID"/> for later reuse.
 		/// </summary>
 		/// 
-		/// <returns>The <see cref="MotionFloat"/>.</returns>
+		/// <remarks>
+		/// If this method is invoked subsequently with the same <paramref name="owner"/> and <paramref name="reuseID"/>
+		/// as before, it will use and return the same motion object that was created previously.
+		/// </remarks>
+		/// 
+		/// <returns>The <see cref="MotionColor"/>.</returns>
 		/// 
 		/// <param name="owner">
 		/// The ownwer of this motion.
@@ -157,9 +164,9 @@
 		/// </param>
 		/// 
 		/// <param name="setter">
-		/// A function that sets the animated <see cref="float"/> value. Can be a lambda expression.
+		/// A function that sets the animated <see cref="Color"/> value. Can be a lambda expression.
 		/// </param>
-		public static MotionFloat GetMotion(object owner, string reuseID, MotionFloat.Setter setter) {
+		public static MotionColor GetMotion(object owner, string reuseID, MotionColor.Setter setter) {
 			if (Instance != null) {
 				return Instance._GetMotion(owner, reuseID, setter);
 			}
@@ -183,26 +190,27 @@
 		}
 
 		/// <summary>
-		/// Gets a <see cref="MotionColor"/> object ready to use for any animation and registers it with
+		/// Gets a <see cref="Timer"/> object ready be played and registers it with
 		/// its <paramref name="owner"/> and <paramref name="reuseID"/> for later reuse.
 		/// </summary>
 		/// 
-		/// <returns>The <see cref="MotionColor"/>.</returns>
+		/// <remarks>
+		/// If this method is invoked subsequently with the same <paramref name="owner"/> and <paramref name="reuseID"/>
+		/// as before, it will use and return the same timer object that was created previously.
+		/// </remarks>
+		/// 
+		/// <returns>The timer.</returns>
 		/// 
 		/// <param name="owner">
-		/// The ownwer of this motion.
+		/// The ownwer of this timer.
 		/// </param>
 		/// 
 		/// <param name="reuseID">
-		/// The reuseID of this motion.
+		/// The reuseID of this timer.
 		/// </param>
-		/// 
-		/// <param name="setter">
-		/// A function that sets the animated <see cref="Color"/> value. Can be a lambda expression.
-		/// </param>
-		public static MotionColor GetMotion(object owner, string reuseID, MotionColor.Setter setter) {
+		public static Timer GetTimer(object owner, string reuseID) {
 			if (Instance != null) {
-				return Instance._GetMotion(owner, reuseID, setter);
+				return Instance._GetTimer(owner, reuseID);
 			}
 			return null;
 		}
@@ -220,22 +228,31 @@
 		}
 
 		/// <summary>
-		/// Gets a <see cref="Timer"/> object ready be played and registers it with
+		/// Gets a <see cref="Sequence"/> object ready be played and registers it with
 		/// its <paramref name="owner"/> and <paramref name="reuseID"/> for later reuse.
 		/// </summary>
 		/// 
-		/// <returns>The timer.</returns>
+		/// <remarks>
+		/// If this method is invoked subsequently with the same <paramref name="owner"/> and <paramref name="reuseID"/>
+		/// as before, it will use and return the same sequence object that was created previously.
+		/// </remarks>
+		/// 
+		/// <returns>The sequence.</returns>
 		/// 
 		/// <param name="owner">
-		/// The ownwer of this timer.
+		/// The ownwer of this sequence.
 		/// </param>
 		/// 
 		/// <param name="reuseID">
-		/// The reuseID of this timer.
+		/// The reuseID of this sequence.
 		/// </param>
-		public static Timer GetTimer(object owner, string reuseID) {
+		///
+		/// <param name="sequenceItems">
+		/// The items that will make the sequence.
+		/// </param>
+		public static Sequence GetSequence(object owner, string reuseID, params ITimedProgressable[] sequenceItems) {
 			if (Instance != null) {
-				return Instance._GetTimer(owner, reuseID);
+				return Instance._GetSequence(owner, reuseID, sequenceItems);
 			}
 			return null;
 		}
@@ -257,50 +274,14 @@
 		}
 
 		/// <summary>
-		/// Gets a <see cref="Sequence"/> object ready be played and registers it with
-		/// its <paramref name="owner"/> and <paramref name="reuseID"/> for later reuse.
-		/// </summary>
-		/// 
-		/// <returns>The sequence.</returns>
-		/// 
-		/// <param name="owner">
-		/// The ownwer of this sequence.
-		/// </param>
-		/// 
-		/// <param name="reuseID">
-		/// The reuseID of this sequence.
-		/// </param>
-		///
-		/// <param name="sequenceItems">
-		/// The items that will make the sequence.
-		/// </param>
-		public static Sequence GetSequence(object owner, string reuseID, params ITimedProgressable[] sequenceItems) {
-			if (Instance != null) {
-				return Instance._GetSequence(owner, reuseID, sequenceItems);
-			}
-			return null;
-		}
-		
-		/// <summary>
-		/// Gets a <see cref="Parallel"/> object ready be played.
-		/// </summary>
-		/// 
-		/// <returns>The parallel.</returns>
-		///
-		/// <param name="parallelItems">
-		/// The items that will make the parallel.
-		/// </param>
-		public static Parallel GetParallel(params ITimedProgressable[] parallelItems) {
-			if (Instance != null) {
-				return Instance._GetParallel(parallelItems);
-			}
-			return null;
-		}
-
-		/// <summary>
 		/// Gets a <see cref="Parallel"/> object ready be played and registers it with
 		/// its <paramref name="owner"/> and <paramref name="reuseID"/> for later reuse.
 		/// </summary>
+		/// 
+		/// <remarks>
+		/// If this method is invoked subsequently with the same <paramref name="owner"/> and <paramref name="reuseID"/>
+		/// as before, it will use and return the same parallel object that was created previously.
+		/// </remarks>
 		/// 
 		/// <returns>The parallel.</returns>
 		/// 
@@ -323,11 +304,27 @@
 		}
 
 		/// <summary>
+		/// Gets a <see cref="Parallel"/> object ready be played.
+		/// </summary>
+		/// 
+		/// <returns>The parallel.</returns>
+		///
+		/// <param name="parallelItems">
+		/// The items that will make the parallel.
+		/// </param>
+		public static Parallel GetParallel(params ITimedProgressable[] parallelItems) {
+			if (Instance != null) {
+				return Instance._GetParallel(parallelItems);
+			}
+			return null;
+		}
+
+		/// <summary>
 		/// Finds the <c>Motion</c>, <c>Timer</c>, <c>Sequence</c> or <c>Parallel</c> registered with 
 		/// <paramref name="owner"/> and the <paramref name="reuseID"/>.
 		/// </summary>
-		/// <param name="owner"></param>
-		/// <param name="reuseID"></param>
+		/// <param name="owner">The owner</param>
+		/// <param name="reuseID">The reuse id</param>
 		/// <returns>The playback object</returns>
 		public static IPlayback FindPlayback(object owner, string reuseID) {
 			if (Instance != null) {
@@ -340,8 +337,8 @@
 		/// Finds the <c>Motion</c>, <c>Timer</c>, <c>Sequence</c> or <c>Parallel</c> registered with 
 		/// <paramref name="owner"/> and the <paramref name="reuseID"/>.
 		/// </summary>
-		/// <param name="owner"></param>
-		/// <param name="reuseID"></param>
+		/// <param name="owner">The owner</param>
+		/// <param name="reuseID">The reuse id</param>
 		/// <returns>The playback object</returns>
 		public static T FindPlayback<T>(object owner, string reuseID) where T : class, IPlayback {
 			if (Instance != null) {
@@ -357,7 +354,8 @@
 		/// <returns>
 		/// <c>true</c>, if the playback was cleared, <c>false</c> otherwise.
 		/// </returns>
-		/// <param name="owner">Owner.</param>
+		/// <param name="owner">the owner</param>
+		/// <param name="reuseId">The reuse id</param>
 		public static bool ClearPlayback(object owner, string reuseId) {
 			// Check for null because this may be called from OnDestroy() of another 
 			// object and at that point, it is possible that the animate instance is 
@@ -369,13 +367,13 @@
 		}
 
 		/// <summary>
-		/// Removes all cached <c>Playback</c> objects that are related to 
+		/// Removes all registered <c>Playback</c> objects that are related to 
 		/// <c>owner</c>
 		/// </summary>
 		/// <returns>
 		/// <c>true</c>, if playbacks were cleared, <c>false</c> otherwise.
 		/// </returns>
-		/// <param name="owner">Owner.</param>
+		/// <param name="owner">The owner</param>
 		public static bool ClearPlaybacks(object owner) {
 			// Check for null because this may be called from OnDestroy() of another 
 			// object and at that point, it is possible that the animate instance is 
