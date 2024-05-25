@@ -67,10 +67,10 @@
 
 		protected override void InitializePropertiesForOnGUI() {
 			base.InitializePropertiesForOnGUI();
-			//MagnitudeProperty	= Property.FindPropertyRelative("m_Magnitude");
-			//TMultiplierProperty = Property.FindPropertyRelative("m_TMultiplier");
-			//IsDamperedProperty	= Property.FindPropertyRelative("m_IsDampered");
-			//DamperProperty		= Property.FindPropertyRelative("m_Damper");
+			MagnitudeProperty	= Property.FindPropertyRelative("m_Magnitude");
+			TMultiplierProperty = Property.FindPropertyRelative("m_TMultiplier");
+			IsDamperedProperty	= Property.FindPropertyRelative("m_IsDampered");
+			DamperProperty		= Property.FindPropertyRelative("m_Damper");
 		}
 
 
