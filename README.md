@@ -29,6 +29,10 @@
 
 MotionKit is a Unity engine tool that animates anything. It is very similar to [DOTween](http://dotween.demigiant.com/getstarted.php), but with inspector super powers and a few tweaks that makes it simpler to use and learn.
 
+<img src="https://github.com/cocodrilodog/tools-motion-kit/assets/8107813/87f79eb1-cf96-4ca4-96e6-a8d17b15da9f" width="640">
+
+There is no need for plugins. This is one of the biggest adavantages, as compared with DOTween. With a simple API, you can animate everything out of the box and it is very easy to learn.
+
 ([Watch overview on YouTube](http://www.youtube.com/watch?v=1knaaxQQs3I))
 
 <a href="http://www.youtube.com/watch?feature=player_embedded&v=1knaaxQQs3I
