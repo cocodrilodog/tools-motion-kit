@@ -27,9 +27,11 @@
 
 ## Lifecycle: `owner`, `reuseID`, and Clearance
 
-The idea of the `owner` and `reuseID` is to store the `Motion` objects internally in an ordered way so that they are reusable when it makes sense, and then disposed when not needed anymore. 
+`Motion`, `Timer`, `Sequence`, and `Parallel` objects (collectibly named as `PlaybackObject`s) can be reused for optimal results with a very convenient API. 
 
-Instead of using global IDs, I decided to associate the `Motion`s with "owners", because it makes more sense from a development standpoint. For example, you may want to define the `reuseID` of multiple `Motion`s that affect the position of objects as `"Position"`, but each one should be associated with the specific `owner` that it intends to move, so that it is no confused with the others. This is a scalable solution to manage the reusability and disposal of the `Motion` objects.
+For example, you can create a motion that animates the position of an object every time the player clicks the mouse button and moves the object to the clicked location. Instead of creating a new `Motion` every time, you can reuse only one `Motion` object to carry out all the animations. This has a very convenient side effect: It will stop the current movement and start a new one towards the new destination point automatically. You wouldn't need to stop or destroy the current one. (A big advantage over DOTween).
+
+This is what `owner` and `reuseID` are for. `PlaybackObject`s are stored internally assotiated with an owner object and an id string when they are created. When invoking `MotionKit.GetMotion(someOwner, "someReuseID", ...` repeatedly, this line of code will use and return the same `Motion` object always.
 
 Example of owners and reuse IDs:
 
@@ -37,7 +39,7 @@ Example of owners and reuse IDs:
 
 ### C#
 #### `owner` and `reuseID`
-In the code below, the `owner` is the `m_Ball` and the `reuseID` is `"Position"`. In order to move the ball many times you may want to create only one `Motion3D` and reuse it as much as possible instead of creating a new one each time. So if you write the code below in different places of your script with different `Vector3` values and durations, you can rest asured that the same `Motion3D` object will be used for all the position animations as long as you use the same `owner` and `reuseID`.
+In the code below, the `owner` is the `m_Ball` and the `reuseID` is `"Position"`. In order to move the ball many times you may want to create only one `Motion3D` and reuse it as much as possible instead of creating a new one each time. So if the code below is excecuted several times in your script with different `Vector3` values and durations, you can rest assured that the same `Motion3D` object will be used for all the position animations as long as you use the same `owner` and `reuseID`.
 ```
 MotionKit.GetMotion(m_Ball, "Position", p => m_Ball.localPosition = p)
 	.Play(new Vector3(0, 0, 0), new Vector3(3, 0, 0), 2);
