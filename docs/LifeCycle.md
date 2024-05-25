@@ -27,7 +27,7 @@
 
 ## Life Cycle: `owner`, `reuseID`, and Clearance
 
-`Motion`, `Timer`, `Sequence`, and `Parallel` objects (collectibly named as `Playback`s) can be reused for optimal results with a very convenient API. 
+`Motion`, `Timer`, `Sequence`, and `Parallel` objects (collectibly named as `Playback`s) can be reused for optimal results with a very easy to use API. 
 
 For example, you can create a motion that animates the position of an object every time the player clicks the mouse button and moves the object to the clicked location. Instead of creating a new `Motion` every time, you can reuse only one `Motion` object to carry out all the animations. This has a very convenient side effect: It will stop the current movement and start a new one towards the new destination point automatically. You wouldn't need to stop or destroy the current one. (The other big advantage over DOTween).
 
