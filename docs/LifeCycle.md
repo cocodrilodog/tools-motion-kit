@@ -25,7 +25,7 @@
 
 ---
 
-## Lifecycle: `owner`, `reuseID`, and Clearance
+## Life Cycle: `owner`, `reuseID`, and Clearance
 
 `Motion`, `Timer`, `Sequence`, and `Parallel` objects (collectibly named as `Playback`s) can be reused for optimal results with a very convenient API. 
 
