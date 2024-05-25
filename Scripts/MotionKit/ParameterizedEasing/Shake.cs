@@ -121,7 +121,7 @@
 						(Mathf.PerlinNoise((t + timeOffset.r) * TMultiplier, 0f) - 0.5f) * magnitude.r,
 						(Mathf.PerlinNoise((t + timeOffset.g) * TMultiplier, 0f) - 0.5f) * magnitude.g,
 						(Mathf.PerlinNoise((t + timeOffset.b) * TMultiplier, 0f) - 0.5f) * magnitude.b,
-						(Mathf.PerlinNoise((t + timeOffset.b) * TMultiplier, 0f) - 0.5f) * magnitude.a
+						(Mathf.PerlinNoise((t + timeOffset.a) * TMultiplier, 0f) - 0.5f) * magnitude.a
 					);
 
 				};
