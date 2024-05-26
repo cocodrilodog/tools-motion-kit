@@ -44,7 +44,7 @@ In the code below, the `owner` is the `m_Ball` and the `reuseID` is `"Position"`
 MotionKit.GetMotion(m_Ball, "Position", p => m_Ball.localPosition = p)
 	.Play(new Vector3(0, 0, 0), new Vector3(3, 0, 0), 2);
 ```
-In the code below, the second animation will interrupt the first one because it is starting before the first one completes. This happens because the animation is being carried out by the same `Motion` object, so it just stops and plays with the new settings. 
+In the code below, if the second animation starts 1.5 seconds after the first one, it will interrupt the first one because it is starting before the first one completes. This happens because the animation is being carried out by the same `Motion` object, so it just stops and plays with the new settings. 
 ```
 // First motion
 MotionKit.GetMotion(m_Ball, "Position", p => m_Ball.localPosition = p)
