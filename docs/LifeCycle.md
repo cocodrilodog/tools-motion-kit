@@ -46,7 +46,7 @@ MotionKit.GetMotion(m_Ball, "Position", p => m_Ball.localPosition = p)
 ```
 In the code below, if the second animation starts 1.5 seconds after the first one, it will interrupt the first one as the second animation starts before the first one completes. This happens because the animation is being carried out by the same Motion object, so it just stops and plays with the new settings.
 ```
-// First motion
+// First motion with a duration of 2 seconds
 MotionKit.GetMotion(m_Ball, "Position", p => m_Ball.localPosition = p)
 	.Play(new Vector3(0, 0, 0), new Vector3(3, 0, 0), 2);
 
