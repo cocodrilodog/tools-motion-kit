@@ -39,22 +39,21 @@ Example of owners and reuse IDs:
 
 ### C#
 #### `owner` and `reuseID`
-In the code below, the `owner` is the `m_Ball` and the `reuseID` is `"Position"`. In order to move the ball many times you may want to create only one `Motion3D` and reuse it as much as possible instead of creating a new one each time. So if the code below is excecuted several times in your script with different `Vector3` values and durations, you can rest assured that the same `Motion3D` object will be used for all the position animations as long as you use the same `owner` and `reuseID`.
+In the code below, the `owner` is the `m_Ball` and the `reuseID` is `"Position"`. The ball will be animated two times, one after the other. The second animation starts 1.5 seconds after the first one started, so it will interrupt the first one which is set to last for 2 seconds. This happens because the animation is being carried out by the same Motion object, so it just stops and plays with the new settings.
 ```
-MotionKit.GetMotion(m_Ball, "Position", p => m_Ball.localPosition = p)
-	.Play(new Vector3(0, 0, 0), new Vector3(3, 0, 0), 2);
-```
-In the code below, if the second animation starts 1.5 seconds after the first one, it will interrupt the first one as the second animation starts before the first one completes. This happens because the animation is being carried out by the same Motion object, so it just stops and plays with the new settings.
-```
-// First motion with a duration of 2 seconds
-MotionKit.GetMotion(m_Ball, "Position", p => m_Ball.localPosition = p)
-	.Play(new Vector3(0, 0, 0), new Vector3(3, 0, 0), 2);
+IEnumerator SomeCoroutine() {
 
-// wait for 1.5 seconds
+	// First motion with a duration of 2 seconds
+	MotionKit.GetMotion(m_Ball, "Position", p => m_Ball.localPosition = p)
+		.Play(new Vector3(0, 0, 0), new Vector3(3, 0, 0), 2);
 
-// Second motion (0.5 before the previous one completes)
-MotionKit.GetMotion(m_Ball, "Position", p => m_Ball.localPosition = p)
-	.Play(m_Ball.localPosition, new Vector3(0, 5, 0), 3); // New initial position, final position, and duration are set
+	yield return new WaitForSeconds(1.5f);
+
+	// Second motion (0.5 before the previous one completes)
+	MotionKit.GetMotion(m_Ball, "Position", p => m_Ball.localPosition = p)
+		.Play(m_Ball.localPosition, new Vector3(0, 5, 0), 3); // New initial position, final position, and duration are set
+
+}
 ```
 #### Clearance
 Once you are done with the motions, you can get rid of them like this:
