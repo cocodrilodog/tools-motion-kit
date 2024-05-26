@@ -41,6 +41,8 @@ Example of owners and reuse IDs:
 #### `owner` and `reuseID`
 In the code below, the `owner` is the `m_Ball` and the `reuseID` is `"Position"`. The ball will be animated two times, one after the other. The second animation starts 1.5 seconds after the first one started, so it will interrupt the first one which is set to last for 2 seconds. This happens because the animation is being carried out by the same Motion object, so it just stops and plays with the new settings.
 ```
+StartCoroutine(SomeCoroutine());
+
 IEnumerator SomeCoroutine() {
 
 	// First motion with a duration of 2 seconds
