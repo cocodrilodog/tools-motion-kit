@@ -172,7 +172,13 @@ namespace CocodriloDog.MotionKit {
 
 			// Is relative field
 			EditorGUIUtility.labelWidth = IsRelativeLabelWidth;
+			EditorGUI.BeginChangeCheck();
 			EditorGUI.PropertyField(isRelativeRect, InitialValueIsRelativeProperty, new GUIContent(IsRelativeString));
+			if (EditorGUI.EndChangeCheck()) {
+				if (Application.isPlaying) {
+					throw new InvalidOperationException($"{InitialValueIsRelativeProperty.displayName} can not be set at runtime.");
+				}
+			}
 			EditorGUIUtility.labelWidth = 0;
 
 		}
@@ -186,7 +192,13 @@ namespace CocodriloDog.MotionKit {
 
 			// Is relative field
 			EditorGUIUtility.labelWidth = IsRelativeLabelWidth;
+			EditorGUI.BeginChangeCheck();
 			EditorGUI.PropertyField(isRelativeRect, FinalValueIsRelativeProperty, new GUIContent(IsRelativeString));
+			if (EditorGUI.EndChangeCheck()) {
+				if (Application.isPlaying) {
+					throw new InvalidOperationException($"{FinalValueIsRelativeProperty.displayName} can not be set at runtime.");
+				}
+			}
 			EditorGUIUtility.labelWidth = 0;
 
 		}

@@ -33,7 +33,8 @@ namespace CocodriloDog.MotionKit {
 
 		public override bool IsInitialized => m_Motion != null;
 
-		public override bool ShouldResetPlayback => base.ShouldResetPlayback || m_Motion == null || InitialValueIsRelative || FinalValueIsRelative;
+		public override bool ShouldResetPlayback => 
+			base.ShouldResetPlayback || m_Motion == null || InitialValueIsRelative || FinalValueIsRelative || m_hasValuesChanged;
 
 		/// <summary>
 		/// The object that will be target of the animatable property.
@@ -75,7 +76,10 @@ namespace CocodriloDog.MotionKit {
 		/// </summary>
 		public ValueT InitialValue {
 			get => SharedValues != null ? SharedValues.InitialValue : m_InitialValue;
-			set => m_InitialValue = value;
+			set {
+				m_InitialValue = value;
+				m_hasValuesChanged = true;
+			}
 		}
 
 		/// <summary>
@@ -88,7 +92,12 @@ namespace CocodriloDog.MotionKit {
 		/// </remarks>
 		public bool InitialValueIsRelative {
 			get => SharedValues != null ? SharedValues.InitialValueIsRelative : m_InitialValueIsRelative;
-			set => m_InitialValueIsRelative = value;
+			set {
+				if (Application.isPlaying) {
+					throw new InvalidOperationException($"{nameof(InitialValueIsRelative)} can not be set at runtime.");
+				}
+				m_InitialValueIsRelative = value;
+			}
 		}
 
 		/// <summary>
@@ -96,7 +105,10 @@ namespace CocodriloDog.MotionKit {
 		/// </summary>
 		public ValueT FinalValue {
 			get => SharedValues != null ? SharedValues.FinalValue : m_FinalValue;
-			set => m_FinalValue = value;
+			set {
+				m_FinalValue = value;
+				m_hasValuesChanged = true;
+			}
 		}
 
 		/// <summary>
@@ -109,7 +121,12 @@ namespace CocodriloDog.MotionKit {
 		/// </remarks>
 		public bool FinalValueIsRelative {
 			get => SharedValues != null ? SharedValues.FinalValueIsRelative : m_FinalValueIsRelative;
-			set => m_FinalValueIsRelative = value;
+			set {
+				if (Application.isPlaying) {
+					throw new InvalidOperationException($"{nameof(FinalValueIsRelative)} can not be set at runtime.");
+				}
+				m_FinalValueIsRelative = value;
+			}
 		}
 
 		#endregion
@@ -251,6 +268,7 @@ namespace CocodriloDog.MotionKit {
 		#region Protected Methods
 
 		protected override void ResetPlayback() {
+			m_hasValuesChanged = false;
 			m_Motion = GetMotion(m_SetterDelegate, m_GetterDelegate);
 		}
 
@@ -293,13 +311,16 @@ namespace CocodriloDog.MotionKit {
 		#endregion
 
 
-		#region Private Fields
+		#region Private Fields - Non Serialized
 
 		[NonSerialized]
 		private Action<ValueT> m_SetterDelegate;
 
 		[NonSerialized]
 		private Func<ValueT> m_GetterDelegate;
+
+		[NonSerialized]
+		private bool m_hasValuesChanged;
 
 		#endregion
 
