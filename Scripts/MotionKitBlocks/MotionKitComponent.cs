@@ -173,7 +173,7 @@ namespace CocodriloDog.MotionKit {
 
 		public T GetChild<T>(string name) where T : MotionKitBlock {
 			TryInitialize();
-			return Blocks.FirstOrDefault(b => b != null && b.Name == name) as T;
+			return GetChild(name) as T;
 		}
 
 		public MotionKitBlock GetChildAtPath(string path) {

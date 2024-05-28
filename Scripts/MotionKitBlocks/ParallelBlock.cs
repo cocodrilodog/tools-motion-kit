@@ -106,7 +106,11 @@ namespace CocodriloDog.MotionKit {
 
 		public MotionKitBlock GetChild(string name) => Items.FirstOrDefault(b => b != null && b.Name == name);
 
+		public T GetChild<T>(string name) where T : MotionKitBlock => GetChild(name) as T;
+
 		public MotionKitBlock GetChildAtPath(string path) => CompositeObjectUtility.GetChildAtPath(this, path);
+
+		public T GetChildAtPath<T>(string path) where T : MotionKitBlock => GetChildAtPath(path) as T;
 
 		public MotionKitBlock[] GetChildren() => Items.ToArray();
 

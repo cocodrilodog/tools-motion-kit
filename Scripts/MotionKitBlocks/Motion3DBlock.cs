@@ -9,7 +9,7 @@ namespace CocodriloDog.MotionKit {
 	/// Block for <see cref="Vector3"/> motions.
 	/// </summary>
 	[Serializable]
-	public class Motion3DBlock : MotionBaseBlock<Vector3, Motion3D, Motion2DValues> {
+	public class Motion3DBlock : MotionBaseBlock<Vector3, Motion3D, Motion3DValues> {
 
 
 		#region Public Methods
