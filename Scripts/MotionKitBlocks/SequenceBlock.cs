@@ -106,15 +106,11 @@ namespace CocodriloDog.MotionKit {
 
 		public MotionKitBlock GetChild(string name) => Items.FirstOrDefault(b => b != null && b.Name == name);
 
-		public T GetChild<T>(string name) where T : MotionKitBlock {
-			return GetChild(name) as T;
-		}
+		public T GetChild<T>(string name) where T : MotionKitBlock => GetChild(name) as T;
 
 		public MotionKitBlock GetChildAtPath(string path) => CompositeObjectUtility.GetChildAtPath(this, path);
 
-		public T GetChildAtPath<T>(string path) where T : MotionKitBlock {
-			return GetChildAtPath(path) as T;
-		}
+		public T GetChildAtPath<T>(string path) where T : MotionKitBlock => GetChildAtPath(path) as T;
 
 		public MotionKitBlock[] GetChildren() => Items.ToArray();
 
@@ -133,6 +129,8 @@ namespace CocodriloDog.MotionKit {
 		#region protected Methods
 
 		protected override void ResetPlayback() {
+
+			base.ResetPlayback();
 
 			List<ITimedProgressable> sequenceItemsList = new List<ITimedProgressable>();
 			foreach (var sequenceItem in m_SequenceItems) {

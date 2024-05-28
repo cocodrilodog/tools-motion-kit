@@ -34,7 +34,7 @@ namespace CocodriloDog.MotionKit {
 		public override bool IsInitialized => m_Motion != null;
 
 		public override bool ShouldResetPlayback => 
-			base.ShouldResetPlayback || m_Motion == null || InitialValueIsRelative || FinalValueIsRelative || m_hasValuesChanged;
+			base.ShouldResetPlayback || m_Motion == null || InitialValueIsRelative || FinalValueIsRelative || m_HaveValuesChanged;
 
 		/// <summary>
 		/// The object that will be target of the animatable property.
@@ -78,7 +78,7 @@ namespace CocodriloDog.MotionKit {
 			get => SharedValues != null ? SharedValues.InitialValue : m_InitialValue;
 			set {
 				m_InitialValue = value;
-				m_hasValuesChanged = true;
+				m_HaveValuesChanged = true; // TODO: Handle equivalent logic for SharedValues
 			}
 		}
 
@@ -107,7 +107,7 @@ namespace CocodriloDog.MotionKit {
 			get => SharedValues != null ? SharedValues.FinalValue : m_FinalValue;
 			set {
 				m_FinalValue = value;
-				m_hasValuesChanged = true;
+				m_HaveValuesChanged = true;  // TODO: Handle equivalent logic for SharedValues
 			}
 		}
 
@@ -238,6 +238,9 @@ namespace CocodriloDog.MotionKit {
 		[NonSerialized]
 		protected MotionT m_Motion;
 
+		[NonSerialized]
+		protected bool m_HaveValuesChanged;
+
 		#endregion
 
 
@@ -268,7 +271,8 @@ namespace CocodriloDog.MotionKit {
 		#region Protected Methods
 
 		protected override void ResetPlayback() {
-			m_hasValuesChanged = false;
+			base.ResetPlayback();
+			m_HaveValuesChanged = false;
 			m_Motion = GetMotion(m_SetterDelegate, m_GetterDelegate);
 		}
 
@@ -318,9 +322,6 @@ namespace CocodriloDog.MotionKit {
 
 		[NonSerialized]
 		private Func<ValueT> m_GetterDelegate;
-
-		[NonSerialized]
-		private bool m_hasValuesChanged;
 
 		#endregion
 

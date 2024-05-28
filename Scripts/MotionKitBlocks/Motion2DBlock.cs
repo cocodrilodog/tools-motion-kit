@@ -115,6 +115,9 @@ namespace CocodriloDog.MotionKit {
 		#region Protected Methods
 
 		protected override void ResetPlayback() {
+			// Base implementation can not be called here so we need to update this flags
+			m_HaveSettingsChanged = false;
+			m_HaveValuesChanged = false;
 			m_Motion = GetMotion(m_SetterDelegate, m_GetterDelegate);
 		}
 

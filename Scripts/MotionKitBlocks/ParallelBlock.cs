@@ -130,6 +130,8 @@ namespace CocodriloDog.MotionKit {
 
 		protected override void ResetPlayback() {
 
+			base.ResetPlayback();
+
 			List<ITimedProgressable> parallelItemsList = new List<ITimedProgressable>();
 			foreach (var parallelItem in m_ParallelItems) {
 				parallelItemsList.Add(parallelItem.TimedProgressable);

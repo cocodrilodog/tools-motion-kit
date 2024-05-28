@@ -72,6 +72,8 @@ namespace CocodriloDog.MotionKit {
 
 		protected override void ResetPlayback() {
 
+			base.ResetPlayback();
+
 			m_Timer = MotionKit.GetTimer(Owner, ReuseID)
 				.SetDuration(DurationInput)
 				.SetTimeMode(TimeMode);

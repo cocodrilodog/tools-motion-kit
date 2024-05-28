@@ -78,7 +78,7 @@ namespace CocodriloDog.MotionKit {
 		/// </para> 
 		/// 
 		/// </remarks>
-		public virtual bool ShouldResetPlayback => m_Owner != null && !string.IsNullOrEmpty(m_ReuseID);
+		public virtual bool ShouldResetPlayback => (m_Owner != null && !string.IsNullOrEmpty(m_ReuseID)) || m_HaveSettingsChanged;
 
 		/// <summary>
 		/// While <c>true</c>, the motion kit block won't be reset.
@@ -123,7 +123,10 @@ namespace CocodriloDog.MotionKit {
 		/// </remarks>
 		public float DurationInput {
 			get => SharedSettings != null ? SharedSettings.Duration : m_Duration;
-			set => m_Duration = value;
+			set {
+				m_Duration = value;
+				m_HaveSettingsChanged = true;
+			}
 		}
 
 		/// <summary>
@@ -145,7 +148,10 @@ namespace CocodriloDog.MotionKit {
 		/// </summary>
 		public TimeMode TimeMode {
 			get => SharedSettings != null ? SharedSettings.TimeMode : m_TimeMode;
-			set => m_TimeMode = value;
+			set {
+				m_TimeMode = value;
+				m_HaveSettingsChanged = true;
+			}
 		}
 
 		/// <summary>
@@ -153,7 +159,10 @@ namespace CocodriloDog.MotionKit {
 		/// </summary>
 		public MotionKitEasingField Easing {
 			get => SharedSettings != null ? SharedSettings.Easing : m_Easing;
-			set => m_Easing = value;
+			set {
+				m_Easing = value;
+				m_HaveSettingsChanged = true;
+			}
 		}
 
 		/// <summary>
@@ -263,6 +272,14 @@ namespace CocodriloDog.MotionKit {
 		#endregion
 
 
+		#region Protected Fields
+
+		[NonSerialized]
+		protected bool m_HaveSettingsChanged;
+
+		#endregion
+
+
 		#region Protected Properties
 
 		/// <summary>
@@ -351,7 +368,7 @@ namespace CocodriloDog.MotionKit {
 		/// This is called in the <see cref="Play"/> method when <see cref="ShouldResetPlayback"/> is <c>true</c>
 		/// and <see cref="IsResetPlaybackLocked"/> is false.
 		/// </remarks>
-		protected abstract void ResetPlayback();
+		protected virtual void ResetPlayback() => m_HaveSettingsChanged = false;
 
 		#endregion
 
