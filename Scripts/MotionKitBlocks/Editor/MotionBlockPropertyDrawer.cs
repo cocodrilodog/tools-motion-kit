@@ -9,6 +9,7 @@ namespace CocodriloDog.MotionKit {
 	using UnityEditor;
 	using UnityEngine;
 
+	[CustomPropertyDrawer(typeof(MotionBlockPropertyDrawer<>), true)] // This fallback seems not to work
 	public class MotionBlockPropertyDrawer<ValueT> : MotionKitBlockPropertyDrawer {
 
 

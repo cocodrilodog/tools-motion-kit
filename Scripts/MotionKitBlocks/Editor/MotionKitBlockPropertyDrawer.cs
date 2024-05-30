@@ -7,7 +7,7 @@
 	using UnityEditor;
 	using UnityEngine;
 
-	[CustomPropertyDrawer(typeof(MotionKitBlock))]
+	[CustomPropertyDrawer(typeof(MotionKitBlock), true)]
 	public class MotionKitBlockPropertyDrawer : CompositePropertyDrawer {
 
 
