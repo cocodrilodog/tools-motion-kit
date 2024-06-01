@@ -9,11 +9,17 @@ namespace CocodriloDog.MotionKit {
 
 		#region Public Properties
 
-		public ValueT InitialValue => m_InitialValue;
+		public ValueT InitialValue {
+			get => m_InitialValue;
+			set => m_InitialValue = value;
+		}
 
 		public bool InitialValueIsRelative => m_InitialValueIsRelative;
 
-		public ValueT FinalValue => m_FinalValue;
+		public ValueT FinalValue {
+			get => m_FinalValue;
+			set => m_FinalValue = value;
+		}
 
 		public bool FinalValueIsRelative => m_FinalValueIsRelative;
 

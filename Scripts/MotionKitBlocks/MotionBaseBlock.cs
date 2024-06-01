@@ -77,7 +77,7 @@ namespace CocodriloDog.MotionKit {
 		public ValueT InitialValue {
 			get => SharedValues != null ? SharedValues.InitialValue : m_InitialValue;
 			set {
-				m_InitialValue = value;
+				_ = SharedValues != null ? SharedValues.InitialValue = value : m_InitialValue = value;
 				m_HaveValuesChanged = true; // TODO: Handle equivalent logic for SharedValues
 			}
 		}
@@ -106,7 +106,7 @@ namespace CocodriloDog.MotionKit {
 		public ValueT FinalValue {
 			get => SharedValues != null ? SharedValues.FinalValue : m_FinalValue;
 			set {
-				m_FinalValue = value;
+				_ = SharedValues != null ? SharedValues.FinalValue = value : m_FinalValue = value;
 				m_HaveValuesChanged = true;  // TODO: Handle equivalent logic for SharedValues
 			}
 		}
