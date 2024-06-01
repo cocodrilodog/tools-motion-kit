@@ -9,7 +9,7 @@ namespace CocodriloDog.MotionKit {
 	using UnityEditor;
 	using UnityEngine;
 
-	[CustomPropertyDrawer(typeof(MotionBlockPropertyDrawer<>), true)] // This fallback seems not to work
+	// [CustomPropertyDrawer(typeof(MotionBaseBlock<>), true)] // This fallback doesn't work
 	public class MotionBlockPropertyDrawer<ValueT> : MotionKitBlockPropertyDrawer {
 
 
@@ -150,8 +150,8 @@ namespace CocodriloDog.MotionKit {
 			EditorGUIUtility.labelWidth = 0;
 
 			// Draw the values
-			DrawInitialValue();
-			DrawFinalValue();
+			DrawInitialValueAndIsRelative();
+			DrawFinalValueAndIsRelative();
 			SerializedSharedValues?.ApplyModifiedProperties();
 
 			// Reset the color
@@ -164,52 +164,16 @@ namespace CocodriloDog.MotionKit {
 
 		}
 
-		protected virtual void DrawInitialValue() {
-
-			GetValueRects(GetNextPosition(InitialValueProperty), out Rect valueRect, out Rect isRelativeRect);
-			
-			// Value field
-			EditorGUI.PropertyField(valueRect, InitialValueProperty);
-
-			// Is relative field
-			EditorGUIUtility.labelWidth = IsRelativeLabelWidth;
-			EditorGUI.BeginChangeCheck();
-			EditorGUI.PropertyField(isRelativeRect, InitialValueIsRelativeProperty, new GUIContent(IsRelativeString));
-			if (EditorGUI.EndChangeCheck()) {
-				if (Application.isPlaying) {
-					throw new InvalidOperationException($"{InitialValueIsRelativeProperty.displayName} can not be set at runtime.");
-				}
-			}
-			EditorGUIUtility.labelWidth = 0;
-
-		}
-
-		protected virtual void DrawFinalValue() {
-
-			GetValueRects(GetNextPosition(InitialValueProperty), out Rect valueRect, out Rect isRelativeRect);
-
-			// Value field
-			EditorGUI.PropertyField(valueRect, FinalValueProperty);
-
-			// Is relative field
-			EditorGUIUtility.labelWidth = IsRelativeLabelWidth;
-			EditorGUI.BeginChangeCheck();
-			EditorGUI.PropertyField(isRelativeRect, FinalValueIsRelativeProperty, new GUIContent(IsRelativeString));
-			if (EditorGUI.EndChangeCheck()) {
-				if (Application.isPlaying) {
-					throw new InvalidOperationException($"{FinalValueIsRelativeProperty.displayName} can not be set at runtime.");
-				}
-			}
-			EditorGUIUtility.labelWidth = 0;
-
-		}
-
 		protected void GetValueRects(Rect fieldRect, out Rect valueRect, out Rect isRelativeRect) {
 			valueRect = fieldRect;
 			valueRect.width -= 90;
 			isRelativeRect = fieldRect;
 			isRelativeRect.xMin = valueRect.xMax + 5;
 		}
+
+		protected virtual void DrawInitialValue(Rect valueRect) => EditorGUI.PropertyField(valueRect, InitialValueProperty);
+		
+		protected virtual void DrawFinalValue(Rect valueRect) => EditorGUI.PropertyField(valueRect, FinalValueProperty);
 
 		#endregion
 
@@ -449,6 +413,45 @@ namespace CocodriloDog.MotionKit {
 			return ownerType.GetProperties().Where((p) => propertyType == p.PropertyType).ToArray();
 		}
 
+		private void DrawInitialValueAndIsRelative() {
+
+			GetValueRects(GetNextPosition(InitialValueProperty), out Rect valueRect, out Rect isRelativeRect);
+
+			// Value field
+			DrawInitialValue(valueRect);
+
+			// Is relative field
+			EditorGUIUtility.labelWidth = IsRelativeLabelWidth;
+			EditorGUI.BeginChangeCheck();
+			EditorGUI.PropertyField(isRelativeRect, InitialValueIsRelativeProperty, new GUIContent(IsRelativeString));
+			if (EditorGUI.EndChangeCheck()) {
+				if (Application.isPlaying) {
+					throw new InvalidOperationException($"{InitialValueIsRelativeProperty.displayName} can not be set at runtime.");
+				}
+			}
+			EditorGUIUtility.labelWidth = 0;
+
+		}
+
+		private void DrawFinalValueAndIsRelative() {
+
+			GetValueRects(GetNextPosition(InitialValueProperty), out Rect valueRect, out Rect isRelativeRect);
+
+			// Value field
+			DrawFinalValue(valueRect);
+
+			// Is relative field
+			EditorGUIUtility.labelWidth = IsRelativeLabelWidth;
+			EditorGUI.BeginChangeCheck();
+			EditorGUI.PropertyField(isRelativeRect, FinalValueIsRelativeProperty, new GUIContent(IsRelativeString));
+			if (EditorGUI.EndChangeCheck()) {
+				if (Application.isPlaying) {
+					throw new InvalidOperationException($"{FinalValueIsRelativeProperty.displayName} can not be set at runtime.");
+				}
+			}
+			EditorGUIUtility.labelWidth = 0;
+
+		}
 
 		#endregion
 

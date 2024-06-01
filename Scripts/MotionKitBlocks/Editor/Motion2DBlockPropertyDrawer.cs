@@ -14,36 +14,12 @@ namespace CocodriloDog.MotionKit {
 		/// <summary>
 		/// This override changes the initial value property from 3D to 2D.
 		/// </summary>
-		protected override void DrawInitialValue() {
-
-			GetValueRects(GetNextPosition(InitialValueProperty), out Rect valueRect, out Rect isRelativeRect);
-
-			// Value field
-			DrawVector2FieldFromVector3Property(valueRect, InitialValueProperty);
-
-			// Is relative field
-			EditorGUIUtility.labelWidth = IsRelativeLabelWidth;
-			EditorGUI.PropertyField(isRelativeRect, InitialValueIsRelativeProperty, new GUIContent(IsRelativeString));
-			EditorGUIUtility.labelWidth = 0;
-
-		}
+		protected override void DrawInitialValue(Rect valueRect) => DrawVector2FieldFromVector3Property(valueRect, InitialValueProperty);
 
 		/// <summary>
 		/// This override changes the final value property from 3D to 2D.
 		/// </summary>
-		protected override void DrawFinalValue() {
-
-			GetValueRects(GetNextPosition(InitialValueProperty), out Rect valueRect, out Rect isRelativeRect);
-
-			// Value field
-			DrawVector2FieldFromVector3Property(valueRect, FinalValueProperty);
-
-			// Is relative field
-			EditorGUIUtility.labelWidth = IsRelativeLabelWidth;
-			EditorGUI.PropertyField(isRelativeRect, FinalValueIsRelativeProperty, new GUIContent(IsRelativeString));
-			EditorGUIUtility.labelWidth = 0;
-
-		}
+		protected override void DrawFinalValue(Rect valueRect) => DrawVector2FieldFromVector3Property(valueRect, FinalValueProperty);
 
 		#endregion
 
