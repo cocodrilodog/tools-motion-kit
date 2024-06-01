@@ -38,10 +38,10 @@ namespace CocodriloDog.MotionKit {
 			EditorStyles.boldLabel.normal.textColor = MotionKitSettingsEditor.SharedColor;
 
 			// Initial value
-			DrawInitialValue(valueLabelWidth, space, isRelativeLabelWidth);
+			DrawInitialValueAndIsRelative(valueLabelWidth, space, isRelativeLabelWidth);
 
 			// Final Value
-			DrawFinalValue(valueLabelWidth, space, isRelativeLabelWidth);
+			DrawFinalValueAndIsRelative(valueLabelWidth, space, isRelativeLabelWidth);
 
 			// Reset label width
 			EditorGUIUtility.labelWidth = 0;
@@ -87,7 +87,7 @@ namespace CocodriloDog.MotionKit {
 
 		#region Private Methods
 
-		private void DrawInitialValue(float valueLabelWidth, float space, float isRelativeLabelWidth) {
+		private void DrawInitialValueAndIsRelative(float valueLabelWidth, float space, float isRelativeLabelWidth) {
 
 			GUILayout.BeginHorizontal();
 			EditorGUIUtility.labelWidth = valueLabelWidth;
@@ -100,7 +100,7 @@ namespace CocodriloDog.MotionKit {
 
 		}
 
-		private void DrawFinalValue(float valueLabelWidth, float space, float isRelativeLabelWidth) {
+		private void DrawFinalValueAndIsRelative(float valueLabelWidth, float space, float isRelativeLabelWidth) {
 
 			GUILayout.BeginHorizontal();
 			EditorGUIUtility.labelWidth = valueLabelWidth;

@@ -38,10 +38,10 @@ namespace CocodriloDog.MotionKit {
 
 			if (SharedValuesProperty.objectReferenceValue != null) {
 				// use the properties from the shared asset
-				InitialValueProperty = SerializedSharedValues.FindProperty("m_InitialValue");
-				InitialValueIsRelativeProperty = SerializedSharedValues.FindProperty("m_InitialValueIsRelative");
-				FinalValueProperty = SerializedSharedValues.FindProperty("m_FinalValue");
-				FinalValueIsRelativeProperty = SerializedSharedValues.FindProperty("m_FinalValueIsRelative");
+				InitialValueProperty = SharedValuesSerializedObject.FindProperty("m_InitialValue");
+				InitialValueIsRelativeProperty = SharedValuesSerializedObject.FindProperty("m_InitialValueIsRelative");
+				FinalValueProperty = SharedValuesSerializedObject.FindProperty("m_FinalValue");
+				FinalValueIsRelativeProperty = SharedValuesSerializedObject.FindProperty("m_FinalValueIsRelative");
 			} else {
 				// Use the propreties from the MotionBlock
 				InitialValueProperty = Property.FindPropertyRelative("m_InitialValue");
@@ -104,6 +104,15 @@ namespace CocodriloDog.MotionKit {
 			}		
 		}
 
+		protected SerializedObject SharedValuesSerializedObject {
+			get {
+				if (SharedValuesProperty.objectReferenceValue != null && m_SharedValuesSerializedObject == null) {
+					m_SharedValuesSerializedObject = new SerializedObject(SharedValuesProperty.objectReferenceValue);
+				}
+				return m_SharedValuesSerializedObject;
+			}
+		}
+
 		#endregion
 
 
@@ -137,7 +146,7 @@ namespace CocodriloDog.MotionKit {
 			);
 
 			// Shared settings field
-			SerializedSharedValues?.Update();
+			SharedValuesSerializedObject?.Update();
 			var sharedSettingsRect = rect;
 			sharedSettingsRect.xMin += labelRect.width;
 			EditorGUIUtility.labelWidth = 50;
@@ -145,14 +154,14 @@ namespace CocodriloDog.MotionKit {
 			EditorGUI.PropertyField(sharedSettingsRect, SharedValuesProperty, new GUIContent("Shared"));
 			if (EditorGUI.EndChangeCheck()) {
 				// This renews SerializedSharedValues either if the new value is null or not
-				m_SerializedSharedValues = null;
+				m_SharedValuesSerializedObject = null;
 			}
 			EditorGUIUtility.labelWidth = 0;
 
 			// Draw the values
 			DrawInitialValueAndIsRelative();
 			DrawFinalValueAndIsRelative();
-			SerializedSharedValues?.ApplyModifiedProperties();
+			SharedValuesSerializedObject?.ApplyModifiedProperties();
 
 			// Reset the color
 			EditorStyles.label.normal.textColor = color;
@@ -188,7 +197,7 @@ namespace CocodriloDog.MotionKit {
 
 		private int m_GetterOptionIndex;
 
-		private SerializedObject m_SerializedSharedValues;
+		private SerializedObject m_SharedValuesSerializedObject;
 
 		#endregion
 
@@ -212,15 +221,6 @@ namespace CocodriloDog.MotionKit {
 		private bool ShowGetterHelp => ObjectProperty.objectReferenceValue == null || m_GetterOptionIndex == 0;
 
 		private float HorizontalLineHeight => 5;
-
-		private SerializedObject SerializedSharedValues {
-			get {
-				if (SharedValuesProperty.objectReferenceValue != null && m_SerializedSharedValues == null) {
-					m_SerializedSharedValues = new SerializedObject(SharedValuesProperty.objectReferenceValue);
-				}
-				return m_SerializedSharedValues;
-			}
-		}
 
 		#endregion
 
