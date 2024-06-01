@@ -166,6 +166,20 @@ namespace CocodriloDog.MotionKit {
 			}
 		}
 
+		/// <summary>
+		/// Gets the block at the specified <paramref name="index"/>.
+		/// </summary>
+		/// <param name="index">The index</param>
+		/// <returns>The block</returns>
+		public MotionKitBlock GetBlock(int index) => Blocks[index];
+
+		/// <summary>
+		/// Sets the block at the specified <paramref name="block"/>
+		/// </summary>
+		/// <param name="index">The index</param>
+		/// <param name="block">The block</param>
+		public void SetBlock(int index, MotionKitBlock block) => Blocks[index] = block;
+
 		public MotionKitBlock GetChild(string name) {
 			TryInitialize();
 			return Blocks.FirstOrDefault(b => b != null && b.Name == name);
