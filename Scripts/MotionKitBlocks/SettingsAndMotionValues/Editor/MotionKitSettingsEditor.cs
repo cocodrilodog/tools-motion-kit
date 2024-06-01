@@ -33,7 +33,9 @@ namespace CocodriloDog.MotionKit {
 		}
 
 		public override void OnInspectorGUI() {
-			
+
+			serializedObject.Update();
+
 			CDEditorUtility.DrawDisabledField(m_ScriptProperty);
 
 			// Set the shared color
@@ -48,6 +50,8 @@ namespace CocodriloDog.MotionKit {
 			// Reset the color
 			EditorStyles.label.normal.textColor = color;
 			EditorStyles.boldLabel.normal.textColor = color;
+
+			serializedObject.ApplyModifiedProperties();
 
 		}
 
