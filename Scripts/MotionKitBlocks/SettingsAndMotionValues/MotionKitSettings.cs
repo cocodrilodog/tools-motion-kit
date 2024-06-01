@@ -1,5 +1,5 @@
 namespace CocodriloDog.MotionKit {
-
+	using System;
 	using System.Collections;
 	using System.Collections.Generic;
 	using UnityEngine;
@@ -10,11 +10,45 @@ namespace CocodriloDog.MotionKit {
 
 		#region Public Properties
 
-		public float Duration => m_Duration;
+		public float Duration {
+			get => m_Duration;
+			set {
+				var raiseEvent = !Mathf.Approximately(value, m_Duration);
+				m_Duration = value;
+				if (raiseEvent) {
+					OnSettingsChange?.Invoke();
+				}
+			}
+		}
 
-		public TimeMode TimeMode => m_TimeMode;
+		public TimeMode TimeMode {
+			get => m_TimeMode;
+			set {
+				var raiseEvent = value != m_TimeMode;
+				m_TimeMode = value;
+				if (raiseEvent) {
+					OnSettingsChange?.Invoke();
+				}
+			}
+		}
 
-		public MotionKitEasingField Easing => m_Easing;
+		public MotionKitEasingField Easing {
+			get => m_Easing;
+			set {
+				var raiseEvent = value != m_Easing;
+				m_Easing = value;
+				if (raiseEvent) {
+					OnSettingsChange?.Invoke();
+				}
+			}
+		}
+
+		#endregion
+
+
+		#region Public Events
+
+		public Action OnSettingsChange;
 
 		#endregion
 

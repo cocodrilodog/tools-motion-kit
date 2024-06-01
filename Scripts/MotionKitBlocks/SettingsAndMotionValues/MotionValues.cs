@@ -1,5 +1,5 @@
 namespace CocodriloDog.MotionKit {
-
+	using System;
 	using System.Collections;
 	using System.Collections.Generic;
 	using UnityEngine;
@@ -11,17 +11,36 @@ namespace CocodriloDog.MotionKit {
 
 		public ValueT InitialValue {
 			get => m_InitialValue;
-			set => m_InitialValue = value;
+			set {
+				var raiseEvent = !value.Equals(m_InitialValue);
+				m_InitialValue = value;
+				if (raiseEvent) {
+					OnValuesChange?.Invoke();
+				}
+			}
 		}
 
 		public bool InitialValueIsRelative => m_InitialValueIsRelative;
 
 		public ValueT FinalValue {
 			get => m_FinalValue;
-			set => m_FinalValue = value;
+			set {
+				var raiseEvent = !value.Equals(m_FinalValue);
+				m_FinalValue = value;
+				if (raiseEvent) {
+					OnValuesChange?.Invoke();
+				}
+			}
 		}
 
 		public bool FinalValueIsRelative => m_FinalValueIsRelative;
+
+		#endregion
+
+
+		#region Public Events
+
+		public event Action OnValuesChange;
 
 		#endregion
 

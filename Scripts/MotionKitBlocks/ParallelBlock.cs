@@ -81,6 +81,7 @@ namespace CocodriloDog.MotionKit {
 		#region Public Methods
 
 		public override void Initialize() {
+			base.Initialize();
 			if (Application.isPlaying) {
 				ResetPlayback();
 			}

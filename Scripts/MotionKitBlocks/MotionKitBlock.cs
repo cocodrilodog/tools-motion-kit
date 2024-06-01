@@ -124,7 +124,7 @@ namespace CocodriloDog.MotionKit {
 		public float DurationInput {
 			get => SharedSettings != null ? SharedSettings.Duration : m_Duration;
 			set {
-				m_Duration = value;
+				_ = SharedSettings != null ? SharedSettings.Duration = value : m_Duration = value;
 				m_HaveSettingsChanged = true;
 			}
 		}
@@ -149,7 +149,7 @@ namespace CocodriloDog.MotionKit {
 		public TimeMode TimeMode {
 			get => SharedSettings != null ? SharedSettings.TimeMode : m_TimeMode;
 			set {
-				m_TimeMode = value;
+				_ = SharedSettings != null ? SharedSettings.TimeMode = value : m_TimeMode = value;
 				m_HaveSettingsChanged = true;
 			}
 		}
@@ -160,7 +160,7 @@ namespace CocodriloDog.MotionKit {
 		public MotionKitEasingField Easing {
 			get => SharedSettings != null ? SharedSettings.Easing : m_Easing;
 			set {
-				m_Easing = value;
+				_ = SharedSettings != null ? SharedSettings.Easing = value : m_Easing = value;
 				m_HaveSettingsChanged = true;
 			}
 		}
@@ -199,13 +199,17 @@ namespace CocodriloDog.MotionKit {
 		/// The contained MotionKit object such as <see cref="MotionBase{ValueT, MotionT}"/>, 
 		/// <see cref="Timer"/> or <see cref="Sequence"/> should be created here.
 		/// </summary>
-		public abstract void Initialize();
+		public virtual void Initialize() {
+			if (SharedSettings != null) {
+				SharedSettings.OnSettingsChange += SharedSettings_OnSettingsChange;
+			}
+		}
 
 		/// <summary>
 		/// This is called in <see cref="Play"/> and on the playbackObject's <c>onStart</c>
 		/// </summary>
 		public virtual void TryResetPlayback(bool recursive) {
-			if(ShouldResetPlayback && !IsResetPlaybackLocked) {
+			if (ShouldResetPlayback && !IsResetPlaybackLocked) {
 				if (!IsInitialized) {
 					Initialize(); // This will reset anyway
 				} else {
@@ -266,8 +270,18 @@ namespace CocodriloDog.MotionKit {
 		public virtual void Dispose() {
 			if (IsInitialized) {
 				MotionKit.ClearPlayback(Owner, ReuseID);
+				if (SharedSettings != null) {
+					SharedSettings.OnSettingsChange -= SharedSettings_OnSettingsChange;
+				}
 			}
 		}
+
+		#endregion
+
+
+		#region Event Handlers
+
+		private void SharedSettings_OnSettingsChange() => m_HaveSettingsChanged = true;
 
 		#endregion
 

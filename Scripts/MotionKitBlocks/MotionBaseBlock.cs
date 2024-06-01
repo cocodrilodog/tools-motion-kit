@@ -139,6 +139,8 @@ namespace CocodriloDog.MotionKit {
 		/// </summary>
 		public override void Initialize() {
 
+			base.Initialize();
+
 			if (Application.isPlaying) {
 
 				// These are strings created by the editor like this: "Transform/localPosition"
@@ -215,8 +217,21 @@ namespace CocodriloDog.MotionKit {
 					return (Func<ValueT>)Delegate.CreateDelegate(typeof(Func<ValueT>), target, getMethod);
 				}
 
+				if (SharedValues != null) {
+					SharedValues.OnValuesChange += SharedValues_OnValuesChange;
+				}
+
 			}
 
+		}
+
+		public override void Dispose() {
+			base.Dispose();
+			if (IsInitialized) {
+				if (SharedValues != null) {
+					SharedValues.OnValuesChange -= SharedValues_OnValuesChange;
+				}
+			}
 		}
 
 		public override void Play() {
@@ -229,6 +244,13 @@ namespace CocodriloDog.MotionKit {
 		public override void Pause() => Motion.Pause();
 
 		public override void Resume() => Motion.Resume();
+
+		#endregion
+
+
+		#region Event Handlers
+
+		private void SharedValues_OnValuesChange() => m_HaveValuesChanged = true;
 
 		#endregion
 

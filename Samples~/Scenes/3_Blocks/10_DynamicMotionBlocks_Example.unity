@@ -123,6 +123,38 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
+--- !u!1 &113789551
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 113789552}
+  m_Layer: 0
+  m_Name: DynamicValuesContainer
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &113789552
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 113789551}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -4, y: 2, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 390141286}
+  m_Father: {fileID: 1741634120}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &390141281
 GameObject:
   m_ObjectHideFlags: 0
@@ -238,11 +270,11 @@ Transform:
   m_GameObject: {fileID: 390141281}
   serializedVersion: 2
   m_LocalRotation: {x: -0.3596048, y: 0.31598538, z: 0.13088542, w: 0.8681629}
-  m_LocalPosition: {x: -4, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 1741634120}
+  m_Father: {fileID: 113789552}
   m_LocalEulerAnglesHint: {x: -45, y: 40, z: 0}
 --- !u!1 &404512984
 GameObject:
@@ -381,6 +413,191 @@ MonoBehaviour:
     mipBias: 0
     varianceClampScale: 0.9
     contrastAdaptiveSharpening: 0
+--- !u!1 &498675224
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 498675225}
+  m_Layer: 0
+  m_Name: DynamicSharedValuesContainer
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &498675225
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 498675224}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -4, y: -2, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 1004404816}
+  m_Father: {fileID: 1741634120}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &596831380
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 596831381}
+  m_Layer: 0
+  m_Name: DynamicSettingsContainer
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &596831381
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 596831380}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 4, y: 2, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 1166779318}
+  m_Father: {fileID: 1741634120}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1004404811
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1004404816}
+  - component: {fileID: 1004404815}
+  - component: {fileID: 1004404814}
+  - component: {fileID: 1004404813}
+  - component: {fileID: 1004404812}
+  m_Layer: 0
+  m_Name: DynamicSharedValuesCube
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1004404812
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1004404811}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7b39d3a3fa4b7b64fa531dab50fc34d4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_ColorPropertyName: _BaseColor
+  m_Color: {r: 0, g: 1, b: 0.98353744, a: 1}
+  m_Alpha: 1
+--- !u!65 &1004404813
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1004404811}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 1, y: 1, z: 1}
+  m_Center: {x: 0, y: 0, z: 0}
+--- !u!23 &1004404814
+MeshRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1004404811}
+  m_Enabled: 1
+  m_CastShadows: 1
+  m_ReceiveShadows: 1
+  m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
+  m_MotionVectors: 1
+  m_LightProbeUsage: 1
+  m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 2
+  m_RayTraceProcedural: 0
+  m_RenderingLayerMask: 1
+  m_RendererPriority: 0
+  m_Materials:
+  - {fileID: 2100000, guid: 31321ba15b8f8eb4c954353edc038b1d, type: 2}
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
+  m_StaticBatchRoot: {fileID: 0}
+  m_ProbeAnchor: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
+  m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
+  m_ImportantGI: 0
+  m_StitchLightmapSeams: 1
+  m_SelectedEditorRenderState: 3
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 0
+  m_AdditionalVertexStreams: {fileID: 0}
+--- !u!33 &1004404815
+MeshFilter:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1004404811}
+  m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!4 &1004404816
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1004404811}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0.3596048, y: 0.31598538, z: 0.13088542, w: 0.8681629}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 498675225}
+  m_LocalEulerAnglesHint: {x: -45, y: 40, z: 0}
 --- !u!1 &1166779317
 GameObject:
   m_ObjectHideFlags: 0
@@ -410,11 +627,11 @@ Transform:
   m_GameObject: {fileID: 1166779317}
   serializedVersion: 2
   m_LocalRotation: {x: -0.3596048, y: 0.31598538, z: 0.13088542, w: 0.8681629}
-  m_LocalPosition: {x: 4, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 1741634120}
+  m_Father: {fileID: 596831381}
   m_LocalEulerAnglesHint: {x: -45, y: 40, z: 0}
 --- !u!114 &1166779319
 MonoBehaviour:
@@ -620,6 +837,159 @@ MonoBehaviour:
   m_LightCookieSize: {x: 1, y: 1}
   m_LightCookieOffset: {x: 0, y: 0}
   m_SoftShadowQuality: 0
+--- !u!1 &1338291200
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1338291201}
+  m_Layer: 0
+  m_Name: DynamicSettinsContainer
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1338291201
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1338291200}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 4, y: -2, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 1563351422}
+  m_Father: {fileID: 1741634120}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1563351421
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1563351422}
+  - component: {fileID: 1563351426}
+  - component: {fileID: 1563351425}
+  - component: {fileID: 1563351424}
+  - component: {fileID: 1563351423}
+  m_Layer: 0
+  m_Name: DynamicSettingsCube
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1563351422
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1563351421}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0.3596048, y: 0.31598538, z: 0.13088542, w: 0.8681629}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1338291201}
+  m_LocalEulerAnglesHint: {x: -45, y: 40, z: 0}
+--- !u!114 &1563351423
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1563351421}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7b39d3a3fa4b7b64fa531dab50fc34d4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_ColorPropertyName: _BaseColor
+  m_Color: {r: 0.6521491, g: 1, b: 0, a: 1}
+  m_Alpha: 1
+--- !u!65 &1563351424
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1563351421}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 1, y: 1, z: 1}
+  m_Center: {x: 0, y: 0, z: 0}
+--- !u!23 &1563351425
+MeshRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1563351421}
+  m_Enabled: 1
+  m_CastShadows: 1
+  m_ReceiveShadows: 1
+  m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
+  m_MotionVectors: 1
+  m_LightProbeUsage: 1
+  m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 2
+  m_RayTraceProcedural: 0
+  m_RenderingLayerMask: 1
+  m_RendererPriority: 0
+  m_Materials:
+  - {fileID: 2100000, guid: 31321ba15b8f8eb4c954353edc038b1d, type: 2}
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
+  m_StaticBatchRoot: {fileID: 0}
+  m_ProbeAnchor: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
+  m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
+  m_ImportantGI: 0
+  m_StitchLightmapSeams: 1
+  m_SelectedEditorRenderState: 3
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 0
+  m_AdditionalVertexStreams: {fileID: 0}
+--- !u!33 &1563351426
+MeshFilter:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1563351421}
+  m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
 --- !u!1 &1741634117
 GameObject:
   m_ObjectHideFlags: 0
@@ -651,6 +1021,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_MotionKitComponent: {fileID: 1741634119}
+  m_Shared3DValues: {fileID: 11400000, guid: d26f963433784b0468f3343d79ac0b72, type: 2}
+  m_SharedSettings: {fileID: 11400000, guid: 4741fea472a026841a23274291fbc2fe, type: 2}
 --- !u!114 &1741634119
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -666,11 +1038,185 @@ MonoBehaviour:
   m_Blocks:
   - rid: 6404330399696158720
   - rid: 6404330418800427010
+  - rid: 3639139426075410435
+  - rid: 3639139426075410439
   references:
     version: 2
     RefIds:
     - rid: -2
       type: {class: , ns: , asm: }
+    - rid: 3639139426075410435
+      type: {class: Motion3DBlock, ns: CocodriloDog.MotionKit, asm: CocodriloDog.MotionKit}
+      data:
+        m_Name: SharedValuesMotion3D
+        m_Owner: {fileID: 0}
+        m_ReuseID: 
+        m_Duration: 1
+        m_TimeMode: 0
+        m_Easing:
+          m_EasingName: Back Out
+          m_ParameterizedEasing:
+            rid: -2
+        m_SharedSettings: {fileID: 0}
+        m_OnStart:
+          m_PersistentCalls:
+            m_Calls: []
+        m_OnUpdate:
+          m_PersistentCalls:
+            m_Calls: []
+        m_OnInterrupt:
+          m_PersistentCalls:
+            m_Calls: []
+        m_OnComplete:
+          m_PersistentCalls:
+            m_Calls:
+            - m_Target: {fileID: 1741634118}
+              m_TargetAssemblyTypeName: CocodriloDog.MotionKit.Examples.DynamicMotionBlocks_Example,
+                CocodriloDog.MotionKit.Examples
+              m_MethodName: PlaySharedValues
+              m_Mode: 1
+              m_Arguments:
+                m_ObjectArgument: {fileID: 0}
+                m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+                m_IntArgument: 0
+                m_FloatArgument: 0
+                m_StringArgument: 
+                m_BoolArgument: 0
+              m_CallState: 2
+        m_CallbackSelection: 3
+        m_EditOwnerAndReuseID: 0
+        m_PlayOnStart: 0
+        m_SetInitialValuesOnStart: 0
+        m_Object: {fileID: 1004404811}
+        m_SetterString: Transform/localPosition
+        m_GetterString: Transform/localPosition
+        m_InitialValue: {x: 0, y: 0, z: 0}
+        m_InitialValueIsRelative: 1
+        m_FinalValue: {x: 0, y: 0, z: 0}
+        m_FinalValueIsRelative: 0
+        m_SharedValues: {fileID: 11400000, guid: d26f963433784b0468f3343d79ac0b72,
+          type: 2}
+    - rid: 3639139426075410439
+      type: {class: SequenceBlock, ns: CocodriloDog.MotionKit, asm: CocodriloDog.MotionKit}
+      data:
+        m_Name: SharedSettingsSequence
+        m_Owner: {fileID: 0}
+        m_ReuseID: 
+        m_Duration: 0
+        m_TimeMode: 0
+        m_Easing:
+          m_EasingName: Linear
+          m_ParameterizedEasing:
+            rid: -2
+        m_SharedSettings: {fileID: 11400000, guid: 4741fea472a026841a23274291fbc2fe,
+          type: 2}
+        m_OnStart:
+          m_PersistentCalls:
+            m_Calls: []
+        m_OnUpdate:
+          m_PersistentCalls:
+            m_Calls: []
+        m_OnInterrupt:
+          m_PersistentCalls:
+            m_Calls: []
+        m_OnComplete:
+          m_PersistentCalls:
+            m_Calls:
+            - m_Target: {fileID: 1741634118}
+              m_TargetAssemblyTypeName: CocodriloDog.MotionKit.Examples.DynamicMotionBlocks_Example,
+                CocodriloDog.MotionKit.Examples
+              m_MethodName: PlaySharedSettings
+              m_Mode: 1
+              m_Arguments:
+                m_ObjectArgument: {fileID: 0}
+                m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+                m_IntArgument: 0
+                m_FloatArgument: 0
+                m_StringArgument: 
+                m_BoolArgument: 0
+              m_CallState: 2
+        m_CallbackSelection: 3
+        m_EditOwnerAndReuseID: 0
+        m_PlayOnStart: 0
+        m_SetInitialValuesOnStart: 0
+        m_SequenceItems:
+        - rid: 3639139426075410440
+        - rid: 3639139426075410441
+        m_BatchOperations: []
+    - rid: 3639139426075410440
+      type: {class: Motion3DBlock, ns: CocodriloDog.MotionKit, asm: CocodriloDog.MotionKit}
+      data:
+        m_Name: MoveUp
+        m_Owner: {fileID: 0}
+        m_ReuseID: 
+        m_Duration: 1
+        m_TimeMode: 0
+        m_Easing:
+          m_EasingName: Back Out
+          m_ParameterizedEasing:
+            rid: -2
+        m_SharedSettings: {fileID: 0}
+        m_OnStart:
+          m_PersistentCalls:
+            m_Calls: []
+        m_OnUpdate:
+          m_PersistentCalls:
+            m_Calls: []
+        m_OnInterrupt:
+          m_PersistentCalls:
+            m_Calls: []
+        m_OnComplete:
+          m_PersistentCalls:
+            m_Calls: []
+        m_CallbackSelection: 0
+        m_EditOwnerAndReuseID: 0
+        m_PlayOnStart: 1
+        m_SetInitialValuesOnStart: 0
+        m_Object: {fileID: 1563351421}
+        m_SetterString: Transform/localPosition
+        m_GetterString: Transform/position
+        m_InitialValue: {x: 0, y: 0, z: 0}
+        m_InitialValueIsRelative: 0
+        m_FinalValue: {x: 0, y: 2, z: 0}
+        m_FinalValueIsRelative: 0
+        m_SharedValues: {fileID: 0}
+    - rid: 3639139426075410441
+      type: {class: Motion3DBlock, ns: CocodriloDog.MotionKit, asm: CocodriloDog.MotionKit}
+      data:
+        m_Name: MoveDown
+        m_Owner: {fileID: 0}
+        m_ReuseID: 
+        m_Duration: 1
+        m_TimeMode: 0
+        m_Easing:
+          m_EasingName: Back Out
+          m_ParameterizedEasing:
+            rid: -2
+        m_SharedSettings: {fileID: 0}
+        m_OnStart:
+          m_PersistentCalls:
+            m_Calls: []
+        m_OnUpdate:
+          m_PersistentCalls:
+            m_Calls: []
+        m_OnInterrupt:
+          m_PersistentCalls:
+            m_Calls: []
+        m_OnComplete:
+          m_PersistentCalls:
+            m_Calls: []
+        m_CallbackSelection: 0
+        m_EditOwnerAndReuseID: 0
+        m_PlayOnStart: 1
+        m_SetInitialValuesOnStart: 0
+        m_Object: {fileID: 1563351421}
+        m_SetterString: Transform/localPosition
+        m_GetterString: Transform/position
+        m_InitialValue: {x: 0, y: 2, z: 0}
+        m_InitialValueIsRelative: 0
+        m_FinalValue: {x: 0, y: 0, z: 0}
+        m_FinalValueIsRelative: 0
+        m_SharedValues: {fileID: 0}
     - rid: 6404330399696158720
       type: {class: Motion3DBlock, ns: CocodriloDog.MotionKit, asm: CocodriloDog.MotionKit}
       data:
@@ -711,11 +1257,11 @@ MonoBehaviour:
               m_CallState: 2
         m_CallbackSelection: 3
         m_EditOwnerAndReuseID: 0
-        m_PlayOnStart: 1
+        m_PlayOnStart: 0
         m_SetInitialValuesOnStart: 0
         m_Object: {fileID: 390141281}
-        m_SetterString: Transform/position
-        m_GetterString: Transform/position
+        m_SetterString: Transform/localPosition
+        m_GetterString: Transform/localPosition
         m_InitialValue: {x: 0, y: 0, z: 0}
         m_InitialValueIsRelative: 1
         m_FinalValue: {x: 0, y: 0, z: 0}
@@ -761,7 +1307,7 @@ MonoBehaviour:
               m_CallState: 2
         m_CallbackSelection: 3
         m_EditOwnerAndReuseID: 0
-        m_PlayOnStart: 1
+        m_PlayOnStart: 0
         m_SetInitialValuesOnStart: 0
         m_SequenceItems:
         - rid: 6404330418800427012
@@ -791,30 +1337,17 @@ MonoBehaviour:
             m_Calls: []
         m_OnComplete:
           m_PersistentCalls:
-            m_Calls:
-            - m_Target: {fileID: 1741634118}
-              m_TargetAssemblyTypeName: CocodriloDog.MotionKit.Examples.DynamicMotionBlocks_Example,
-                CocodriloDog.MotionKit.Examples
-              m_MethodName: PlayValues
-              m_Mode: 1
-              m_Arguments:
-                m_ObjectArgument: {fileID: 0}
-                m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-                m_IntArgument: 0
-                m_FloatArgument: 0
-                m_StringArgument: 
-                m_BoolArgument: 0
-              m_CallState: 2
+            m_Calls: []
         m_CallbackSelection: 3
         m_EditOwnerAndReuseID: 0
         m_PlayOnStart: 1
         m_SetInitialValuesOnStart: 0
         m_Object: {fileID: 1166779317}
-        m_SetterString: Transform/position
+        m_SetterString: Transform/localPosition
         m_GetterString: Transform/position
-        m_InitialValue: {x: 4, y: 0, z: 0}
+        m_InitialValue: {x: 0, y: 0, z: 0}
         m_InitialValueIsRelative: 0
-        m_FinalValue: {x: 4, y: 2, z: 0}
+        m_FinalValue: {x: 0, y: 2, z: 0}
         m_FinalValueIsRelative: 0
         m_SharedValues: {fileID: 0}
     - rid: 6404330418800427014
@@ -841,30 +1374,17 @@ MonoBehaviour:
             m_Calls: []
         m_OnComplete:
           m_PersistentCalls:
-            m_Calls:
-            - m_Target: {fileID: 1741634118}
-              m_TargetAssemblyTypeName: CocodriloDog.MotionKit.Examples.DynamicMotionBlocks_Example,
-                CocodriloDog.MotionKit.Examples
-              m_MethodName: PlayValues
-              m_Mode: 1
-              m_Arguments:
-                m_ObjectArgument: {fileID: 0}
-                m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-                m_IntArgument: 0
-                m_FloatArgument: 0
-                m_StringArgument: 
-                m_BoolArgument: 0
-              m_CallState: 2
+            m_Calls: []
         m_CallbackSelection: 3
         m_EditOwnerAndReuseID: 0
         m_PlayOnStart: 1
         m_SetInitialValuesOnStart: 0
         m_Object: {fileID: 1166779317}
-        m_SetterString: Transform/position
+        m_SetterString: Transform/localPosition
         m_GetterString: Transform/position
-        m_InitialValue: {x: 4, y: 2, z: 0}
+        m_InitialValue: {x: 0, y: 2, z: 0}
         m_InitialValueIsRelative: 0
-        m_FinalValue: {x: 4, y: 0, z: 0}
+        m_FinalValue: {x: 0, y: 0, z: 0}
         m_FinalValueIsRelative: 0
         m_SharedValues: {fileID: 0}
 --- !u!4 &1741634120
@@ -880,8 +1400,10 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 390141286}
-  - {fileID: 1166779318}
+  - {fileID: 113789552}
+  - {fileID: 596831381}
+  - {fileID: 498675225}
+  - {fileID: 1338291201}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1660057539 &9223372036854775807
