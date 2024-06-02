@@ -37,6 +37,7 @@ namespace CocodriloDog.MotionKit {
 		[SerializeField]
 		private string m_NewName;
 
+		[Tooltip("Append a serial number at the end of the specified name. For example, \"Move1\", \"Move2\", etc.")]
 		[SerializeField]
 		private bool m_AppendSerialNumber;
 

@@ -33,6 +33,10 @@ namespace CocodriloDog.MotionKit {
 
 		#region Private Fields
 
+		[Tooltip(
+			"A list of objects that will be assigned to the blocks in the target list in the setter object field, " +
+			"if those blocks are motion blocks."
+		)]
 		[SerializeField]
 		private UnityEngine.Object[] m_SetterObjects;
 

@@ -16,15 +16,19 @@ namespace CocodriloDog.MotionKit {
 
 		#region Private Fields
 
+		[Tooltip("The initial value that the first block in the target list will have.")]
 		[SerializeField]
 		private T m_BaseInitialValue;
 
+		[Tooltip("The amount that the initial value will increment per each subsequent block.")]
 		[SerializeField]
 		private T m_InitialValueIncrement;
 
+		[Tooltip("The final value that the first block in the target list will have.")]
 		[SerializeField]
 		private T m_BaseFinalValue;
 
+		[Tooltip("The amount that the final value will increment per each subsequent block.")]
 		[SerializeField]
 		private T m_FinalValueIncrement;
 

@@ -170,9 +170,11 @@ namespace CocodriloDog.MotionKit {
 		/// at the time of the change, there was a lot of work already done that I didn't wnat to lose. 
 		/// Additionally it reads more clear for the user in the inspector.
 		/// </summary>
+		[Tooltip("The blocks that are part of this parallel.")]
 		[SerializeReference]
 		private List<MotionKitBlock> m_ParallelItems = new List<MotionKitBlock>();
 
+		[Tooltip("A set of batch operations that can be performed in each block of the parallel in edit mode.")]
 		[SerializeReference]
 		private List<MotionKitBatchOperation> m_BatchOperations = new List<MotionKitBatchOperation>();
 

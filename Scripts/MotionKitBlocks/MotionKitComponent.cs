@@ -228,6 +228,7 @@ namespace CocodriloDog.MotionKit {
 
 		#region Private Fields - Serialized
 
+		[Tooltip("A list of blocks that can be played independently.")] 
 		[SerializeReference]
 		private List<MotionKitBlock> m_Blocks = new List<MotionKitBlock>();
 

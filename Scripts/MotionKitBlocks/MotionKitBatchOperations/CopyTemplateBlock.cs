@@ -33,6 +33,7 @@ namespace CocodriloDog.MotionKit {
 
 		#region Private Fields
 
+		[Tooltip("A template block that will be copied and will replace the blocks in the target list.")]
 		[SerializeReference]
 		private MotionKitBlock m_TemplateBlock;
 

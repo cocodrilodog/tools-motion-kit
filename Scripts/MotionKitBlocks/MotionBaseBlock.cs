@@ -310,27 +310,38 @@ namespace CocodriloDog.MotionKit {
 
 		#region Private Fields - Serialized
 
+		[Tooltip("The object that will be animated.")] // This tooltip won't be shown
 		[SerializeField]
 		private UnityEngine.Object m_Object;
 
+		[Tooltip("The property or method that will be used for the animation.")] // This tooltip won't be shown
 		[SerializeField]
 		private string m_SetterString;
 
+		[Tooltip("The read property or method that will be used when either the initial or final value is set to \"Is Relative\"")] // This tooltip won't be shown
 		[SerializeField]
 		private string m_GetterString;
 
+		[Tooltip("The initial value for the motion.")]
 		[SerializeField]
 		private ValueT m_InitialValue;
 
+		[Tooltip("If checked, the animation will begin at the current value plus this value.")]
 		[SerializeField]
 		private bool m_InitialValueIsRelative;
 
+		[Tooltip("The final value for the motion.")]
 		[SerializeField]
 		private ValueT m_FinalValue;
 
+		[Tooltip("If checked, the animation will end at the current value plus this value.")]
 		[SerializeField]
 		private bool m_FinalValueIsRelative;
 
+		[Tooltip(
+			"An asset that will override the InitialValue, FinalValue, and their respective Is Relative flags, and " +
+			"can be shared with other motion kit blocks.")
+		]
 		[SerializeField]
 		private SharedValuesT m_SharedValues;
 

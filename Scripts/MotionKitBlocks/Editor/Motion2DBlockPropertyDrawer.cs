@@ -36,7 +36,7 @@ namespace CocodriloDog.MotionKit {
 			var yProperty = vector3Property.FindPropertyRelative("y");
 
 			Vector2 currentValue = new Vector2(xProperty.floatValue, yProperty.floatValue);
-			var newValue = EditorGUI.Vector2Field(rect, vector3Property.displayName, currentValue);
+			var newValue = EditorGUI.Vector2Field(rect, new GUIContent(vector3Property.displayName, vector3Property.tooltip), currentValue);
 
 			xProperty.floatValue = newValue.x;
 			yProperty.floatValue = newValue.y;

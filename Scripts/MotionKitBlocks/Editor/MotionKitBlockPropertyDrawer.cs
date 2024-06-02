@@ -202,9 +202,9 @@
 
 		protected virtual void DrawAfterSettings() { }
 
-		protected override void DrawPropertyField(Rect propertyRect, string label, string name) {
+		protected override void DrawPropertyField(Rect propertyRect, GUIContent guiContent, string name) {
 
-			base.DrawPropertyField(propertyRect, label, name);
+			base.DrawPropertyField(propertyRect, guiContent, name);
 
 			if (Property.managedReferenceValue != null && (Property.managedReferenceValue as MotionKitBlock).DrawToggles) {
 

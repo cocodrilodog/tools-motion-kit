@@ -172,12 +172,14 @@ namespace CocodriloDog.MotionKit {
 
 		/// <summary>
 		/// The property was renamed to <see cref="Items"/>, but this field was left as is because
-		/// at the time of the change, there was a lot of work already done that I didn't wnat to lose. 
+		/// at the time of the change, there was a lot of work already done that I didn't want to lose. 
 		/// Additionally it reads more clear for the user in the inspector.
 		/// </summary>
+		[Tooltip("The blocks that are part of this sequence.")]
 		[SerializeReference]
 		private List<MotionKitBlock> m_SequenceItems = new List<MotionKitBlock>();
 
+		[Tooltip("A set of batch operations that can be performed in each block of the sequence in edit mode.")]
 		[SerializeReference]
 		private List<MotionKitBatchOperation> m_BatchOperations = new List<MotionKitBatchOperation>();
 

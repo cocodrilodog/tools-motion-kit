@@ -33,9 +33,11 @@ namespace CocodriloDog.MotionKit {
 
 		#region Private Fields
 
+		[Tooltip("The duration that the first block in the target list will have.")]
 		[SerializeField]
 		private float m_BaseDuration;
 
+		[Tooltip("The amount that the duration will increment per each subsequent block.")]
 		[SerializeField]
 		private float m_DurationIncrement;
 

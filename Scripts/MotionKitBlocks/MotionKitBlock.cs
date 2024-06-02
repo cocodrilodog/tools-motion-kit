@@ -403,15 +403,19 @@ namespace CocodriloDog.MotionKit {
 		[SerializeField]
 		private string m_ReuseID;
 
+		[Tooltip("The duration of this playback object.")]
 		[SerializeField]
 		private float m_Duration;
 
+		[Tooltip("The time mode of this playback object.")]
 		[SerializeField]
 		private TimeMode m_TimeMode;
 
+		[Tooltip("The easing of this playback object.")]
 		[SerializeField]
 		private MotionKitEasingField m_Easing;
 
+		[Tooltip("An asset that will override the Duration, Time Mode and Easing, and can be shared with other motion kit blocks.")]
 		[SerializeField]
 		private MotionKitSettings m_SharedSettings;
 

@@ -20,9 +20,9 @@ namespace CocodriloDog.MotionKit {
 
 		#region Protected Methods
 
-		protected override void DrawPropertyField(Rect propertyRect, string label, string name) {
+		protected override void DrawPropertyField(Rect propertyRect, GUIContent guiContent, string name) {
 
-			base.DrawPropertyField(propertyRect, label, name);
+			base.DrawPropertyField(propertyRect, guiContent, name);
 
 			if (Property.managedReferenceValue != null) {
 

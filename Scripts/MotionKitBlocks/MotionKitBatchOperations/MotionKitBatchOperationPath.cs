@@ -78,7 +78,10 @@ namespace CocodriloDog.MotionKit {
 
 		#region Private Fields
 
-		[Tooltip("A relative path to a child block in which the operation will be performed. If left blank, the block itself.")]
+		[Tooltip(
+			"On each main block of the target list, this is a relative path to a child block in which the operation will happen. " +
+			"If left blank, the operation will happen in each main block of the target list."
+		)]
 		[SerializeField]
 		private string m_Path;
 
