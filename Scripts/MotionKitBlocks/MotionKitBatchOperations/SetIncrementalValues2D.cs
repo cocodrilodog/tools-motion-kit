@@ -7,7 +7,7 @@ namespace CocodriloDog.MotionKit {
 	using UnityEngine;
 
 	/// <summary>
-	/// Sets the values of the <see cref="Motion3DBlock"/> at <see cref="MotionKitBatchOperationPath.Path"/>
+	/// Sets the values of the <see cref="Motion2DBlock"/> at <see cref="MotionKitBatchOperationPath.Path"/>
 	/// in a incremental way proportional to the <c>index</c> of the block.
 	/// </summary>
 	[Serializable]
