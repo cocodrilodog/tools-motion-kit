@@ -74,7 +74,7 @@ namespace CocodriloDog.MotionKit {
 		/// <summary>
 		/// The initial value for the motion.
 		/// </summary>
-		public ValueT InitialValue {
+		public virtual ValueT InitialValue {
 			get => SharedValues != null ? SharedValues.InitialValue : m_InitialValue;
 			set {
 				_ = SharedValues != null ? SharedValues.InitialValue = value : m_InitialValue = value;
@@ -103,7 +103,7 @@ namespace CocodriloDog.MotionKit {
 		/// <summary>
 		/// The final value for the motion.
 		/// </summary>
-		public ValueT FinalValue {
+		public virtual ValueT FinalValue {
 			get => SharedValues != null ? SharedValues.FinalValue : m_FinalValue;
 			set {
 				_ = SharedValues != null ? SharedValues.FinalValue = value : m_FinalValue = value;
