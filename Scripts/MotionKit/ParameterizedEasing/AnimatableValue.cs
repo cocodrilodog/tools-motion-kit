@@ -5,18 +5,33 @@ namespace CocodriloDog.MotionKit {
 	using System.Collections.Generic;
 	using UnityEngine;
 
+	/// <summary>
+	/// This is used by <see cref="ParameterizedEasing"/> objects that have value-related parameters.
+	/// </summary>
 	[Serializable]
 	public class AnimatableValue {
 
 
 		#region Public Fields
 
+		/// <summary>
+		/// A float to be used by the easing function when working with a Motion3D.
+		/// </summary>
+		[Tooltip("A float to be used by the easing function when working with a MotionFloat")]
 		[SerializeField]
 		public float Float;
 
+		/// <summary>
+		/// A Vector3 to be used by the easing function when working with a Vector3.
+		/// </summary>
+		[Tooltip("A Vector3 to be used by the easing function when working with a Motion3D")]
 		[SerializeField]
 		public Vector3 Vector3;
 
+		/// <summary>
+		/// A color to be used by the easing function when working with a MotionColor.
+		/// </summary>
+		[Tooltip("A color to be used by the easing function when working with a MotionColor")]
 		[SerializeField]
 		public Color Color;
 

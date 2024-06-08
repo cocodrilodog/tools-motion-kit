@@ -1,9 +1,14 @@
 namespace CocodriloDog.MotionKit {
+
 	using System;
 	using System.Collections;
 	using System.Collections.Generic;
 	using UnityEngine;
 
+	/// <summary>
+	/// Base class for MotionValues assets.
+	/// </summary>
+	/// <typeparam name="ValueT"></typeparam>
 	public class MotionValues<ValueT> : ScriptableObject {
 
 

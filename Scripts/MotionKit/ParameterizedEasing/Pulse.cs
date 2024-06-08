@@ -97,6 +97,10 @@
 
 		#region Private Fields
 
+		[Tooltip(
+			"The maximum value that will be added on top of the current value of the " +
+			"property when the pulsation reachs its peak"
+		)]
 		[SerializeField]
 		private AnimatableValue m_Offset;
 

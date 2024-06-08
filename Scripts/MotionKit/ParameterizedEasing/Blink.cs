@@ -15,6 +15,10 @@
 
 		#region Public Fields
 
+		/// <summary>
+		/// The number of blinks.
+		/// </summary>
+		[Tooltip("The number of blinks")]
 		[SerializeField]
 		public int BlinkCount = 4;
 

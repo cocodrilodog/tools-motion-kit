@@ -20,12 +20,12 @@
 		public AnimatableValue Magnitude => m_Magnitude = m_Magnitude ?? new AnimatableValue();
 
 		/// <summary>
-		/// How fast will the shake look?
+		/// Multiplies <c>t</c> in the interpolation function. The higher the value, the faster the shake.
 		/// </summary>
 		public float TMultiplier => m_TMultiplier;
 
 		/// <summary>
-		/// Will this shake be dampered over time?
+		/// Whether this shake will be dampered over time or not.
 		/// </summary>
 		public bool IsDampered => m_IsDampered;
 
@@ -176,15 +176,19 @@
 
 		#region Private Fields - Serialized
 
+		[Tooltip("The magnitude of the shake.")]
 		[SerializeField]
 		private AnimatableValue m_Magnitude;
 
+		[Tooltip("Multiplies t in the interpolation function. The higher the value, the faster the shake.")]
 		[SerializeField]
 		public float m_TMultiplier = 7;
 
+		[Tooltip("Whether this shake will be dampered over time or not.")]
 		[SerializeField]
 		public bool m_IsDampered = true;
 
+		[Tooltip("The Damper curve.")]
 		[SerializeField]
 		private AnimationCurve m_Damper = new AnimationCurve(
 			new Keyframe(0f, 1f), new Keyframe(0.9f, .33f, -2f, -2f), new Keyframe(1f, 0f, -5.65f, -5.65f)
