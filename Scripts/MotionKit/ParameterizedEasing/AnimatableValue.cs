@@ -15,14 +15,14 @@ namespace CocodriloDog.MotionKit {
 		#region Public Fields
 
 		/// <summary>
-		/// A float to be used by the easing function when working with a Motion3D.
+		/// A float to be used by the easing function when working with a MotionFloat.
 		/// </summary>
 		[Tooltip("A float to be used by the easing function when working with a MotionFloat")]
 		[SerializeField]
 		public float Float;
 
 		/// <summary>
-		/// A Vector3 to be used by the easing function when working with a Vector3.
+		/// A Vector3 to be used by the easing function when working with a Motion3D.
 		/// </summary>
 		[Tooltip("A Vector3 to be used by the easing function when working with a Motion3D")]
 		[SerializeField]
