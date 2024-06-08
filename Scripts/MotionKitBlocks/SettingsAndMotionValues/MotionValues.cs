@@ -9,7 +9,7 @@ namespace CocodriloDog.MotionKit {
 
 		#region Public Properties
 
-		public ValueT InitialValue {
+		public virtual ValueT InitialValue {
 			get => m_InitialValue;
 			set {
 				var raiseEvent = !value.Equals(m_InitialValue);
@@ -22,7 +22,7 @@ namespace CocodriloDog.MotionKit {
 
 		public bool InitialValueIsRelative => m_InitialValueIsRelative;
 
-		public ValueT FinalValue {
+		public virtual ValueT FinalValue {
 			get => m_FinalValue;
 			set {
 				var raiseEvent = !value.Equals(m_FinalValue);
