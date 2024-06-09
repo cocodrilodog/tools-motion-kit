@@ -7,15 +7,8 @@ namespace CocodriloDog.MotionKit {
 	using UnityEditor;
 	using UnityEngine;
 
-	[CustomPropertyDrawer(typeof(MotionKitBatchOperation))]
+	[CustomPropertyDrawer(typeof(MotionKitBatchOperation), true)]
 	public class MotionKitBatchOperationPropertyDrawer : CompositePropertyDrawer {
-
-
-		#region Protected Properties
-
-		protected override bool UseDefaultDrawer => false;
-
-		#endregion
 
 
 		#region Protected Methods
@@ -50,13 +43,6 @@ namespace CocodriloDog.MotionKit {
 
 			}
 		}
-
-		#endregion
-
-
-		#region Private Fields
-
-		private List<Type> m_CompositeTypes;
 
 		#endregion
 

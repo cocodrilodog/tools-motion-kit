@@ -43,6 +43,7 @@ namespace CocodriloDog.MotionKit {
 
 		#region Private Fields
 
+		[HideInInspector]
 		[SerializeField]
 		private bool m_Enabled = true;
 
