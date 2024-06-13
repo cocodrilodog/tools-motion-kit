@@ -19,12 +19,24 @@ namespace CocodriloDog.MotionKit {
 		}
 
 		protected override void OnRootInspectorGUI() {
+
 			base.OnRootInspectorGUI();
+
 			if (GUILayout.Button("Run Batch Operations")) {
+
+				var motionKitComponents = new List<MotionKitComponent>();
+				for (int i = 0; i < m_MotionKitComponentsProperty.arraySize; i++) {
+					var motionKitComponent = m_MotionKitComponentsProperty.GetArrayElementAtIndex(i).objectReferenceValue as MotionKitComponent;
+					motionKitComponents.Add(motionKitComponent);
+				}
+				Undo.RecordObjects(motionKitComponents.ToArray(), "Run Batch Operations");
+
 				RunBatchOperations();
 				m_ShowResults = true;
 				m_ResultsMessage = GetResultsMessage();
+
 			}
+
 			if (m_ShowResults) {
 				GUIStyle resultsStyle = new GUIStyle(EditorStyles.helpBox);
 				resultsStyle.richText = true;
@@ -33,6 +45,7 @@ namespace CocodriloDog.MotionKit {
 					m_ShowResults = false;
 				}
 			}
+
 		}
 
 		#endregion
