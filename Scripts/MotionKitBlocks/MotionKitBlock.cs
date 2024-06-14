@@ -159,10 +159,6 @@ namespace CocodriloDog.MotionKit {
 		/// </summary>
 		public MotionKitEasingField Easing {
 			get => SharedSettings != null ? SharedSettings.Easing : m_Easing;
-			set {
-				_ = SharedSettings != null ? SharedSettings.Easing = value : m_Easing = value;
-				m_HaveSettingsChanged = true;
-			}
 		}
 
 		/// <summary>
@@ -203,6 +199,42 @@ namespace CocodriloDog.MotionKit {
 			if (SharedSettings != null) {
 				SharedSettings.OnSettingsChange += SharedSettings_OnSettingsChange;
 			}
+		}
+
+		/// <summary>
+		/// Sets a runtime <paramref name="onStart"/> callback that will be invoked in addition to the Unity Event <see cref="m_OnStart"/>.
+		/// </summary>
+		/// <param name="onStart">The callback</param>
+		public void SetOnStart_Runtime(Action onStart) {
+			m_OnStart_Runtime = onStart;
+			m_HaveSettingsChanged = true;
+		}
+
+		/// <summary>
+		/// Sets a runtime <paramref name="onUpdate"/> callback that will be invoked in addition to the Unity Event <see cref="m_OnUpdate"/>.
+		/// </summary>
+		/// <param name="onUpdate">The callback</param>
+		public void SetOnUpdate_Runtime(Action onUpdate) {
+			m_OnUpdate_Runtime = onUpdate;
+			m_HaveSettingsChanged = true;
+		}
+
+		/// <summary>
+		/// Sets a runtime <paramref name="onInterrupt"/> callback that will be invoked in addition to the Unity Event <see cref="m_OnInterrupt"/>.
+		/// </summary>
+		/// <param name="onInterrupt">The callback</param>
+		public void SetOnInterrupt_Runtime(Action onInterrupt) {
+			m_OnInterrupt_Runtime = onInterrupt;
+			m_HaveSettingsChanged = true;
+		}
+
+		/// <summary>
+		/// Sets a runtime <paramref name="onComplete"/> callback that will be invoked in addition to the Unity Event <see cref="m_OnComplete"/>.
+		/// </summary>
+		/// <param name="onComplete">The callback</param>
+		public void SetOnComplete_Runtime(Action onComplete) {
+			m_OnComplete_Runtime = onComplete;
+			m_HaveSettingsChanged = true;
 		}
 
 		/// <summary>
@@ -273,6 +305,10 @@ namespace CocodriloDog.MotionKit {
 				if (SharedSettings != null) {
 					SharedSettings.OnSettingsChange -= SharedSettings_OnSettingsChange;
 				}
+				m_OnStart_Runtime = null;
+				m_OnUpdate_Runtime = null;
+				m_OnInterrupt_Runtime = null;
+				m_OnComplete_Runtime = null;
 			}
 		}
 
@@ -369,6 +405,30 @@ namespace CocodriloDog.MotionKit {
 		/// </summary>
 		protected UnityEvent OnComplete => m_OnComplete;
 
+		/// <summary>
+		/// The <c>OnStart</c> callback that is set at runtime and will be invoked by the MotionKit object managed by this 
+		/// <see cref="MotionKitBlock"/>.
+		/// </summary>
+		protected Action OnStart_Runtime => m_OnStart_Runtime;
+
+		/// <summary>
+		/// The <c>OnUpdate</c> callback that is set at runtime and will be invoked by the MotionKit object managed by this 
+		/// <see cref="MotionKitBlock"/>.
+		/// </summary>
+		protected Action OnUpdate_Runtime => m_OnUpdate_Runtime;
+
+		/// <summary>
+		/// The <c>OnInterrupt</c> callback that is set at runtime and will be invoked by the MotionKit object managed by this 
+		/// <see cref="MotionKitBlock"/>.
+		/// </summary>
+		protected Action OnInterrupt_Runtime => m_OnInterrupt_Runtime;
+
+		/// <summary>
+		/// The <c>OnComplete</c> callback that is set at runtime and will be invoked by the MotionKit object managed by this 
+		/// <see cref="MotionKitBlock"/>.
+		/// </summary>
+		protected Action OnComplete_Runtime => m_OnComplete_Runtime;
+
 		#endregion
 
 
@@ -456,6 +516,18 @@ namespace CocodriloDog.MotionKit {
 
 		[NonSerialized]
 		private bool m_DrawToggles;
+
+		[NonSerialized]
+		private Action m_OnStart_Runtime;
+
+		[NonSerialized]
+		private Action m_OnUpdate_Runtime;
+
+		[NonSerialized]
+		private Action m_OnInterrupt_Runtime;
+
+		[NonSerialized]
+		private Action m_OnComplete_Runtime;
 
 		#endregion
 

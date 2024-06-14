@@ -40,10 +40,23 @@ namespace CocodriloDog.MotionKit {
 				UnlockResetPlayback(false); // After a possible recursive lock when setting initial values, this auto unlocks this object (not recursively)
 											// when the lock is not needed anymore
 				if (OnStart.GetPersistentEventCount() > 0) OnStart.Invoke();
+				OnStart_Runtime?.Invoke();
 			});
-			motion.SetOnUpdate(OnUpdate.GetPersistentEventCount() > 0 ? OnUpdate.Invoke : null);
-			motion.SetOnInterrupt(OnInterrupt.GetPersistentEventCount() > 0 ? OnInterrupt.Invoke : null);
-			motion.SetOnComplete(OnComplete.GetPersistentEventCount() > 0 ? OnComplete.Invoke : null);
+
+			motion.SetOnUpdate(() => {
+				if (OnUpdate.GetPersistentEventCount() > 0) OnUpdate.Invoke();
+				OnUpdate_Runtime?.Invoke();
+			});
+
+			motion.SetOnInterrupt(() => {
+				if (OnInterrupt.GetPersistentEventCount() > 0) OnInterrupt.Invoke();
+				OnInterrupt_Runtime?.Invoke();
+			});
+
+			motion.SetOnComplete(() => {
+				if (OnComplete.GetPersistentEventCount() > 0) OnComplete.Invoke();
+				OnComplete_Runtime?.Invoke();
+			});
 
 			return motion;
 

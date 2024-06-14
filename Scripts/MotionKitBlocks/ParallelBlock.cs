@@ -153,10 +153,23 @@ namespace CocodriloDog.MotionKit {
 				UnlockResetPlayback(false); // After a possible recursive lock when setting initial values, this auto unlocks this object (not recursively)
 											// when the lock is not needed anymore
 				if (OnStart.GetPersistentEventCount() > 0) OnStart.Invoke();
+				OnStart_Runtime?.Invoke();
 			});
-			m_Parallel.SetOnUpdate(OnUpdate.GetPersistentEventCount() > 0 ? OnUpdate.Invoke : null);
-			m_Parallel.SetOnInterrupt(OnInterrupt.GetPersistentEventCount() > 0 ? OnInterrupt.Invoke : null);
-			m_Parallel.SetOnComplete(OnComplete.GetPersistentEventCount() > 0 ? OnComplete.Invoke : null);
+
+			m_Parallel.SetOnUpdate(() => {
+				if (OnUpdate.GetPersistentEventCount() > 0) OnUpdate.Invoke();
+				OnUpdate_Runtime?.Invoke();
+			});
+
+			m_Parallel.SetOnInterrupt(() => {
+				if (OnInterrupt.GetPersistentEventCount() > 0) OnInterrupt.Invoke();
+				OnInterrupt_Runtime?.Invoke();
+			});
+
+			m_Parallel.SetOnComplete(() => {
+				if (OnComplete.GetPersistentEventCount() > 0) OnComplete.Invoke();
+				OnComplete_Runtime?.Invoke();
+			});
 
 		}
 
