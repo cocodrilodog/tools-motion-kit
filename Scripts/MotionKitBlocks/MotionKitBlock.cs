@@ -444,6 +444,42 @@ namespace CocodriloDog.MotionKit {
 		/// </remarks>
 		protected virtual void ResetPlayback() => m_HaveSettingsChanged = false;
 
+		/// <summary>
+		/// Invokes the <c>OnStart</c> callbacks that are set in the inspector and the one that is set via
+		/// <see cref="SetOnStart_Runtime(Action)"/>.
+		/// </summary>
+		protected void InvokeOnStart() {
+			OnStart.Invoke();
+			OnStart_Runtime?.Invoke();
+		}
+
+		/// <summary>
+		/// Invokes the <c>OnUpdate</c> callbacks that are set in the inspector and the one that is set via
+		/// <see cref="SetOnUpdate_Runtime(Action)"/>.
+		/// </summary>
+		protected void InvokeOnUpdate() {
+			OnUpdate.Invoke();
+			OnUpdate_Runtime?.Invoke();
+		}
+
+		/// <summary>
+		/// Invokes the <c>OnInterrupt</c> callbacks that are set in the inspector and the one that is set via
+		/// <see cref="SetOnInterrupt_Runtime(Action)"/>.
+		/// </summary>
+		protected void InvokeOnInterrupt() {
+			OnInterrupt.Invoke();
+			OnInterrupt_Runtime?.Invoke();
+		}
+
+		/// <summary>
+		/// Invokes the <c>OnComplete</c> callbacks that are set in the inspector and the one that is set via
+		/// <see cref="SetOnComplete_Runtime(Action)"/>.
+		/// </summary>
+		protected void InvokeOnComplete() {
+			OnComplete.Invoke();
+			OnComplete_Runtime?.Invoke();
+		}
+
 		#endregion
 
 

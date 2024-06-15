@@ -149,30 +149,19 @@ namespace CocodriloDog.MotionKit {
 			motion.SetFinalValue(FinalValueIsRelative ? getterDelegate() + (Vector2)FinalValue : FinalValue);
 			motion.SetDuration(DurationInput);
 
-			// Callbacks: This approach will only work if the listeners are added via editor
-			// We are setting the callbacks to null when there are none to clean it in case this is a reused playback
+			// Callbacks: Adding editor and runtime callbacks
 			motion.SetOnStart(() => {
 				TryResetPlayback(false);    // After a recursive reset on play, reset only this object (not recursively) when the playback starts
 				UnlockResetPlayback(false); // After a possible recursive lock when setting initial values, this auto unlocks this object (not recursively)
 											// when the lock is not needed anymore
-				if (OnStart.GetPersistentEventCount() > 0) OnStart.Invoke();
-				OnStart_Runtime?.Invoke();
+				InvokeOnStart();
 			});
 
-			motion.SetOnUpdate(() => { 
-				if (OnUpdate.GetPersistentEventCount() > 0) OnUpdate.Invoke();
-				OnUpdate_Runtime?.Invoke();
-			});
-
-			motion.SetOnInterrupt(() => {
-				if (OnInterrupt.GetPersistentEventCount() > 0) OnInterrupt.Invoke();
-				OnInterrupt_Runtime?.Invoke();
-			});
-
-			motion.SetOnComplete(() => {
-				if (OnComplete.GetPersistentEventCount() > 0) OnComplete.Invoke();
-				OnComplete_Runtime?.Invoke();
-			});
+			// We are setting the callbacks to null when there are none to clean it in case this is a reused playback. In the case of
+			// OnStart, it is required always, but it is updated. So if InvokeOnStart does nothing, we are still cleaning it.
+			motion.SetOnUpdate(OnUpdate.GetPersistentEventCount() > 0 || OnUpdate_Runtime != null ? InvokeOnUpdate : null);
+			motion.SetOnInterrupt(OnInterrupt.GetPersistentEventCount() > 0 || OnInterrupt_Runtime != null ? InvokeOnInterrupt : null);
+			motion.SetOnComplete(OnComplete.GetPersistentEventCount() > 0 || OnComplete_Runtime != null ? InvokeOnComplete : null);
 
 			return motion;
 

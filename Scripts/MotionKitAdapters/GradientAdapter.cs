@@ -18,7 +18,6 @@ namespace CocodriloDog.MotionKit {
 		#region Public Methods
 
 		public void ApplyValue() {
-			// TODO: Make this changes undoable when done from the editor
 			if (ColorAdapter != null) {
 				ColorAdapter.Color = m_Gradient.Evaluate(Mathf.Repeat(m_Value, 1));
 			}
