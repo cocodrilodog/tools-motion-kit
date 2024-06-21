@@ -9,49 +9,33 @@ namespace CocodriloDog.MotionKit {
 	[CustomEditor(typeof(MotionKitBatchComponent))]
 	public class MotionKitBatchComponentEditor : CompositeRootEditor {
 
-		
+
 		#region Unity Methods
 
 		protected override void OnEnable() {
 			base.OnEnable();
+			m_ScriptProperty = serializedObject.FindProperty("m_Script");
 			m_MotionKitComponentsProperty = serializedObject.FindProperty("m_MotionKitComponents");
 			m_BatchOperationGroupsProperty = serializedObject.FindProperty("m_BatchOperationGroups.m_List");
 		}
 
 		protected override void OnRootInspectorGUI() {
-
-			base.OnRootInspectorGUI();
-
-			if (GUILayout.Button("Run Batch Operations")) {
-
-				var motionKitComponents = new List<MotionKitComponent>();
-				for (int i = 0; i < m_MotionKitComponentsProperty.arraySize; i++) {
-					var motionKitComponent = m_MotionKitComponentsProperty.GetArrayElementAtIndex(i).objectReferenceValue as MotionKitComponent;
-					motionKitComponents.Add(motionKitComponent);
-				}
-				Undo.RecordObjects(motionKitComponents.ToArray(), "Run Batch Operations");
-
-				RunBatchOperations();
-				m_ShowResults = true;
-				m_ResultsMessage = GetResultsMessage();
-
-			}
-
-			if (m_ShowResults) {
-				GUIStyle resultsStyle = new GUIStyle(EditorStyles.helpBox);
-				resultsStyle.richText = true;
-				m_ResultsMessage = EditorGUILayout.TextArea(m_ResultsMessage, resultsStyle);
-				if (GUILayout.Button("OK")) {
-					m_ShowResults = false;
-				}
-			}
-
+			serializedObject.Update();
+			CDEditorUtility.DrawDisabledField(m_ScriptProperty);
+			DrawMotionKitComponents();
+			DrawBatchOperationGroups();
+			DrawAffectedBlockIndicesWarning();
+			DrawRunBatchOperationsButton();
+			DrawResutls();
+			serializedObject.ApplyModifiedProperties();
 		}
 
 		#endregion
 
 
 		#region Private Fields
+
+		private SerializedProperty m_ScriptProperty;
 
 		private SerializedProperty m_MotionKitComponentsProperty;
 
@@ -66,7 +50,113 @@ namespace CocodriloDog.MotionKit {
 		#endregion
 
 
+		#region Private Properties
+
+		private bool HasMotionKitComponents {
+			get {
+				for (int i = 0; i < m_MotionKitComponentsProperty.arraySize; i++) {
+					var motionKitComponent = m_MotionKitComponentsProperty.GetArrayElementAtIndex(i).objectReferenceValue as MotionKitComponent;
+					if (motionKitComponent != null) {
+						return true;
+					}
+				}
+				return false;
+			}
+		}
+
+		private bool HasBatchOperationGroups {
+			get {
+				for (int i = 0; i < m_BatchOperationGroupsProperty.arraySize; i++) {
+					var batchOperationGroup = m_BatchOperationGroupsProperty.GetArrayElementAtIndex(i).managedReferenceValue as MotionKitBatchOperationsGroup;
+					if (batchOperationGroup != null) {
+						return true;
+					}
+				}
+				return false;
+			}
+		}
+
+		#endregion
+
+
 		#region Private Methods
+
+		private void DrawMotionKitComponents() {
+			EditorGUILayout.PropertyField(m_MotionKitComponentsProperty);
+			if (HasBatchOperationGroups && !HasMotionKitComponents) {
+				EditorGUILayout.HelpBox("Add MotionKitComponents to run the operations.", MessageType.Warning);
+			}
+		}
+
+		private void DrawBatchOperationGroups() {
+			EditorGUILayout.PropertyField(serializedObject.FindProperty("m_BatchOperationGroups"));
+			if (HasMotionKitComponents && !HasBatchOperationGroups) {
+				EditorGUILayout.HelpBox("Add batch operations to run on the MotionKitComponents.", MessageType.Warning);
+			}
+		}
+
+		private void DrawAffectedBlockIndicesWarning() {
+
+			var affectedBlockIndices = new List<int>();
+			var repeatedBlockIndices = new List<int>();
+
+			for (int i = 0; i < m_BatchOperationGroupsProperty.arraySize; i++) {
+				var boGroupProperty = m_BatchOperationGroupsProperty.GetArrayElementAtIndex(i);
+				if (boGroupProperty.managedReferenceValue != null) {
+
+					var affectedBlockIndexProperty = boGroupProperty.FindPropertyRelative("m_AffectedBlockIndex");
+					var index = affectedBlockIndexProperty.intValue;
+
+					if (!affectedBlockIndices.Contains(index)) {
+						affectedBlockIndices.Add(index);
+					} else {
+						repeatedBlockIndices.Add(index);
+					}
+
+				}
+			}
+
+			if (repeatedBlockIndices.Count > 0) {
+				var message = $"There is more than one operation group that will affect the MotionKitBlocks at these positions: ";
+				foreach (var repeatedIndex in repeatedBlockIndices) {
+					message += $" {repeatedIndex}, ";
+				}
+				message = message.Remove(message.Length - 2);
+				message += "\n\nThis may overwrite operations of preceding groups.";
+				EditorGUILayout.HelpBox(message, MessageType.Warning);
+			}
+
+		}
+
+		private void DrawRunBatchOperationsButton() {
+			EditorGUI.BeginDisabledGroup(!HasMotionKitComponents || !HasBatchOperationGroups);
+			if (GUILayout.Button("Run Batch Operations")) {
+
+				var motionKitComponents = new List<MotionKitComponent>();
+				for (int i = 0; i < m_MotionKitComponentsProperty.arraySize; i++) {
+					var motionKitComponent = m_MotionKitComponentsProperty.GetArrayElementAtIndex(i).objectReferenceValue as MotionKitComponent;
+					motionKitComponents.Add(motionKitComponent);
+				}
+				Undo.RecordObjects(motionKitComponents.ToArray(), "Run Batch Operations");
+
+				RunBatchOperations();
+				m_ShowResults = true;
+				m_ResultsMessage = GetResultsMessage();
+
+			}
+			EditorGUI.EndDisabledGroup();
+		}
+
+		private void DrawResutls() {
+			if (m_ShowResults) {
+				GUIStyle resultsStyle = new GUIStyle(EditorStyles.helpBox);
+				resultsStyle.richText = true;
+				m_ResultsMessage = EditorGUILayout.TextArea(m_ResultsMessage, resultsStyle);
+				if (GUILayout.Button("OK")) {
+					m_ShowResults = false;
+				}
+			}
+		}
 
 		private void RunBatchOperations() {
 
@@ -151,7 +241,7 @@ namespace CocodriloDog.MotionKit {
 
 			public string GetMessage() {
 				var message = $"{Name} - Applied to block at index {BlockIndex}\n";
-				foreach(var results in BatchOperationResults) {
+				foreach (var results in BatchOperationResults) {
 					message += $"\t{results.GetMessage()}\n";
 				}
 				return message;
@@ -183,7 +273,7 @@ namespace CocodriloDog.MotionKit {
 
 				// successful / total message
 				message += $"{Name}: {Successful} of {Total}";
-				
+
 				// Close the color tag
 				if (someFailed) {
 					message += "</color>";

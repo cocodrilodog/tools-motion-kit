@@ -17,7 +17,10 @@ namespace CocodriloDog.MotionKit {
 		[SerializeField]
 		private List<MotionKitComponent> m_MotionKitComponents;
 
-		[Tooltip("On the motion kit components, each batch operations group will target one motion kit block by index")]
+		[Tooltip(
+			"On the motion kit components, each batch operations group will target one motion kit block at the " +
+			"specified index on which the operations of the group will be performed."
+		)]
 		[SerializeField]
 		private CompositeList<MotionKitBatchOperationsGroup> m_BatchOperationGroups;
 

@@ -28,11 +28,11 @@
 		protected virtual bool DoesDrawEasing => true;
 
 		protected virtual float BeforeSettingsHeight => 0;
-		
+
 		protected virtual float SettingsHeight {
 			get {
-				var height = SpaceHeight;	// <- Settings space
-				height += FieldHeight;		// <- Settings label
+				var height = SpaceHeight;   // <- Settings space
+				height += FieldHeight;      // <- Settings label
 				height += EditorGUI.GetPropertyHeight(DurationProperty) + 2;
 				height += EditorGUI.GetPropertyHeight(TimeModeProperty) + 2;
 				if (DoesDrawEasing) {
@@ -50,44 +50,9 @@
 		#region Protected Methods
 
 		protected override void Edit_InitializePropertiesForGetHeight() {
-
 			base.Edit_InitializePropertiesForGetHeight();
-
-			//PlayOnStartProperty = Property.FindPropertyRelative("m_PlayOnStart");
-			OwnerProperty				= Property.FindPropertyRelative("m_Owner");
-			ReuseIDProperty				= Property.FindPropertyRelative("m_ReuseID");
-
-			SharedSettingsProperty		= Property.FindPropertyRelative("m_SharedSettings");
-			
-			if (SharedSettingsProperty.objectReferenceValue != null) {
-				// Use the properties from the shared asset
-				DurationProperty	= SerializedSharedSettings.FindProperty("m_Duration");
-				TimeModeProperty	= SerializedSharedSettings.FindProperty("m_TimeMode");
-				EasingProperty		= SerializedSharedSettings.FindProperty("m_Easing");
-			} else {
-				// Use the properties from the MotionKitBlock
-				DurationProperty	= Property.FindPropertyRelative("m_Duration");
-				TimeModeProperty	= Property.FindPropertyRelative("m_TimeMode");
-				EasingProperty		= Property.FindPropertyRelative("m_Easing");
-			}
-
-			OnStartProperty				= Property.FindPropertyRelative("m_OnStart");
-			OnUpdateProperty			= Property.FindPropertyRelative("m_OnUpdate");
-			OnInterruptProperty			= Property.FindPropertyRelative("m_OnInterrupt");
-			OnCompleteProperty			= Property.FindPropertyRelative("m_OnComplete");
-			CallbackSelectionProperty	= Property.FindPropertyRelative("m_CallbackSelection");
-
-			OnStartCallsProperty		= OnStartProperty.FindPropertyRelative("m_PersistentCalls.m_Calls");
-			OnUpdateCallsProperty		= OnUpdateProperty.FindPropertyRelative("m_PersistentCalls.m_Calls");
-			OnInterruptCallsProperty	= OnInterruptProperty.FindPropertyRelative("m_PersistentCalls.m_Calls");
-			OnCompleteCallsProperty		= OnCompleteProperty.FindPropertyRelative("m_PersistentCalls.m_Calls");
-
+			InitializeProperties();
 		}
-
-		//protected override void Edit_InitializePropertiesForOnGUI() {
-		//	base.Edit_InitializePropertiesForOnGUI();
-		//	PlayOnStartProperty = Property.FindPropertyRelative("m_PlayOnStart");
-		//}
 
 		protected override float Edit_GetPropertyHeight(SerializedProperty property, GUIContent label) {
 
@@ -97,12 +62,15 @@
 			// Owner and Reuse ID
 			height += EditorGUI.GetPropertyHeight(OwnerProperty) + 2;
 
+			// Play on Start
+			height += EditorGUI.GetPropertyHeight(PlayOnStartProperty);
+
 			// Before settings
 			height += BeforeSettingsHeight;
 
 			// Settings
 			height += SettingsHeight;
-			
+
 			// After settings
 			height += AfterSettingsHeight;
 
@@ -121,9 +89,17 @@
 			return height;
 		}
 
+
+		protected override void Edit_InitializePropertiesForOnGUI() {
+			base.Edit_InitializePropertiesForOnGUI();
+			InitializeProperties();
+		}
+
+
 		protected override void Edit_OnGUI(Rect position, SerializedProperty property, GUIContent label) {
 			base.Edit_OnGUI(position, property, label);
 			DrawOwnerAndReuseID();
+			EditorGUI.PropertyField(GetNextPosition(PlayOnStartProperty), PlayOnStartProperty);
 			DrawBeforeSettings();
 			DrawSettings();
 			DrawAfterSettings();
@@ -149,7 +125,7 @@
 			var labelRect = rect;
 			labelRect.width = EditorGUIUtility.labelWidth;
 			EditorGUI.LabelField(
-				labelRect, 
+				labelRect,
 				SharedSettingsProperty.objectReferenceValue != null ? "Settings (Shared)" : "Settings",
 				EditorStyles.boldLabel
 			);
@@ -214,7 +190,7 @@
 				playOnStartRect.width = 10;
 				var playOnStartProperty = Property.FindPropertyRelative("m_PlayOnStart");
 				playOnStartProperty.boolValue = EditorGUI.Toggle(playOnStartRect, playOnStartProperty.boolValue);
-				DrawTooltip(playOnStartRect, "Play on start");
+				DrawControlTooltip(playOnStartRect, "Play on start");
 
 				// Draw the SetInitialValuesOnStart toggle for non-timer blocks
 				if (!(Property.managedReferenceValue is TimerBlock)) {
@@ -223,21 +199,7 @@
 					setInitialValuesOnStartRect.width = 10;
 					var setInitialValuesOnStartProperty = Property.FindPropertyRelative("m_SetInitialValuesOnStart");
 					setInitialValuesOnStartProperty.boolValue = EditorGUI.Toggle(setInitialValuesOnStartRect, setInitialValuesOnStartProperty.boolValue);
-					DrawTooltip(setInitialValuesOnStartRect, "Set initial values on start");
-				}
-
-				void DrawTooltip(Rect toggleRect, string text) {
-					if (toggleRect.Contains(Event.current.mousePosition)) {
-
-						var content = new GUIContent(text);
-						var size = EditorStyles.helpBox.CalcSize(content);
-						var rect = new Rect(toggleRect.position + Vector2.left * size.x, size);
-
-						// Use the dark color of the editor
-						EditorGUI.DrawRect(rect, new Color(0.216f, 0.216f, 0.216f));
-						GUI.Box(rect, content, EditorStyles.helpBox);
-
-					}
+					DrawControlTooltip(setInitialValuesOnStartRect, "Set initial values on start");
 				}
 
 			}
@@ -261,6 +223,8 @@
 		private SerializedProperty OwnerProperty { get; set; }
 
 		private SerializedProperty ReuseIDProperty { get; set; }
+
+		private SerializedProperty PlayOnStartProperty { get; set; }
 
 		private SerializedProperty DurationProperty { get; set; }
 
@@ -313,8 +277,40 @@
 
 		#region Private Methods
 
-		private void DrawOwnerAndReuseID() {
+		private void InitializeProperties() {
 
+			OwnerProperty			= Property.FindPropertyRelative("m_Owner");
+			ReuseIDProperty			= Property.FindPropertyRelative("m_ReuseID");
+			PlayOnStartProperty		= Property.FindPropertyRelative("m_PlayOnStart");
+
+			SharedSettingsProperty	= Property.FindPropertyRelative("m_SharedSettings");
+
+			if (SharedSettingsProperty.objectReferenceValue != null) {
+				// Use the properties from the shared asset
+				DurationProperty	= SerializedSharedSettings.FindProperty("m_Duration");
+				TimeModeProperty	= SerializedSharedSettings.FindProperty("m_TimeMode");
+				EasingProperty		= SerializedSharedSettings.FindProperty("m_Easing");
+			} else {
+				// Use the properties from the MotionKitBlock
+				DurationProperty	= Property.FindPropertyRelative("m_Duration");
+				TimeModeProperty	= Property.FindPropertyRelative("m_TimeMode");
+				EasingProperty		= Property.FindPropertyRelative("m_Easing");
+			}
+
+			OnStartProperty				= Property.FindPropertyRelative("m_OnStart");
+			OnUpdateProperty			= Property.FindPropertyRelative("m_OnUpdate");
+			OnInterruptProperty			= Property.FindPropertyRelative("m_OnInterrupt");
+			OnCompleteProperty			= Property.FindPropertyRelative("m_OnComplete");
+			CallbackSelectionProperty	= Property.FindPropertyRelative("m_CallbackSelection");
+
+			OnStartCallsProperty		= OnStartProperty.FindPropertyRelative("m_PersistentCalls.m_Calls");
+			OnUpdateCallsProperty		= OnUpdateProperty.FindPropertyRelative("m_PersistentCalls.m_Calls");
+			OnInterruptCallsProperty	= OnInterruptProperty.FindPropertyRelative("m_PersistentCalls.m_Calls");
+			OnCompleteCallsProperty		= OnCompleteProperty.FindPropertyRelative("m_PersistentCalls.m_Calls");
+
+		}
+
+		private void DrawOwnerAndReuseID() {
 			var mainRect = GetNextPosition(OwnerProperty);
 			if (Property.managedReferenceValue != null && m_EditOwnerAndReuseID) {
 
@@ -350,7 +346,6 @@
 					}
 				}
 			}
-
 		}
 
 		private void DrawCallbacks() {
@@ -373,6 +368,21 @@
 				case 3: EditorGUI.PropertyField(GetNextPosition(OnCompleteProperty), OnCompleteProperty); break;
 			}
 
+		}
+
+		//TODO: Implement this in CompositePropertyDrawer
+		private void DrawControlTooltip(Rect propertyControlRect, string text) {
+			if (propertyControlRect.Contains(Event.current.mousePosition)) {
+
+				var content = new GUIContent(text);
+				var size = EditorStyles.helpBox.CalcSize(content);
+				var rect = new Rect(propertyControlRect.position + Vector2.left * size.x, size);
+
+				// Use the dark color of the editor
+				EditorGUI.DrawRect(rect, new Color(0.216f, 0.216f, 0.216f));
+				GUI.Box(rect, content, EditorStyles.helpBox);
+
+			}
 		}
 
 		#endregion
