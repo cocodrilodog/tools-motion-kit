@@ -162,7 +162,7 @@ namespace CocodriloDog.MotionKit {
 		}
 
 		/// <summary>
-		/// Should this block be played on start?
+		/// If this is checked and this is at the root of a MotionKitComponent, it will be played on start.
 		/// </summary>
 		public bool PlayOnStart {
 			get => m_PlayOnStart;
@@ -170,7 +170,7 @@ namespace CocodriloDog.MotionKit {
 		}
 
 		/// <summary>
-		/// Should this block set initial values on start?
+		/// Whether this block sets initial values on start or not.
 		/// </summary>
 		public bool SetInitialValuesOnStart {
 			get => m_SetInitialValuesOnStart;
@@ -533,9 +533,11 @@ namespace CocodriloDog.MotionKit {
 		[SerializeField]
 		private bool m_EditOwnerAndReuseID;
 
+		[Tooltip("If this is checked and this block is at the root of a MotionKitComponent, it will be played on start.")]
 		[SerializeField]
 		private bool m_PlayOnStart;
 
+		[Tooltip("Whether this block sets initial values on start or not.")]
 		[SerializeField]
 		private bool m_SetInitialValuesOnStart;
 
