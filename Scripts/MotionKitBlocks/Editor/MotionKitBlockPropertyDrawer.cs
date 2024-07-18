@@ -8,7 +8,7 @@
 	using UnityEngine;
 
 	[CustomPropertyDrawer(typeof(MotionKitBlock), true)]
-	public class MotionKitBlockPropertyDrawer : CompositePropertyDrawer {
+	public class MotionKitBlockPropertyDrawer : CompositeObjectPropertyDrawer {
 
 
 		#region Public Static Properties

@@ -7,7 +7,7 @@ namespace CocodriloDog.MotionKit {
 	using UnityEngine;
 
 	[CustomPropertyDrawer(typeof(MotionKitBatchOperationsGroup))]
-	public class MotionKitBatchOperationsGroupPropertyDrawer : CompositePropertyDrawer {
+	public class MotionKitBatchOperationsGroupPropertyDrawer : CompositeObjectPropertyDrawer {
 
 
 		#region Protected Methods
