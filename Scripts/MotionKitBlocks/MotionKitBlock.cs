@@ -512,23 +512,25 @@ namespace CocodriloDog.MotionKit {
 		private MotionKitEasingField m_Easing;
 
 		[Tooltip("An asset that will override the Duration, Time Mode and Easing, and can be shared with other motion kit blocks.")]
+		[CreateAsset]
 		[SerializeField]
 		private MotionKitSettings m_SharedSettings;
 
+		[UnityEventGroup("Callbacks")]
 		[SerializeField]
 		private UnityEvent m_OnStart;
 
+		[UnityEventGroup("Callbacks")]
 		[SerializeField]
 		private UnityEvent m_OnUpdate;
 
+		[UnityEventGroup("Callbacks")]
 		[SerializeField]
 		private UnityEvent m_OnInterrupt;
 
+		[UnityEventGroup("Callbacks")]
 		[SerializeField]
 		private UnityEvent m_OnComplete;
-
-		[SerializeField]
-		private int m_CallbackSelection;
 
 		[SerializeField]
 		private bool m_EditOwnerAndReuseID;
