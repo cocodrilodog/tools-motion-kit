@@ -13,7 +13,7 @@ namespace CocodriloDog.MotionKit {
 	/// <remarks>
 	/// Its interface has been designed for ease of use by <c>UnityEvents</c>.
 	/// </remarks>
-	public class MotionKitComponent : CompositeRoot, ICompositeParent<MotionKitBlock> {
+	public class MotionKitComponent : MonoCompositeRoot, ICompositeParent<MotionKitBlock> {
 
 
 		#region Public Properties

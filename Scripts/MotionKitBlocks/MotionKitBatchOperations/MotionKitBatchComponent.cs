@@ -8,7 +8,7 @@ namespace CocodriloDog.MotionKit {
 	/// <summary>
 	/// This component processes <see cref="MotionKitBatchOperation"/>s on multiple <see cref="MotionKitComponent"/>s.
 	/// </summary>
-	public class MotionKitBatchComponent : CompositeRoot {
+	public class MotionKitBatchComponent : MonoCompositeRoot {
 
 
 		#region Private Fields

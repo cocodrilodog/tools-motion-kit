@@ -7,7 +7,7 @@ namespace CocodriloDog.MotionKit {
 	using UnityEngine;
 
 	[CustomEditor(typeof(MotionKitBatchComponent))]
-	public class MotionKitBatchComponentEditor : CompositeRootEditor {
+	public class MotionKitBatchComponentEditor : MonoCompositeRootEditor {
 
 
 		#region Unity Methods
