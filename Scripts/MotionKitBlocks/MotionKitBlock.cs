@@ -250,6 +250,16 @@ namespace CocodriloDog.MotionKit {
 			}
 		}
 
+		/// <summary>
+		/// Forces a call to <see cref="ResetPlayback"/>.
+		/// </summary>
+		/// 
+		/// <remarks>
+		/// <see cref="ResetPlayback"/> is called automatically when a playback is played and when it 
+		/// starts, if <see cref="ShouldResetPlayback"/> is true, which happens under certain 
+		/// circumstances. However, there are some cases that the automatic system won't handle
+		/// and there is the need to reset the playback anyway. This is what this method is for.
+		/// </remarks>
 		public void ForceResetPlayback() => ResetPlayback();
 
 		/// <summary>
@@ -439,8 +449,8 @@ namespace CocodriloDog.MotionKit {
 		/// <see cref="MotionKit"/>.
 		/// </summary>
 		/// <remarks>
-		/// This is called in the <see cref="Play"/> method when <see cref="ShouldResetPlayback"/> is <c>true</c>
-		/// and <see cref="IsResetPlaybackLocked"/> is false.
+		/// This is called in the <see cref="Play"/> method and on the playbackObject's <c>onStart</c> when 
+		/// <see cref="ShouldResetPlayback"/> is <c>true</c> and <see cref="IsResetPlaybackLocked"/> is false.
 		/// </remarks>
 		protected virtual void ResetPlayback() => m_HaveSettingsChanged = false;
 
