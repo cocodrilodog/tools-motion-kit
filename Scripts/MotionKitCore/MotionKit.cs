@@ -520,15 +520,16 @@
 
 		private bool _ClearPlayback(object owner, string reuseID) {
 			if (Playbacks.TryGetValue(owner, out var ownerPlaybacks)) {
-				ownerPlaybacks[reuseID].Dispose();
-				ownerPlaybacks.Remove(reuseID);
-				if (ownerPlaybacks.Count == 0) {
-					Playbacks.Remove(owner);
+				if (ownerPlaybacks.TryGetValue(reuseID, out var playback)) {
+					playback.Dispose();
+					ownerPlaybacks.Remove(reuseID);
+					if (ownerPlaybacks.Count == 0) {
+						Playbacks.Remove(owner);
+					}
+					return true;
 				}
-				return true;
-			} else {
-				return false;
 			}
+			return false;
 		}
 
 		private void _ClearAllPlaybacks() {
