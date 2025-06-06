@@ -658,8 +658,13 @@
 
 			CheckDisposed();
 
+			// This is a very rare case, but we need to handle it nevertheless
+			if (m_ProgressingItemInfo == null) {
+				return;
+			}
+
 			// Make sure that previous items did complete 
-			for(int i = 0; i < m_ProgressingItemInfo.Index; i++) {
+			for (int i = 0; i < m_ProgressingItemInfo.Index; i++) {
 				if (m_SequenceItemsInfo[i].Item.Progress != 1) {
 					m_SequenceItemsInfo[i].Item.SetProgress(1, invokeCallbacks);
 					// Don't reset the state here, because since progress goes back to 0 it would
