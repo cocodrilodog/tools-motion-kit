@@ -187,7 +187,7 @@
 				playOnStartRect.width = 10;
 				var playOnStartProperty = Property.FindPropertyRelative("m_PlayOnStart");
 				playOnStartProperty.boolValue = EditorGUI.Toggle(playOnStartRect, playOnStartProperty.boolValue);
-				DrawControlTooltip(playOnStartRect, "Play on start");
+				CDEditorGUI.DrawControlTooltip(playOnStartRect, "Play on start");
 
 				// Draw the SetInitialValuesOnStart toggle for non-timer blocks
 				if (!(Property.managedReferenceValue is TimerBlock)) {
@@ -196,7 +196,7 @@
 					setInitialValuesOnStartRect.width = 10;
 					var setInitialValuesOnStartProperty = Property.FindPropertyRelative("m_SetInitialValuesOnStart");
 					setInitialValuesOnStartProperty.boolValue = EditorGUI.Toggle(setInitialValuesOnStartRect, setInitialValuesOnStartProperty.boolValue);
-					DrawControlTooltip(setInitialValuesOnStartRect, "Set initial values on start");
+					CDEditorGUI.DrawControlTooltip(setInitialValuesOnStartRect, "Set initial values on start");
 				}
 
 			}
@@ -339,21 +339,6 @@
 			EditorGUI.PropertyField(GetNextPosition(OnInterruptProperty), OnInterruptProperty);
 			EditorGUI.PropertyField(GetNextPosition(OnCompleteProperty), OnCompleteProperty);
 
-		}
-
-		//TODO: Implement this in CompositePropertyDrawer
-		private void DrawControlTooltip(Rect propertyControlRect, string text) {
-			if (propertyControlRect.Contains(Event.current.mousePosition)) {
-
-				var content = new GUIContent(text);
-				var size = EditorStyles.helpBox.CalcSize(content);
-				var rect = new Rect(propertyControlRect.position + Vector2.left * size.x, size);
-
-				// Use the dark color of the editor
-				EditorGUI.DrawRect(rect, new Color(0.216f, 0.216f, 0.216f));
-				GUI.Box(rect, content, EditorStyles.helpBox);
-
-			}
 		}
 
 		#endregion
