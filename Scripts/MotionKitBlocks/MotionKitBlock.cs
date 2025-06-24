@@ -309,7 +309,8 @@ namespace CocodriloDog.MotionKit {
 		/// <summary>
 		/// Disposes any MotionKit object that was created with this asset as owner.
 		/// </summary>
-		public virtual void Dispose() {
+		public override void Dispose() {
+			base.Dispose();
 			if (IsInitialized) {
 				MotionKit.ClearPlayback(Owner, ReuseID);
 				if (SharedSettings != null) {
