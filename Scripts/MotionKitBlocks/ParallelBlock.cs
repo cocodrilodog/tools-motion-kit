@@ -98,6 +98,22 @@ namespace CocodriloDog.MotionKit {
 
 		public override void Resume() => Parallel.Resume();
 
+		public override void RegisterAsReferenceable(UnityEngine.Object root) {
+			base.RegisterAsReferenceable(root);
+			foreach (var parallelItem in Items) {
+				parallelItem?.RegisterAsReferenceable(root);
+			}
+			m_BatchOperations.ForEach(bo => bo.RegisterAsReferenceable(root));
+		}
+
+		public override void UnregisterReferenceable(UnityEngine.Object root) {
+			base.UnregisterReferenceable(root);
+			foreach (var parallelItem in Items) {
+				parallelItem?.UnregisterReferenceable(root);
+			}
+			m_BatchOperations.ForEach(bo => bo.UnregisterReferenceable(root));
+		}
+
 		public override void Dispose() {
 			base.Dispose();
 			foreach (var parallelItem in Items) {

@@ -221,6 +221,7 @@ namespace CocodriloDog.MotionKit {
 
 		private void OnDestroy() {
 			Blocks.ForEach(b => b?.Dispose());
+			Blocks.ForEach(b => b?.UnregisterReferenceable(this));
 		}
 
 		#endregion
@@ -275,6 +276,7 @@ namespace CocodriloDog.MotionKit {
 			// - Because we are locking it below, the default block won't reset on play
 			for (int i = Blocks.Count - 1; i >= 0; i--) {
 				Blocks[i]?.Initialize();
+				Blocks[i]?.RegisterAsReferenceable(this);
 			}
 
 			// This must be done after initializing the blocks
