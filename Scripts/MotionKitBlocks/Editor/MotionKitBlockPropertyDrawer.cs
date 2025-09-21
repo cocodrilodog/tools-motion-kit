@@ -253,10 +253,6 @@
 
 		#region Private Fields
 
-		private List<Type> m_CompositeTypes;
-
-		private string[] m_CallbackOptions = new string[] { "On Start", "On Update", "On Interrupt", "On Complete" };
-
 		private bool m_EditOwnerAndReuseID;
 
 		#endregion
