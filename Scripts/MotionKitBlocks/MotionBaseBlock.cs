@@ -1,5 +1,5 @@
 namespace CocodriloDog.MotionKit {
-
+	using CocodriloDog.Core;
 	using System;
 	using System.Collections;
 	using System.Collections.Generic;
@@ -342,6 +342,7 @@ namespace CocodriloDog.MotionKit {
 			"An asset that will override the InitialValue, FinalValue, and their respective Is Relative flags, and " +
 			"can be shared with other motion kit blocks.")
 		]
+		[CreateAsset]
 		[SerializeField]
 		private SharedValuesT m_SharedValues;
 
