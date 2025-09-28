@@ -1,4 +1,5 @@
 namespace CocodriloDog.MotionKit {
+
 	using CocodriloDog.Core;
 	using System;
 	using System.Collections;
@@ -20,11 +21,20 @@ namespace CocodriloDog.MotionKit {
 	}
 
 	/// <summary>
+	/// A <see cref="IMotionBaseBlock"/> with the provided <typeparamref name="T"/>
+	/// </summary>
+	/// <typeparam name="T"></typeparam>
+	public interface IMotionBaseBlock<T> : IMotionBaseBlock { 
+		public T InitialValue { get; set; }
+		public T FinalValue { get; set; }
+	}
+
+	/// <summary>
 	/// Base class for motion blocks.
 	/// </summary>
 	/// <typeparam name="ValueT">The animatable type of the motion objects.</typeparam>
 	/// <typeparam name="MotionT">The motion type.</typeparam>
-	public abstract class MotionBaseBlock<ValueT, MotionT, SharedValuesT> : MotionKitBlock, IMotionBaseBlock
+	public abstract class MotionBaseBlock<ValueT, MotionT, SharedValuesT> : MotionKitBlock, IMotionBaseBlock<ValueT>
 		where MotionT : MotionBase<ValueT, MotionT>
 		where SharedValuesT : MotionValues<ValueT> {
 

@@ -106,6 +106,11 @@ namespace CocodriloDog.MotionKit {
 
 		protected SerializedObject SharedValuesSerializedObject {
 			get {
+				// Edge case in which the same property drawer is used for another motion block
+				if(Property.propertyPath != m_LastPropertyPath) {
+					m_LastPropertyPath = Property.propertyPath;
+					m_SharedValuesSerializedObject = null; // Force the serialized object to be re-created
+				}
 				if (SharedValuesProperty.objectReferenceValue != null && m_SharedValuesSerializedObject == null) {
 					m_SharedValuesSerializedObject = new SerializedObject(SharedValuesProperty.objectReferenceValue);
 				}
@@ -198,6 +203,8 @@ namespace CocodriloDog.MotionKit {
 		private int m_GetterOptionIndex;
 
 		private SerializedObject m_SharedValuesSerializedObject;
+
+		private string m_LastPropertyPath;
 
 		#endregion
 

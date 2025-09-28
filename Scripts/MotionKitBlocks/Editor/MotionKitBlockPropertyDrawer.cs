@@ -212,6 +212,8 @@
 
 		private bool m_IsSubscribedToSelectionChange;
 
+		private string m_LastPropertyPath;
+
 		#endregion
 
 
@@ -233,6 +235,11 @@
 
 		private SerializedObject SerializedSharedSettings {
 			get {
+				// Edge case in which the same property drawer is used for another motion block
+				if (Property.propertyPath != m_LastPropertyPath) {
+					m_LastPropertyPath = Property.propertyPath;
+					m_SerializedSharedSettings = null; // Force the serialized object to be re-created
+				}
 				if (SharedSettingsProperty.objectReferenceValue != null && m_SerializedSharedSettings == null) {
 					m_SerializedSharedSettings = new SerializedObject(SharedSettingsProperty.objectReferenceValue);
 				}
