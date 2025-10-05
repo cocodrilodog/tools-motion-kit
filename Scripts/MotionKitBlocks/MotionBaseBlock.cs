@@ -158,7 +158,7 @@ namespace CocodriloDog.MotionKit {
 				var getterStringParts = GetterString.Split('/');
 
 				// Variables for setter and getter
-				Component component;
+				UnityEngine.Object componentOrScriptableObject;
 				MethodInfo methodInfo;
 
 				if (Object == null) {
@@ -168,23 +168,15 @@ namespace CocodriloDog.MotionKit {
 				}
 
 				var gameObject = Object as GameObject;
-				if (gameObject != null) {
+				if (gameObject != null) { // Object is a GameObject
 
 					// SETTER
 					//
 					// The first part of the setter string is the component
-					component = gameObject.GetComponent(setterStringParts[0]);
+					componentOrScriptableObject = gameObject.GetComponent(setterStringParts[0]);
 
-					// The second part is the setter. First we'll look for the method setter
-					// Check for 1 ValueT parameter to avoid ambiguity
-					methodInfo = component.GetType().GetMethod(setterStringParts[1], new Type[] { typeof(ValueT) });
-					if (methodInfo != null) {
-						m_SetterDelegate = GetSetterDelegate(component, methodInfo);
-					} else {
-						// If a method setter is not found, then we look for a property setter
-						var propertyInfo = component.GetType().GetProperty(setterStringParts[1]);
-						m_SetterDelegate = GetSetterDelegate(component, propertyInfo.GetSetMethod());
-					}
+					// The second part is the setter. 
+					CreateSetterDelegate(componentOrScriptableObject, setterStringParts[1]);
 
 					if (InitialValueIsRelative || FinalValueIsRelative) {
 
@@ -195,26 +187,64 @@ namespace CocodriloDog.MotionKit {
 						// GETTER
 						//
 						// The first part of the getter string is the component
-						component = gameObject.GetComponent(getterStringParts[0]);
+						componentOrScriptableObject = gameObject.GetComponent(getterStringParts[0]);
 
-						// The second part is the getter. First we'll look for the method getter
-						// Check for 0 parameters to avoid ambiguity
-						methodInfo = component.GetType().GetMethod(getterStringParts[1], new Type[] { });
-						if (methodInfo != null) {
-							m_GetterDelegate = GetGetterDelegate(component, methodInfo);
-						} else {
-							// If a method getter is not found, then we look for a property getter
-							var propertyInfo = component.GetType().GetProperty(getterStringParts[1]);
-							m_GetterDelegate = GetGetterDelegate(component, propertyInfo.GetGetMethod());
-						}
+						CreateGetterDelegate(componentOrScriptableObject, getterStringParts[1]);
 
 					}
 
-					// Initialize the motion
-					ResetPlayback();
+				} else { // Object is a Component or ScriptableObject
 
-				} else {
-					// TODO: Possibly work with ScriptableObjects (and fields)
+					// Here the first part of setterStringParts and getterStringParts is ignored and the 
+					// main object is the Object reference 
+
+					// SETTER
+					//
+					// The Object is a Component or ScriptableObject
+					// The second part is the setter. 
+					CreateSetterDelegate(Object, setterStringParts[1]);
+
+					if (InitialValueIsRelative || FinalValueIsRelative) {
+
+						if (GetterString == "No Function") {
+							throw new InvalidOperationException($"{Name}: A getter function must be set.");
+						}
+
+						// GETTER
+						//
+						// The object is a component or scriptable object, and was set above
+						CreateGetterDelegate(Object, getterStringParts[1]);
+
+					}
+
+				}
+
+				// Initialize the motion
+				ResetPlayback();
+
+				void CreateSetterDelegate(UnityEngine.Object componentOrScriptableObject, string setterName) {
+					// Check for 1 ValueT parameter to avoid ambiguity
+					methodInfo = componentOrScriptableObject.GetType().GetMethod(setterName, new Type[] { typeof(ValueT) });
+					if (methodInfo != null) {
+						// First we'll look for the method setter
+						m_SetterDelegate = GetSetterDelegate(componentOrScriptableObject, methodInfo);
+					} else {
+						// If a method setter is not found, then we look for a property setter
+						var propertyInfo = componentOrScriptableObject.GetType().GetProperty(setterName);
+						m_SetterDelegate = GetSetterDelegate(componentOrScriptableObject, propertyInfo.GetSetMethod());
+					}
+				}
+
+				void CreateGetterDelegate(UnityEngine.Object componentOrScriptableObject, string getterName) {
+					// Check for 0 parameters to avoid ambiguity
+					methodInfo = componentOrScriptableObject.GetType().GetMethod(getterName, new Type[] { });
+					if (methodInfo != null) {
+						m_GetterDelegate = GetGetterDelegate(componentOrScriptableObject, methodInfo);
+					} else {
+						// If a method getter is not found, then we look for a property getter
+						var propertyInfo = componentOrScriptableObject.GetType().GetProperty(getterName);
+						m_GetterDelegate = GetGetterDelegate(componentOrScriptableObject, propertyInfo.GetGetMethod());
+					}
 				}
 
 				// Creates a delegate for the target and method info. Here is a discussion about this technique:

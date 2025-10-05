@@ -341,21 +341,22 @@ namespace CocodriloDog.MotionKit {
 					var components = gameObject.GetComponents(typeof(Component));
 
 					foreach (var component in components) {
-
-						var methods = GetMethodsBySignature(component.GetType(), typeof(void), typeof(ValueT));
-						foreach (var setter in methods) {
-							m_SetterOptions.Add($"{component.GetType().Name}/{setter.Name}");
-						}
-
-						var properties = GetPropertiesByType(component.GetType(), typeof(ValueT));
-						foreach (var property in properties) {
-							m_SetterOptions.Add($"{component.GetType().Name}/{property.Name}");
-						}
-
+						AddSetterOptions(component);
 					}
 
 				} else {
-					// TODO: Possibly work with ScriptableObjects (and fields)
+					AddSetterOptions(ObjectProperty.objectReferenceValue);
+				}
+			}
+
+			void AddSetterOptions(UnityEngine.Object componentOrScriptableObject) {
+				var methods = GetMethodsBySignature(componentOrScriptableObject.GetType(), typeof(void), typeof(ValueT));
+				foreach (var setter in methods) {
+					m_SetterOptions.Add($"{componentOrScriptableObject.GetType().Name}/{setter.Name}");
+				}
+				var properties = GetPropertiesByType(componentOrScriptableObject.GetType(), typeof(ValueT));
+				foreach (var property in properties) {
+					m_SetterOptions.Add($"{componentOrScriptableObject.GetType().Name}/{property.Name}");
 				}
 			}
 
@@ -367,28 +368,31 @@ namespace CocodriloDog.MotionKit {
 			m_GetterOptions.Add(NoFunctionString);
 
 			if (ObjectProperty.objectReferenceValue != null) {
+
 				if (ObjectProperty.objectReferenceValue is GameObject) {
 
 					var gameObject = ObjectProperty.objectReferenceValue as GameObject;
 					var components = gameObject.GetComponents(typeof(Component));
 
 					foreach (var component in components) {
-
-						var methods = GetMethodsBySignature(component.GetType(), typeof(ValueT));
-						foreach (var getter in methods) {
-							m_GetterOptions.Add($"{component.GetType().Name}/{getter.Name}");
-						}
-
-						var properties = GetPropertiesByType(component.GetType(), typeof(ValueT));
-						foreach (var property in properties) {
-							m_GetterOptions.Add($"{component.GetType().Name}/{property.Name}");
-						}
-
+						AddGetterOptions(component);
 					}
 
 				} else {
-					// TODO: Possibly work with ScriptableObjects (and fields)
+					AddGetterOptions(ObjectProperty.objectReferenceValue);
 				}
+
+				void AddGetterOptions(UnityEngine.Object componentOrScriptableObject) {
+					var methods = GetMethodsBySignature(componentOrScriptableObject.GetType(), typeof(ValueT));
+					foreach (var getter in methods) {
+						m_GetterOptions.Add($"{componentOrScriptableObject.GetType().Name}/{getter.Name}");
+					}
+					var properties = GetPropertiesByType(componentOrScriptableObject.GetType(), typeof(ValueT));
+					foreach (var property in properties) {
+						m_GetterOptions.Add($"{componentOrScriptableObject.GetType().Name}/{property.Name}");
+					}
+				}
+
 			}
 
 		}
