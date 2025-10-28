@@ -32,7 +32,7 @@ namespace CocodriloDog.MotionKit {
 
 		public override ReadOnlyCollection<MotionKitBlock> Items {
 			get {
-				_ = Parallel; // <- Force init
+				//_ = Parallel; // <- Force init
 				if (m_Items == null) {
 					m_Items = new ReadOnlyCollection<MotionKitBlock>(m_ParallelItems);
 				}

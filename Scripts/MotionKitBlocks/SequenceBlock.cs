@@ -32,7 +32,7 @@ namespace CocodriloDog.MotionKit {
 
 		public override ReadOnlyCollection<MotionKitBlock> Items {
 			get {
-				_ = Sequence; // <- Force init
+				//_ = Sequence; // <- Force init
 				if (m_Items == null) {
 					m_Items = new ReadOnlyCollection<MotionKitBlock>(m_SequenceItems);
 				}
