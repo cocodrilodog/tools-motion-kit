@@ -52,15 +52,19 @@ namespace CocodriloDog.MotionKit {
 
 		#region Private Fields
 
+		[Tooltip("The initial value for the motion.")]
 		[SerializeField]
 		private ValueT m_InitialValue;
 
+		[Tooltip("If checked, the animation will begin at the current value plus this value.")]
 		[SerializeField]
 		private bool m_InitialValueIsRelative;
 
+		[Tooltip("The final value for the motion.")]
 		[SerializeField]
 		private ValueT m_FinalValue;
 
+		[Tooltip("If checked, the animation will end at the current value plus this value.")]
 		[SerializeField]
 		private bool m_FinalValueIsRelative;
 
