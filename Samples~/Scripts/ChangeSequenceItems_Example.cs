@@ -34,7 +34,6 @@
 
         #region Private Properties
 
-        [SerializeField]
         private Transform Cube => m_Cube;
 
 		#endregion
