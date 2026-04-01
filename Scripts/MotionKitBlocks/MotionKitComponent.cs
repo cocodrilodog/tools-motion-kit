@@ -210,8 +210,11 @@ namespace CocodriloDog.MotionKit {
 
 		#region Unity Methods
 
-		private void Start() {
+		private void Awake() {
 			TryInitialize();
+		}
+
+		private void Start() {
 			for (int i = 0; i < Blocks.Count; i++) {
 				if (Blocks[i] != null && Blocks[i].PlayOnStart) {
 					Blocks[i].Play();
