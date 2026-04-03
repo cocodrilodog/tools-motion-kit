@@ -34,6 +34,7 @@ namespace CocodriloDog.MotionKit {
 		void Stop();
 		void Pause();
 		void Resume();
+		void ForceProgress(float progress, float step = 0.01f);
 		void Dispose();
 	}
 
@@ -305,6 +306,11 @@ namespace CocodriloDog.MotionKit {
 		/// Resumes the MotionKit object managed by this <see cref="MotionKitBlock"/>.
 		/// </summary>
 		public abstract void Resume();
+
+		/// <summary>
+		/// Forcces progress on the MotionKit object managed by this <see cref="MotionKitBlock"/>.
+		/// </summary>
+		public abstract void ForceProgress(float progress, float step = 0.01f);
 
 		/// <summary>
 		/// Disposes any MotionKit object that was created with this asset as owner.

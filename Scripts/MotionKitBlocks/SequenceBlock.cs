@@ -98,6 +98,8 @@ namespace CocodriloDog.MotionKit {
 
 		public override void Resume() => Sequence.Resume();
 
+		public override void ForceProgress(float progress, float step = 0.01F) => Sequence.ForceProgress(progress, step);
+
 		public override void RegisterAsReferenceable(UnityEngine.Object root) {
 			base.RegisterAsReferenceable(root);
 			foreach (var sequenceItem in Items) {

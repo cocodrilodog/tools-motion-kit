@@ -23,6 +23,14 @@
 		float Progress { get; set; }
 		float Duration { get; }
 		void SetProgress(float progress, bool invokeCallbacks);
+		// TODO: Centralize documentation here
+		/// <summary>
+		/// Forcefully sets the Progress from 1 to <paramref name="progress"/> and then
+		/// from 0 to <paramref name="progress"/>
+		/// </summary>
+		/// <param name="progress">The intended progress</param>
+		/// <param name="step">The step for each iteration.</param>
+		void ForceProgress(float progress, float step = 0.01f);
 		void ResetState();
 		void InvokeOnInterrupt();
 	}
