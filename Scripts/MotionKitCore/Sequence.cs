@@ -665,7 +665,7 @@
 
 			// Make sure that previous items did complete 
 			for (int i = 0; i < m_ProgressingItemInfo.Index; i++) {
-				if (m_SequenceItemsInfo[i].Item.Progress != 1) {
+				if (m_SequenceItemsInfo[i].Item.Progress < 1) {
 					m_SequenceItemsInfo[i].Item.SetProgress(1, invokeCallbacks);
 					// Don't reset the state here, because since progress goes back to 0 it would
 					// cause this condition to trigger again next time
@@ -674,7 +674,7 @@
 
 			// Make sure that future items are at 0, starting from the last one
 			for (int i = m_SequenceItemsInfo.Length - 1; i > m_ProgressingItemInfo.Index; i--) {
-				if (m_SequenceItemsInfo[i].Item.Progress != 0) {
+				if (m_SequenceItemsInfo[i].Item.Progress > 0) {
 					m_SequenceItemsInfo[i].Item.Progress = 0;
 					m_SequenceItemsInfo[i].Item.ResetState();
 				}

@@ -623,6 +623,9 @@
 			if (Progress >= 0) {
 				Started = true;
 			}
+			if (Progress < 1) {
+				Completed = false;
+			}
 			if (Started && !Completed) {
 				// Putting ApplyProgress() here solves the issue of the target property being changed
 				// before OnStart. Now OnStart is invoked before the motion starts modifying the property
@@ -642,10 +645,7 @@
 				// as it is part of a sequence.
 				Completed = true;
 
-			} else {
-				// This is useful if the animation is played in reverse
-				Completed = false;
-			}
+			} 
 			m_InvokeCallbacks = true;
 		}
 
