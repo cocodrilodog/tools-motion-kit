@@ -217,6 +217,33 @@
 			UpdateState(invokeCallbacks);
 		}
 
+		public void ForceProgress(float progress, float step = 0.01f) {
+
+			step = Mathf.Clamp(step, 0.001f, float.MaxValue);
+
+			// Negative
+			var forcedProgress = 1f;
+			while (forcedProgress > progress) {
+				forcedProgress -= step;
+				if(forcedProgress > progress) { 
+					Progress = forcedProgress;
+				}
+			}
+
+			// Positive
+			forcedProgress = 0f;
+			while(forcedProgress < progress) {
+				forcedProgress += step;
+				if (forcedProgress < progress) {
+					Progress = forcedProgress;
+				}
+			}
+
+			// Confirm
+			Progress = progress;
+
+		}
+
 		/// <summary>
 		/// Resets the motion to its default state.
 		/// </summary>
@@ -626,6 +653,9 @@
 			if (Progress < 1) {
 				Completed = false;
 			}
+
+			//Debug.Log($"Started: {Started}; Completed: {Completed} | {this}");
+
 			if (Started && !Completed) {
 				// Putting ApplyProgress() here solves the issue of the target property being changed
 				// before OnStart. Now OnStart is invoked before the motion starts modifying the property

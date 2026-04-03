@@ -193,6 +193,33 @@ namespace CocodriloDog.MotionKit {
 			UpdateState(invokeCallbacks);
 		}
 
+		public void ForceProgress(float progress, float step = 0.01f) {
+
+			step = Mathf.Clamp(step, 0.001f, float.MaxValue);
+
+			// Negative
+			var forcedProgress = 1f;
+			while (forcedProgress > progress) {
+				forcedProgress -= step;
+				if (forcedProgress > progress) {
+					Progress = forcedProgress;
+				}
+			}
+
+			// Positive
+			forcedProgress = 0f;
+			while (forcedProgress < progress) {
+				forcedProgress += step;
+				if (forcedProgress < progress) {
+					Progress = forcedProgress;
+				}
+			}
+
+			// Confirm
+			Progress = progress;
+
+		}
+
 		/// <summary>
 		/// Resets the parallel to its default state.
 		/// </summary>

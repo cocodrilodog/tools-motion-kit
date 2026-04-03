@@ -56,6 +56,8 @@ namespace CocodriloDog.MotionKit {
 
 		public void Resume() => m_Block.Value?.Resume();
 
+		public void ForceProgress(float progress, float step = 0.01F) => m_Block.Value?.ForceProgress(progress, step);
+
 		public void Stop() => m_Block.Value?.Stop();
 
 		public void TryResetPlayback(bool recursive) => m_Block.Value?.TryResetPlayback(recursive);
