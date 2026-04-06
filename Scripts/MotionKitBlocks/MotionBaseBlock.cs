@@ -283,7 +283,7 @@ namespace CocodriloDog.MotionKit {
 
 		public override void Pause() => Motion.Pause();
 
-		public override void ForceProgress(float progress, float step = 0.01F) => Motion.ForceProgress(progress, step);
+		public override void ForceProgress(float progress, float step = 0.1f) => Motion.ForceProgress(progress, step);
 
 		public override void Resume() => Motion.Resume();
 
