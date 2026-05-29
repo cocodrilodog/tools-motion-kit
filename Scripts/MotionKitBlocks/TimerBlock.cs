@@ -64,7 +64,10 @@ namespace CocodriloDog.MotionKit {
 
 		public override void Resume() => Timer.Resume();
 
-		public override void ForceProgress(float progress, float step = 0.1f) => Timer.ForceProgress(progress, step);
+		public override void ForceProgress(float progress, float step = 0.1f) {
+			TryResetPlayback(true);
+			Timer.ForceProgress(progress, step);
+		}
 
 		public override string DefaultName => $"Timer";
 

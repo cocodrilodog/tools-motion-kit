@@ -193,7 +193,7 @@ namespace CocodriloDog.MotionKit {
 			UpdateState(invokeCallbacks);
 		}
 
-		public void ForceProgress(float progress, float step = 0.01f) {
+		public void ForceProgress(float progress, float step = 0.1f) {
 
 			step = Mathf.Clamp(step, 0.001f, float.MaxValue);
 
