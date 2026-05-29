@@ -310,7 +310,7 @@ namespace CocodriloDog.MotionKit {
 		/// <summary>
 		/// Forcces progress on the MotionKit object managed by this <see cref="MotionKitBlock"/>.
 		/// </summary>
-		public abstract void ForceProgress(float progress, float step = 0.01f);
+		public abstract void ForceProgress(float progress, float step = 0.1f);
 
 		/// <summary>
 		/// Disposes any MotionKit object that was created with this asset as owner.
